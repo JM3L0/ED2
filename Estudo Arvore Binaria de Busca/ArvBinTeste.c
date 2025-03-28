@@ -33,7 +33,7 @@ void menu()
     printf("2. Imprimir arvore em pre-ordem\n");
     printf("3. Imprimir arvore em ordem\n");
     printf("4. Imprimir arvore em pos-ordem\n");
-    printf("5. Sair\n");
+    printf("0. Sair\n");
 }
 
 void executarMenu(ArvBin **Raiz)
@@ -53,7 +53,7 @@ void executarMenu(ArvBin **Raiz)
             printf("Digite o valor a ser inserido: ");
             scanf("%d", &valor);
             novo = CriaNo(valor);
-            if (inserirArvBin(Raiz, novo) == 0)
+            if (inserirArvBin(Raiz, novo))
             {
                 printf("Elemento inserido com sucesso!\n");
             }
@@ -80,13 +80,13 @@ void executarMenu(ArvBin **Raiz)
                 printf("Arvore Vazia\n");
             printf("\n");
             break;
-        case 5:
+        case 0:
             printf("Saindo...\n");
             break;
         default:
             printf("Opcao invalida! Tente novamente.\n");
         }
-    } while (opcao != 5);
+    } while (opcao != 0);
 }
 
 ArvBin *CriaNo(int valor)
@@ -108,7 +108,7 @@ ArvBin *CriaNo(int valor)
 int inserirArvBin(ArvBin **Raiz, ArvBin *No)
 {
 
-    int inseriu = 0;
+    int inseriu = 1;
 
     if (*Raiz == NULL)
     {
@@ -124,7 +124,7 @@ int inserirArvBin(ArvBin **Raiz, ArvBin *No)
     }
     else
     {
-        inseriu = 1;
+        inseriu = 0;
     }
 
     return (inseriu);
@@ -174,3 +174,5 @@ int printarArvBinPosOrdem(ArvBin *Raiz)
 
     return printou;
 }
+
+
