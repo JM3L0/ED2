@@ -15,6 +15,8 @@ int inserirArvBin(ArvBin **Raiz, ArvBin *No);
 int printarArvBinPreOrdem(ArvBin *Raiz);
 int printarArvBinEmOrdem(ArvBin *Raiz);
 int printarArvBinPosOrdem(ArvBin *Raiz);
+ArvBin *TreeMaximun(ArvBin *Raiz);
+ArvBin *TreeMaximun2(ArvBin *Raiz);
 
 int main()
 {
@@ -33,13 +35,14 @@ void menu()
     printf("2. Imprimir arvore em pre-ordem\n");
     printf("3. Imprimir arvore em ordem\n");
     printf("4. Imprimir arvore em pos-ordem\n");
+    printf("5. Imprimir maior elemento da arvore\n");
     printf("0. Sair\n");
 }
 
 void executarMenu(ArvBin **Raiz)
 {
     int opcao, valor;
-    ArvBin *novo;
+    ArvBin *novo, *aux;
 
     do
     {
@@ -64,20 +67,26 @@ void executarMenu(ArvBin **Raiz)
             break;
         case 2:
             printf("Arvore em pre-ordem: ");
-            if(!printarArvBinPreOrdem(*Raiz))
+            if (!printarArvBinPreOrdem(*Raiz))
                 printf("Arvore Vazia\n");
             printf("\n");
             break;
         case 3:
             printf("Arvore em ordem: ");
-            if(!printarArvBinEmOrdem(*Raiz))
+            if (!printarArvBinEmOrdem(*Raiz))
                 printf("Arvore Vazia\n");
             printf("\n");
             break;
         case 4:
             printf("Arvore em pos-ordem: ");
-            if(!printarArvBinPosOrdem(*Raiz))
+            if (!printarArvBinPosOrdem(*Raiz))
                 printf("Arvore Vazia\n");
+            printf("\n");
+            break;
+        case 5:
+            printf("Maior elemento: ");
+            aux = TreeMaximun2(*Raiz);
+            printf("%d\n", aux->info);
             printf("\n");
             break;
         case 0:
@@ -177,3 +186,28 @@ int printarArvBinPosOrdem(ArvBin *Raiz)
 
 ////////////////////////////////////// A PARTIR DAQUI É A REMOÇÃO /////////////////////////////////////////////////////
 
+ArvBin *TreeMaximun1(ArvBin *Raiz)//Recursivo
+{
+    if (Raiz != NULL)
+    {
+        if (Raiz->dir != NULL)
+        {
+            Raiz = TreeMaximun1(Raiz->dir);
+        }
+    }
+
+    return Raiz;
+}
+
+ArvBin *TreeMaximun2(ArvBin *Raiz)//Iterativo
+{
+    if (Raiz != NULL)
+    {
+        while (Raiz->dir != NULL)
+        {
+            Raiz = Raiz->dir;
+        }
+    }
+    
+    return Raiz;
+}
