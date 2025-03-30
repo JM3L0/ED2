@@ -40,25 +40,19 @@ ArvBin *alocaNo(char *valor){
     return novo;
 }
 
-int InsereArvBin(struct ArvBin **raiz, ArvBin *no) {
+int InsereArvBin(struct ArvBin **raiz, ArvBin *no){
     int inseriu = 0;
 
-    if (*raiz == NULL) {
-        *raiz = no;  // Insere o nó na raiz vazia
-        inseriu = 1; // Marca como inserido com sucesso
+    if(*raiz == NULL){
+        *raiz = no;
+        inseriu = 1;
     }
-    else if (strcasecmp(no->info, (*raiz)->info) < 0) {
-        // Se no->info é menor, insere na subárvore esquerda
+    else if(strcasecmp(no->info, (*raiz)->info) < 0)
         inseriu = InsereArvBin(&(*raiz)->esq, no);
-    }
-    else if (strcasecmp(no->info, (*raiz)->info) > 0) {
-        // Se no->info é maior, insere na subárvore direita
+    else if(strcasecmp(no->info, (*raiz)->info) > 0)
         inseriu = InsereArvBin(&(*raiz)->dir, no);
-    }
-    else {
-        // Se no->info é igual a (*raiz)->info, não insere (duplicata)
-        inseriu = 0; // Ou 1, dependendo da semântica desejada
-    }
+    else
+        inseriu = 0;
     return inseriu;
 }
 
@@ -113,6 +107,5 @@ int main(){
                 break;
         }
     }while(opcao != 0);
-
     return 0;
 }
