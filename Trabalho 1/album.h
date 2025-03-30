@@ -1,3 +1,5 @@
+#ifndef ALBUM_H
+#define ALBUM_H
 typedef struct ALBUNS{
     char *titulo_album;
     int ano_lancamento;
@@ -6,3 +8,4 @@ typedef struct ALBUNS{
     struct ALBUNS *dir;
     struct MUSICAS *arv_musicas;
 }ALBUNS;
+#endif
