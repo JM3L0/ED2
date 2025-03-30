@@ -6,28 +6,41 @@ typedef struct String{
     char *nome;
 }String;
 
-char* ler_string() {
-    char buffer[256]; // Buffer temporário de 256 caracteres
-    if (fgets(buffer, sizeof(buffer), stdin) == NULL) { // Lê a entrada
-        printf("Erro ao ler a entrada!\n");
-        return NULL; // Retorna NULL em caso de erro
+char* ler_string(){
+    char buffer[256], *string;
+
+    if(fgets(buffer, sizeof(buffer), stdin) == NULL)
+        string = NULL;
+    else{
+        buffer[strcspn(buffer, "\n")] = 0;
+        string = strdup(buffer);
     }
-    
-    buffer[strcspn(buffer, "\n")] = 0; // Remove o '\n' do final
-    
-    char* string = strdup(buffer); // Aloca dinamicamente e copia o conteúdo
-    //se a alocação falhar ele retorna null
-    if (!string) {
-        printf("Erro de alocação de memória!\n");
-        exit(1);
-    }
-    
-    return string; // Retorna o ponteiro para a string alocada
+    return string;
 }
 
+int verifica_cadastro(char *artista){
+    if(artista != NULL)
+        return 1;
+    else
+        return 0;
+}
+
+void cadastrar_artista(char **artista){
+    printf("Digite o nome do artista: ");
+    *artista = ler_string();
+    if((verifica_cadastro(*artista)) == 1)
+        printf("Artista cadastrado com sucesso!\n");
+    else
+        printf("Erro ao cadastrar artista!\n");
+}
+
+
+
+
+
 int main() {
-    printf("Digite um nome: ");
-    char* nome = ler_string();
+    char *nome;
+    cadastrar_artista(&nome);
     if (nome) {
         printf("Nome digitado: %s\n", nome);
         free(nome); // Libera a memória alocada
