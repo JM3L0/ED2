@@ -1,11 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct ArvBin{
     char *info;
     struct ArvBin *esq;
     struct ArvBin *dir;
 }ArvBin;
+
+char* ler_string(){
+    char buffer[256], *string;
+
+    if(fgets(buffer, sizeof(buffer), stdin) == NULL)
+        string = NULL;
+    else{
+        buffer[strcspn(buffer, "\n")] = 0;
+        string = strdup(buffer);
+    }
+    return string;
+}
 
 int ehFolha(struct ArvBin *raiz){
     int Folha = 0;
@@ -27,17 +40,25 @@ ArvBin *alocaNo(char *valor){
     return novo;
 }
 
-int InsereArvBin(struct ArvBin **raiz, ArvBin *no){
+int InsereArvBin(struct ArvBin **raiz, ArvBin *no) {
     int inseriu = 0;
 
-    if(*raiz == NULL)
-        *raiz = no;
-    else if(strcmp(no->info, (*raiz)->info))
+    if (*raiz == NULL) {
+        *raiz = no;  // Insere o nó na raiz vazia
+        inseriu = 1; // Marca como inserido com sucesso
+    }
+    else if (strcasecmp(no->info, (*raiz)->info) < 0) {
+        // Se no->info é menor, insere na subárvore esquerda
         inseriu = InsereArvBin(&(*raiz)->esq, no);
-    else if(strcmp(no->info, (*raiz)->info))
+    }
+    else if (strcasecmp(no->info, (*raiz)->info) > 0) {
+        // Se no->info é maior, insere na subárvore direita
         inseriu = InsereArvBin(&(*raiz)->dir, no);
-    else
-        inseriu = 1;
+    }
+    else {
+        // Se no->info é igual a (*raiz)->info, não insere (duplicata)
+        inseriu = 0; // Ou 1, dependendo da semântica desejada
+    }
     return inseriu;
 }
 
@@ -55,7 +76,7 @@ int ImprimirInOrdem(struct ArvBin *raiz){
 int main(){
     ArvBin *raiz, *no;
     int opcao;
-    char valor[256];
+    char *valor;
 
     raiz = NULL, no = NULL;
     do{
@@ -70,9 +91,9 @@ int main(){
             case 1:
                 printf("\nDigite o valor a ser inserido: ");
                 getchar();
-                scanf("%[^\n]", valor);
+                valor = ler_string();
                 no = alocaNo(valor);
-                if(InsereArvBin(&raiz, no) == 0)
+                if(InsereArvBin(&raiz, no) == 1)
                     printf("\nvalor inserido com sucesso\n");
                 else
                     printf("\nvalor ja existe na arvore\n");
