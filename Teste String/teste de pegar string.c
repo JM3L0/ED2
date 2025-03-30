@@ -8,10 +8,10 @@ typedef struct String{
 
 int main(){
 
-    char *nome;
+    String ab;
 
-    scanf("%[^\n]", nome);
+    scanf("%c", &ab.nome);
 
-    printf("%s", nome);
+    printf("%c", ab.nome);
 
 }

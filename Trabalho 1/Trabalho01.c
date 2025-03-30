@@ -43,8 +43,9 @@ void menu(){
     printf("[3] - Cadastrar musica\n");
     printf("[0] - Sair\n");
     printf("Escolha uma opcao: ");
+    printf("\n\n");
 }
-aaaaaaaaaaaaaaaaaaaa
+
 int main(){
     int opcao;
 
