@@ -44,7 +44,7 @@ void menu(){
     printf("[0] - Sair\n");
     printf("Escolha uma opcao: ");
 }
-
+aaaaaaaaaaaaaaaaaaaa
 int main(){
     int opcao;
 
