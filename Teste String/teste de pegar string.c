@@ -2,19 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-<<<<<<< HEAD
 typedef struct String{
     char *nome;
 }String;
 
-int main(){
-
-    String ab;
-
-    scanf("%c", &ab.nome);
-
-    printf("%c", ab.nome);
-=======
 char* ler_string() {
     char buffer[256]; // Buffer temporário de 256 caracteres
     if (fgets(buffer, sizeof(buffer), stdin) == NULL) { // Lê a entrada
@@ -33,7 +24,6 @@ char* ler_string() {
     
     return string; // Retorna o ponteiro para a string alocada
 }
->>>>>>> a90d80368cdd220c13130b43e2c70bb7b1eb013c
 
 int main() {
     printf("Digite um nome: ");
