@@ -2,49 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct PLAYLIST{
-    char *titulo_playlist;
-    char *nome_artista;
-    char *titulo_album;
-    char *titulo_musica;
-    struct PLAYLIST *esq;
-    struct PLAYLIST *dir;
-}PLAYLIST;
 
-typedef struct MUSICAS{
-    char *titulo_musica;
-    float quantidade_minutos;
-    struct MUSICAS *esq;
-    struct MUSICAS *dir;
-}MUSICAS;
-
-typedef struct ALBUNS{
-    char *titulo_album;
-    int ano_lancamento;
-    int quantidade_musicas;
-    struct ALBUNS *esq;
-    struct ALBUNS *dir;
-    struct MUSICAS *arv_musicas;
-}ALBUNS;
-
-typedef struct ARTISTAS{
-    char *nome_artista;
-    char *tipo_artista;
-    char *estilo_musical;
-    int numero_albuns;
-    struct ARTISTAS *esq;
-    struct ARTISTAS *dir;
-    struct ALBUNS *arv_albuns;
-}ARTISTAS;      
-
-void menu(){
-    printf("\n[1] - Cadastrar artista\n");
-    printf("[2] - Cadastrar album\n");
-    printf("[3] - Cadastrar musica\n");
-    printf("[0] - Sair\n");
-    printf("Escolha uma opcao: ");
-    printf("\n\n");
-}
 
 int main(){
     int opcao;
