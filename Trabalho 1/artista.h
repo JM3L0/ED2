@@ -1,6 +1,7 @@
 #ifndef ARTISTA_H
 #define ARTISTA_H
-typedef struct ARTISTAS{
+typedef struct ARTISTAS
+{
     char *nome_artista;
     char *tipo_artista;
     char *estilo_musical;
@@ -8,5 +9,5 @@ typedef struct ARTISTAS{
     struct ARTISTAS *esq;
     struct ARTISTAS *dir;
     struct ALBUNS *arv_albuns;
-}ARTISTAS;
+} ARTISTAS;
 #endif
