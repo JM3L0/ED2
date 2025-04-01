@@ -6,7 +6,6 @@ typedef struct PLAYLIST
     char *nome_artista;
     char *titulo_album;
     char *titulo_musica;
-    struct PLAYLIST *esq;
-    struct PLAYLIST *dir;
+    struct PLAYLIST *esq, *dir;
 } PLAYLIST;
 #endif
