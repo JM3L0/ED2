@@ -4,6 +4,7 @@
 #include"artista.h"
 #include "album.h"
 #include"musica.h"
+#include"utilitarios.h"
 
 char *ler_string()
 {

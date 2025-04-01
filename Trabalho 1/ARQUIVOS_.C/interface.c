@@ -1,7 +1,7 @@
-void menu(){
-    printf("\n[1] - Cadastrar artista\n");
-    printf("[2] - Cadastrar album\n");
-    printf("[3] - Cadastrar musica\n");
-    printf("[0] - Sair\n");
-    printf("Escolha uma opcao: ");
-}
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include"artista.h"
+#include "album.h"
+#include"musica.h"
+#include"utilitarios.h"
