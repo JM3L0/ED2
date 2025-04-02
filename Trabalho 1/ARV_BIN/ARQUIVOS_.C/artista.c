@@ -24,10 +24,12 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
     return novo;
 }
 
-void cadastrar_artista()
+ARTISTAS* cadastrar_artista()
 {
     char *nome, *tipo_artista, *estilo_musical;
     int num_album;
+    ARTISTAS *artista;
+    artista = NULL; // inicializa o ponteiro para artista
     // fazer ponteiro para albuns
 
     printf("Digite o nome do Artista: ");
@@ -38,9 +40,14 @@ void cadastrar_artista()
     estilo_musical = ler_string();
     printf("Digite o numero de albuns do Artista: ");
     scanf("%d", &num_album);
+
+    artista = aloca_no_artista(nome, tipo_artista, estilo_musical, num_album, NULL);
+
 }
 int main(){
-    ARTISTAS *artista = aloca_no_artista("Artista1", "Tipo1", "Estilo1", 5, NULL);
+    ARTISTAS *artista;
+    artista = cadastrar_artista();
+    
     if (artista != NULL)
     {
         printf("Artista cadastrado: %s\n", artista->nome_artista);

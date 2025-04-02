@@ -18,5 +18,5 @@ typedef struct ARTISTAS
 } ARTISTAS;
 
 ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, int numero_albuns, ALBUNS *arv_albuns);
-void cadastrar_artista();
+ARTISTAS *cadastrar_artista();
 #endif
