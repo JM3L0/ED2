@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include"../ARQUIVOS_.H/artista.h"  
-#include"../ARQUIVOS_.H/album.h"
-#include"../ARQUIVOS_.H/musica.h"
-#include"../ARQUIVOS_.H/utilitarios.h"
-#include"../ARQUIVOS_.H/interface.h"
-#include"../ARQUIVOS_.H/playlist.h"
+#include "../ARQUIVOS_.H/artista.h"
+#include "../ARQUIVOS_.H/album.h"
+#include "../ARQUIVOS_.H/musica.h"
+#include "../ARQUIVOS_.H/utilitarios.h"
+#include "../ARQUIVOS_.H/interface.h"
+#include "../ARQUIVOS_.H/playlist.h"
 
 ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, int numero_albuns, ALBUNS *arv_albuns)
 {
@@ -24,7 +24,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
     return novo;
 }
 
-ARTISTAS* cadastrar_artista()
+ARTISTAS *cadastrar_artista()
 {
     char *nome, *tipo_artista, *estilo_musical;
     int num_album;
@@ -42,12 +42,28 @@ ARTISTAS* cadastrar_artista()
     scanf("%d", &num_album);
 
     artista = aloca_no_artista(nome, tipo_artista, estilo_musical, num_album, NULL);
-
 }
-int main(){
+
+int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
+{
+    int inseriu = 0;
+
+    if (*raiz == NULL)
+        *raiz = no;
+    else if (strcasecmp(no->nome_artista, (*raiz)->nome_artista) < 0)
+        inserir_artista(&(*raiz)->esq, no);
+    else if (strcasecmp(no->nome_artista, (*raiz)->nome_artista) > 0)
+        inserir_artista(&(*raiz)->dir, no);
+    else
+        inseriu = 1;
+    return (inseriu);
+}
+
+int main()
+{
     ARTISTAS *artista;
     artista = cadastrar_artista();
-    
+
     if (artista != NULL)
     {
         printf("Artista cadastrado: %s\n", artista->nome_artista);
@@ -61,4 +77,3 @@ int main(){
     }
     return 0;
 }
-
