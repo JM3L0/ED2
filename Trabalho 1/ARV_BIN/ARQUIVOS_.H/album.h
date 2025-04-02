@@ -1,5 +1,12 @@
 #ifndef ALBUM_H
 #define ALBUM_H
+
+#include "artista.h"
+#include "musica.h"
+#include "album.h"
+#include "playlist.h"
+#include "utilitarios.h"
+#include "interface.h"
 typedef struct ALBUNS
 {
     char *titulo_album;
