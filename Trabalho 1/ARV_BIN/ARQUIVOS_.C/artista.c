@@ -30,7 +30,7 @@ ARTISTAS *cadastrar_artista()
     int num_album;
     ARTISTAS *artista;
     artista = NULL; // inicializa o ponteiro para artista
-    // fazer ponteiro para albuns
+    // fazer ponteiro para albuns \\
 
     printf("Digite o nome do Artista: ");
     nome = ler_string();
