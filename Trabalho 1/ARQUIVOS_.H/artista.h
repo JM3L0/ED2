@@ -1,5 +1,7 @@
 #ifndef ARTISTA_H
 #define ARTISTA_H
+
+#include "album.h"
 typedef struct ARTISTAS
 {
     char *nome_artista;
@@ -10,6 +12,6 @@ typedef struct ARTISTAS
     struct ALBUNS *arv_albuns;
 } ARTISTAS;
 
-ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, int numero_albuns, ALBUNS *arv_albuns)
+ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, int numero_albuns, ALBUNS *arv_albuns);
 void cadastrar_artista();
 #endif

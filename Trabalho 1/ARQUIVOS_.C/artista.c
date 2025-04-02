@@ -43,6 +43,9 @@ int main(){
     if (artista != NULL)
     {
         printf("Artista cadastrado: %s\n", artista->nome_artista);
+        printf("Tipo: %s\n", artista->tipo_artista);
+        printf("Estilo: %s\n", artista->estilo_musical);
+        printf("Numero de albuns: %d\n", artista->numero_albuns);
         free(artista->nome_artista);
         free(artista->tipo_artista);
         free(artista->estilo_musical);
