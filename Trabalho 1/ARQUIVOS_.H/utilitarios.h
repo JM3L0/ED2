@@ -20,5 +20,4 @@ char *ler_string();
 
 
 
-
 #endif
