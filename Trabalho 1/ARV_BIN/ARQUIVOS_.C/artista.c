@@ -87,8 +87,8 @@ int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
         printf("Tipo: %s\n", raiz->tipo_artista);
         printf("Estilo: %s\n", raiz->estilo_musical);
         printf("Numero de albuns: %d\n", raiz->numero_albuns);
-        imprimiu = 1;
         imprimiu = imprimir_todos_os_dados_dos_artistas(raiz->dir);
+        imprimiu = 1;
     }
     return (imprimiu);
 }
@@ -101,8 +101,8 @@ int imprimir_todos_artistas(ARTISTAS *raiz) // Imprime todos os artistas (só o 
         imprimiu = imprimir_todos_artistas(raiz->esq);
         printf("\n\n");
         printf("Artista: %s\n", raiz->nome_artista);
-        imprimiu = 1;
         imprimiu = imprimir_todos_artistas(raiz->dir);
+        imprimiu = 1;
     }
     return (imprimiu);
 }
@@ -112,13 +112,13 @@ int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista) // imprime os arti
     int imprimiu = 0;
     if (raiz != NULL)
     {
-        imprimiu = imprimir_artista_tipo(raiz->esq, tipo_artista);
+        imprimiu |= imprimir_artista_tipo(raiz->esq, tipo_artista);
         if (strcasecmp(raiz->tipo_artista, tipo_artista) == 0)
         {
             printf("Artista: %s\n", raiz->nome_artista);
             imprimiu = 1;
         }
-        imprimiu = imprimir_artista_tipo(raiz->dir, tipo_artista);
+        imprimiu |= imprimir_artista_tipo(raiz->dir, tipo_artista);// |= é o operador OR
     }
     return (imprimiu);
 }
@@ -128,13 +128,13 @@ int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical) // imprime os 
     int imprimiu = 0;
     if (raiz != NULL)
     {
-        imprimiu = imprimir_artista_estilo(raiz->esq, estilo_musical);
+        imprimiu |= imprimir_artista_estilo(raiz->esq, estilo_musical);
         if (strcasecmp(raiz->estilo_musical, estilo_musical) == 0)
         {
             printf("Artista: %s\n", raiz->nome_artista);
             imprimiu = 1;
         }
-        imprimiu = imprimir_artista_estilo(raiz->dir, estilo_musical);
+        imprimiu |= imprimir_artista_estilo(raiz->dir, estilo_musical);// |= é o operador OR
     }
     return (imprimiu);
 }
@@ -144,19 +144,50 @@ int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *t
     int imprimiu = 0;
     if (raiz != NULL)
     {
-        imprimiu = imprimir_artista_estilo_tipo(raiz->esq, estilo_musical, tipo_artista);
+        imprimiu |= imprimir_artista_estilo_e_tipo(raiz->esq, estilo_musical, tipo_artista);
         if (strcasecmp(raiz->estilo_musical, estilo_musical) == 0 && strcasecmp(raiz->tipo_artista, tipo_artista) == 0)
         {
             imprimiu = printf("Artista: %s\n", raiz->nome_artista);
             imprimiu = 1;
         }
-        imprimiu = imprimir_artista_estilo_tipo(raiz->dir, estilo_musical, tipo_artista);
+        imprimiu |= imprimir_artista_estilo_e_tipo(raiz->dir, estilo_musical, tipo_artista);// |= é o operador OR
     }
     return (imprimiu);
 }
 
-/*---------------------------------- Remover Artista ----------------------------------*/
+/*---------------------------------- Limpar Arv Artista ----------------------------------*/
 
+void limpar_no_artista(ARTISTAS *raiz) // limpa os dados do artista sem liberar o nó
+{
+    if (raiz != NULL)
+    {
+        free(raiz->nome_artista);
+        raiz->nome_artista = NULL;
+
+        free(raiz->tipo_artista);
+        raiz->tipo_artista = NULL;
+
+        free(raiz->estilo_musical);
+        raiz->estilo_musical = NULL;
+    }
+}
+
+void limpar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
+{
+    if (*raiz != NULL)
+    {
+        // if ((*raiz)->arv_albuns != NULL) // se a arvore de albuns não for nula
+        // {
+        //     limpar_arv_album(&(*raiz)->arv_albuns); // limpa a arvore de albuns
+        //     (*raiz)->arv_albuns = NULL; // seta a arvore de albuns como nula
+        // }
+        limpar_arv_artista(&(*raiz)->esq);
+        limpar_arv_artista(&(*raiz)->dir);
+        limpar_no_artista(*raiz);
+        free(*raiz);
+        *raiz = NULL;
+    }
+}
 // int art_eh_folha(ARTISTAS *raiz) // verifica se o artista é folha
 // {
 //     return !(raiz->esq || raiz->dir);
@@ -174,21 +205,6 @@ int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *t
 //     while (menor->esq != NULL)
 //         menor = menor->esq;
 //     return menor;
-// }
-
-// void limpar_no_artista(ARTISTAS *raiz) // limpa os dados do artista sem liberar o nó
-// {
-//     if (raiz != NULL)
-//     {
-//         free(raiz->nome_artista);
-//         raiz->nome_artista = NULL;
-
-//         free(raiz->tipo_artista);
-//         raiz->tipo_artista = NULL;
-
-//         free(raiz->estilo_musical);
-//         raiz->estilo_musical = NULL;
-//     }
 // }
 
 // void copiar_no_artista(ARTISTAS **raiz, ARTISTAS **menor) // copia os dados do menor nó para o nó a ser removido

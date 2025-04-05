@@ -38,10 +38,15 @@ void menu_geral()
                 retorno = inserir_artista(&raiz, no);
                 break;
             case 2:
-                imprimir_todos_os_dados_do_artista(raiz);
+                retorno = imprimir_artista_estilo(raiz, "rock");
+                if (retorno == 0)
+                {
+                    printf("\nArvore de Artistas Vazia <!>\n");
+                }
+                
                 break;
             case 3:
-                // cadastrar_musica();
+                limpar_arv_artista(&raiz);
                 break;
             case 4:
                 // cadastrar_playlist();
