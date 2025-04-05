@@ -28,7 +28,7 @@ int digitar_int()
     
     while (scanf("%hd", &numero) != 1 || numero < 0)
     {
-        mensagem_erro("Numero invalido ");
+        printf("Numero invalido ");
         limpar_buffer();
         printf("Digite novamente: ");
     }
