@@ -28,8 +28,7 @@ void menu_geral()
     while(opcao != 0)
     {
         menu_dos_print();
-        scanf("%d", &opcao);
-        limpar_buffer(); // Limpa o buffer do teclado
+        opcao = digitar_int();
         switch (opcao)
         {
             case 1:

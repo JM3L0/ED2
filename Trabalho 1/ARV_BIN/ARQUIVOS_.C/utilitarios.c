@@ -22,6 +22,20 @@ char *ler_string()
     return string;
 }
 
+int digitar_int()
+{
+    int numero = 0;
+    
+    while (scanf("%hd", &numero) != 1 || numero < 0)
+    {
+        mensagem_erro("Numero invalido ");
+        limpar_buffer();
+        printf("Digite novamente: ");
+    }
+    
+    return numero;
+}
+
 void limpar_buffer()
 {
     while (getchar() != '\n');

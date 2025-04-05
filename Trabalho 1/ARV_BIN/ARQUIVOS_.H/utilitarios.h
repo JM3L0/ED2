@@ -16,6 +16,7 @@ typedef union ARVORES
 
 char *ler_string();
 void limpar_buffer();
+int digitar_int();
 
 
 
