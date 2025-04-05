@@ -108,6 +108,17 @@ void imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical)
     }
 }
 
+void imprimir_artista_estilo_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista)
+{
+    if (raiz != NULL)
+    {
+        imprimir_artista_estilo_tipo(raiz->esq, estilo_musical, tipo_artista);
+        if (strcasecmp(raiz->estilo_musical, estilo_musical) == 0 && strcasecmp(raiz->tipo_artista, tipo_artista) == 0)
+            printf("Artista: %s\n", raiz->nome_artista);
+        imprimir_artista_estilo_tipo(raiz->dir, estilo_musical, tipo_artista);
+    }
+}
+
 int main()
 {
     ARTISTAS *raiz, *no;
@@ -124,7 +135,9 @@ int main()
     {
         // imprimir_todos_os_dados_do_artista(raiz);
         // imprimir_todos_artistas(raiz);
-        imprimir_artista_estilo(raiz, "rock");
+        //imprimir_artista_tipo(raiz, "solo");
+        // imprimir_artista_estilo(raiz, "rock");
+        imprimir_artista_estilo_tipo(raiz, "rock", "solo");
         free(raiz->nome_artista);
         free(raiz->tipo_artista);
         free(raiz->estilo_musical);
