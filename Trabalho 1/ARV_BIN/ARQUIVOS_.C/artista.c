@@ -57,7 +57,7 @@ ARTISTAS *cadastrar_artista()
     estilo_musical = ler_string();
     printf("Digite o numero de albuns do Artista: ");
     scanf("%d", &num_album);
-    getchar(); // Limpa o buffer do teclado
+    limpar_buffer(); // Limpa o buffer do teclado
 
     artista = aloca_no_artista(nome, tipo_artista, estilo_musical, num_album, NULL);
     return (artista);

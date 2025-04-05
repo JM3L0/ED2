@@ -21,3 +21,9 @@ char *ler_string()
     }
     return string;
 }
+
+void limpar_buffer()
+{
+    while (getchar() != '\n');
+    
+}
