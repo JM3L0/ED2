@@ -29,6 +29,7 @@ void menu_geral()
     {
         menu_dos_print();
         opcao = digitar_int();
+        limpar_buffer(); // Limpa o buffer do teclado
         switch (opcao)
         {
             case 1:
