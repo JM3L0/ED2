@@ -8,7 +8,7 @@
 #include "../ARQUIVOS_.H/interface.h"
 #include "../ARQUIVOS_.H/playlist.h"
 
-ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, int numero_albuns, ALBUNS *arv_albuns)
+ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, ALBUNS *arv_albuns)
 {
     ARTISTAS *novo = malloc(sizeof(ARTISTAS));
     if (novo != NULL)
@@ -16,7 +16,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
         novo->nome_artista = nome;
         novo->tipo_artista = tipo_artista;
         novo->estilo_musical = estilo_musical;
-        novo->numero_albuns = numero_albuns;
+        novo->numero_albuns = 0;
         novo->arv_albuns = arv_albuns;
         novo->esq = NULL;
         novo->dir = NULL;
@@ -44,7 +44,6 @@ ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista)
 ARTISTAS *cadastrar_artista()
 {
     char *nome, *tipo_artista, *estilo_musical;
-    int num_album;
     ARTISTAS *artista;
     artista = NULL;
     // fazer ponteiro para albuns
@@ -55,11 +54,9 @@ ARTISTAS *cadastrar_artista()
     tipo_artista = ler_string();
     printf("Digite o estilo musical do Artista: ");
     estilo_musical = ler_string();
-    printf("Digite o numero de albuns do Artista: ");
-    scanf("%d", &num_album);
-    limpar_buffer(); // Limpa o buffer do teclado
+    // limpar_buffer(); // Limpa o buffer do teclado
 
-    artista = aloca_no_artista(nome, tipo_artista, estilo_musical, num_album, NULL);
+    artista = aloca_no_artista(nome, tipo_artista, estilo_musical, NULL);
     return (artista);
 }
 

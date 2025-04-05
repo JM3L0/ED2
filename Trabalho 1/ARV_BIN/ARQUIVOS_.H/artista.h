@@ -17,7 +17,7 @@ typedef struct ARTISTAS
     struct ALBUNS *arv_albuns;
 } ARTISTAS;
 
-ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, int numero_albuns, ALBUNS *arv_albuns);
+ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, ALBUNS *arv_albuns);
 ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista);
 ARTISTAS *cadastrar_artista();
 int inserir_artista(ARTISTAS **raiz, ARTISTAS *no);
