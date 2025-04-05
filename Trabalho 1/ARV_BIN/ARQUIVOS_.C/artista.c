@@ -86,32 +86,34 @@ void imprimir_todos_artistas(ARTISTAS *raiz)
     }
 }
 
+void imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista)
+{
+    if (raiz != NULL)
+    {
+        imprimir_artista_tipo(raiz->esq, tipo_artista);
+        if (strcasecmp(raiz->tipo_artista, tipo_artista) == 0)
+            printf("Artista: %s\n", raiz->nome_artista);
+        imprimir_artista_tipo(raiz->dir, tipo_artista);
+    }
+}
+
 int main()
 {
     ARTISTAS *raiz, *no;
     int inseriu;
-    raiz = NULL; 
+    raiz = NULL;
     no = NULL;
 
     no = cadastrar_artista();
     inseriu = inserir_artista(&raiz, no);
-    if (inseriu == 0)
-        printf("Artista inserido com sucesso!\n");
-    else
-        printf("Artista ja existe na arvore!\n");
     no = cadastrar_artista();
     inseriu = inserir_artista(&raiz, no);
-    if (inseriu == 0)
-        printf("Artista inserido com sucesso!\n");
-    else
-        printf("Artista ja existe na arvore!\n");
     
-    
-
     if (raiz != NULL)
     {
-        imprimir_todos_os_dados_do_artista(raiz);
-        imprimir_todos_artistas(raiz);
+        // imprimir_todos_os_dados_do_artista(raiz);
+        // imprimir_todos_artistas(raiz);
+        imprimir_artista_tipo(raiz, "Cantor");
         free(raiz->nome_artista);
         free(raiz->tipo_artista);
         free(raiz->estilo_musical);
