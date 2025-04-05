@@ -8,7 +8,7 @@
 #include "../ARQUIVOS_.H/interface.h"
 #include "../ARQUIVOS_.H/playlist.h"
 
-ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical, ALBUNS *arv_albuns)
+ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical)
 {
     ARTISTAS *novo = malloc(sizeof(ARTISTAS));
     if (novo != NULL)
@@ -17,7 +17,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
         novo->tipo_artista = tipo_artista;
         novo->estilo_musical = estilo_musical;
         novo->numero_albuns = 0;
-        novo->arv_albuns = arv_albuns;
+        novo->arv_albuns = NULL;
         novo->esq = NULL;
         novo->dir = NULL;
     }
@@ -55,7 +55,7 @@ ARTISTAS *cadastrar_artista()
     tipo_artista = ler_string();
     printf("Digite o estilo musical do Artista: ");
     estilo_musical = ler_string();
-    artista = aloca_no_artista(nome, tipo_artista, estilo_musical, NULL);
+    artista = aloca_no_artista(nome, tipo_artista, estilo_musical);
     return (artista);
 }
 
