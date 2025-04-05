@@ -157,22 +157,43 @@ int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *t
 
 /*---------------------------------- Remover Artista ----------------------------------*/
 
-int art_eh_folha(ARTISTAS *raiz) // verifica se o artista é folha
-{
-    return !(raiz->esq || raiz->dir);
-}
+// int art_eh_folha(ARTISTAS *raiz) // verifica se o artista é folha
+// {
+//     return !(raiz->esq || raiz->dir);
+// }
 
-int art_so_um_filho(ARTISTAS *raiz) // verifica se o artista tem um filho
-{
-    return (raiz->esq == NULL) != (raiz->dir == NULL);
-}
+// int art_so_um_filho(ARTISTAS *raiz) // verifica se o artista tem um filho
+// {
+//     return (raiz->esq == NULL) != (raiz->dir == NULL);
+// }
 
-ARTISTAS *art_menor_no(ARTISTAS *raiz) // retorna o menor nó da subárvore
-{
-    ARTISTAS *menor = raiz;
+// ARTISTAS *art_menor_no(ARTISTAS *raiz) // retorna o menor nó da subárvore
+// {
+//     ARTISTAS *menor = raiz;
 
-    while (menor->esq != NULL)
-        menor = menor->esq;
-    return menor;
-}
+//     while (menor->esq != NULL)
+//         menor = menor->esq;
+//     return menor;
+// }
+
+// void limpar_no_artista(ARTISTAS *raiz) // limpa os dados do artista sem liberar o nó
+// {
+//     if (raiz != NULL)
+//     {
+//         free(raiz->nome_artista);
+//         raiz->nome_artista = NULL;
+
+//         free(raiz->tipo_artista);
+//         raiz->tipo_artista = NULL;
+
+//         free(raiz->estilo_musical);
+//         raiz->estilo_musical = NULL;
+//     }
+// }
+
+// void copiar_no_artista(ARTISTAS **raiz, ARTISTAS **menor) // copia os dados do menor nó para o nó a ser removido
+// {
+    
+// }
+
 
