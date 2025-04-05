@@ -21,7 +21,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
         novo->esq = NULL;
         novo->dir = NULL;
     }
-    return novo;
+    return (novo);
 }
 
 ARTISTAS *cadastrar_artista()
@@ -29,8 +29,8 @@ ARTISTAS *cadastrar_artista()
     char *nome, *tipo_artista, *estilo_musical;
     int num_album;
     ARTISTAS *artista;
-    artista = NULL; // inicializa o ponteiro para artista
-    // fazer ponteiro para albuns \\
+    artista = NULL;
+    // fazer ponteiro para albuns
 
     printf("Digite o nome do Artista: ");
     nome = ler_string();
@@ -40,8 +40,10 @@ ARTISTAS *cadastrar_artista()
     estilo_musical = ler_string();
     printf("Digite o numero de albuns do Artista: ");
     scanf("%d", &num_album);
+    getchar(); // Limpa o buffer do teclado
 
     artista = aloca_no_artista(nome, tipo_artista, estilo_musical, num_album, NULL);
+    return (artista);
 }
 
 int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
@@ -59,21 +61,49 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
     return (inseriu);
 }
 
+void imprimir_artista(ARTISTAS *raiz)
+{
+    if (raiz != NULL)
+    {
+        imprimir_artista(raiz->esq);
+        printf("\n\n");
+        printf("Artista: %s\n", raiz->nome_artista);
+        printf("Tipo: %s\n", raiz->tipo_artista);
+        printf("Estilo: %s\n", raiz->estilo_musical);
+        printf("Numero de albuns: %d\n", raiz->numero_albuns);
+        imprimir_artista(raiz->dir);
+    }
+}
+
 int main()
 {
-    ARTISTAS *artista;
-    artista = cadastrar_artista();
+    ARTISTAS *raiz, *no;
+    int inseriu;
+    raiz = NULL; 
+    no = NULL;
 
-    if (artista != NULL)
+    no = cadastrar_artista();
+    inseriu = inserir_artista(&raiz, no);
+    if (inseriu == 0)
+        printf("Artista inserido com sucesso!\n");
+    else
+        printf("Artista ja existe na arvore!\n");
+    no = cadastrar_artista();
+    inseriu = inserir_artista(&raiz, no);
+    if (inseriu == 0)
+        printf("Artista inserido com sucesso!\n");
+    else
+        printf("Artista ja existe na arvore!\n");
+    
+    
+
+    if (raiz != NULL)
     {
-        printf("Artista cadastrado: %s\n", artista->nome_artista);
-        printf("Tipo: %s\n", artista->tipo_artista);
-        printf("Estilo: %s\n", artista->estilo_musical);
-        printf("Numero de albuns: %d\n", artista->numero_albuns);
-        free(artista->nome_artista);
-        free(artista->tipo_artista);
-        free(artista->estilo_musical);
-        free(artista);
+        imprimir_artista(raiz);
+        free(raiz->nome_artista);
+        free(raiz->tipo_artista);
+        free(raiz->estilo_musical);
+        free(raiz);
     }
     return 0;
 }
