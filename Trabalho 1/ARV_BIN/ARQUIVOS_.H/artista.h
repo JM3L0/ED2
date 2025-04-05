@@ -21,7 +21,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
 ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista);
 ARTISTAS *cadastrar_artista();
 int inserir_artista(ARTISTAS **raiz, ARTISTAS *no);
-int imprimir_todos_os_dados_do_artista(ARTISTAS *raiz);
+int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz);
 int imprimir_todos_artistas(ARTISTAS *raiz);
 int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista);
 int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical);

@@ -24,7 +24,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
     return (novo);
 }
 
-ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista)
+ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista) //deve ser testado
 {
     ARTISTAS *existe_art;
     existe_art = NULL;
@@ -45,8 +45,9 @@ ARTISTAS *cadastrar_artista()
 {
     char *nome, *tipo_artista, *estilo_musical;
     ARTISTAS *artista;
-    artista = NULL;
     // fazer ponteiro para albuns
+    
+    artista = NULL;
 
     printf("Digite o nome do Artista: ");
     nome = ler_string();
@@ -54,8 +55,6 @@ ARTISTAS *cadastrar_artista()
     tipo_artista = ler_string();
     printf("Digite o estilo musical do Artista: ");
     estilo_musical = ler_string();
-    // limpar_buffer(); // Limpa o buffer do teclado
-
     artista = aloca_no_artista(nome, tipo_artista, estilo_musical, NULL);
     return (artista);
 }
@@ -75,20 +74,20 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
     return (inseriu);
 }
 
-int imprimir_todos_os_dados_do_artista(ARTISTAS *raiz)
+int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
 {
     int imprimiu = 0;
 
     if (raiz != NULL)
     {
-        imprimiu = imprimir_todos_os_dados_do_artista(raiz->esq);
+        imprimiu = imprimir_todos_os_dados_dos_artistas(raiz->esq);
         printf("\n\n");
         printf("Artista: %s\n", raiz->nome_artista);
         printf("Tipo: %s\n", raiz->tipo_artista);
         printf("Estilo: %s\n", raiz->estilo_musical);
         printf("Numero de albuns: %d\n", raiz->numero_albuns);
         imprimiu = 1;
-        imprimiu = imprimir_todos_os_dados_do_artista(raiz->dir);
+        imprimiu = imprimir_todos_os_dados_dos_artistas(raiz->dir);
     }
     return (imprimiu);
 }
@@ -139,7 +138,7 @@ int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical)//imprime os ar
     return (imprimiu);
 }
 
-int imprimir_artista_estilo_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista)//imprime os artistas de acordo com o estilo musical e tipo de artista
+int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista)//imprime os artistas de acordo com o estilo musical e tipo de artista
 {
     int imprimiu = 0;
     if (raiz != NULL)
