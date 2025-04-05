@@ -96,7 +96,7 @@ int imprimir_todos_os_dados_do_artista(ARTISTAS *raiz)
     return (imprimiu);
 }
 
-int imprimir_todos_artistas(ARTISTAS *raiz)
+int imprimir_todos_artistas(ARTISTAS *raiz)//Imprime todos os artistas (só o nome)
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -110,7 +110,7 @@ int imprimir_todos_artistas(ARTISTAS *raiz)
     return (imprimiu);
 }
 
-int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista)
+int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista)//imprime os artistas de acordo com o tipo
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -126,7 +126,7 @@ int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista)
     return (imprimiu);
 }
 
-int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical)
+int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical)//imprime os artistas de acordo com o estilo musical
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -142,7 +142,7 @@ int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical)
     return (imprimiu);
 }
 
-int imprimir_artista_estilo_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista)
+int imprimir_artista_estilo_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista)//imprime os artistas de acordo com o estilo musical e tipo de artista
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -155,5 +155,5 @@ int imprimir_artista_estilo_tipo(ARTISTAS *raiz, char *estilo_musical, char *tip
         }
         imprimiu = imprimir_artista_estilo_tipo(raiz->dir, estilo_musical, tipo_artista);
     }
+    return (imprimiu);
 }
-

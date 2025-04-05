@@ -16,5 +16,5 @@ typedef struct ALBUNS
     struct MUSICAS *arv_musicas;
 } ALBUNS;
 
-ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento, int quat_musics, int numero_albuns, MUSICAS *arv_musicas);
+//ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento, int quat_musics, int numero_albuns, MUSICAS *arv_musicas);
 #endif

@@ -4,7 +4,7 @@
 int main()
 {
     // Comando de compilação usando caminhos relativos
-    const char *comando = "gcc -o artista ../ARQUIVOS_.C/artista.c ../ARQUIVOS_.C/utilitarios.c ../ARQUIVOS_.C/album.c ../ARQUIVOS_.C/musica.c -I ARQUIVOS_.H";
+    const char *comando = "gcc -o artista ../ARQUIVOS_.C/main.c ../ARQUIVOS_.C/interface.c ../ARQUIVOS_.C/artista.c ../ARQUIVOS_.C/utilitarios.c ../ARQUIVOS_.C/album.c ../ARQUIVOS_.C/musica.c -I ARQUIVOS_.H";
 
     printf("Compilando o projeto...\n");
 

@@ -8,4 +8,7 @@
 #include "utilitarios.h"
 #include "interface.h"
 
+void menu_dos_print();
+void menu_geral();
+
 #endif
