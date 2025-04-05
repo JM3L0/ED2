@@ -61,17 +61,28 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
     return (inseriu);
 }
 
-void imprimir_artista(ARTISTAS *raiz)
+void imprimir_todos_os_dados_fo_artista(ARTISTAS *raiz)
 {
     if (raiz != NULL)
     {
-        imprimir_artista(raiz->esq);
+        imprimir_todos_os_dados_fo_artista(raiz->esq);
         printf("\n\n");
         printf("Artista: %s\n", raiz->nome_artista);
         printf("Tipo: %s\n", raiz->tipo_artista);
         printf("Estilo: %s\n", raiz->estilo_musical);
         printf("Numero de albuns: %d\n", raiz->numero_albuns);
-        imprimir_artista(raiz->dir);
+        imprimir_todos_os_dados_fo_artista(raiz->dir);
+    }
+}
+
+void imprimir_nome_artista(ARTISTAS *raiz)
+{
+    if (raiz != NULL)
+    {
+        imprimir_nome_artista(raiz->esq);
+        printf("\n\n");
+        printf("Artista: %s\n", raiz->nome_artista);
+        imprimir_nome_artista(raiz->dir);
     }
 }
 
@@ -99,7 +110,8 @@ int main()
 
     if (raiz != NULL)
     {
-        imprimir_artista(raiz);
+        imprimir_todos_os_dados_fo_artista(raiz);
+        imprimir_nome_artista(raiz);
         free(raiz->nome_artista);
         free(raiz->tipo_artista);
         free(raiz->estilo_musical);
