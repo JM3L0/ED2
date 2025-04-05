@@ -26,4 +26,7 @@ int imprimir_todos_artistas(ARTISTAS *raiz);
 int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista);
 int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical);
 int imprimir_artista_estilo_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista);
+int art_eh_folha(ARTISTAS *raiz);
+int art_so_um_filho(ARTISTAS *raiz);
+ARTISTAS *art_menor_no(ARTISTAS *raiz);
 #endif

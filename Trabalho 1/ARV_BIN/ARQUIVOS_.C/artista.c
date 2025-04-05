@@ -24,7 +24,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical,
     return (novo);
 }
 
-ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista) //deve ser testado
+ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista) // deve ser testado
 {
     ARTISTAS *existe_art;
     existe_art = NULL;
@@ -46,7 +46,7 @@ ARTISTAS *cadastrar_artista()
     char *nome, *tipo_artista, *estilo_musical;
     ARTISTAS *artista;
     // fazer ponteiro para albuns
-    
+
     artista = NULL;
 
     printf("Digite o nome do Artista: ");
@@ -74,6 +74,7 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
     return (inseriu);
 }
 
+/*---------------------------------- Funções de Imprimir ----------------------------------*/
 int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
 {
     int imprimiu = 0;
@@ -92,7 +93,7 @@ int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
     return (imprimiu);
 }
 
-int imprimir_todos_artistas(ARTISTAS *raiz)//Imprime todos os artistas (só o nome)
+int imprimir_todos_artistas(ARTISTAS *raiz) // Imprime todos os artistas (só o nome)
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -106,7 +107,7 @@ int imprimir_todos_artistas(ARTISTAS *raiz)//Imprime todos os artistas (só o no
     return (imprimiu);
 }
 
-int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista)//imprime os artistas de acordo com o tipo
+int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista) // imprime os artistas de acordo com o tipo
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -122,7 +123,7 @@ int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista)//imprime os artist
     return (imprimiu);
 }
 
-int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical)//imprime os artistas de acordo com o estilo musical
+int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical) // imprime os artistas de acordo com o estilo musical
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -138,7 +139,7 @@ int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical)//imprime os ar
     return (imprimiu);
 }
 
-int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista)//imprime os artistas de acordo com o estilo musical e tipo de artista
+int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista) // imprime os artistas de acordo com o estilo musical e tipo de artista
 {
     int imprimiu = 0;
     if (raiz != NULL)
@@ -153,3 +154,25 @@ int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *t
     }
     return (imprimiu);
 }
+
+/*---------------------------------- Remover Artista ----------------------------------*/
+
+int art_eh_folha(ARTISTAS *raiz) // verifica se o artista é folha
+{
+    return !(raiz->esq || raiz->dir);
+}
+
+int art_so_um_filho(ARTISTAS *raiz) // verifica se o artista tem um filho
+{
+    return (raiz->esq == NULL) != (raiz->dir == NULL);
+}
+
+ARTISTAS *art_menor_no(ARTISTAS *raiz) // retorna o menor nó da subárvore
+{
+    ARTISTAS *menor = raiz;
+
+    while (menor->esq != NULL)
+        menor = menor->esq;
+    return menor;
+}
+
