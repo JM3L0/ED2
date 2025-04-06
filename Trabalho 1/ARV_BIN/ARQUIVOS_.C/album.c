@@ -73,12 +73,12 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
 
 /*---------------------------------- Funções de Imprimir ----------------------------------*/
 int imprimir_todos_albuns_de_um_artista(ARTISTAS *raiz, char *nome_artista) // imprime os artistas de acordo com o tipo
-{
+{//FUNÇÃO FILTRO
     ARTISTAS *artista;
     artista = existe_artista(raiz, nome_artista);
 
     int imprimiu = 0;
-    if (artista != NULL)
+    if (artista != NULL && artista->arv_albuns != NULL)
     {
         imprimiu = imprimir_todos_albuns(artista->arv_albuns);
     }
@@ -99,12 +99,12 @@ int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns (só o nome)
 }
 
 int imprimir_albuns_artita_ano(ARTISTAS *raiz, char *nome_artista, int ano_lancamento) // imprime os albuns de acordo com o tipo
-{
+{//FUNÇÃO FILTRO
     ARTISTAS *artista;
     artista = existe_artista(raiz, nome_artista);
 
     int imprimiu = 0;
-    if (artista != NULL)
+    if (artista != NULL && artista->arv_albuns != NULL)
     {
         imprimiu = imprimir_albuns_ano(artista->arv_albuns, ano_lancamento);
     }
@@ -117,10 +117,38 @@ int imprimir_albuns_ano(ALBUNS *raiz, int ano_lancamento) // Imprime todos os al
     if (raiz != NULL)
     {
         imprimiu |= imprimir_albuns_ano(raiz->esq, ano_lancamento);
-        if (raiz->ano_lancamento == ano_lancamento)
+        if (raiz->ano_lancamento == ano_lancamento){
             printf("Album: %s\n", raiz->titulo_album);
             imprimiu = 1;
+        }
         imprimiu |= imprimir_albuns_ano(raiz->dir, ano_lancamento);
     }
     return (imprimiu);
 }
+
+int todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os albuns de acordo com o ano
+{
+    int imprimiu = 0;
+    if (raiz != NULL)
+    {
+        if (raiz->arv_albuns != NULL)
+            imprimiu = imprimir_albuns_ano(raiz->arv_albuns, ano_lancamento);
+
+        imprimiu |= todos_artistas_album_ano(raiz->esq, ano_lancamento);
+        imprimiu |= todos_artistas_album_ano(raiz->dir, ano_lancamento);
+    }
+    return (imprimiu);
+}
+
+/*---------------------------------- Ligação Album -> Artista ----------------------------------*/
+
+void adicionar_album_a_artista(ARTISTAS *raiz, ALBUNS *album, char *nome_artista)
+{
+    ARTISTAS *artista = existe_artista(raiz, nome_artista);
+    if (artista != NULL)
+    {
+        inserir_album(&artista->arv_albuns, album);
+        artista->numero_albuns++;
+    }
+}
+
