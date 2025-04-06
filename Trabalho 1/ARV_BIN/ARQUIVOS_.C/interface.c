@@ -115,7 +115,7 @@ void menu_geral()
             printf("Artistas cadastrados do estilo %s:\n\n", estilo_musical);
             printf("--------------------------------------------------\n");
 
-            retorno = imprimir_artista_estilo(raiz, "estilo_musical"); // tem que adicionar o estilo musical
+            retorno = imprimir_artista_estilo(raiz, estilo_musical); // tem que adicionar o estilo musical
             if (retorno == 0)
                 printf("\nNenhum artista desse estilo!\n");
             pausar();
