@@ -58,7 +58,21 @@ void menu_geral()
             break;
 
         case 2:
+        {
+            char nome_artista[50];
+            ALBUNS *album;
+            album = NULL;
 
+            printf("Digite o nome do artista: ");
+            ler_string_simples(nome_artista, sizeof(nome_artista));
+            album = cadastrar_album();
+            retorno = adicionar_album_a_artista(raiz, album, nome_artista);
+
+            if (retorno == 1)
+                printf("\nAlbum cadastrado com sucesso!\n");
+            else
+                printf("\nErro ao cadastrar album!\n");
+        }
             break;
         case 3:
 

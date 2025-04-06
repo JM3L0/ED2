@@ -24,7 +24,7 @@ ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
 }
 
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
-{
+{//sera utilizado para as musicas
     ALBUNS *existe_alb;
     existe_alb = NULL;
 
@@ -142,13 +142,16 @@ int todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os a
 
 /*---------------------------------- Ligação Album -> Artista ----------------------------------*/
 
-void adicionar_album_a_artista(ARTISTAS *raiz, ALBUNS *album, char *nome_artista)
+int adicionar_album_a_artista(ARTISTAS *raiz, ALBUNS *album, char *nome_artista)
 {
     ARTISTAS *artista = existe_artista(raiz, nome_artista);
+    int adicionou = 0;
     if (artista != NULL)
     {
         inserir_album(&artista->arv_albuns, album);
         artista->numero_albuns++;
+        adicionou = 1;
     }
+    return (adicionou);
 }
 

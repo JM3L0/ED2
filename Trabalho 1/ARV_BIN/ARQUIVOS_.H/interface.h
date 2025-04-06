@@ -2,8 +2,8 @@
 #define INTERFACE_H
 
 #include "artista.h"
-#include "musica.h"
 #include "album.h"
+#include "musica.h"
 #include "playlist.h"
 #include "utilitarios.h"
 #include "interface.h"
