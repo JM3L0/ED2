@@ -51,10 +51,8 @@ ALBUNS *cadastrar_album()
     titulo_album = ler_string();
     printf("Digite o ano de lancamento do Album: ");
     scanf("%d", &ano_lancamento);
-    getchar(); // Limpa o buffer do teclado
     printf("Digite a quantidade de musicas do Album: ");
     scanf("%d", &quat_musics);
-    getchar(); // Limpa o buffer do teclado
 
     album = aloca_no_album(titulo_album, ano_lancamento);
     return (album);
