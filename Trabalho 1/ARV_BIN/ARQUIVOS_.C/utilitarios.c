@@ -34,7 +34,7 @@ void ler_string_simples(char *buffer, size_t tamanho)
     }
 }
 
-int digitar_int()
+int digitar_int()//muito bom
 {
     int numero = 0;
     

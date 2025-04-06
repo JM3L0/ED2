@@ -163,21 +163,56 @@ void menu_geral()
                 retorno = imprimir_todos_albuns_de_um_artista(raiz, nome_artista); // tem que adicionar o nome do artista
                 if (retorno == 0)
                     printf("\nNenhum album cadastrado desse artista!\n");
-                pausar();
-            }else{
-                printf("\nArtista nao encontrado!\n");
-            }
-
+                }else{
+                    printf("\nArtista nao encontrado!\n");
+                }
+            pausar();
         }
             break;
         case 9:
-            // imprimir_albuns_ano_artista(raiz);
+        {
+            char nome_artista[50];
+            int ano_lancamento;
+            printf("Digite o nome do artista: ");
+            ler_string_simples(nome_artista, sizeof(nome_artista));
+            ARTISTAS *artista = existe_artista(raiz, nome_artista);
+
+            if(artista){
+
+                printf("Digite o ano de lancamento: ");
+                ano_lancamento = digitar_int();
+
+                printf("\n\n");
+                printf("Albuns cadastrados do artista %s no ano %d:\n\n", nome_artista, ano_lancamento);
+                printf("--------------------------------------------------\n");
+
+                retorno = imprimir_todos_albuns_de_um_artista(raiz, nome_artista); 
+                if (retorno == 0)
+                    printf("\nNenhum album desse desse ano para esse artista!\n");
+            }else{
+                printf("\nArtista nao encontrado!\n");
+            }
+            pausar();
+        }
             break;
         case 10:
             // imprimir_musicas_album_artista(raiz);
             break;
         case 11:
-            // imprimir_albuns_ano_todos(raiz);
+        {
+            int ano_lancamento;
+            printf("Digite o ano de lancamento: ");
+            ano_lancamento = digitar_int();
+
+            printf("\n\n");
+            printf("Albuns cadastrados no ano %d:\n\n", ano_lancamento);
+            printf("--------------------------------------------------\n");
+
+            retorno = todos_artistas_album_ano(raiz, ano_lancamento); // tem que adicionar o ano de lancamento
+            if (retorno == 0)
+                printf("\nNenhum album cadastrado desse ano!\n");
+            pausar();
+        }
             break;
         case 12:
             // imprimir_dados_musica(raiz);
