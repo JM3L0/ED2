@@ -53,3 +53,12 @@ void limpar_buffer()
     while (getchar() != '\n');
     
 }
+
+void pausar()
+{
+    printf("\n\nPressione Enter para continuar...");
+    int c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF); // Consome tudo até o Enter
+}

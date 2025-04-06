@@ -61,7 +61,7 @@ ARTISTAS *cadastrar_artista()
 
 int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
 {
-    int inseriu = 0;
+    int inseriu = 1;
 
     if (*raiz == NULL)
         *raiz = no;
@@ -70,7 +70,7 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
     else if (strcasecmp(no->nome_artista, (*raiz)->nome_artista) > 0)
         inseriu = inserir_artista(&(*raiz)->dir, no);
     else
-        inseriu = 1;
+        inseriu = 0;
     return (inseriu);
 }
 
