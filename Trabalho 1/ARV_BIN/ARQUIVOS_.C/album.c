@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ARQUIVOS_.H/artista.h"
+// #include "../ARQUIVOS_.H/artista.h"
 #include "../ARQUIVOS_.H/album.h"
-#include "../ARQUIVOS_.H/musica.h"
+// #include "../ARQUIVOS_.H/musica.h"
 #include "../ARQUIVOS_.H/utilitarios.h"
-#include "../ARQUIVOS_.H/interface.h"
-#include "../ARQUIVOS_.H/playlist.h"
+// #include "../ARQUIVOS_.H/interface.h"
+// #include "../ARQUIVOS_.H/playlist.h"
 
 ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
 {
@@ -24,7 +24,7 @@ ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
 }
 
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
-{//sera utilizado para as musicas
+{ // sera utilizado para as musicas
     ALBUNS *existe_alb;
     existe_alb = NULL;
 
@@ -72,19 +72,6 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
 }
 
 /*---------------------------------- Funções de Imprimir ----------------------------------*/
-int imprimir_todos_albuns_de_um_artista(ARTISTAS *raiz, char *nome_artista) // imprime os artistas de acordo com o tipo
-{//FUNÇÃO FILTRO
-    ARTISTAS *artista;
-    artista = existe_artista(raiz, nome_artista);
-
-    int imprimiu = 0;
-    if (artista != NULL && artista->arv_albuns != NULL)
-    {
-        imprimiu = imprimir_todos_albuns(artista->arv_albuns);
-    }
-    return (imprimiu);
-}
-
 int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns (só o nome)
 {
     int imprimiu = 0;
@@ -98,8 +85,21 @@ int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns (só o nome)
     return (imprimiu);
 }
 
+int imprimir_todos_albuns_de_um_artista(ARTISTAS *raiz, char *nome_artista) // imprime os artistas de acordo com o tipo
+{                                                                           // FUNÇÃO FILTRO
+    ARTISTAS *artista;
+    artista = existe_artista(raiz, nome_artista);
+
+    int imprimiu = 0;
+    if (artista != NULL && artista->arv_albuns != NULL)
+    {
+        imprimiu = imprimir_todos_albuns(artista->arv_albuns);
+    }
+    return (imprimiu);
+}
+
 int imprimir_albuns_artita_ano(ARTISTAS *raiz, char *nome_artista, int ano_lancamento) // imprime os albuns de acordo com o tipo
-{//FUNÇÃO FILTRO
+{                                                                                      // FUNÇÃO FILTRO
     ARTISTAS *artista;
     artista = existe_artista(raiz, nome_artista);
 
@@ -117,7 +117,8 @@ int imprimir_albuns_ano(ALBUNS *raiz, int ano_lancamento) // Imprime todos os al
     if (raiz != NULL)
     {
         imprimiu |= imprimir_albuns_ano(raiz->esq, ano_lancamento);
-        if (raiz->ano_lancamento == ano_lancamento){
+        if (raiz->ano_lancamento == ano_lancamento)
+        {
             printf("Album: %s\n", raiz->titulo_album);
             imprimiu = 1;
         }
@@ -154,4 +155,3 @@ int adicionar_album_a_artista(ARTISTAS *raiz, ALBUNS *album, char *nome_artista)
     }
     return (adicionou);
 }
-
