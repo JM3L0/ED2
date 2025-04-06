@@ -42,7 +42,6 @@ void menu_geral()
         menu_dos_print();
         printf("\nDigite a opcao desejada: ");
         opcao = digitar_int();
-        limpar_buffer();
 
         switch (opcao)
         {
@@ -55,6 +54,8 @@ void menu_geral()
                 printf("\nArtista cadastrado com sucesso!\n");
             else
                 printf("\nErro ao cadastrar artista!\n");
+
+            pausar();
             break;
 
         case 2:
@@ -79,7 +80,7 @@ void menu_geral()
             }else{
                 printf("\nArtista nao encontrado!\n");
             }
-            
+            pausar();
         }
             break;
         case 3:
@@ -167,8 +168,8 @@ void menu_geral()
                     printf("\nArtista nao encontrado!\n");
                 }
             pausar();
-        }
             break;
+        }
         case 9:
         {
             char nome_artista[50];
@@ -193,8 +194,8 @@ void menu_geral()
                 printf("\nArtista nao encontrado!\n");
             }
             pausar();
-        }
             break;
+        }
         case 10:
             // imprimir_musicas_album_artista(raiz);
             break;
@@ -203,14 +204,16 @@ void menu_geral()
             int ano_lancamento;
             printf("Digite o ano de lancamento: ");
             ano_lancamento = digitar_int();
+            //limpar_buffer();
 
             printf("\n\n");
             printf("Albuns cadastrados no ano %d:\n\n", ano_lancamento);
             printf("--------------------------------------------------\n");
 
             retorno = todos_artistas_album_ano(raiz, ano_lancamento); // tem que adicionar o ano de lancamento
-            if (retorno == 0)
-                printf("\nNenhum album cadastrado desse ano!\n");
+            if (retorno == 0){
+                printf("\nNenhum album cadastrado desse ano!\n");   
+            }
             pausar();
         }
             break;

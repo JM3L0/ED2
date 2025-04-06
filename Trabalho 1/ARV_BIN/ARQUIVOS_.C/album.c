@@ -72,13 +72,23 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
 }
 
 /*---------------------------------- Funções de Imprimir ----------------------------------*/
+void mostrar_dados_album(ALBUNS *raiz) // imprime os albuns de acordo com o tipo
+{
+    if (raiz != NULL)
+    {
+        printf("Album: %s\n", raiz->titulo_album);
+        printf("Ano: %d\n", raiz->ano_lancamento);
+        printf("Quantidade de musicas: %d\n", raiz->quantidade_musicas);
+    }
+}
+
 int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns (só o nome)
 {
     int imprimiu = 0;
     if (raiz != NULL)
     {
         imprimiu = imprimir_todos_albuns(raiz->esq);
-        printf("Album: %s\n", raiz->titulo_album);
+        mostrar_dados_album(raiz);
         imprimiu = imprimir_todos_albuns(raiz->dir);
         imprimiu = 1;
     }
@@ -112,14 +122,14 @@ int imprimir_albuns_artita_ano(ARTISTAS *raiz, char *nome_artista, int ano_lanca
 }
 
 int imprimir_albuns_ano(ALBUNS *raiz, int ano_lancamento) // Imprime todos os albuns (só o nome)
-{
+{                                                         // FUNÇÃO FILTRO
     int imprimiu = 0;
     if (raiz != NULL)
     {
         imprimiu |= imprimir_albuns_ano(raiz->esq, ano_lancamento);
         if (raiz->ano_lancamento == ano_lancamento)
         {
-            printf("Album: %s\n", raiz->titulo_album);
+            mostrar_dados_album(raiz);
             imprimiu = 1;
         }
         imprimiu |= imprimir_albuns_ano(raiz->dir, ano_lancamento);
@@ -133,8 +143,12 @@ int todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os a
     if (raiz != NULL)
     {
         if (raiz->arv_albuns != NULL)
+        {
+            printf("\nArtista: %s\n", raiz->nome_artista);
             imprimiu = imprimir_albuns_ano(raiz->arv_albuns, ano_lancamento);
-
+            if (imprimiu == 0)
+                printf("Nenhum album cadastrado nesse ano!\n");
+        }
         imprimiu |= todos_artistas_album_ano(raiz->esq, ano_lancamento);
         imprimiu |= todos_artistas_album_ano(raiz->dir, ano_lancamento);
     }
@@ -154,4 +168,31 @@ int adicionar_album_a_artista(ARTISTAS *raiz, ALBUNS *album, char *nome_artista)
         adicionou = 1;
     }
     return (adicionou);
+}
+
+/*---------------------------------- Limpar Albuns ----------------------------------*/
+
+void limpar_no_album(ALBUNS *raiz) // limpa os dados do album sem liberar o nó
+{
+    if (raiz != NULL)
+    {
+        free(raiz->titulo_album);
+        raiz->titulo_album = NULL;
+    }
+}
+
+void limpar_arv_album(ALBUNS **raiz) // limpa a arvore album
+{
+    if (*raiz != NULL)
+    {
+        if ((*raiz)->arv_musicas != NULL) // se a arvore de musicas não for nula
+        {
+            // limpar_arv_musica(&(*raiz)->arv_musicas); // limpa a arvore de musicas
+        }
+        limpar_arv_album(&(*raiz)->esq);
+        limpar_arv_album(&(*raiz)->dir);
+        limpar_no_album(*raiz);
+        free(*raiz);
+        *raiz = NULL;
+    }
 }
