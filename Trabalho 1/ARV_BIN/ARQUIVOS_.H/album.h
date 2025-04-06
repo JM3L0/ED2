@@ -2,9 +2,9 @@
 #define ALBUM_H
 
 #include "artista.h"
-#include "album.h"
-#include "musica.h"
-#include "playlist.h"
+//#include "album.h"
+//#include "musica.h"
+//#include "playlist.h"
 #include "utilitarios.h"
 #include "interface.h"
 typedef struct ALBUNS

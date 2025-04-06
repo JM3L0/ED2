@@ -63,9 +63,9 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
     if (*raiz == NULL)
         *raiz = no;
     else if (strcasecmp(no->titulo_album, (*raiz)->titulo_album) < 0)
-        inseriu = inserir_artista(&(*raiz)->esq, no);
+        inseriu = inserir_album(&(*raiz)->esq, no);
     else if (strcasecmp(no->titulo_album, (*raiz)->titulo_album) > 0)
-        inseriu = inserir_artista(&(*raiz)->dir, no);
+        inseriu = inserir_album(&(*raiz)->dir, no);
     else
         inseriu = 0;
     return (inseriu);

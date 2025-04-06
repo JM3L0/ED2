@@ -1,10 +1,10 @@
 #ifndef ARTISTA_H
 #define ARTISTA_H
 
-#include "artista.h"
-#include "album.h"
-#include "musica.h"
-#include "playlist.h"
+//#include "artista.h"
+//#include "album.h"
+//#include "musica.h"
+//#include "playlist.h"
 #include "utilitarios.h"
 #include "interface.h"
 typedef struct ARTISTAS
@@ -16,6 +16,7 @@ typedef struct ARTISTAS
     struct ARTISTAS *esq, *dir;
     struct ALBUNS *arv_albuns;
 } ARTISTAS;
+
 
 ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical);
 ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista);
@@ -31,4 +32,5 @@ int art_so_um_filho(ARTISTAS *raiz);
 ARTISTAS *art_menor_no(ARTISTAS *raiz);
 void limpar_no_artista(ARTISTAS *raiz);
 void limpar_arv_artista(ARTISTAS **raiz);
+
 #endif
