@@ -51,9 +51,76 @@ ALBUNS *cadastrar_album()
     titulo_album = ler_string();
     printf("Digite o ano de lancamento do Album: ");
     scanf("%d", &ano_lancamento);
-    printf("Digite a quantidade de musicas do Album: ");
-    scanf("%d", &quat_musics);
 
     album = aloca_no_album(titulo_album, ano_lancamento);
     return (album);
+}
+
+int inserir_album(ALBUNS **raiz, ALBUNS *no)
+{
+    int inseriu = 1;
+
+    if (*raiz == NULL)
+        *raiz = no;
+    else if (strcasecmp(no->titulo_album, (*raiz)->titulo_album) < 0)
+        inseriu = inserir_artista(&(*raiz)->esq, no);
+    else if (strcasecmp(no->titulo_album, (*raiz)->titulo_album) > 0)
+        inseriu = inserir_artista(&(*raiz)->dir, no);
+    else
+        inseriu = 0;
+    return (inseriu);
+}
+
+/*---------------------------------- Funções de Imprimir ----------------------------------*/
+int imprimir_todos_albuns_de_um_artista(ARTISTAS *raiz, char *nome_artista) // imprime os artistas de acordo com o tipo
+{
+    ARTISTAS *artista;
+    artista = existe_artista(raiz, nome_artista);
+
+    int imprimiu = 0;
+    if (artista != NULL)
+    {
+        imprimiu = imprimir_todos_albuns(artista->arv_albuns);
+    }
+    return (imprimiu);
+}
+
+int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns (só o nome)
+{
+    int imprimiu = 0;
+    if (raiz != NULL)
+    {
+        imprimiu = imprimir_todos_albuns(raiz->esq);
+        printf("Album: %s\n", raiz->titulo_album);
+        imprimiu = imprimir_todos_albuns(raiz->dir);
+        imprimiu = 1;
+    }
+    return (imprimiu);
+}
+
+int imprimir_albuns_artita_ano(ARTISTAS *raiz, char *nome_artista, int ano_lancamento) // imprime os albuns de acordo com o tipo
+{
+    ARTISTAS *artista;
+    artista = existe_artista(raiz, nome_artista);
+
+    int imprimiu = 0;
+    if (artista != NULL)
+    {
+        imprimiu = imprimir_albuns_ano(artista->arv_albuns, ano_lancamento);
+    }
+    return (imprimiu);
+}
+
+int imprimir_albuns_ano(ALBUNS *raiz, int ano_lancamento) // Imprime todos os albuns (só o nome)
+{
+    int imprimiu = 0;
+    if (raiz != NULL)
+    {
+        imprimiu |= imprimir_albuns_ano(raiz->esq, ano_lancamento);
+        if (raiz->ano_lancamento == ano_lancamento)
+            printf("Album: %s\n", raiz->titulo_album);
+            imprimiu = 1;
+        imprimiu |= imprimir_albuns_ano(raiz->dir, ano_lancamento);
+    }
+    return (imprimiu);
 }
