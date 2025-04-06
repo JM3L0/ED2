@@ -29,7 +29,7 @@ void menu_dos_print()
     printf("[17] - Remover  uma  música  de  um  determinado  álbum  de  um  determinado  artista\n");
 }
 
-void menu_geral()
+void menu_gera()
 {
     ARTISTAS *raiz, *no;
     raiz = NULL;
@@ -37,34 +37,73 @@ void menu_geral()
 
     int opcao, retorno = 0;
 
-    while (opcao != 0)
+    switch (opcao)
     {
-        menu_dos_print();
-        opcao = digitar_int();
-        limpar_buffer(); // Limpa o buffer do teclado
-        switch (opcao)
-        {
-        case 1:
+    case 1:
+        no = cadastrar_artista();
+        retorno = inserir_artista(raiz, no);
+        if (retorno == 1)
+            printf("\nArtista cadastrado com sucesso!\n");
+        else
+            printf("\nErro ao cadastrar artista!\n");
+        break;
+    case 2:
 
-            no = cadastrar_artista();
-            retorno = inserir_artista(&raiz, no);
-            break;
-        case 2:
-            retorno = imprimir_artista_estilo(raiz, "rock");
-            if (retorno == 0)
-            {
-                printf("\nArvore de Artistas Vazia <!>\n");
-            }
+        break;
+    case 3:
 
-            break;
-        case 3:
-            limpar_arv_artista(&raiz);
-            break;
-        case 4:
-            // cadastrar_playlist();
-            break;
-        default:
-            printf("Opcao invalida!\n");
-        }
+        break;
+    case 4:
+        retorno = imprimir_todos_os_dados_dos_artistas(raiz);
+        if (retorno == 0)
+            printf("\nNenhum artista cadastrado!\n");
+        break;
+    case 5:
+        retorno = imprimir_artista_tipo(raiz, "tipo_artista"); // tem que adicionar o tipo de artista
+        if (retorno == 0)
+            printf("\nNenhum artista desse tipo!\n");
+        break;
+    case 6:
+        retorno = imprimir_artista_estilo(raiz, "estilo_musical"); // tem que adicionar o estilo musical
+        if (retorno == 0)
+            printf("\nNenhum artista desse estilo!\n");
+        break;
+    case 7:
+        retorno = imprimir_artista_estilo_e_tipo(raiz, "estilo_musical", "tipo_artista"); // tem que adicionar o estilo musical e o tipo de artista
+        if (retorno == 0)
+            printf("\nNenhum artista desse estilo e tipo!\n");
+        break;
+    case 8:
+        // imprimir_albuns_artista(raiz);
+        break;
+    case 9:
+        // imprimir_albuns_ano_artista(raiz);
+        break;
+    case 10:
+        // imprimir_musicas_album_artista(raiz);
+        break;
+    case 11:
+        // imprimir_albuns_ano_todos(raiz);
+        break;
+    case 12:
+        // imprimir_dados_musica(raiz);
+        break;
+    case 13:
+        // cadastrar_playlist();
+        break;
+    case 14:
+        // imprimir_dados_playlist();
+        break;
+    case 15:
+        // remover_musica_playlist();
+        break;
+    case 16:
+        // remover_playlist();
+        break;
+    case 17:
+        // remover_musica_album_artista(raiz);
+        break;
+    default:
+        printf("Opcao invalida!\n");
     }
 }
