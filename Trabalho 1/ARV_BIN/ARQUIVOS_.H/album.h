@@ -1,9 +1,6 @@
 #ifndef ALBUM_H
 #define ALBUM_H
 #include "artista.h"
-//#include "album.h"
-//#include "musica.h"
-//#include "playlist.h"
 #include "utilitarios.h"
 #include "interface.h"
 #include "STRUCTS.h"

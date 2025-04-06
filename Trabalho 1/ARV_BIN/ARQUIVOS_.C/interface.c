@@ -65,13 +65,21 @@ void menu_geral()
 
             printf("Digite o nome do artista: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
-            album = cadastrar_album();
-            retorno = adicionar_album_a_artista(raiz, album, nome_artista);
+            ARTISTAS *artista = existe_artista(raiz, nome_artista);
 
-            if (retorno == 1)
-                printf("\nAlbum cadastrado com sucesso!\n");
-            else
-                printf("\nErro ao cadastrar album!\n");
+            if (artista){
+
+                album = cadastrar_album();
+                retorno = adicionar_album_a_artista(raiz, album, nome_artista);
+
+                if (retorno == 1)
+                    printf("\nAlbum cadastrado com sucesso!\n");
+                else
+                    printf("\nErro ao cadastrar album!\n");
+            }else{
+                printf("\nArtista nao encontrado!\n");
+            }
+            
         }
             break;
         case 3:
@@ -140,7 +148,27 @@ void menu_geral()
             break;
         }
         case 8:
-            // imprimir_albuns_artista(raiz);
+        {
+            char nome_artista[50];
+            printf("Digite o nome do artista: ");
+            ler_string_simples(nome_artista, sizeof(nome_artista));
+            ARTISTAS *artista = existe_artista(raiz, nome_artista);
+
+            if(artista){
+
+                printf("\n\n");
+                printf("Albuns cadastrados do artista %s:\n\n", nome_artista);
+                printf("--------------------------------------------------\n");
+    
+                retorno = imprimir_todos_albuns_de_um_artista(raiz, nome_artista); // tem que adicionar o nome do artista
+                if (retorno == 0)
+                    printf("\nNenhum album cadastrado desse artista!\n");
+                pausar();
+            }else{
+                printf("\nArtista nao encontrado!\n");
+            }
+
+        }
             break;
         case 9:
             // imprimir_albuns_ano_artista(raiz);
