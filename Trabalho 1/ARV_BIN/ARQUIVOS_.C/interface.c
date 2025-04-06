@@ -64,88 +64,115 @@ void menu_geral()
 
             printf("Digite o nome do artista: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
+            
+            
             ARTISTAS *artista = existe_artista(raiz, nome_artista);
-
+            
             if (artista)
             {
-
+                ALBUNS *album;
                 char *titulo_album;
                 printf("Digite o titulo do album: ");
                 titulo_album = ler_string();
 
-                ALBUNS *album;
-                album = existe_album(artista->arv_albuns, titulo_album);
+                album = cadastrar_album(&titulo_album);
 
-                if (album == NULL)
-                {
+                retorno = inserir_album(&artista->arv_albuns, album);
 
-                    album = cadastrar_album(&titulo_album);
-                    retorno = adicionar_album_a_artista(raiz, album, nome_artista);
-
-                    if (retorno == 1)
-                        printf("\nAlbum cadastrado com sucesso!\n");
-                    else
-                        printf("\nErro ao cadastrar album!\n");
-                }
-                else
-                {
-                    printf("\nAlbum ja cadastrado para esse artista!\n");
+                if (retorno == 1)
+                    printf("\nAlbum cadastrado com sucesso!\n");
+                else{
+                    printf("\nAlbum nao cadastrado!\n");
+                    printf("Ja existente para esse Artista!\n");
                     free(album->titulo_album);
                 }
             }
-            else
-            {
-                printf("\nArtista nao encontrado!\n");
-            }
+            
+
+
+
+            // ARTISTAS *artista = existe_artista(raiz, nome_artista);
+
+            // if (artista)
+            // {
+
+            //     char *titulo_album;
+            //     printf("Digite o titulo do album: ");
+            //     titulo_album = ler_string();
+
+            //     ALBUNS *album;
+            //     album = existe_album(artista->arv_albuns, titulo_album);
+
+            //     if (album == NULL)
+            //     {
+
+            //         album = cadastrar_album(&titulo_album);
+            //         retorno = adicionar_album_a_artista(raiz, album, nome_artista);
+
+            //         if (retorno == 1)
+            //             printf("\nAlbum cadastrado com sucesso!\n");
+            //         else
+            //             printf("\nErro ao cadastrar album!\n");
+            //     }
+            //     else
+            //     {
+            //         printf("\nAlbum ja cadastrado para esse artista!\n");
+            //         free(album->titulo_album);
+            //     }
+            // }
+            // else
+            // {
+            //     printf("\nArtista nao encontrado!\n");
+            // }
             pausar();
             break;
         }
         case 3:
         {
-            char nome_artista[50];
-            printf("Digite o nome do artista: ");
-            ler_string_simples(nome_artista, sizeof(nome_artista));
-            ARTISTAS *artista = existe_artista(raiz, nome_artista);
+            // char nome_artista[50];
+            // printf("Digite o nome do artista: ");
+            // ler_string_simples(nome_artista, sizeof(nome_artista));
+            // ARTISTAS *artista = existe_artista(raiz, nome_artista);
 
-            if (artista)
-            {
+            // if (artista)
+            // {
 
-                char *titulo_album;
-                printf("Digite o titulo do album: ");
-                titulo_album = ler_string();
+            //     char *titulo_album;
+            //     printf("Digite o titulo do album: ");
+            //     titulo_album = ler_string();
 
-                ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
-                if (album != NULL)
-                {
-                    MUSICAS *musica = existe_musica(album->arv_musicas, titulo_album);
+            //     ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
+            //     if (album != NULL)
+            //     {
+            //         MUSICAS *musica = existe_musica(album->arv_musicas, titulo_album);
 
-                    if (musica == NULL)
-                    {
+            //         if (musica == NULL)
+            //         {
 
-                        MUSICAS *musica = cadastrar_musica(&titulo_album);
-                        retorno = inserir_musica(&album->arv_musicas, musica);
+            //             MUSICAS *musica = cadastrar_musica(&titulo_album);
+            //             retorno = inserir_musica(&album->arv_musicas, musica);
 
-                        if (retorno == 1)
-                            printf("\nMusica cadastrada com sucesso!\n");
-                        else
-                            printf("\nErro ao cadastrar musica!\n");
-                    }
-                    else
-                    {
-                        printf("\nMusica ja cadastrada neste album!\n");
-                        free(musica->titulo_musica);
-                    }
-                }
-                else
-                {
-                    printf("\nAlbum nao encontrado!\n");
-                }
-            }
-            else
-            {
-                printf("\nArtista nao encontrado!\n");
-            }
-            pausar();
+            //             if (retorno == 1)
+            //                 printf("\nMusica cadastrada com sucesso!\n");
+            //             else
+            //                 printf("\nErro ao cadastrar musica!\n");
+            //         }
+            //         else
+            //         {
+            //             printf("\nMusica ja cadastrada neste album!\n");
+            //             free(musica->titulo_musica);
+            //         }
+            //     }
+            //     else
+            //     {
+            //         printf("\nAlbum nao encontrado!\n");
+            //     }
+            // }
+            // else
+            // {
+            //     printf("\nArtista nao encontrado!\n");
+            // }
+            // pausar();
 
             break;
         }

@@ -154,17 +154,18 @@ int todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os a
 
 /*---------------------------------- Ligação Album -> Artista ----------------------------------*/
 
-int adicionar_album_a_artista(ARTISTAS *raiz, ALBUNS *album, char *nome_artista)
-{
-    ARTISTAS *artista = existe_artista(raiz, nome_artista);
-    int adicionou = 0;
-    if (artista != NULL)
-    {
-        adicionou = inserir_album(&artista->arv_albuns, album);
-        artista->numero_albuns++;
-    }
-    return (adicionou);
-}
+// int adicionar_album_a_artista(ARTISTAS **artista, ALBUNS *album, char *nome_artista)
+// {
+//     // ARTISTAS *artista = existe_artista(raiz, nome_artista);
+//     int adicionou = 0;
+//     // if (artista != NULL)
+//     // {
+//     // }
+
+//     adicionou = inserir_album(&(*artista)->arv_albuns, album);
+//     (*artista)->numero_albuns++;
+//     return (adicionou);
+// }
 
 /*---------------------------------- Limpar Albuns ----------------------------------*/
 
