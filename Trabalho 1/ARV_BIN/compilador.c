@@ -4,7 +4,7 @@
 int main()
 {
     // Comando de compilação usando caminhos relativos
-    const char *comando = "gcc -o artista ../ARQUIVOS_.C/main.c ../ARQUIVOS_.C/interface.c ../ARQUIVOS_.C/artista.c ../ARQUIVOS_.C/utilitarios.c ../ARQUIVOS_.C/album.c ../ARQUIVOS_.C/musica.c -I ARQUIVOS_.H";
+    const char *comando = "gcc -o arvore_binaria ../ARQUIVOS_.H/STRUCTS.h ../ARQUIVOS_.C/main.c ../ARQUIVOS_.C/interface.c ../ARQUIVOS_.C/artista.c ../ARQUIVOS_.C/utilitarios.c ../ARQUIVOS_.C/album.c ../ARQUIVOS_.C/musica.c -I ARQUIVOS_.H";
 
     printf("Compilando o projeto...\n");
 
@@ -15,7 +15,7 @@ int main()
     if (retorno == 0)
     {
         printf("Compilacao concluida com sucesso!\n");
-        system("artista.exe");
+        system("arvore_binaria.exe");
     }
     else
     {

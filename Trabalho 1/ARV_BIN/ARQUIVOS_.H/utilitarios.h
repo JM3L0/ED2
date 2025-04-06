@@ -7,11 +7,7 @@
 #include "playlist.h"
 #include "utilitarios.h"
 #include "interface.h"
-
-typedef union ARVORES
-{
-    
-}ARVORES;
+#include "STRUCTS.h"
 
 
 char *ler_string();
