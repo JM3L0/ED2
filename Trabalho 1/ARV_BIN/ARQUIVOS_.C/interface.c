@@ -61,22 +61,35 @@ void menu_geral()
         case 2:
         {
             char nome_artista[50];
-            ALBUNS *album;
-            album = NULL;
-
+            
             printf("Digite o nome do artista: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
             ARTISTAS *artista = existe_artista(raiz, nome_artista);
-
+            
             if (artista){
 
-                album = cadastrar_album();
-                retorno = adicionar_album_a_artista(raiz, album, nome_artista);
+                char *titulo_album;
+                printf("Digite o titulo do album: ");   
+                titulo_album = ler_string();
 
-                if (retorno == 1)
-                    printf("\nAlbum cadastrado com sucesso!\n");
-                else
-                    printf("\nErro ao cadastrar album!\n");
+                ALBUNS *album;
+                album = existe_album(artista->arv_albuns, titulo_album);
+
+                if (album == NULL){
+
+                    album = cadastrar_album(&titulo_album);
+                    retorno = adicionar_album_a_artista(raiz, album, nome_artista);
+    
+                    if (retorno == 1)
+                        printf("\nAlbum cadastrado com sucesso!\n");
+                    else
+                        printf("\nErro ao cadastrar album!\n");
+
+                }else{
+                    printf("\nAlbum ja cadastrado para esse artista!\n");
+                    free(album->titulo_album);
+                }
+
             }else{
                 printf("\nArtista nao encontrado!\n");
             }

@@ -6,9 +6,9 @@
 #include "STRUCTS.h"
 
 
-ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento);
+ALBUNS *aloca_no_album(char **titulo_album, int ano_lancamento);
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album);
-ALBUNS *cadastrar_album();
+ALBUNS *cadastrar_album(char **titulo_album);
 int inserir_album(ALBUNS **raiz, ALBUNS *no);
 int imprimir_todos_albuns_de_um_artista(ARTISTAS *raiz, char *nome_artista);
 int imprimir_todos_albuns(ALBUNS *raiz);

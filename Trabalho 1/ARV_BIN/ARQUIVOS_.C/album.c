@@ -8,12 +8,12 @@
 // #include "../ARQUIVOS_.H/interface.h"
 // #include "../ARQUIVOS_.H/playlist.h"
 
-ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
+ALBUNS *aloca_no_album(char **titulo_album, int ano_lancamento)
 {
     ALBUNS *novo = malloc(sizeof(ALBUNS));
     if (novo != NULL)
     {
-        novo->titulo_album = titulo_album;
+        novo->titulo_album = *titulo_album;
         novo->ano_lancamento = ano_lancamento;
         novo->quantidade_musicas = 0;
         novo->arv_musicas = NULL;
@@ -23,11 +23,27 @@ ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
     return (novo);
 }
 
+ALBUNS *cadastrar_album(char **titulo_album)
+{
+    // char *titulo_album;
+    int ano_lancamento, quat_musics;
+    ALBUNS *album;
+    album = NULL;
+
+    // printf("Digite o titulo do Album: ");
+    // titulo_album = ler_string();
+    printf("Digite o ano de lancamento do Album: ");
+    scanf("%d", &ano_lancamento);
+
+    album = aloca_no_album(titulo_album, ano_lancamento);
+    return (album);
+}
+
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
 { // sera utilizado para as musicas
     ALBUNS *existe_alb;
     existe_alb = NULL;
-
+    
     if (raiz != NULL)
     {
         if (strcasecmp(raiz->titulo_album, titulo_album) == 0)
@@ -38,22 +54,6 @@ ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
             existe_alb = existe_album(raiz->dir, titulo_album);
     }
     return (existe_alb);
-}
-
-ALBUNS *cadastrar_album()
-{
-    char *titulo_album;
-    int ano_lancamento, quat_musics;
-    ALBUNS *album;
-    album = NULL;
-
-    printf("Digite o titulo do Album: ");
-    titulo_album = ler_string();
-    printf("Digite o ano de lancamento do Album: ");
-    scanf("%d", &ano_lancamento);
-
-    album = aloca_no_album(titulo_album, ano_lancamento);
-    return (album);
 }
 
 int inserir_album(ALBUNS **raiz, ALBUNS *no)

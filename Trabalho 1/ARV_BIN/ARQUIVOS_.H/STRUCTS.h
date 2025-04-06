@@ -3,7 +3,7 @@
 typedef struct MUSICAS
 {
     char *titulo_musica;
-    float quantidade_minutos;
+    float duracao_musica;
     struct MUSICAS *esq, *dir;
 } MUSICAS;
 
