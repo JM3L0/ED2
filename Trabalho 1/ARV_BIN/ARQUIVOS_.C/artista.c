@@ -193,10 +193,10 @@ void limpar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
 //     return !(raiz->esq || raiz->dir);
 // }
 
-// int art_so_um_filho(ARTISTAS *raiz) // verifica se o artista tem um filho
-// {
-//     return (raiz->esq == NULL) != (raiz->dir == NULL);
-// }
+int art_so_um_filho(ARTISTAS *raiz) // verifica se o artista tem um filho
+{
+    // return (raiz->esq == NULL) != (raiz->dir == NULL);
+}
 
 // ARTISTAS *art_menor_no(ARTISTAS *raiz) // retorna o menor nó da subárvore
 // {
