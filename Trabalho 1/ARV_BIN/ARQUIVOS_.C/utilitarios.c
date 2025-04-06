@@ -8,7 +8,7 @@
 // #include"../ARQUIVOS_.H/interface.h"
 // #include"../ARQUIVOS_.H/playlist.h"
 
-char *ler_string()
+char *ler_string()//nunca lhe esquecerei (ou não)
 {
     char buffer[256], *string;
 

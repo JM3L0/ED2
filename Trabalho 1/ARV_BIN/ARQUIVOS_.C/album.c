@@ -25,13 +25,10 @@ ALBUNS *aloca_no_album(char **titulo_album, int ano_lancamento)
 
 ALBUNS *cadastrar_album(char **titulo_album)
 {
-    // char *titulo_album;
     int ano_lancamento, quat_musics;
     ALBUNS *album;
     album = NULL;
 
-    // printf("Digite o titulo do Album: ");
-    // titulo_album = ler_string();
     printf("Digite o ano de lancamento do Album: ");
     scanf("%d", &ano_lancamento);
 
@@ -163,9 +160,8 @@ int adicionar_album_a_artista(ARTISTAS *raiz, ALBUNS *album, char *nome_artista)
     int adicionou = 0;
     if (artista != NULL)
     {
-        inserir_album(&artista->arv_albuns, album);
+        adicionou = inserir_album(&artista->arv_albuns, album);
         artista->numero_albuns++;
-        adicionou = 1;
     }
     return (adicionou);
 }
