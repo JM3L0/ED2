@@ -38,7 +38,7 @@ int digitar_int()//muito bom
 {
     int numero = 0;
     
-    while (scanf("%hd", &numero) != 1 || numero < 0)
+    while (scanf("%d", &numero) != 1 || numero < 0)
     {
         printf("Numero invalido ");
         printf("Digite novamente: ");
