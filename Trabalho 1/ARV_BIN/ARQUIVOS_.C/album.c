@@ -40,7 +40,7 @@ ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
 { // sera utilizado para as musicas
     ALBUNS *existe_alb;
     existe_alb = NULL;
-    
+
     if (raiz != NULL)
     {
         if (strcasecmp(raiz->titulo_album, titulo_album) == 0)
@@ -64,7 +64,12 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
     else if (strcasecmp(no->titulo_album, (*raiz)->titulo_album) > 0)
         inseriu = inserir_album(&(*raiz)->dir, no);
     else
+    {
+        limpar_no_album(no);
+        free(no);
+        no = NULL;
         inseriu = 0;
+    }
     return (inseriu);
 }
 
@@ -169,13 +174,11 @@ int todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os a
 
 /*---------------------------------- Limpar Albuns ----------------------------------*/
 
-void limpar_no_album(ALBUNS *raiz) // limpa os dados do album sem liberar o nó
+void limpar_no_album(ALBUNS *no) // limpa os dados do album sem liberar o nó
 {
-    if (raiz != NULL)
-    {
-        free(raiz->titulo_album);
-        raiz->titulo_album = NULL;
-    }
+
+    free(no->titulo_album);
+    no->titulo_album = NULL;
 }
 
 void limpar_arv_album(ALBUNS **raiz) // limpa a arvore album

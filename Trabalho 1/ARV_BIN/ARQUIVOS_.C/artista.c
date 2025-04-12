@@ -69,8 +69,14 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
         inseriu = inserir_artista(&(*raiz)->esq, no);
     else if (strcasecmp(no->nome_artista, (*raiz)->nome_artista) > 0)
         inseriu = inserir_artista(&(*raiz)->dir, no);
-    else
+    else{
+        
+        limpar_no_artista(no);
+        free(no);
+        no = NULL;
         inseriu = 0;
+    }
+
     return (inseriu);
 }
 
@@ -118,7 +124,7 @@ int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista) // imprime os arti
             printf("Artista: %s\n", raiz->nome_artista);
             imprimiu = 1;
         }
-        imprimiu |= imprimir_artista_tipo(raiz->dir, tipo_artista);// |= é o operador OR
+        imprimiu |= imprimir_artista_tipo(raiz->dir, tipo_artista); // |= é o operador OR
     }
     return (imprimiu);
 }
@@ -134,7 +140,7 @@ int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical) // imprime os 
             printf("Artista: %s\n", raiz->nome_artista);
             imprimiu = 1;
         }
-        imprimiu |= imprimir_artista_estilo(raiz->dir, estilo_musical);// |= é o operador OR
+        imprimiu |= imprimir_artista_estilo(raiz->dir, estilo_musical); // |= é o operador OR
     }
     return (imprimiu);
 }
@@ -150,26 +156,24 @@ int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *t
             imprimiu = printf("Artista: %s\n", raiz->nome_artista);
             imprimiu = 1;
         }
-        imprimiu |= imprimir_artista_estilo_e_tipo(raiz->dir, estilo_musical, tipo_artista);// |= é o operador OR
+        imprimiu |= imprimir_artista_estilo_e_tipo(raiz->dir, estilo_musical, tipo_artista); // |= é o operador OR
     }
     return (imprimiu);
 }
 
 /*---------------------------------- Limpar Arv Artista ----------------------------------*/
 
-void limpar_no_artista(ARTISTAS *raiz) // limpa os dados do artista sem liberar o nó
+void limpar_no_artista(ARTISTAS *no) // limpa os dados do artista sem liberar o nó
 {
-    if (raiz != NULL)
-    {
-        free(raiz->nome_artista);
-        raiz->nome_artista = NULL;
 
-        free(raiz->tipo_artista);
-        raiz->tipo_artista = NULL;
+    free(no->nome_artista);
+    no->nome_artista = NULL;
 
-        free(raiz->estilo_musical);
-        raiz->estilo_musical = NULL;
-    }
+    free(no->tipo_artista);
+    no->tipo_artista = NULL;
+
+    free(no->estilo_musical);
+    no->estilo_musical = NULL;
 }
 
 void limpar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
@@ -209,7 +213,5 @@ void limpar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
 
 // void copiar_no_artista(ARTISTAS **raiz, ARTISTAS **menor) // copia os dados do menor nó para o nó a ser removido
 // {
-    
+
 // }
-
-
