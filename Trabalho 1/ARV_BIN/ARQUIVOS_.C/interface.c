@@ -97,7 +97,45 @@ void menu_geral()
         }
         case 3:
         {
+            printf("CADASTRAR UMA MUSICA\n\n");
 
+            char nome_artista[50];
+            printf("Digite o nome do artista no qual deseja cadastrar a musica: ");
+            ler_string_simples(nome_artista, sizeof(nome_artista));
+            ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
+
+            if (artista)
+            {
+                char titulo_album[50];
+                printf("Digite o titulo do album a qual a musica pertence: ");
+                ler_string_simples(titulo_album, sizeof(titulo_album));
+                ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
+
+                if (album)
+                {
+                    MUSICAS *musica;
+                    char *titulo_musica;
+                    printf("Digite o titulo da musica: ");
+                    titulo_musica = ler_string();
+                    musica = cadastrar_musica(&titulo_musica);
+
+                    retorno = inserir_musica(&album->arv_musicas, musica);
+
+                    if (retorno == 1)
+                        printf("\nMusica cadastrada com sucesso!\n");
+                    else
+                        printf("\nMusica nao cadastrada!\n");
+                }
+                else
+                {
+                    printf("\nAlbum nao encontrado!\n");
+                }
+            }
+            else
+            {
+                printf("\nArtista nao encontrado!\n");
+            }
+            pausar();
 
             break;
         }
@@ -260,17 +298,30 @@ void menu_geral()
             printf("Albuns cadastrados no ano %d:\n\n", ano_lancamento);
             printf("--------------------------------------------------\n");
 
-            retorno = todos_artistas_album_ano(raiz_artista, ano_lancamento); // tem que adicionar o ano de lancamento
+            retorno = todos_artistas_album_ano(raiz_artista, ano_lancamento);
             if (retorno == 0)
             {
                 printf("\nNenhum album cadastrado desse ano!\n");
             }
             pausar();
-        }
-        break;
-        case 12:
-            // imprimir_dados_musica(raiz_artista);
             break;
+        }
+        case 12:
+        {
+            char nome_musica[50];
+            printf("Digite o nome da musica: ");
+            ler_string_simples(nome_musica, sizeof(nome_musica));
+
+            printf("\n\n");
+            printf("Dados da musica %s:\n\n", nome_musica);
+            printf("--------------------------------------------------\n");
+
+            retorno = imprime_dados_da_musica_album_artista(raiz_artista, nome_musica);
+            if (retorno == 0)
+                printf("\nEssa musica nao foi encontrada!\n");
+            pausar();
+            break;
+        }
         case 13:
             // cadastrar_playlist();
             break;

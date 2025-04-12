@@ -32,6 +32,7 @@ void ler_string_simples(char *buffer, size_t tamanho)
     {
         buffer[0] = '\0'; // Garante que o buffer fique vazio em caso de erro
     }
+    limpar_buffer();
 }
 
 int digitar_int()//muito bom

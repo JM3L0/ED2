@@ -102,6 +102,7 @@ int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art ,char *nome_musica)
         }
         imprimiu = imprime_dados_da_musica_album_artista(raiz_art->dir, nome_musica);
     }
+    return (imprimiu);
 }
 
 int imprime_dados_da_musica_album(ALBUNS *raiz_alb ,char *nome_musica){
@@ -119,6 +120,7 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb ,char *nome_musica){
         }
         imprimiu = imprime_dados_da_musica_album(raiz_alb->dir, nome_musica);
     }
+    return (imprimiu);
 }
 
 int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus ,char *nome_musica){
