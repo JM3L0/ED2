@@ -62,7 +62,7 @@ void menu_geral()
         {
             char nome_artista[50];
 
-            printf("Digite o nome do artista: ");
+            printf("Digite o nome do artista para qual o album sera cadastrado: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
             
             
@@ -86,9 +86,10 @@ void menu_geral()
                     printf("Ja existente para esse Artista!\n");
                     free(album->titulo_album);
                 }
+            }else{
+                printf("\nArtista nao encontrado!\n");
             }
-            
-
+            pausar();
 
 
             // ARTISTAS *artista = existe_artista(raiz, nome_artista);
