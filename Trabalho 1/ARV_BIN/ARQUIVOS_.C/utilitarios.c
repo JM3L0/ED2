@@ -32,7 +32,7 @@ void ler_string_simples(char *buffer, size_t tamanho)
     {
         buffer[0] = '\0'; // Garante que o buffer fique vazio em caso de erro
     }
-    limpar_buffer();
+    //limpar_buffer();
 }
 
 int digitar_int()//muito bom
@@ -62,4 +62,18 @@ void pausar()
     do {
         c = getchar();
     } while (c != '\n' && c != EOF); // Consome tudo até o Enter
+}
+
+float digitar_float()
+{
+    float numero = 0;
+    
+    while (scanf("%f", &numero) != 1 || numero < 0)
+    {
+        printf("Numero invalido ");
+        printf("Digite novamente: ");
+    }
+    limpar_buffer();
+    
+    return numero;
 }

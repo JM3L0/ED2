@@ -276,7 +276,7 @@ void menu_geral()
                     printf("Musicas cadastradas do album %s do artista %s:\n\n", titulo_album, nome_artista);
                     printf("--------------------------------------------------\n");
 
-                    retorno = imprime_todas_as_musicas(album->arv_musicas);
+                    retorno = imprimir_todas_as_musicas(album->arv_musicas);
                     if (retorno == 0)
                         printf("\nNenhuma musica cadastrada desse album!\n");
                 }

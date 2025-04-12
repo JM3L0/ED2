@@ -15,6 +15,7 @@ void limpar_buffer();
 int digitar_int();
 void ler_string_simples(char *buffer, size_t tamanho);
 void pausar();
+float digitar_float();
 
 
 
