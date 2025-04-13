@@ -22,21 +22,6 @@ MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_music
     return (nova_musica_play);
 }
 
-// MUSICA_PLAYLIST *cadastrar_musica_playlist(char *titulo_musica)
-// {
-//     float duracao_musica;
-//     MUSICA_PLAYLIST *musica_play;
-//     musica_play = NULL;
-
-//     printf("Digite a duracao da Musica: ");
-//     duracao_musica = digitar_float();
-
-//     musica_play = alocar_musica_playlist(titulo_musica, duracao_musica, NULL, NULL);// tem que ajeitar aqui, colocar o artista e o album
-//     return (musica_play);
-// }
-
-//////////////////////////////////////////////////////////////////////
-
 int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no, char *titulo_album, char *nome_artista)
 {
     int inseriu = 1;
