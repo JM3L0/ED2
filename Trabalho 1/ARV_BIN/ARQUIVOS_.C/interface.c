@@ -243,12 +243,12 @@ void menu_geral()
 
                 printf("Digite o ano de lancamento: ");
                 ano_lancamento = digitar_int();
-
+                
                 printf("\n\n");
                 printf("Albuns cadastrados do artista %s no ano %d:\n\n", nome_artista, ano_lancamento);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprimir_todos_albuns_de_um_artista(raiz_artista, nome_artista);
+                retorno = imprimir_albuns_artita_ano(raiz_artista, nome_artista, ano_lancamento); // tem que adicionar o nome do artista e o ano de lancamento
                 if (retorno == 0)
                     printf("\nNenhum album desse desse ano para esse artista!\n");
             }
