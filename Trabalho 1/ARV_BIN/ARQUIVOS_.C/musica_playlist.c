@@ -47,6 +47,7 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
     else
     {
         limpar_no_musica(no);
+        //o erro está aqui. falta resolver
         free(no);
         no = NULL;
         inseriu = 0;
