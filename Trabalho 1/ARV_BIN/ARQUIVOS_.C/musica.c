@@ -167,3 +167,5 @@ void limpar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
         *raiz = NULL;
     }
 }
+
+
