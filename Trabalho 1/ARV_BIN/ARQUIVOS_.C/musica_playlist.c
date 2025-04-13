@@ -112,26 +112,26 @@ int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas
     return (imprimiu);
 }
 
-void menu_cadastrar_musica_playlist()
-{
-    printf("\n[1] - Adicionar musica a playlist");
-    printf("\n[0] - Voltar");
-    printf("\nDigite a opcao desejada: ");
-}
+// void menu_cadastrar_musica_playlist()
+// {
+//     printf("\n[1] - Adicionar musica a playlist");
+//     printf("\n[0] - Voltar");
+//     printf("\nDigite a opcao desejada: ");
+// }
 
 int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 {
 
     int opcao, retorno;
 
-    do
-    {
-        menu_cadastrar_musica_playlist();
-        opcao = digitar_int();
-        switch (opcao)
-        {
-        case 1:
-        {
+    // do
+    // {
+        // menu_cadastrar_musica_playlist();
+        // opcao = digitar_int();
+        // switch (opcao)
+        // {
+        // case 1:
+        // {
             char nome_artista[50];
             printf("Digite o nome do artista referente a musica que deseja adicionar: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
@@ -166,15 +166,15 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
             }
             else
                 retorno = 4;//Artista nao encontrado!
-            break;
-        }
-        case 0:
-            printf("\nVoltando para o menu principal...\n");
-            break;
-        default:
-            printf("Opcao invalida!\n");
-        }
-    } while (opcao != 0);
+            // break;
+    //     }
+    //     case 0:
+    //         printf("\nVoltando para o menu principal...\n");
+    //         break;
+    //     default:
+    //         printf("Opcao invalida!\n");
+    //     }
+    // } while (opcao != 0);
 
     return (retorno);
 }

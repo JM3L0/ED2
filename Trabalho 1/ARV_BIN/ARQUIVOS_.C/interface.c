@@ -51,7 +51,9 @@ void menu_geral()
         {
         case 1:
         {
-        // Cadastrar  Artista:  cadastrar  os  dados  dos  artistas  organizados  em  uma  árvore  binária  pelo  nome  do artista  a  qualquer  momento,  o  usuário  pode  cadastrar  um  artista  a  qualquer  momento,  não  permita cadastro repetido.
+            /* Cadastrar  Artista:  cadastrar  os  dados  dos  artistas  organizados
+            em  uma  árvore  binária  pelo  nome  do artista  a  qualquer  momento,
+            o  usuário  pode  cadastrar  um  artista  a  qualquer  momento,  não  permita cadastro repetido.*/
 
             no_artista = cadastrar_artista();
             retorno = inserir_artista(&raiz_artista, no_artista);
@@ -66,7 +68,9 @@ void menu_geral()
         }
         case 2:
         {
-        // Cadastrar Álbuns: cadastrar os dados de Álbuns de um determinado artista organizados em uma árvore binária pelo título do álbum a qualquer momento, lembre-se um álbum só pode ser cadastrado para um artista já castrado e o álbum não pode se repetir para um mesmo artista.
+            /* Cadastrar Álbuns: cadastrar os dados de Álbuns de um determinado artista organizados em uma
+            árvore binária pelo título do álbum a qualquer momento, lembre-se um álbum só pode ser cadastrado
+            para um artista já castrado e o álbum não pode se repetir para um mesmo artista.*/
             char nome_artista[50];
 
             printf("Digite o nome do artista para qual o album sera cadastrado: ");
@@ -105,8 +109,9 @@ void menu_geral()
         }
         case 3:
         {
-        //Cadastrar Músicas:   cadastrar as músicas de um álbum de um artista em uma árvore binária organizada pelo título, lembre-se uma música só pode ser cadastrada para um álbum que já existe e a música não pode se repetir para um mesmo álbum.
-            // printf("\nCADASTRAR UMA MUSICA\n");
+            /* Cadastrar Músicas:   cadastrar as músicas de um álbum de um artista em uma árvore binária organizada pelo título,
+            lembre-se uma música só pode ser cadastrada para um álbum que já existe e a música não pode se repetir para um mesmo álbum.*/
+            //  printf("\nCADASTRAR UMA MUSICA\n");
 
             char nome_artista[50];
             printf("Digite o nome do artista no qual deseja cadastrar a musica: ");
@@ -150,7 +155,7 @@ void menu_geral()
         }
         case 4:
         {
-        // Mostrar todos os artistas cadastrados
+            // Mostrar todos os artistas cadastrados
             printf("\n\n");
             printf("Artistas cadastrados:\n\n");
             printf("--------------------------------------------------\n");
@@ -163,7 +168,7 @@ void menu_geral()
         }
         case 5:
         {
-        //Mostrar todos os artistas cadastrados de um determinado tipo
+            // Mostrar todos os artistas cadastrados de um determinado tipo
             char tipo_artista[50];
             printf("Digite o tipo de artista: ");
             ler_string_simples(tipo_artista, sizeof(tipo_artista));
@@ -180,7 +185,7 @@ void menu_geral()
         }
         case 6:
         {
-        //Mostrar todos os artistas cadastrados de um determinado estilo musical. 
+            // Mostrar todos os artistas cadastrados de um determinado estilo musical.
             char estilo_musical[50];
             printf("Digite o estilo musical: ");
             ler_string_simples(estilo_musical, sizeof(estilo_musical));
@@ -197,7 +202,7 @@ void menu_geral()
         }
         case 7:
         {
-        //Mostrar todos os artistas cadastrados de um determinado estilo musical e tipo de artista.
+            // Mostrar todos os artistas cadastrados de um determinado estilo musical e tipo de artista.
             char estilo_musical[50], tipo_artista[50];
             printf("Digite o tipo de artista: ");
             ler_string_simples(tipo_artista, sizeof(tipo_artista));
@@ -208,7 +213,7 @@ void menu_geral()
             printf("Artistas cadastrados do estilo %s e tipo %s:\n\n", estilo_musical, tipo_artista);
             printf("--------------------------------------------------\n");
 
-            retorno = imprimir_artista_estilo_e_tipo(raiz_artista, estilo_musical, tipo_artista); // tem que adicionar o estilo musical e o tipo de artista
+            retorno = imprimir_artista_estilo_e_tipo(raiz_artista, estilo_musical, tipo_artista);
             if (retorno == 0)
                 printf("\nNenhum artista desse estilo e tipo!\n");
             pausar();
@@ -216,7 +221,7 @@ void menu_geral()
         }
         case 8:
         {
-        //Mostrar todos os álbuns de um determinado artista. 
+            // Mostrar todos os álbuns de um determinado artista.
             char nome_artista[50];
             printf("Digite o nome do artista: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
@@ -229,7 +234,7 @@ void menu_geral()
                 printf("Albuns cadastrados do artista %s:\n\n", nome_artista);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprimir_todos_albuns_de_um_artista(raiz_artista, nome_artista); // tem que adicionar o nome do artista
+                retorno = imprimir_todos_albuns_de_um_artista(raiz_artista, nome_artista);
                 if (retorno == 0)
                     printf("\nNenhum album cadastrado desse artista!\n");
             }
@@ -242,7 +247,7 @@ void menu_geral()
         }
         case 9:
         {
-        //Mostrar todos os álbuns de um determinado ano de um artista
+            // Mostrar todos os álbuns de um determinado ano de um artista
             char nome_artista[50];
             printf("Digite o nome do artista: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
@@ -259,7 +264,7 @@ void menu_geral()
                 printf("Albuns cadastrados do artista %s no ano %d:\n\n", nome_artista, ano_lancamento);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprimir_albuns_artita_ano(raiz_artista, nome_artista, ano_lancamento); // tem que adicionar o nome do artista e o ano de lancamento
+                retorno = imprimir_albuns_artita_ano(raiz_artista, nome_artista, ano_lancamento);
                 if (retorno == 0)
                     printf("\nNenhum album desse desse ano para esse artista!\n");
             }
@@ -272,7 +277,7 @@ void menu_geral()
         }
         case 10:
         {
-        //Mostrar todas as músicas de um determinado álbum de um determinado artista
+            // Mostrar todas as músicas de um determinado álbum de um determinado artista
             char nome_artista[50];
             printf("Digite o nome do artista: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
@@ -305,7 +310,7 @@ void menu_geral()
         }
         case 11:
         {
-        //Mostrar todos os álbuns de um determinado ano de todos os artistas cadastrados
+            // Mostrar todos os álbuns de um determinado ano de todos os artistas cadastrados
             int ano_lancamento;
             printf("Digite o ano de lancamento: ");
             ano_lancamento = digitar_int();
@@ -325,7 +330,8 @@ void menu_geral()
         }
         case 12:
         {
-        //Mostrar  os  dados  de  uma  determinada  Música  (usuário  entrar  com  o  título  da  música):  nome  artista, título do álbum, ano de lançamento
+            /* Mostrar  os  dados  de  uma  determinada  Música  (usuário  entrar  com  o  título  da  música):
+            nome  artista, título do álbum, ano de lançamento*/
             char nome_musica[50];
             printf("Digite o nome da musica: ");
             ler_string_simples(nome_musica, sizeof(nome_musica));
@@ -342,24 +348,27 @@ void menu_geral()
         }
         case 13:
         {
-        //Criar uma árvore binária de playlists, na qual cada playlist contém um nome (organização da árvore), e uma árvore binária de músicas. Não permita playlist com títulos iguais. As músicas das playlists devem estar cadastradas na árvore de músicas de um álbum de um artista. A árvore de música da playlist deve conter: nome do artista, título do álbum e o título da Música.
+            /*Criar uma árvore binária de playlists, na qual cada playlist contém um nome (organização da árvore),
+            e uma árvore binária de músicas. Não permita playlist com títulos iguais. As músicas das playlists devem
+            estar cadastradas na árvore de músicas de um álbum de um artista. A árvore de música da playlist deve conter:
+            nome do artista, título do álbum e o título da Música.*/
             no_playlist = cadastrar_playlist();
             retorno = inserir_playlist(&raiz_playlist, no_playlist);
 
-            if (retorno == 1)
-            {
-                printf("\nPlaylist cadastrada com sucesso!\n");
+            // if (retorno == 1)
+            // {
+            //     printf("\nPlaylist cadastrada com sucesso!\n");
 
-                retorno = cadastrar_musica_playlist(raiz_artista, raiz_playlist);
-            }
-            mensagems_de_erro_add_musica_playlist(retorno);
+            //     retorno = cadastrar_musica_playlist(raiz_artista, raiz_playlist);
+            // }
+            // mensagems_de_erro_add_musica_playlist(retorno);
 
             pausar();
             break;
         }
         case 14:
         {
-        //Mostrar todos os dados de uma determinada playlist
+            // Mostrar todos os dados de uma determinada playlist
             char nome_playlist[50];
             printf("Digite o nome da playlist: ");
             ler_string_simples(nome_playlist, sizeof(nome_playlist));
@@ -371,9 +380,7 @@ void menu_geral()
                 printf("Dados da playlist %s:\n\n", nome_playlist);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprimir_todos_os_dados_das_playlists(raiz_playlist, nome_playlist);
-                if (retorno == 0)
-                    printf("\nNenhuma playlist cadastrada!\n");
+                retorno = imprime_dados_de_uma_playlist(raiz_playlist, nome_playlist);
             }
             else
                 printf("\nPlaylist nao encontrada!\n");
@@ -381,17 +388,38 @@ void menu_geral()
             break;
         }
         case 15:
-        //Permita remover uma música de uma determinada playlist.
-            // remover_musica_playlist();
+            // Permita remover uma música de uma determinada playlist.
+            //  remover_musica_playlist();
             break;
         case 16:
-        //Permita remover uma playlist, lembre-se de remover a árvore binária da playlist também.
-            // remover_playlist();
+            // Permita remover uma playlist, lembre-se de remover a árvore binária da playlist também.
+            //  remover_playlist();
             break;
         case 17:
-        //Permita remover uma música de um determinado álbum de um determinado artista. Lembre-se só poderá ser removida se não fizer parte de nenhuma playlist. 
-            // remover_musica_album_artista(raiz_artista);
+            // Permita remover uma música de um determinado álbum de um determinado artista. Lembre-se só poderá ser removida se não fizer parte de nenhuma playlist.
+            //  remover_musica_album_artista(raiz_artista);
             break;
+        case 18:
+        { /*Adicionar musica a uma playlist*/
+            char nome_playlist[50];
+            printf("Digite o nome da playlist: ");
+            ler_string_simples(nome_playlist, sizeof(nome_playlist));
+            PLAYLIST *playlist = existe_playlist(raiz_playlist, nome_playlist);
+
+            if (playlist)
+            {
+                retorno = cadastrar_musica_playlist(raiz_artista, playlist);
+                if(retorno == 1) playlist->quantidade_musicas_playlist++;
+                mensagems_de_erro_add_musica_playlist(retorno);
+            }
+            else
+            {
+                printf("\nPlaylist nao encontrada!\n");
+            }
+
+            pausar();
+            break;
+        }
         default:
             printf("Opcao invalida!\n");
         }

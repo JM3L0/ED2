@@ -97,13 +97,14 @@ int imprime_dados_de_uma_playlist(PLAYLIST *raiz, char *titulo_playlist) // impr
     int imprimiu = 0;
     if (raiz != NULL)
     {
-        imprimiu |= imprime_dados_de_uma_playlist(raiz->esq, titulo_playlist);
         if (strcasecmp(raiz->titulo_playlist, titulo_playlist) == 0)
         {
             printf("Playlist: %s\n", raiz->titulo_playlist);
+            printf("Quantidade de musicas: %d\n", raiz->quantidade_musicas_playlist);
+            printf("--------------------------------------------------\n");
+            imprimiu = imprime_todas_as_musicas_da_playlist(raiz->arv_musicas_playlist);
             imprimiu = 1;
         }
-        imprimiu |= imprime_dados_de_uma_playlist(raiz->dir, titulo_playlist); // |= é o operador OR
     }
     return (imprimiu);
 }
