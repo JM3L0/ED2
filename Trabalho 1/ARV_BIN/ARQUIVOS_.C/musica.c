@@ -94,10 +94,11 @@ int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art ,char *nome_musica)
     if (raiz_art != NULL){
         imprimiu |= imprime_dados_da_musica_album_artista(raiz_art->esq, nome_musica);
         if (raiz_art->arv_albuns != NULL){
-            imprimiu = imprime_dados_da_musica_album(raiz_art->arv_albuns, nome_musica);
+            imprimiu |= imprime_dados_da_musica_album(raiz_art->arv_albuns, nome_musica);
             if (imprimiu)
             {
-                printf("Artista: %s\n", raiz_art->nome_artista);
+                printf("\n> ARTISTA: %s\n", raiz_art->nome_artista);
+                printf("================================\n");
             }
         }
         imprimiu |= imprime_dados_da_musica_album_artista(raiz_art->dir, nome_musica);
@@ -111,11 +112,12 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb ,char *nome_musica){
     if (raiz_alb != NULL){
         imprimiu |= imprime_dados_da_musica_album(raiz_alb->esq, nome_musica);
         if (raiz_alb->arv_musicas != NULL){
-            imprimiu = imprime_dados_da_musica_buscada(raiz_alb->arv_musicas, nome_musica);
+            imprimiu |= imprime_dados_da_musica_buscada(raiz_alb->arv_musicas, nome_musica);
             if (imprimiu)
             {
-                printf("Album: %s\n", raiz_alb->titulo_album);
-                printf("Ano de lancamento: %d\n", raiz_alb->ano_lancamento);
+                printf("     Album: %s\n", raiz_alb->titulo_album);
+                printf("     Ano de lancamento: %4d\n", raiz_alb->ano_lancamento);
+                printf("---\n");
             }
         }
         imprimiu |= imprime_dados_da_musica_album(raiz_alb->dir, nome_musica);
@@ -130,8 +132,8 @@ int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus ,char *nome_musica){
         imprimiu |= imprime_dados_da_musica_buscada(raiz_mus->esq, nome_musica);
         if (strcasecmp(raiz_mus->titulo_musica, nome_musica) == 0){
             printf("\n\n");
-            printf("Musica: %s\n", raiz_mus->titulo_musica);
-            printf("Duracao: %.2f minutos\n", raiz_mus->duracao_musica);
+            printf(" > Musica: %s\n", raiz_mus->titulo_musica);//1 espaço
+            printf("     Duracao: %6.2f minutos\n", raiz_mus->duracao_musica);//5 espaços
             imprimiu = 1;
         }
         imprimiu |= imprime_dados_da_musica_buscada(raiz_mus->dir, nome_musica);

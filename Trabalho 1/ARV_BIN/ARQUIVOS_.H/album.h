@@ -2,7 +2,7 @@
 #define ALBUM_H
 #include "artista.h"
 #include "utilitarios.h"
-#include "interface.h"
+//#include "interface.h"
 #include "STRUCTS.h"
 
 

@@ -97,7 +97,7 @@ void menu_geral()
         }
         case 3:
         {
-            printf("CADASTRAR UMA MUSICA\n\n");
+            //printf("\nCADASTRAR UMA MUSICA\n");
 
             char nome_artista[50];
             printf("Digite o nome do artista no qual deseja cadastrar a musica: ");

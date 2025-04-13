@@ -45,7 +45,6 @@ ARTISTAS *cadastrar_artista()
 {
     char *nome, *tipo_artista, *estilo_musical;
     ARTISTAS *artista;
-    // fazer ponteiro para albuns
 
     artista = NULL;
 

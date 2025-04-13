@@ -4,7 +4,7 @@
 #include "STRUCTS.h"
 #include "album.h"
 #include "utilitarios.h"
-#include "interface.h"
+//#include "interface.h"
 
 MUSICAS *alocar_musica(char **titulo_musica, float duracao_musica);
 MUSICAS *cadastrar_musica(char **titulo_musica);
@@ -16,4 +16,5 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica);
 int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus, char *nome_musica);
 void limpar_no_musica(MUSICAS *no);
 void limpar_arv_musica(MUSICAS **raiz);
+
 #endif

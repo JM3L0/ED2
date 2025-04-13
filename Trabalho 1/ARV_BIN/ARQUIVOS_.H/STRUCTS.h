@@ -29,9 +29,18 @@ typedef struct ARTISTAS
 typedef struct PLAYLIST
 {
     char *titulo_playlist;
-    char *nome_artista;
-    char *titulo_album;
-    char *titulo_musica;
     struct PLAYLIST *esq, *dir;
+    struct MUSICA_PLAYLIST *arv_musicas_playlist;
 } PLAYLIST;
+
+typedef struct MUSICA_PLAYLIST
+{
+    char *titulo_musica; 
+    float duracao_musica;
+    char *artista_musica;
+    char *album_musica;
+
+    struct MUSICA_PLAYLIST *esq, *dir;
+} MUSICA_PLAYLIST;
+
 #endif

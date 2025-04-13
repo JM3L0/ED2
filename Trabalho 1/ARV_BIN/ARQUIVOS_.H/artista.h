@@ -2,7 +2,7 @@
 #define ARTISTA_H
 
 #include "utilitarios.h"
-#include "interface.h"
+//#include "interface.h"
 #include "STRUCTS.h"
 
 
