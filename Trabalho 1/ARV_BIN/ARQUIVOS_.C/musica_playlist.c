@@ -46,8 +46,7 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
         inseriu = inserir_musica_playlist(&(*raiz)->dir, no);
     else
     {
-        limpar_no_musica(no);
-        //o erro está aqui. falta resolver
+        limpar_no_musica_playlist(no);
         free(no);
         no = NULL;
         inseriu = 0;
@@ -70,4 +69,13 @@ MUSICA_PLAYLIST *existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musi
             existe_music_play = existe_musica_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
     }
     return (existe_music_play);
+}
+
+void limpar_no_musica_playlist(MUSICA_PLAYLIST *no)
+{
+    if (no != NULL)
+    {
+        free(no->titulo_musica);
+        no->titulo_musica = NULL;
+    }
 }
