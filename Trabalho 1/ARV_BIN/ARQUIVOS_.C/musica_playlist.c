@@ -34,86 +34,42 @@ MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_music
 //     return (musica_play);
 // }
 
-////////////////////////////////////////////////////////////////////////
-
-// MusicaPlaylist* inserirMusicaPlaylist(MusicaPlaylist *raiz, char *nome_artista, char *titulo_album, char *titulo_musica) {
-//     // Se a raiz é NULL, cria nova música
-//     if (raiz == NULL) {
-//         MusicaPlaylist *novo = (MusicaPlaylist*)malloc(sizeof(MusicaPlaylist));
-//         strcpy(novo->nome_artista, nome_artista);
-//         strcpy(novo->titulo_album, titulo_album);
-//         strcpy(novo->titulo_musica, titulo_musica);
-//         novo->esq = novo->dir = NULL;
-//         return novo;
-//     }
-    
-//     // Comparação composta
-//     int cmp_artista = strcmp(nome_artista, raiz->nome_artista);
-//     if (cmp_artista < 0) {
-//         raiz->esq = inserirMusicaPlaylist(raiz->esq, nome_artista, titulo_album, titulo_musica);
-//     } else if (cmp_artista > 0) {
-//         raiz->dir = inserirMusicaPlaylist(raiz->dir, nome_artista, titulo_album, titulo_musica);
-//     } else {
-//         // Mesmo artista, compara álbum
-//         int cmp_album = strcmp(titulo_album, raiz->titulo_album);
-//         if (cmp_album < 0) {
-//             raiz->esq = inserirMusicaPlaylist(raiz->esq, nome_artista, titulo_album, titulo_musica);
-//         } else if (cmp_album > 0) {
-//             raiz->dir = inserirMusicaPlaylist(raiz->dir, nome_artista, titulo_album, titulo_musica);
-//         } else {
-//             // Mesmo artista e álbum, compara música
-//             int cmp_musica = strcmp(titulo_musica, raiz->titulo_musica);
-//             if (cmp_musica < 0) {
-//                 raiz->esq = inserirMusicaPlaylist(raiz->esq, nome_artista, titulo_album, titulo_musica);
-//             } else if (cmp_musica > 0) {
-//                 raiz->dir = inserirMusicaPlaylist(raiz->dir, nome_artista, titulo_album, titulo_musica);
-//             } else {
-//                 // Todos os campos iguais, não insere (duplicata real)
-//                 printf("Erro: A música '%s' de '%s' no álbum '%s' já está na playlist!\n", 
-//                        titulo_musica, nome_artista, titulo_album);
-//             }
-//         }
-//     }
-    
-//     return raiz;
-// }
-
 //////////////////////////////////////////////////////////////////////
 
-int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no){
+int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no, char *titulo_album, char *nome_artista)
+{
     int inseriu = 1;
 
     if (*raiz == NULL)
         *raiz = no;
     else if (strcasecmp(no->titulo_musica, (*raiz)->titulo_musica) < 0)
-        inseriu = inserir_musica_playlist(&(*raiz)->esq, no);
+        inseriu = inserir_musica_playlist(&(*raiz)->esq, no, nome_artista, titulo_album);
     else if (strcasecmp(no->titulo_musica, (*raiz)->titulo_musica) > 0)
-        inseriu = inserir_musica_playlist(&(*raiz)->dir, no);
+        inseriu = inserir_musica_playlist(&(*raiz)->dir, no, nome_artista, titulo_album);
     else
     {
-        
+        if (strcasecmp(no->album_musica, (*raiz)->album_musica) < 0)
+            inseriu = inserir_musica_playlist(&(*raiz)->esq, no, nome_artista, titulo_album);
+        else if (strcasecmp(no->album_musica, (*raiz)->album_musica) > 0)
+            inseriu = inserir_musica_playlist(&(*raiz)->dir, no, nome_artista, titulo_album);
+        else
+        {
+            if (strcasecmp(no->artista_musica, (*raiz)->artista_musica) < 0)
+                inseriu = inserir_musica_playlist(&(*raiz)->esq, no, nome_artista, titulo_album);
+            else if (strcasecmp(no->artista_musica, (*raiz)->artista_musica) > 0)
+                inseriu = inserir_musica_playlist(&(*raiz)->dir, no, nome_artista, titulo_album);
+            else
+            {
+                limpar_no_musica_playlist(no);
+                free(no);
+                no = NULL;
+                inseriu = 0;
+            }
+        }
     }
+
+    return (inseriu);
 }
-
-// int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
-// {
-//     int inseriu = 1;
-
-//     if (*raiz == NULL)
-//         *raiz = no;
-//     else if (strcasecmp(no->titulo_musica, (*raiz)->titulo_musica) < 0)
-//         inseriu = inserir_musica_playlist(&(*raiz)->esq, no);
-//     else if (strcasecmp(no->titulo_musica, (*raiz)->titulo_musica) > 0)
-//         inseriu = inserir_musica_playlist(&(*raiz)->dir, no);
-//     else
-//     {
-//         limpar_no_musica_playlist(no);
-//         free(no);
-//         no = NULL;
-//         inseriu = 0;
-//     }
-//     return (inseriu);
-// }
 
 MUSICA_PLAYLIST *existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica)
 { // sera utilizado para as musicas
@@ -154,4 +110,71 @@ int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas
         imprimiu = 1;
     }
     return (imprimiu);
+}
+
+void menu_cadastrar_musica_playlist()
+{
+    printf("\n[1] - Adicionar musica a playlist");
+    printf("\n[0] - Voltar");
+    printf("\nDigite a opcao desejada: ");
+}
+
+int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
+{
+
+    int opcao, retorno;
+
+    do
+    {
+        menu_cadastrar_musica_playlist();
+        opcao = digitar_int();
+        switch (opcao)
+        {
+        case 1:
+        {
+            char nome_artista[50];
+            printf("Digite o nome do artista referente a musica que deseja adicionar: ");
+            ler_string_simples(nome_artista, sizeof(nome_artista));
+            ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
+
+            if (artista)
+            {
+                char titulo_album[50];
+                printf("Digite o titulo do album referente a musica que deseja adicionar: ");
+                ler_string_simples(titulo_album, sizeof(titulo_album));
+                ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
+
+                if (album)
+                {
+                    char titulo_musica[50];
+                    printf("Digite o titulo da musica a ser adicioanda na playlist: ");
+                    ler_string_simples(titulo_musica, sizeof(titulo_musica));
+                    MUSICAS *musica = existe_musica(album->arv_musicas, titulo_musica);
+
+                    if (musica)
+                    {
+                        MUSICA_PLAYLIST *musica_playlist = alocar_musica_playlist(musica->titulo_musica, musica->duracao_musica, artista->nome_artista, album->titulo_album);
+                        retorno = inserir_musica_playlist(&raiz_playlist->arv_musicas_playlist, musica_playlist, album->titulo_album, artista->nome_artista);
+                        //musica cadastrada na playlist, retorno = 1
+                        //musica ja existe na playlist, retorno = 0
+                    }
+                    else
+                        retorno = 2;//Musica nao encontrada!
+                }
+                else
+                    retorno = 3;//Album nao encontrado!
+            }
+            else
+                retorno = 4;//Artista nao encontrado!
+            break;
+        }
+        case 0:
+            printf("\nVoltando para o menu principal...\n");
+            break;
+        default:
+            printf("Opcao invalida!\n");
+        }
+    } while (opcao != 0);
+
+    return (retorno);
 }
