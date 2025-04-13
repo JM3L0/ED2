@@ -8,6 +8,7 @@
 // #include"../ARQUIVOS_.H/interface.h"
 #include "../ARQUIVOS_.H/playlist.h"
 #include "../ARQUIVOS_.H/STRUCTS.h"
+#include "../ARQUIVOS_.H/musica_playlist.h"
 
 PLAYLIST *aloca_no_playlist(char *titulo_playlist)
 {
@@ -92,19 +93,16 @@ int imprimir_playlists(PLAYLIST *raiz)//apens imprime todas as playlists (titulo
     return (imprimiu);
 }
 
-int imprime_dados_de_uma_playlist(PLAYLIST *raiz, char *titulo_playlist) // imprime os dados da playlist
+int imprime_dados_de_uma_playlist(PLAYLIST *raiz) // imprime os dados da playlist
 {
     int imprimiu = 0;
     if (raiz != NULL)
     {
-        if (strcasecmp(raiz->titulo_playlist, titulo_playlist) == 0)
-        {
-            printf("Playlist: %s\n", raiz->titulo_playlist);
-            printf("Quantidade de musicas: %d\n", raiz->quantidade_musicas_playlist);
-            printf("--------------------------------------------------\n");
-            imprimiu = imprime_todas_as_musicas_da_playlist(raiz->arv_musicas_playlist);
-            imprimiu = 1;
-        }
+        printf("Playlist: %s\n", raiz->titulo_playlist);
+        printf("Quantidade de musicas: %d\n", raiz->quantidade_musicas_playlist);
+        printf("--------------------------------------------------\n");
+        imprimiu = imprime_todas_as_musicas_da_playlist(raiz->arv_musicas_playlist);
+        imprimiu = 1;
     }
     return (imprimiu);
 }

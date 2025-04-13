@@ -7,6 +7,7 @@
 #include "../ARQUIVOS_.H/utilitarios.h"
 #include "../ARQUIVOS_.H/interface.h"
 #include "../ARQUIVOS_.H/playlist.h"
+#include "../ARQUIVOS_.H/musica_playlist.h"
 
 void menu_dos_print()
 {
@@ -380,7 +381,7 @@ void menu_geral()
                 printf("Dados da playlist %s:\n\n", nome_playlist);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprime_dados_de_uma_playlist(raiz_playlist, nome_playlist);
+                retorno = imprime_dados_de_uma_playlist(raiz_playlist);
             }
             else
                 printf("\nPlaylist nao encontrada!\n");
@@ -409,8 +410,9 @@ void menu_geral()
             if (playlist)
             {
                 retorno = cadastrar_musica_playlist(raiz_artista, playlist);
-                if(retorno == 1) playlist->quantidade_musicas_playlist++;
-                mensagems_de_erro_add_musica_playlist(retorno);
+                if(retorno == 1) 
+                    playlist->quantidade_musicas_playlist++;
+                mensagens_de_erro_add_musica_playlist(retorno);
             }
             else
             {

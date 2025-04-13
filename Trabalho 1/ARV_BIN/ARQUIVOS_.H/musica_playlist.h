@@ -10,5 +10,6 @@ MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_music
 int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no, char *titulo_album, char *nome_artista);
 MUSICA_PLAYLIST *existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica);
 void limpar_no_musica_playlist(MUSICA_PLAYLIST *no);
-int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz)
+int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz);
+int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist);
 #endif

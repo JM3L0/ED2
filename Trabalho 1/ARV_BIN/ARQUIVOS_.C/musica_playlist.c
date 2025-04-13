@@ -5,6 +5,7 @@
 #include "../ARQUIVOS_.H/musica_playlist.h"
 #include "../ARQUIVOS_.H/STRUCTS.h"
 #include "../ARQUIVOS_.H/playlist.h"
+#include "../ARQUIVOS_.H/utilitarios.h"
 
 MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_musica, char *nome_artista, char *titulo_album)
 {
