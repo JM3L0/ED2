@@ -59,9 +59,9 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
     if (*raiz == NULL)
         *raiz = no;
     else if (strcasecmp(no->titulo_playlist, (*raiz)->titulo_playlist) < 0)
-        inseriu = inserir_artista(&(*raiz)->esq, no);
+        inseriu = inserir_playlist(&(*raiz)->esq, no);
     else if (strcasecmp(no->titulo_playlist, (*raiz)->titulo_playlist) > 0)
-        inseriu = inserir_artista(&(*raiz)->dir, no);
+        inseriu = inserir_playlist(&(*raiz)->dir, no);
     else
     {
 
