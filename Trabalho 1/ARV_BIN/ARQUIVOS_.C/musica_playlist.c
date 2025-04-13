@@ -61,7 +61,6 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no, char *t
                 inseriu = inserir_musica_playlist(&(*raiz)->dir, no, nome_artista, titulo_album);
             else
             {
-                limpar_no_musica_playlist(no);
                 free(no);
                 no = NULL;
                 inseriu = 0;
@@ -113,69 +112,45 @@ int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas
     return (imprimiu);
 }
 
-// void menu_cadastrar_musica_playlist()
-// {
-//     printf("\n[1] - Adicionar musica a playlist");
-//     printf("\n[0] - Voltar");
-//     printf("\nDigite a opcao desejada: ");
-// }
-
 int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 {
 
     int opcao, retorno;
 
-    // do
-    // {
-        // menu_cadastrar_musica_playlist();
-        // opcao = digitar_int();
-        // switch (opcao)
-        // {
-        // case 1:
-        // {
-            char nome_artista[50];
-            printf("Digite o nome do artista referente a musica que deseja adicionar: ");
-            ler_string_simples(nome_artista, sizeof(nome_artista));
-            ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
+    char nome_artista[50];
+    printf("Digite o nome do artista referente a musica que deseja adicionar: ");
+    ler_string_simples(nome_artista, sizeof(nome_artista));
+    ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
 
-            if (artista)
+    if (artista)
+    {
+        char titulo_album[50];
+        printf("Digite o titulo do album referente a musica que deseja adicionar: ");
+        ler_string_simples(titulo_album, sizeof(titulo_album));
+        ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
+
+        if (album)
+        {
+            char titulo_musica[50];
+            printf("Digite o titulo da musica a ser adicioanda na playlist: ");
+            ler_string_simples(titulo_musica, sizeof(titulo_musica));
+            MUSICAS *musica = existe_musica(album->arv_musicas, titulo_musica);
+
+            if (musica)
             {
-                char titulo_album[50];
-                printf("Digite o titulo do album referente a musica que deseja adicionar: ");
-                ler_string_simples(titulo_album, sizeof(titulo_album));
-                ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
-
-                if (album)
-                {
-                    char titulo_musica[50];
-                    printf("Digite o titulo da musica a ser adicioanda na playlist: ");
-                    ler_string_simples(titulo_musica, sizeof(titulo_musica));
-                    MUSICAS *musica = existe_musica(album->arv_musicas, titulo_musica);
-
-                    if (musica)
-                    {
-                        MUSICA_PLAYLIST *musica_playlist = alocar_musica_playlist(musica->titulo_musica, musica->duracao_musica, artista->nome_artista, album->titulo_album);
-                        retorno = inserir_musica_playlist(&raiz_playlist->arv_musicas_playlist, musica_playlist, album->titulo_album, artista->nome_artista);
-                        //musica cadastrada na playlist, retorno = 1
-                        //musica ja existe na playlist, retorno = 0
-                    }
-                    else
-                        retorno = 2;//Musica nao encontrada!
-                }
-                else
-                    retorno = 3;//Album nao encontrado!
+                MUSICA_PLAYLIST *musica_playlist = alocar_musica_playlist(musica->titulo_musica, musica->duracao_musica, artista->nome_artista, album->titulo_album);
+                retorno = inserir_musica_playlist(&raiz_playlist->arv_musicas_playlist, musica_playlist, album->titulo_album, artista->nome_artista);
+                // musica cadastrada na playlist, retorno = 1
+                // musica ja existe na playlist, retorno = 0
             }
             else
-                retorno = 4;//Artista nao encontrado!
-            // break;
-    //     }
-    //     case 0:
-    //         printf("\nVoltando para o menu principal...\n");
-    //         break;
-    //     default:
-    //         printf("Opcao invalida!\n");
-    //     }
-    // } while (opcao != 0);
+                retorno = 2; // Musica nao encontrada!
+        }
+        else
+            retorno = 3; // Album nao encontrado!
+    }
+    else
+        retorno = 4; // Artista nao encontrado!
 
     return (retorno);
 }

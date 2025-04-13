@@ -1,20 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ARQUIVOS_.H/artista.h"
-#include "../ARQUIVOS_.H/album.h"
-#include "../ARQUIVOS_.H/musica.h"
 #include "../ARQUIVOS_.H/utilitarios.h"
-// #include"../ARQUIVOS_.H/interface.h"
 #include "../ARQUIVOS_.H/playlist.h"
 #include "../ARQUIVOS_.H/STRUCTS.h"
 #include "../ARQUIVOS_.H/musica_playlist.h"
 
 PLAYLIST *aloca_no_playlist(char *titulo_playlist)
 {
-    printf("passou aqui\n");
     PLAYLIST *novo = malloc(sizeof(PLAYLIST));
-    printf("passou aqui\n");
     if (novo != NULL)
     {
         novo->titulo_playlist = titulo_playlist;
@@ -52,7 +46,6 @@ PLAYLIST *cadastrar_playlist()
 
     printf("Digite o nome da Playlist: ");
     titulo_playlist = ler_string();
-    printf("passou aqui\n");
     playlist = aloca_no_playlist(titulo_playlist);
     return (playlist);
 }
@@ -81,8 +74,7 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
 
 /*---------------------------------- Funções de Printar ----------------------------------*/
 
-
-int imprimir_playlists(PLAYLIST *raiz)//apens imprime todas as playlists (titulo da playlist) existentes
+int imprimir_playlists(PLAYLIST *raiz) // apens imprime todas as playlists (titulo da playlist) existentes
 {
     int imprimiu = 0;
     if (raiz != NULL)

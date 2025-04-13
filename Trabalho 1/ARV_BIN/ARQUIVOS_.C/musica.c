@@ -1,19 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include"../ARQUIVOS_.H/artista.h"
-// #include"../ARQUIVOS_.H/album.h"
 #include "../ARQUIVOS_.H/musica.h"
 #include "../ARQUIVOS_.H/utilitarios.h"
-// // #include"../ARQUIVOS_.H/interface.h"
-// // #include"../ARQUIVOS_.H/playlist.h"
 
-MUSICAS *alocar_musica(char **titulo_musica, float duracao_musica)
+MUSICAS *alocar_musica(char *titulo_musica, float duracao_musica)
 {
     MUSICAS *nova_musica = malloc(sizeof(MUSICAS));
     if (nova_musica != NULL)
     {
-        nova_musica->titulo_musica = *titulo_musica;
+        nova_musica->titulo_musica = titulo_musica;
         nova_musica->duracao_musica = duracao_musica;
         nova_musica->esq = NULL;
         nova_musica->dir = NULL;
@@ -21,11 +17,13 @@ MUSICAS *alocar_musica(char **titulo_musica, float duracao_musica)
     return (nova_musica);
 }
 
-MUSICAS *cadastrar_musica(char **titulo_musica)
+MUSICAS *cadastrar_musica(MUSICAS *musica)
 {
     float duracao_musica;
-    MUSICAS *musica;
-    musica = NULL;
+    char *titulo_musica;
+
+    printf("Digite o titulo da musica: ");
+    titulo_musica = ler_string();
 
     printf("Digite a duracao da Musica: ");
     duracao_musica = digitar_float();
@@ -88,12 +86,15 @@ int imprimir_todas_as_musicas(MUSICAS *raiz) // imprime todas as musicas
     return (imprimiu);
 }
 ///
-int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art ,char *nome_musica){
+int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art, char *nome_musica)
+{
 
     int imprimiu = 0;
-    if (raiz_art != NULL){
+    if (raiz_art != NULL)
+    {
         imprimiu |= imprime_dados_da_musica_album_artista(raiz_art->esq, nome_musica);
-        if (raiz_art->arv_albuns != NULL){
+        if (raiz_art->arv_albuns != NULL)
+        {
             imprimiu |= imprime_dados_da_musica_album(raiz_art->arv_albuns, nome_musica);
             if (imprimiu)
             {
@@ -106,12 +107,15 @@ int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art ,char *nome_musica)
     return (imprimiu);
 }
 
-int imprime_dados_da_musica_album(ALBUNS *raiz_alb ,char *nome_musica){
+int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica)
+{
 
     int imprimiu = 0;
-    if (raiz_alb != NULL){
+    if (raiz_alb != NULL)
+    {
         imprimiu |= imprime_dados_da_musica_album(raiz_alb->esq, nome_musica);
-        if (raiz_alb->arv_musicas != NULL){
+        if (raiz_alb->arv_musicas != NULL)
+        {
             imprimiu |= imprime_dados_da_musica_buscada(raiz_alb->arv_musicas, nome_musica);
             if (imprimiu)
             {
@@ -125,15 +129,18 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb ,char *nome_musica){
     return (imprimiu);
 }
 
-int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus ,char *nome_musica){
+int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus, char *nome_musica)
+{
 
     int imprimiu = 0;
-    if (raiz_mus != NULL){
+    if (raiz_mus != NULL)
+    {
         imprimiu |= imprime_dados_da_musica_buscada(raiz_mus->esq, nome_musica);
-        if (strcasecmp(raiz_mus->titulo_musica, nome_musica) == 0){
+        if (strcasecmp(raiz_mus->titulo_musica, nome_musica) == 0)
+        {
             printf("\n\n");
-            printf(" > Musica: %s\n", raiz_mus->titulo_musica);//1 espaço
-            printf("     Duracao: %6.2f minutos\n", raiz_mus->duracao_musica);//5 espaços
+            printf(" > Musica: %s\n", raiz_mus->titulo_musica);                // 1 espaço
+            printf("     Duracao: %6.2f minutos\n", raiz_mus->duracao_musica); // 5 espaços
             imprimiu = 1;
         }
         imprimiu |= imprime_dados_da_musica_buscada(raiz_mus->dir, nome_musica);

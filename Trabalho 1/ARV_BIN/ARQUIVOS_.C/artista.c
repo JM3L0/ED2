@@ -2,11 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../ARQUIVOS_.H/artista.h"
-// #include "../ARQUIVOS_.H/album.h"
-// #include "../ARQUIVOS_.H/musica.h"
+#include "../ARQUIVOS_.H/album.h"
 #include "../ARQUIVOS_.H/utilitarios.h"
-// #include "../ARQUIVOS_.H/interface.h"
-// #include "../ARQUIVOS_.H/playlist.h"
 
 ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical)
 {
@@ -179,11 +176,11 @@ void limpar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
 {
     if (*raiz != NULL)
     {
-        // if ((*raiz)->arv_albuns != NULL) // se a arvore de albuns não for nula
-        // {
-        //     limpar_arv_album(&(*raiz)->arv_albuns); // limpa a arvore de albuns
-        //     (*raiz)->arv_albuns = NULL; // seta a arvore de albuns como nula
-        // }
+        if ((*raiz)->arv_albuns != NULL) // se a arvore de albuns não for nula
+        {
+            limpar_arv_album(&(*raiz)->arv_albuns); // limpa a arvore de albuns
+            (*raiz)->arv_albuns = NULL; // seta a arvore de albuns como nula
+        }
         limpar_arv_artista(&(*raiz)->esq);
         limpar_arv_artista(&(*raiz)->dir);
         limpar_no_artista(*raiz);
@@ -191,26 +188,3 @@ void limpar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
         *raiz = NULL;
     }
 }
-// int art_eh_folha(ARTISTAS *raiz) // verifica se o artista é folha
-// {
-//     return !(raiz->esq || raiz->dir);
-// }
-
-// int art_so_um_filho(ARTISTAS *raiz) // verifica se o artista tem um filho
-// {
-//     // return (raiz->esq == NULL) != (raiz->dir == NULL);
-// }
-
-// ARTISTAS *art_menor_no(ARTISTAS *raiz) // retorna o menor nó da subárvore
-// {
-//     ARTISTAS *menor = raiz;
-
-//     while (menor->esq != NULL)
-//         menor = menor->esq;
-//     return menor;
-// }
-
-// void copiar_no_artista(ARTISTAS **raiz, ARTISTAS **menor) // copia os dados do menor nó para o nó a ser removido
-// {
-
-// }

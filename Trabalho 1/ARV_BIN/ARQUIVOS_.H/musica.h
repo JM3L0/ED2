@@ -4,10 +4,9 @@
 #include "STRUCTS.h"
 #include "album.h"
 #include "utilitarios.h"
-//#include "interface.h"
 
-MUSICAS *alocar_musica(char **titulo_musica, float duracao_musica);
-MUSICAS *cadastrar_musica(char **titulo_musica);
+MUSICAS *alocar_musica(char *titulo_musica, float duracao_musica);
+MUSICAS *cadastrar_musica(MUSICAS *musica);
 int inserir_musica(MUSICAS **raiz, MUSICAS *no);
 MUSICAS *existe_musica(MUSICAS *raiz, char *titulo_musica);
 int imprimir_todas_as_musicas(MUSICAS *raiz);

@@ -4,7 +4,6 @@
 #include "STRUCTS.h"
 #include "musica.h"
 #include "utilitarios.h"
-//#include "interface.h"
 
 PLAYLIST *aloca_no_playlist(char *titulo_playlist);
 PLAYLIST *existe_playlist(PLAYLIST *raiz, char *titulo_playlist);

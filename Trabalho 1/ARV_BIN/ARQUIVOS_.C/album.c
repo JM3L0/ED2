@@ -1,19 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include "../ARQUIVOS_.H/artista.h"
 #include "../ARQUIVOS_.H/album.h"
-// #include "../ARQUIVOS_.H/musica.h"
+#include "../ARQUIVOS_.H/musica.h"
 #include "../ARQUIVOS_.H/utilitarios.h"
-// #include "../ARQUIVOS_.H/interface.h"
-// #include "../ARQUIVOS_.H/playlist.h"
 
-ALBUNS *aloca_no_album(char **titulo_album, int ano_lancamento)
+ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
 {
     ALBUNS *novo = malloc(sizeof(ALBUNS));
     if (novo != NULL)
     {
-        novo->titulo_album = *titulo_album;
+        novo->titulo_album = titulo_album;
         novo->ano_lancamento = ano_lancamento;
         novo->quantidade_musicas = 0;
         novo->arv_musicas = NULL;
@@ -23,14 +20,16 @@ ALBUNS *aloca_no_album(char **titulo_album, int ano_lancamento)
     return (novo);
 }
 
-ALBUNS *cadastrar_album(char **titulo_album)
+ALBUNS *cadastrar_album(ALBUNS *album)
 {
     int ano_lancamento, quat_musics;
-    ALBUNS *album;
-    album = NULL;
+    char *titulo_album;
+
+    printf("Digite o titulo do album: ");
+    titulo_album = ler_string();
 
     printf("Digite o ano de lancamento do Album: ");
-    scanf("%d", &ano_lancamento);
+    ano_lancamento = digitar_int();
 
     album = aloca_no_album(titulo_album, ano_lancamento);
     return (album);
@@ -157,21 +156,6 @@ int todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os a
     return (imprimiu);
 }
 
-/*---------------------------------- Ligação Album -> Artista ----------------------------------*/
-
-// int adicionar_album_a_artista(ARTISTAS **artista, ALBUNS *album, char *nome_artista)
-// {
-//     // ARTISTAS *artista = existe_artista(raiz, nome_artista);
-//     int adicionou = 0;
-//     // if (artista != NULL)
-//     // {
-//     // }
-
-//     adicionou = inserir_album(&(*artista)->arv_albuns, album);
-//     (*artista)->numero_albuns++;
-//     return (adicionou);
-// }
-
 /*---------------------------------- Limpar Albuns ----------------------------------*/
 
 void limpar_no_album(ALBUNS *no) // limpa os dados do album sem liberar o nó
@@ -187,7 +171,8 @@ void limpar_arv_album(ALBUNS **raiz) // limpa a arvore album
     {
         if ((*raiz)->arv_musicas != NULL) // se a arvore de musicas não for nula
         {
-            // limpar_arv_musica(&(*raiz)->arv_musicas); // limpa a arvore de musicas
+            limpar_arv_musica(&(*raiz)->arv_musicas); // limpa a arvore de musicas
+            (*raiz)->arv_musicas = NULL;              // limpa o ponteiro da arvore de musicas
         }
         limpar_arv_album(&(*raiz)->esq);
         limpar_arv_album(&(*raiz)->dir);

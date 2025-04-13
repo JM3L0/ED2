@@ -2,9 +2,7 @@
 #define ARTISTA_H
 
 #include "utilitarios.h"
-//#include "interface.h"
 #include "STRUCTS.h"
-
 
 ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical);
 ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista);
@@ -15,9 +13,6 @@ int imprimir_todos_artistas(ARTISTAS *raiz);
 int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista);
 int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical);
 int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista);
-int art_eh_folha(ARTISTAS *raiz);
-int art_so_um_filho(ARTISTAS *raiz);
-ARTISTAS *art_menor_no(ARTISTAS *raiz);
 void limpar_no_artista(ARTISTAS *raiz);
 void limpar_arv_artista(ARTISTAS **raiz);
 

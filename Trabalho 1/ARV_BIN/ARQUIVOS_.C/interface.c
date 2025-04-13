@@ -28,6 +28,7 @@ void menu_dos_print()
     printf("[15] - Remover uma musica de uma determinada playlist\n");
     printf("[16] - Remover uma playlist\n");
     printf("[17] - Remover  uma  musica  de  um  determinado  album  de  um  determinado  artista\n");
+    printf("[18] - Adicionar musica a uma playlist\n");
 }
 
 void menu_geral()
@@ -82,11 +83,9 @@ void menu_geral()
             if (artista)
             {
                 ALBUNS *album;
-                char *titulo_album;
-                printf("Digite o titulo do album: ");
-                titulo_album = ler_string();
+                album = NULL;
 
-                album = cadastrar_album(&titulo_album);
+                album = cadastrar_album(album);
 
                 retorno = inserir_album(&artista->arv_albuns, album);
 
@@ -99,7 +98,6 @@ void menu_geral()
                 {
                     printf("\nAlbum nao cadastrado!\n");
                     printf("Ja existente para esse Artista!\n");
-                    // free(album->titulo_album);
                 }
             }
             else
@@ -129,10 +127,9 @@ void menu_geral()
                 if (album)
                 {
                     MUSICAS *musica;
-                    char *titulo_musica;
-                    printf("Digite o titulo da musica: ");
-                    titulo_musica = ler_string();
-                    musica = cadastrar_musica(&titulo_musica);
+                    musica = NULL;
+
+                    musica = cadastrar_musica(musica);
 
                     retorno = inserir_musica(&album->arv_musicas, musica);
 
@@ -307,6 +304,7 @@ void menu_geral()
             }
             else
                 printf("\nArtista nao encontrado!\n");
+            pausar();
             break;
         }
         case 11:
@@ -365,7 +363,6 @@ void menu_geral()
                 printf("\nErro ao cadastrar playlist!\n");
             }
 
-
             pausar();
             break;
         }
@@ -412,7 +409,7 @@ void menu_geral()
             if (playlist)
             {
                 retorno = cadastrar_musica_playlist(raiz_artista, playlist);
-                if(retorno == 1) 
+                if (retorno == 1)
                     playlist->quantidade_musicas_playlist++;
                 mensagens_de_erro_add_musica_playlist(retorno);
             }
