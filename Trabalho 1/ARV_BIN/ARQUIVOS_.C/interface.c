@@ -35,6 +35,10 @@ void menu_geral()
     raiz_artista = NULL;
     no_artista = NULL;
 
+    PLAYLIST *raiz_playlist, *no_playlist;
+    raiz_playlist = NULL;
+    no_playlist = NULL;
+
     int opcao, retorno = 0;
 
     do
@@ -97,7 +101,7 @@ void menu_geral()
         }
         case 3:
         {
-            //printf("\nCADASTRAR UMA MUSICA\n");
+            // printf("\nCADASTRAR UMA MUSICA\n");
 
             char nome_artista[50];
             printf("Digite o nome do artista no qual deseja cadastrar a musica: ");
@@ -323,11 +327,23 @@ void menu_geral()
             break;
         }
         case 13:
-            // cadastrar_playlist();
+        {
+            no_playlist = cadastrar_playlist();
+            retorno = inserir_playlist(&raiz_playlist, no_playlist);
+
+            if (retorno == 1)
+                printf("\nPlaylist cadastrada com sucesso!\n");
+            else
+                printf("\nErro ao cadastrar playlist!\n");
+
+            pausar();
             break;
+        }
         case 14:
-            // imprimir_dados_playlist();
+        {
+
             break;
+        }
         case 15:
             // remover_musica_playlist();
             break;

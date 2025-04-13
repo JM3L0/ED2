@@ -6,15 +6,15 @@
 #include "../ARQUIVOS_.H/STRUCTS.h"
 #include "../ARQUIVOS_.H/playlist.h"
 
-MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_musica, char *artista_musica, char *album_musica)
+MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_musica, char *nome_artista, char *titulo_album)
 {
     MUSICA_PLAYLIST *nova_musica_play = malloc(sizeof(MUSICA_PLAYLIST));
     if (nova_musica_play != NULL)
     {
         nova_musica_play->titulo_musica = titulo_musica;
         nova_musica_play->duracao_musica = duracao_musica;
-        nova_musica_play->artista_musica = artista_musica;
-        nova_musica_play->album_musica = album_musica;
+        nova_musica_play->artista_musica = nome_artista;
+        nova_musica_play->album_musica = titulo_album;
         nova_musica_play->esq = NULL;
         nova_musica_play->dir = NULL;
     }
