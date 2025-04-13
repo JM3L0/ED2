@@ -12,12 +12,14 @@
 
 PLAYLIST *aloca_no_playlist(char *titulo_playlist)
 {
+    printf("passou aqui\n");
     PLAYLIST *novo = malloc(sizeof(PLAYLIST));
+    printf("passou aqui\n");
     if (novo != NULL)
     {
         novo->titulo_playlist = titulo_playlist;
-        novo->arv_musicas_playlist = NULL;
         novo->quantidade_musicas_playlist = 0;
+        novo->arv_musicas_playlist = NULL;
         novo->esq = NULL;
         novo->dir = NULL;
     }
@@ -48,8 +50,9 @@ PLAYLIST *cadastrar_playlist()
 
     playlist = NULL;
 
-    printf("Digite o nome do Artista: ");
+    printf("Digite o nome da Playlist: ");
     titulo_playlist = ler_string();
+    printf("passou aqui\n");
     playlist = aloca_no_playlist(titulo_playlist);
     return (playlist);
 }

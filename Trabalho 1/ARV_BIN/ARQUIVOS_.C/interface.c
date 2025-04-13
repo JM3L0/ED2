@@ -356,13 +356,15 @@ void menu_geral()
             no_playlist = cadastrar_playlist();
             retorno = inserir_playlist(&raiz_playlist, no_playlist);
 
-            // if (retorno == 1)
-            // {
-            //     printf("\nPlaylist cadastrada com sucesso!\n");
+            if (retorno == 1)
+            {
+                printf("\nPlaylist cadastrada com sucesso!\n");
+            }
+            else
+            {
+                printf("\nErro ao cadastrar playlist!\n");
+            }
 
-            //     retorno = cadastrar_musica_playlist(raiz_artista, raiz_playlist);
-            // }
-            // mensagems_de_erro_add_musica_playlist(retorno);
 
             pausar();
             break;
