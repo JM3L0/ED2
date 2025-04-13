@@ -336,6 +336,22 @@ void menu_geral()
             else
                 printf("\nErro ao cadastrar playlist!\n");
 
+            do{
+                printf("\n[1] - Adicionar musica a playlist");
+                printf("\n[2] - Voltar");
+                printf("\nDigite a opcao desejada: ");
+                opcao = digitar_int();
+                switch(opcao){
+                    case 1:
+                        // adicionar_musica_playlist(raiz_playlist);
+                        break;
+                    case 2:
+                        printf("\nVoltando para o menu principal...\n");
+                        break;
+                    default:
+                        printf("Opcao invalida!\n");
+                }
+            }while(opcao != 2);
             pausar();
             break;
         }
