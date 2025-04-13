@@ -24,19 +24,19 @@ PLAYLIST *aloca_no_playlist(char *titulo_playlist)
 
 PLAYLIST *existe_playlist(PLAYLIST *raiz, char *titulo_playlist) // deve ser testado
 {
-    PLAYLIST *existe_playlist;
-    existe_playlist = NULL;
+    PLAYLIST *existe_play;
+    existe_play = NULL;
 
     if (raiz != NULL)
     {
         if (strcasecmp(raiz->titulo_playlist, titulo_playlist) == 0)
-            existe_playlist = raiz;
+            existe_play = raiz;
         else if (strcasecmp(titulo_playlist, raiz->titulo_playlist) < 0)
-            existe_playlist = existe_artista(raiz->esq, titulo_playlist);
+            existe_play = existe_playlist(raiz->esq, titulo_playlist);
         else
-            existe_playlist = existe_artista(raiz->dir, titulo_playlist);
+            existe_play = existe_playlist(raiz->dir, titulo_playlist);
     }
-    return (existe_playlist);
+    return (existe_play);
 }
 
 PLAYLIST *cadastrar_playlist()
