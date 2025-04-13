@@ -29,6 +29,7 @@ typedef struct ARTISTAS
 typedef struct PLAYLIST
 {
     char *titulo_playlist;
+    int quantidade_musicas_playlist;
     struct PLAYLIST *esq, *dir;
     struct MUSICA_PLAYLIST *arv_musicas_playlist;
 } PLAYLIST;

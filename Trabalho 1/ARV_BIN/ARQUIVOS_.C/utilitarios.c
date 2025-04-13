@@ -77,3 +77,28 @@ float digitar_float()
     
     return numero;
 }
+
+void mensagens_de_erro_add_musica_playlist(int erro){
+    switch (erro)
+    {
+        case 1:
+            printf("\nMusica adicionada a playlist com sucesso\n");
+            break;
+
+        case 0:
+            printf("Musica ja existente na playlist!\n");
+            break;
+        case 2:
+            printf("ERRO: Musica nao encontrada!\n");
+            break;
+        case 3:
+            printf("ERRO: Album nao encontrado!\n");
+            break;
+        case 4:
+            printf("ERRO: Artista nao encontrado!\n");
+            break;
+        default:
+            printf("Erro desconhecido!\n");
+            break;
+    }
+}

@@ -16,6 +16,7 @@ PLAYLIST *aloca_no_playlist(char *titulo_playlist)
     {
         novo->titulo_playlist = titulo_playlist;
         novo->arv_musicas_playlist = NULL;
+        novo->quantidade_musicas_playlist = 0;
         novo->esq = NULL;
         novo->dir = NULL;
     }
@@ -91,6 +92,21 @@ int imprimir_playlists(PLAYLIST *raiz)//apens imprime todas as playlists (titulo
     return (imprimiu);
 }
 
+int imprime_dados_de_uma_playlist(PLAYLIST *raiz, char *titulo_playlist) // imprime os dados da playlist
+{
+    int imprimiu = 0;
+    if (raiz != NULL)
+    {
+        imprimiu |= imprime_dados_de_uma_playlist(raiz->esq, titulo_playlist);
+        if (strcasecmp(raiz->titulo_playlist, titulo_playlist) == 0)
+        {
+            printf("Playlist: %s\n", raiz->titulo_playlist);
+            imprimiu = 1;
+        }
+        imprimiu |= imprime_dados_de_uma_playlist(raiz->dir, titulo_playlist); // |= é o operador OR
+    }
+    return (imprimiu);
+}
 
 /*---------------------------------- Funções de Limpar ----------------------------------*/
 void limpar_no_playlist(PLAYLIST *no)
