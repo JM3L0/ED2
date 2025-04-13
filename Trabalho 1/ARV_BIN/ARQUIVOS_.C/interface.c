@@ -396,7 +396,8 @@ void menu_geral()
             //  remover_playlist();
             break;
         case 17:
-            // Permita remover uma música de um determinado álbum de um determinado artista. Lembre-se só poderá ser removida se não fizer parte de nenhuma playlist.
+            /* Permita remover uma música de um determinado álbum de um determinado artista. Lembre-se só
+            poderá ser removida se não fizer parte de nenhuma playlist.*/
             //  remover_musica_album_artista(raiz_artista);
             break;
         case 18:
