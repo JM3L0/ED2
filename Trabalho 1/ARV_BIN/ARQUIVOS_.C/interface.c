@@ -133,8 +133,10 @@ void menu_geral()
 
                     retorno = inserir_musica(&album->arv_musicas, musica);
 
-                    if (retorno == 1)
+                    if (retorno == 1){
                         printf("\nMusica cadastrada com sucesso!\n");
+                        album->quantidade_musicas++;
+                    }
                     else
                         printf("\nMusica nao cadastrada!\n");
                 }

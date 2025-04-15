@@ -37,6 +37,7 @@ int digitar_int() // muito bom
     {
         printf("Numero invalido ");
         printf("Digite novamente: ");
+        limpar_buffer();
     }
     limpar_buffer();
 
@@ -67,6 +68,7 @@ float digitar_float()
     {
         printf("Numero invalido ");
         printf("Digite novamente: ");
+        limpar_buffer();
     }
     limpar_buffer();
 
