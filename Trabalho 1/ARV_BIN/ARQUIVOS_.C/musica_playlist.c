@@ -139,3 +139,20 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 
     return (retorno);
 }
+
+/*-------------------------------------- remover musica da playlist* --------------------------------------*/
+
+int eh_folha(MUSICA_PLAYLIST *raiz)
+{
+    return (raiz->esq == NULL && raiz->dir == NULL);
+}
+
+int so_um_filho(MUSICA_PLAYLIST *raiz)
+{
+    return ((raiz->esq == NULL && raiz->dir != NULL) || (raiz->esq != NULL && raiz->dir == NULL));
+}
+
+int dois_filhos(MUSICA_PLAYLIST *raiz)
+{
+    return (raiz->esq != NULL && raiz->dir != NULL);
+}
