@@ -182,29 +182,32 @@ int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
     {
         if (strcasecmp((*raiz)->titulo_musica, titulo_musica) == 0 && strcasecmp((*raiz)->artista_musica, nome_artista) == 0 && strcasecmp((*raiz)->album_musica, titulo_album) == 0)
         {
-            MUSICA_PLAYLIST *aux , *filho;
+            MUSICA_PLAYLIST *aux = *raiz, *filho;
 
             if (eh_folha_musica_playlist(*raiz))
             {
-                aux = *raiz;
                 *raiz = NULL;
-                free(aux);
-            }else if (filho = so_um_filho_musica_playlist(*raiz))
+            }
+            else if (filho = so_um_filho_musica_playlist(*raiz))
             {
-                aux = *raiz;
                 *raiz = filho;
-                free(aux);
-            }else
+            }
+            else
             {
                 aux = menor_musica_playlist((*raiz)->dir);
+
                 (*raiz)->titulo_musica = aux->titulo_musica;
                 (*raiz)->duracao_musica = aux->duracao_musica;
                 (*raiz)->artista_musica = aux->artista_musica;
                 (*raiz)->album_musica = aux->album_musica;
+
                 remove_musica_platlist(&(*raiz)->dir, aux->titulo_musica, aux->album_musica, aux->artista_musica);
             }
+
+            free(aux);
         }
-        else{
+        else
+        {
             if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
                 removeu = remove_musica_platlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
             else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) > 0)
@@ -219,13 +222,14 @@ int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
                 {
                     if (strcasecmp(nome_artista, (*raiz)->artista_musica) < 0)
                         removeu = remove_musica_platlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-                    else //if (strcasecmp(nome_artista, (*raiz)->artista_musica) > 0)
+                    else // if (strcasecmp(nome_artista, (*raiz)->artista_musica) > 0)
                         removeu = remove_musica_platlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-                    
                 }
             }
         }
-    }else{
+    }
+    else
+    {
         removeu = 0; // Raiz nula, nada a remover
     }
 
