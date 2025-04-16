@@ -592,17 +592,21 @@ void menu_geral()
                     char titulo_musica[50];
                     printf("Digite o titulo da musica: ");
                     ler_string_simples(titulo_musica, sizeof(titulo_musica));
+                    MUSICAS *musica = existe_musica(album->arv_musicas, titulo_musica);
 
-                    retorno = percorre_todas_as_playlists_buscando_uma_musica(raiz_playlist, titulo_musica, nome_artista, titulo_album);
-                    if (retorno == 1)
-                        printf("\nEssa musica faz parte de uma playlist, nao pode ser removida!\n");
-                    else
+                    if(musica)
                     {
-                        retorno = remove_musica(&artista->arv_albuns, titulo_musica, titulo_album, nome_artista);
+                        retorno = percorre_todas_as_playlists_buscando_uma_musica(raiz_playlist, titulo_musica, nome_artista, titulo_album);
                         if (retorno == 1)
-                            printf("\nMusica removida com sucesso!\n");
+                            printf("\nEssa musica faz parte de uma playlist, nao pode ser removida!\n");
                         else
-                            printf("\nMusica nao encontrada!\n");
+                        {
+                            retorno = remove_musica(&artista->arv_albuns, titulo_musica);
+                            if (retorno == 1)
+                                printf("\nMusica removida com sucesso!\n");
+                            else
+                                printf("\nMusica nao encontrada!\n");
+                        }
                     }
                     
                 }
