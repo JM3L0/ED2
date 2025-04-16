@@ -95,12 +95,14 @@ int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art, char *nome_musica)
         imprimiu |= imprime_dados_da_musica_album_artista(raiz_art->esq, nome_musica);
         if (raiz_art->arv_albuns != NULL)
         {
-            imprimiu |= imprime_dados_da_musica_album(raiz_art->arv_albuns, nome_musica);
-            if (imprimiu)
+            int encontrou_musica = imprime_dados_da_musica_album(raiz_art->arv_albuns, nome_musica);
+            if (encontrou_musica)
             {
                 printf("\n> ARTISTA: %s\n", raiz_art->nome_artista);
                 printf("================================\n");
             }
+
+            imprimiu |= encontrou_musica; // Atualiza imprimiu com o resultado da busca
         }
         imprimiu |= imprime_dados_da_musica_album_artista(raiz_art->dir, nome_musica);
     }
@@ -117,14 +119,16 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica)
         if (raiz_alb->arv_musicas != NULL)
         {
             //printf("DEBUG: Antes de buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
-            imprimiu |= imprime_dados_da_musica_buscada(raiz_alb->arv_musicas, nome_musica);
+            int encontrou_musica = imprime_dados_da_musica_buscada(raiz_alb->arv_musicas, nome_musica);
             //printf("DEBUG: Apos buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
-            if (imprimiu)
+            if (encontrou_musica)
             {
                 printf("     Album: %s\n", raiz_alb->titulo_album);
                 printf("     Ano de lancamento: %4d\n", raiz_alb->ano_lancamento);
                 printf("---\n");
             }
+
+            imprimiu |= encontrou_musica; // Atualiza imprimiu com o resultado da busca
         }
         imprimiu |= imprime_dados_da_musica_album(raiz_alb->dir, nome_musica);
     }
@@ -169,5 +173,3 @@ void limpar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
         *raiz = NULL;
     }
 }
-
-
