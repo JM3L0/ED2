@@ -163,11 +163,6 @@ int eh_folha_musica_playlist(MUSICA_PLAYLIST *raiz)
     return (raiz->esq == NULL && raiz->dir == NULL);
 }
 
-// int so_um_filho(MUSICA_PLAYLIST *raiz)
-// {
-//     return ((raiz->esq == NULL && raiz->dir != NULL) || (raiz->esq != NULL && raiz->dir == NULL));
-// }
-
 MUSICA_PLAYLIST *so_um_filho_musica_playlist(MUSICA_PLAYLIST *raiz)
 {
     MUSICA_PLAYLIST *filho = NULL;

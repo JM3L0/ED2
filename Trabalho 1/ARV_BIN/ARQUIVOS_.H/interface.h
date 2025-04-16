@@ -7,7 +7,7 @@
 #include "utilitarios.h"
 #include "STRUCTS.h"
 
-void menu_dos_print();
+void menu_dos_print_de_opcoes();
 void menu_geral();
 
 #endif

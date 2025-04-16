@@ -169,7 +169,7 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
     }
 }
 
-void menu_dos_print()
+void menu_dos_print_de_opcoes()
 {
     printf("\n[1] - Cadastrar Artista\n");
     printf("[2] - Cadastrar Album\n");
@@ -189,6 +189,7 @@ void menu_dos_print()
     printf("[16] - Remover uma playlist\n");
     printf("[17] - Remover  uma  musica  de  um  determinado  album  de  um  determinado  artista\n");
     printf("[18] - Adicionar musica a uma playlist\n");
+    printf("[0] - Encerrar Programa\n");
 }
 
 void menu_geral()
@@ -205,7 +206,7 @@ void menu_geral()
     inicializar_dados_predefinidos(&raiz_artista, &raiz_playlist);
     do
     {
-        menu_dos_print();
+        menu_dos_print_de_opcoes();
         printf("\nDigite a opcao desejada: ");
         opcao = digitar_int();
 
@@ -438,23 +439,29 @@ void menu_geral()
 
             if (artista)
             {
-                char titulo_album[50];
-                printf("Digite o titulo do album: ");
-                ler_string_simples(titulo_album, sizeof(titulo_album));
-                ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
-                if (album)
-                {
+                retorno = imprimir_todos_albuns(artista->arv_albuns);
+                if (retorno){
 
-                    printf("\n\n");
-                    printf("Musicas cadastradas do album %s do artista %s:\n\n", titulo_album, nome_artista);
-                    printf("--------------------------------------------------\n");
+                    char titulo_album[50];
+                    printf("Digite o titulo do album: ");
+                    ler_string_simples(titulo_album, sizeof(titulo_album));
+                    ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
+                    if (album)
+                    {
 
-                    retorno = imprimir_todas_as_musicas(album->arv_musicas);
-                    if (retorno == 0)
-                        printf("\nNenhuma musica cadastrada desse album!\n");
+                        printf("\n\n");
+                        printf("Musicas cadastradas do album %s do artista %s:\n\n", titulo_album, nome_artista);
+                        printf("--------------------------------------------------\n");
+
+                        retorno = imprimir_todas_as_musicas(album->arv_musicas);
+                        if (retorno == 0)
+                            printf("\nNenhuma musica cadastrada desse album!\n");
+                    }
+                    else
+                        printf("\nAlbum nao encontrado!\n");
+                }else{
+                    printf("\nNenhum album cadastrado desse artista!\n");
                 }
-                else
-                    printf("\nAlbum nao encontrado!\n");
             }
             else
                 printf("\nArtista nao encontrado!\n");
@@ -656,6 +663,15 @@ void menu_geral()
             pausar();
             break;
         }
+        case 0:
+            printf("\n\nSaindo do programa...\n");
+
+            liberar_arv_artista(&raiz_artista);
+            liberar_arv_playlist(&raiz_playlist);
+
+            printf("Memoria liberada com sucesso!\n");
+            printf("Programa encerrado.\n\n");
+            break;
         default:
             printf("Opcao invalida!\n");
         }

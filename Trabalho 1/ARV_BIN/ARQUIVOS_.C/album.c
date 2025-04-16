@@ -77,9 +77,10 @@ void mostrar_dados_album(ALBUNS *raiz) // imprime os albuns de acordo com o tipo
 {
     if (raiz != NULL)
     {
-        printf("Album: %s\n", raiz->titulo_album);
-        printf("Ano: %d\n", raiz->ano_lancamento);
-        printf("Quantidade de musicas: %d\n", raiz->quantidade_musicas);
+        printf("\n------\n");
+        printf("> Album: %s\n", raiz->titulo_album);
+        printf("  > Ano: %d\n", raiz->ano_lancamento);
+        printf("  > Quantidade de musicas: %d\n\n", raiz->quantidade_musicas);
     }
 }
 

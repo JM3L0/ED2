@@ -134,6 +134,11 @@ void liberar_arv_playlist(PLAYLIST **raiz) // apagar tudo (CABUM)
 {
     if (*raiz != NULL)
     {
+        if ((*raiz)->arv_musicas_playlist != NULL){
+            liberar_arv_musica_playlist(&(*raiz)->arv_musicas_playlist);
+            (*raiz)->arv_musicas_playlist = NULL;
+        }
+
         liberar_arv_playlist(&(*raiz)->esq);
         liberar_arv_playlist(&(*raiz)->dir);
         limpar_no_playlist(*raiz);
