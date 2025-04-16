@@ -434,9 +434,7 @@ void menu_geral()
 
             retorno = mostrar_todos_artistas_album_ano(raiz_artista, ano_lancamento);
             if (retorno == 0)
-            {
                 printf("\nNenhum artista tem album cadastrado no ano %d!\n", ano_lancamento);
-            }
             pausar();
             break;
         }
@@ -468,13 +466,9 @@ void menu_geral()
             retorno = inserir_playlist(&raiz_playlist, no_playlist);
 
             if (retorno == 1)
-            {
                 printf("\nPlaylist cadastrada com sucesso!\n");
-            }
             else
-            {
                 printf("\nErro ao cadastrar playlist!\n");
-            }
 
             pausar();
             break;
@@ -518,15 +512,16 @@ void menu_geral()
                 ler_string_simples(album_musica, sizeof(album_musica));
 
                 retorno = remove_musica_platlist(&playlist->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
-                if (retorno == 1)
+                if (retorno == 1){
                     printf("\nMusica removida com sucesso!\n");
+                    playlist->quantidade_musicas_playlist--;
+                }
                 else
                     printf("\nMusica nao encontrada!\n");
             }
             else
-            {
                 printf("\nPlaylist nao encontrada!\n");
-            }
+            pausar();
             break;
         }
         case 16:
@@ -553,10 +548,7 @@ void menu_geral()
                 mensagens_de_erro_add_musica_playlist(retorno);
             }
             else
-            {
                 printf("\nPlaylist nao encontrada!\n");
-            }
-
             pausar();
             break;
         }
