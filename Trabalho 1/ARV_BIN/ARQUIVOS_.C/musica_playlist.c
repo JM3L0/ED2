@@ -82,8 +82,23 @@ void limpar_no_musica_playlist(MUSICA_PLAYLIST *no)
     }
 }
 
+int procura_musica_playlist(MUSICA_PLAYLIST *raiz, char* titulo_musica, char* artista_musica, char* album_musica) // percorre todas as playlists e imprime as musicas
+{
+    int achou_mus = 0;
+    if (raiz != NULL)
+    {
+        if (achou_mus == 0){
 
-
+            achou_mus |= procura_musica_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
+            if (strcasecmp(raiz->titulo_musica, titulo_musica) == 0 && strcasecmp(raiz->artista_musica, artista_musica) == 0 && strcasecmp(raiz->album_musica, album_musica) == 0)
+            {
+                achou_mus = 1;
+            }
+            achou_mus |= procura_musica_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
+        }
+    }
+    return (achou_mus);
+}
 /*---------------------------------- Funções de Imprimir ----------------------------------*/
 
 int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas as musicas

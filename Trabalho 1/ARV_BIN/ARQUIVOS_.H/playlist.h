@@ -17,5 +17,7 @@ int eh_folha_playlist(PLAYLIST *no);
 PLAYLIST *so_um_filho_playlist(PLAYLIST *no);
 PLAYLIST *menor_no_playlist(PLAYLIST *raiz);
 int remove_playlist(PLAYLIST **raiz, char *titulo_playlist);
+int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char* titulo_musica, char* album_musica, char* artista_musica);
+
 
 #endif

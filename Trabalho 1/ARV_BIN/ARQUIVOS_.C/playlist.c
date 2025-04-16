@@ -72,14 +72,22 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
     return (inseriu);
 }
 
-int percorre_todas_as_playlists(PLAYLIST *raiz){
+int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char* titulo_musica, char* album_musica, char* artista_musica) // percorre todas as playlists e imprime as musicas{
+{   
     int retorno = 0;
 
     if (raiz != NULL)
     {
-        retorno = percorre_todas_as_playlists(raiz->esq);
-        retorno = imprime_dados_de_uma_playlist(raiz);
-        retorno = percorre_todas_as_playlists(raiz->dir);
+        if(retorno == 0){
+
+            retorno |= percorre_todas_as_playlists_buscando_uma_musica(raiz->esq, titulo_musica, album_musica, artista_musica);
+            if (raiz->arv_musicas_playlist != NULL)
+            {
+                retorno |= procura_musica_playlist(raiz->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
+            }
+            retorno |= percorre_todas_as_playlists_buscando_uma_musica(raiz->dir, titulo_musica, album_musica, artista_musica);
+        }
+
     }
     return (retorno);
 }
