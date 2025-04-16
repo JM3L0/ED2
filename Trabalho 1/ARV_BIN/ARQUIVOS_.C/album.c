@@ -147,7 +147,7 @@ int mostrar_todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // impr
         if (raiz->arv_albuns != NULL)
         {
             printf("\nArtista: %s\n", raiz->nome_artista);
-            imprimiu = imprimir_albuns_ano(raiz->arv_albuns, ano_lancamento);
+            imprimiu |= imprimir_albuns_ano(raiz->arv_albuns, ano_lancamento);
             if (imprimiu == 0)
                 printf("O artista %s nao posssui album lancado no ano %d!\n", raiz->nome_artista, ano_lancamento);
         }
