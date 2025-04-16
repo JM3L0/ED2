@@ -598,7 +598,7 @@ void menu_geral()
                         printf("\nEssa musica faz parte de uma playlist, nao pode ser removida!\n");
                     else
                     {
-                        retorno = remove_musica_album(&artista->arv_albuns, titulo_musica, titulo_album, nome_artista);
+                        retorno = remove_musica(&artista->arv_albuns, titulo_musica, titulo_album, nome_artista);
                         if (retorno == 1)
                             printf("\nMusica removida com sucesso!\n");
                         else
