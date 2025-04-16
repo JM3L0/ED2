@@ -493,7 +493,7 @@ void menu_geral()
                 printf("Dados da playlist %s:\n\n", nome_playlist);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprime_dados_de_uma_playlist(raiz_playlist);
+                retorno = imprime_dados_de_uma_playlist(playlist);
             }
             else
                 printf("\nPlaylist nao encontrada!\n");
