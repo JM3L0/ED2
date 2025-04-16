@@ -432,10 +432,10 @@ void menu_geral()
             printf("Albuns cadastrados no ano %d:\n\n", ano_lancamento);
             printf("--------------------------------------------------\n");
 
-            retorno = todos_artistas_album_ano(raiz_artista, ano_lancamento);
+            retorno = mostrar_todos_artistas_album_ano(raiz_artista, ano_lancamento);
             if (retorno == 0)
             {
-                printf("\nNenhum album cadastrado desse ano!\n");
+                printf("\nNenhum artista tem album cadastrado no ano %d!\n", ano_lancamento);
             }
             pausar();
             break;

@@ -138,20 +138,20 @@ int imprimir_albuns_ano(ALBUNS *raiz, int ano_lancamento) // Imprime todos os al
     return (imprimiu);
 }
 
-int todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os albuns de acordo com o ano
+int mostrar_todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os albuns de acordo com o ano
 {
     int imprimiu = 0;
     if (raiz != NULL)
     {
+        imprimiu |= mostrar_todos_artistas_album_ano(raiz->esq, ano_lancamento);
         if (raiz->arv_albuns != NULL)
         {
             printf("\nArtista: %s\n", raiz->nome_artista);
             imprimiu = imprimir_albuns_ano(raiz->arv_albuns, ano_lancamento);
             if (imprimiu == 0)
-                printf("Nenhum album cadastrado nesse ano!\n");
+                printf("O artista %s nao posssui album lancado no ano %d!\n", raiz->nome_artista, ano_lancamento);
         }
-        imprimiu |= todos_artistas_album_ano(raiz->esq, ano_lancamento);
-        imprimiu |= todos_artistas_album_ano(raiz->dir, ano_lancamento);
+        imprimiu |= mostrar_todos_artistas_album_ano(raiz->dir, ano_lancamento);
     }
     return (imprimiu);
 }
