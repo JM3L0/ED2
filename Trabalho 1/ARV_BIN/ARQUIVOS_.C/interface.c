@@ -513,7 +513,7 @@ void menu_geral()
                 printf("Digite o nome do album: ");
                 ler_string_simples(album_musica, sizeof(album_musica));
 
-                retorno = remove_musica_platlist(&playlist->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
+                retorno = remove_musica_playlist(&playlist->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
                 if (retorno == 1){
                     printf("\nMusica removida com sucesso!\n");
                     playlist->quantidade_musicas_playlist--;

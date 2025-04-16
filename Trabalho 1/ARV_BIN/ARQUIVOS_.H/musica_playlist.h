@@ -16,7 +16,7 @@ int eh_folha_musica_playlist(MUSICA_PLAYLIST *raiz);
 MUSICA_PLAYLIST *so_um_filho_musica_playlist(MUSICA_PLAYLIST *raiz);
 int dois_filhos(MUSICA_PLAYLIST *raiz);
 MUSICA_PLAYLIST *menor_musica_playlist(MUSICA_PLAYLIST *raiz);
-int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista);
+int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista);
 void liberar_arv_musica_playlist(MUSICA_PLAYLIST **raiz);
 
 #endif

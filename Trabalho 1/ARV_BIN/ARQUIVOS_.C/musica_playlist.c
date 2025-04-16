@@ -175,7 +175,7 @@ MUSICA_PLAYLIST *menor_musica_playlist(MUSICA_PLAYLIST *raiz)
     return (menor);
 }
 
-int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista)
+int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista)
 {
     int removeu = 1;
     if (*raiz != NULL)
@@ -201,7 +201,7 @@ int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
                 (*raiz)->artista_musica = aux->artista_musica;
                 (*raiz)->album_musica = aux->album_musica;
 
-                remove_musica_platlist(&(*raiz)->dir, aux->titulo_musica, aux->album_musica, aux->artista_musica);
+                remove_musica_playlist(&(*raiz)->dir, aux->titulo_musica, aux->album_musica, aux->artista_musica);
             }
 
             free(aux);
@@ -209,21 +209,21 @@ int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
         else
         {
             if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
-                removeu = remove_musica_platlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
+                removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
             else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) > 0)
-                removeu = remove_musica_platlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+                removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
             else
             {
                 if (strcasecmp(titulo_album, (*raiz)->album_musica) < 0)
-                    removeu = remove_musica_platlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
+                    removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
                 else if (strcasecmp(titulo_album, (*raiz)->album_musica) > 0)
-                    removeu = remove_musica_platlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+                    removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
                 else
                 {
                     if (strcasecmp(nome_artista, (*raiz)->artista_musica) < 0)
-                        removeu = remove_musica_platlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
+                        removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
                     else // if (strcasecmp(nome_artista, (*raiz)->artista_musica) > 0)
-                        removeu = remove_musica_platlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+                        removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
                 }
             }
         }
