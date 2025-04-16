@@ -162,15 +162,17 @@ int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *t
 
 void limpar_no_artista(ARTISTAS *no) // limpa os dados do artista sem liberar o nó
 {
+    if (no == NULL)
+    {
+        free(no->nome_artista);
+        no->nome_artista = NULL;
 
-    free(no->nome_artista);
-    no->nome_artista = NULL;
+        free(no->tipo_artista);
+        no->tipo_artista = NULL;
 
-    free(no->tipo_artista);
-    no->tipo_artista = NULL;
-
-    free(no->estilo_musical);
-    no->estilo_musical = NULL;
+        free(no->estilo_musical);
+        no->estilo_musical = NULL;
+    }
 }
 
 void liberar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista

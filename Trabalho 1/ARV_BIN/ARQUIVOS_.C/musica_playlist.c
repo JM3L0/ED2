@@ -63,26 +63,20 @@ MUSICA_PLAYLIST *existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musi
 
     if (raiz != NULL)
     {
-        if (strcasecmp(raiz->titulo_musica, titulo_musica) == 0 && strcasecmp(raiz->artista_musica, artista_musica) == 0 && strcasecmp(raiz->album_musica, album_musica) == 0)
-            existe_music_play = raiz;
-        else if (strcasecmp(titulo_musica, raiz->titulo_musica) < 0)
-            existe_music_play = existe_musica_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
-        else
-            existe_music_play = existe_musica_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
+        if (existe_music_play == NULL){
+
+            if (strcasecmp(raiz->titulo_musica, titulo_musica) == 0 && strcasecmp(raiz->artista_musica, artista_musica) == 0 && strcasecmp(raiz->album_musica, album_musica) == 0)
+                existe_music_play = raiz;
+            else if (strcasecmp(titulo_musica, raiz->titulo_musica) < 0)
+                existe_music_play = existe_musica_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
+            else
+                existe_music_play = existe_musica_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
+        }
     }
     return (existe_music_play);
 }
 
-void limpar_no_musica_playlist(MUSICA_PLAYLIST *no)
-{
-    if (no != NULL)
-    {
-        free(no->titulo_musica);
-        no->titulo_musica = NULL;
-    }
-}
-
-int procura_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica) // percorre todas as playlists e imprime as musicas
+int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica) // percorre todas as playlists e imprime as musicas
 {
     int achou_mus = 0;
     if (raiz != NULL)
@@ -90,10 +84,10 @@ int procura_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *ar
         if (achou_mus == 0)
         {
 
-            achou_mus |= procura_musica_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
+            achou_mus |= verifica_se_musica_esta_na_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
             if (strcasecmp(raiz->titulo_musica, titulo_musica) == 0 && strcasecmp(raiz->artista_musica, artista_musica) == 0 && strcasecmp(raiz->album_musica, album_musica) == 0)
                 achou_mus = 1;
-            achou_mus |= procura_musica_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
+            achou_mus |= verifica_se_musica_esta_na_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
         }
     }
     return (achou_mus);
@@ -116,7 +110,7 @@ int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas
 int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 {
 
-    int opcao, retorno;
+    int retorno;
 
     char nome_artista[50];
     printf("Digite o nome do artista referente a musica que deseja adicionar: ");
@@ -197,7 +191,7 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
 
             if (eh_folha_musica_playlist(*raiz))
                 *raiz = NULL;
-            else if (filho = so_um_filho_musica_playlist(*raiz))
+            else if ((filho = so_um_filho_musica_playlist(*raiz)) != NULL)
                 *raiz = filho;
             else
             {

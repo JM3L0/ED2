@@ -83,7 +83,7 @@ int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char *titulo
 
             retorno |= percorre_todas_as_playlists_buscando_uma_musica(raiz->esq, titulo_musica, album_musica, artista_musica);
             if (raiz->arv_musicas_playlist != NULL)
-                retorno |= procura_musica_playlist(raiz->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
+                retorno |= verifica_se_musica_esta_na_playlist(raiz->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
             retorno |= percorre_todas_as_playlists_buscando_uma_musica(raiz->dir, titulo_musica, album_musica, artista_musica);
         }
     }

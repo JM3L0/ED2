@@ -22,7 +22,7 @@ ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
 
 ALBUNS *cadastrar_album(ALBUNS *album)
 {
-    int ano_lancamento, quat_musics;
+    int ano_lancamento;
     char *titulo_album;
 
     printf("Digite o titulo do album: ");
@@ -158,9 +158,11 @@ int mostrar_todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // impr
 
 void limpar_no_album(ALBUNS *no) // limpa os dados do album sem liberar o nó
 {
-
-    free(no->titulo_album);
-    no->titulo_album = NULL;
+    if(no == NULL)
+    {
+        free(no->titulo_album);
+        no->titulo_album = NULL;
+    }
 }
 
 void liberar_arv_album(ALBUNS **raiz) // limpa a arvore album

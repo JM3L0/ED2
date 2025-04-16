@@ -17,12 +17,26 @@ char *ler_string() // nunca lhe esquecerei (ou não)
     return string;
 }
 
+// void ler_string_simples(char *buffer, size_t tamanho)
+// {
+//     if (fgets(buffer, tamanho, stdin) != NULL)
+//         buffer[strcspn(buffer, "\n")] = 0; // Remove o caractere de nova linha, se existir
+//     else
+//         buffer[0] = '\0'; // Garante que o buffer fique vazio em caso de erro
+// }
+
 void ler_string_simples(char *buffer, size_t tamanho)
 {
     if (fgets(buffer, tamanho, stdin) != NULL)
-        buffer[strcspn(buffer, "\n")] = 0; // Remove o caractere de nova linha, se existir
+    {
+        buffer[strcspn(buffer, "\n")] = 0;
+        if (strlen(buffer) == 0) {
+            printf("Entrada inválida! Digite novamente: ");
+            ler_string_simples(buffer, tamanho);
+        }
+    }
     else
-        buffer[0] = '\0'; // Garante que o buffer fique vazio em caso de erro
+        buffer[0] = '\0';
 }
 
 int digitar_int() // muito bom

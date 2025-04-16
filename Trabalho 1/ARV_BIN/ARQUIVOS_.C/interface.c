@@ -440,7 +440,8 @@ void menu_geral()
             if (artista)
             {
                 retorno = imprimir_todos_albuns(artista->arv_albuns);
-                if (retorno){
+                if (retorno)
+                {
 
                     char titulo_album[50];
                     printf("Digite o titulo do album: ");
@@ -459,7 +460,9 @@ void menu_geral()
                     }
                     else
                         printf("\nAlbum nao encontrado!\n");
-                }else{
+                }
+                else
+                {
                     printf("\nNenhum album cadastrado desse artista!\n");
                 }
             }
@@ -619,21 +622,20 @@ void menu_geral()
                     char titulo_musica[50];
                     printf("Digite o titulo da musica: ");
                     ler_string_simples(titulo_musica, sizeof(titulo_musica));
-                    MUSICAS *musica = existe_musica(album->arv_musicas, titulo_musica);
 
-                    if (musica)
+                    retorno = percorre_todas_as_playlists_buscando_uma_musica(raiz_playlist, titulo_musica, nome_artista, titulo_album);
+                    if (retorno == 1)
+                        printf("\nEssa musica faz parte de uma playlist, nao pode ser removida!\n");
+                    else
                     {
-                        retorno = percorre_todas_as_playlists_buscando_uma_musica(raiz_playlist, titulo_musica, nome_artista, titulo_album);
+                        retorno = remove_musica(&album->arv_musicas, titulo_musica);
                         if (retorno == 1)
-                            printf("\nEssa musica faz parte de uma playlist, nao pode ser removida!\n");
-                        else
                         {
-                            retorno = remove_musica(&musica, titulo_musica);
-                            if (retorno == 1)
-                                printf("\nMusica removida com sucesso!\n");
-                            else
-                                printf("\nMusica nao encontrada!\n");
+                            printf("\nMusica removida com sucesso!\n");
+                            album->quantidade_musicas--;
                         }
+                        else
+                            printf("\nMusica nao encontrada!\n");
                     }
                 }
                 else

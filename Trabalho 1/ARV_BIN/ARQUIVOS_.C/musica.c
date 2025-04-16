@@ -158,8 +158,11 @@ int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus, char *nome_musica)
 
 void limpar_no_musica(MUSICAS *no) // limpa os dados da musica sem liberar o nó
 {
-    free(no->titulo_musica);
-    no->titulo_musica = NULL;
+    if (no == NULL)
+    {
+        free(no->titulo_musica);
+        no->titulo_musica = NULL;
+    }
 }
 
 void liberar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
@@ -224,11 +227,12 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica)
     {
         if (strcasecmp((*raiz)->titulo_musica, titulo_musica) == 0)
         {
-            MUSICAS *aux = *raiz, *filho;
+            MUSICAS *aux, *filho;
+            aux = *raiz;
 
             if (eh_folha_musica(*raiz))
                 *raiz = NULL;
-            else if (filho = so_um_filho_musica(*raiz))
+            else if ((filho = so_um_filho_musica(*raiz)) != NULL)
                 *raiz = filho;
             else
             {
