@@ -547,11 +547,38 @@ void menu_geral()
             pausar();
             break;
         }
-        case 17:
+        case 17:{
             /* Permita remover uma música de um determinado álbum de um determinado artista. Lembre-se só
             poderá ser removida se não fizer parte de nenhuma playlist.*/
-            //  remover_musica_album_artista(raiz_artista);
+            
+            char nome_artista[50];
+            printf("Digite o nome do artista: ");
+            ler_string_simples(nome_artista, sizeof(nome_artista));
+            ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
+
+            if(artista)
+            {
+                char titulo_album[50];
+                printf("Digite o titulo do album: ");
+                ler_string_simples(titulo_album, sizeof(titulo_album));
+                ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
+
+                if (album)
+                {
+                    char titulo_musica[50];
+                    printf("Digite o titulo da musica: ");
+                    ler_string_simples(titulo_musica, sizeof(titulo_musica));
+
+                    
+                }
+                else
+                    printf("\nAlbum nao encontrado!\n");
+            }
+            else
+                printf("\nArtista nao encontrado!\n");
+
             break;
+        }
         case 18:
         { /*Adicionar musica a uma playlist*/
             char nome_playlist[50];

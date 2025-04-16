@@ -72,6 +72,18 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
     return (inseriu);
 }
 
+int percorre_todas_as_playlists(PLAYLIST *raiz){
+    int retorno = 0;
+
+    if (raiz != NULL)
+    {
+        retorno = percorre_todas_as_playlists(raiz->esq);
+        retorno = imprime_dados_de_uma_playlist(raiz);
+        retorno = percorre_todas_as_playlists(raiz->dir);
+    }
+    return (retorno);
+}
+
 /*---------------------------------- Funções de Printar ----------------------------------*/
 
 int imprimir_playlists(PLAYLIST *raiz) // apens imprime todas as playlists (titulo da playlist) existentes

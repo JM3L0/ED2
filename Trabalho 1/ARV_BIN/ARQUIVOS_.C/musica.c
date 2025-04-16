@@ -173,3 +173,88 @@ void liberar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
         *raiz = NULL;
     }
 }
+
+int eh_folha_musica (MUSICAS *raiz){
+
+    int eh_folha = 0;
+
+    if (raiz != NULL)
+    {
+        if (raiz->esq == NULL && raiz->dir == NULL)
+            eh_folha = 1;
+        else
+            eh_folha = 0;
+    }
+    return (eh_folha);
+}
+
+MUSICAS *so_um_filho_musica(MUSICAS *raiz){
+
+    MUSICAS *no = NULL;
+
+    if (raiz != NULL)
+    {
+        if (raiz->esq == NULL && raiz->dir != NULL)
+            no = raiz->dir;
+        else if (raiz->esq != NULL && raiz->dir == NULL)
+            no = raiz->esq;
+    }
+    return (no);
+}
+
+int dois_filhos_musica(MUSICAS *raiz){
+    return (raiz->esq != NULL && raiz->dir != NULL);
+}
+
+MUSICAS *menor_no_musica(MUSICAS *raiz){
+    MUSICAS *menor = raiz;
+    while (menor->esq != NULL)
+        menor = menor->esq;
+    return (menor);
+}
+
+int remove_musica(MUSICAS **raiz, char *titulo_musica){
+    int removeu = 1;
+    if (*raiz != NULL)
+    {
+        if (strcasecmp((*raiz)->titulo_musica, titulo_musica) == 0)
+        {
+            MUSICAS *aux = *raiz, *filho;
+
+            if (eh_folha_musica(*raiz))
+            {
+                *raiz = NULL;
+            }
+            else if (filho = so_um_filho_musica(*raiz))
+            {
+                *raiz = filho;
+            }
+            else
+            {
+                aux = menor_no_musica((*raiz)->dir);
+                limpar_no_musica(*raiz);
+
+                (*raiz)->titulo_musica = aux->titulo_musica;
+                (*raiz)->duracao_musica = aux->duracao_musica;
+
+                aux->titulo_musica = NULL;
+
+                remove_musica(&(*raiz)->dir, aux->titulo_musica);
+            }
+
+            limpar_no_musica(aux);
+            free(aux);
+        }
+        else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
+        {
+            removeu = remove_musica(&(*raiz)->esq, titulo_musica);
+        }
+        else
+        {
+            removeu = remove_musica(&(*raiz)->dir, titulo_musica);
+        }
+    }else{
+        removeu = 0;
+    }
+    return (removeu);
+}

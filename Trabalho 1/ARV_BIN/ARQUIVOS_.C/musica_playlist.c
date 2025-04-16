@@ -82,6 +82,8 @@ void limpar_no_musica_playlist(MUSICA_PLAYLIST *no)
     }
 }
 
+
+
 /*---------------------------------- Funções de Imprimir ----------------------------------*/
 
 int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas as musicas
