@@ -117,7 +117,7 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
         if (album)
         {
             char titulo_musica[50];
-            printf("Digite o titulo da musica a ser adicioanda na playlist: ");
+            printf("Digite o titulo da musica a ser adicionada na playlist: ");
             ler_string_simples(titulo_musica, sizeof(titulo_musica));
             MUSICAS *musica = existe_musica(album->arv_musicas, titulo_musica);
 
