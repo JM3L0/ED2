@@ -20,13 +20,9 @@ char *ler_string() // nunca lhe esquecerei (ou não)
 void ler_string_simples(char *buffer, size_t tamanho)
 {
     if (fgets(buffer, tamanho, stdin) != NULL)
-    {
         buffer[strcspn(buffer, "\n")] = 0; // Remove o caractere de nova linha, se existir
-    }
     else
-    {
         buffer[0] = '\0'; // Garante que o buffer fique vazio em caso de erro
-    }
 }
 
 int digitar_int() // muito bom
@@ -46,8 +42,7 @@ int digitar_int() // muito bom
 
 void limpar_buffer()
 {
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n');
 }
 
 void pausar()

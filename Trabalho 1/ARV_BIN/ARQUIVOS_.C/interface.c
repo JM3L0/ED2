@@ -9,7 +9,8 @@
 #include "../ARQUIVOS_.H/playlist.h"
 #include "../ARQUIVOS_.H/musica_playlist.h"
 
-void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_playlist) {
+void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_playlist)
+{
     int retorno;
 
     // --- Criação de 2 Artistas ---
@@ -18,89 +19,105 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
 
     // Inserir artistas
     retorno = inserir_artista(raiz_artista, artista1);
-    if (retorno == 1) printf("Artista 'rail' cadastrado com sucesso!\n");
-    else printf("Erro ao cadastrar 'rail'!\n");
+    if (retorno == 1)
+        printf("Artista 'rail' cadastrado com sucesso!\n");
+    else
+        printf("Erro ao cadastrar 'rail'!\n");
 
     retorno = inserir_artista(raiz_artista, artista2);
-    if (retorno == 1) printf("Artista 'joao' cadastrado com sucesso!\n");
-    else printf("Erro ao cadastrar 'joao'!\n");
+    if (retorno == 1)
+        printf("Artista 'joao' cadastrado com sucesso!\n");
+    else
+        printf("Erro ao cadastrar 'joao'!\n");
 
-    // --- Criação de 2 albuns ---
+    // --- Criação de 3 albuns ---
     ALBUNS *album1 = aloca_no_album(strdup("SIM"), 2000);
     ALBUNS *album2 = aloca_no_album(strdup("NAO"), 3000);
     ALBUNS *album3 = aloca_no_album(strdup("MUSICS"), 2001);
 
     // Inserir albuns
     ARTISTAS *rail = existe_artista(*raiz_artista, "rail");
-    if (rail) {
+    if (rail)
+    {
         retorno = inserir_album(&rail->arv_albuns, album1);
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("album 'SIM' cadastrado para rail!\n");
             rail->numero_albuns++;
-        } else {
-            printf("Erro ao cadastrar 'SIM'!\n");
         }
+        else
+            printf("Erro ao cadastrar 'SIM'!\n");
     }
 
     rail = existe_artista(*raiz_artista, "rail");
-    if (rail) {
+    if (rail)
+    {
         retorno = inserir_album(&rail->arv_albuns, album3);
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("album 'MUSICS' cadastrado para rail!\n");
             rail->numero_albuns++;
-        } else {
-            printf("Erro ao cadastrar 'MUSICS'!\n");
         }
+        else
+            printf("Erro ao cadastrar 'MUSICS'!\n");
     }
 
     ARTISTAS *joao = existe_artista(*raiz_artista, "joao");
-    if (joao) {
+    if (joao)
+    {
         retorno = inserir_album(&joao->arv_albuns, album2);
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("album 'NAO' cadastrado para joao!\n");
             joao->numero_albuns++;
-        } else {
-            printf("Erro ao cadastrar 'NAO'!\n");
         }
+        else
+            printf("Erro ao cadastrar 'NAO'!\n");
     }
 
-    // --- Criação de 2 Musicas ---
+    // --- Criação de 3 Musicas ---
     MUSICAS *musica1 = alocar_musica(strdup("winx"), 2.66);
     MUSICAS *musica2 = alocar_musica(strdup("kwid"), 1.99);
     MUSICAS *musica3 = alocar_musica(strdup("corola manual"), 2.99);
 
     // Inserir musicas
     ALBUNS *SIM = existe_album(rail->arv_albuns, "SIM");
-    if (SIM) {
+    if (SIM)
+    {
         retorno = inserir_musica(&SIM->arv_musicas, musica1);
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("Musica 'winx' cadastrada em SIM!\n");
             SIM->quantidade_musicas++;
-        } else {
-            printf("Erro ao cadastrar 'winx'!\n");
         }
+        else
+            printf("Erro ao cadastrar 'winx'!\n");
     }
 
     ALBUNS *MUSICS = existe_album(rail->arv_albuns, "MUSICS");
-    if (MUSICS) {
+    if (MUSICS)
+    {
         retorno = inserir_musica(&MUSICS->arv_musicas, musica3);
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("Musica 'corola manual' cadastrada em MUSICS!\n");
             MUSICS->quantidade_musicas++;
-        } else {
-            printf("Erro ao cadastrar 'corola manual'!\n");
         }
+        else
+            printf("Erro ao cadastrar 'corola manual'!\n");
     }
 
     ALBUNS *NAO = existe_album(joao->arv_albuns, "NAO");
-    if (NAO) {
+    if (NAO)
+    {
         retorno = inserir_musica(&NAO->arv_musicas, musica2);
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("Musica 'kwid' cadastrada em NAO!\n");
             NAO->quantidade_musicas++;
-        } else {
-            printf("Erro ao cadastrar 'kwid'!\n");
         }
+        else
+            printf("Erro ao cadastrar 'kwid'!\n");
     }
 
     // --- Criação de 2 Playlists ---
@@ -109,38 +126,46 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
 
     // Inserir playlists
     retorno = inserir_playlist(raiz_playlist, playlist1);
-    if (retorno == 1) printf("Playlist 'testando' cadastrada com sucesso!\n");
-    else printf("Erro ao cadastrar 'testando'!\n");
+    if (retorno == 1)
+        printf("Playlist 'testando' cadastrada com sucesso!\n");
+    else
+        printf("Erro ao cadastrar 'testando'!\n");
 
     retorno = inserir_playlist(raiz_playlist, playlist2);
-    if (retorno == 1) printf("Playlist 'tome' cadastrada com sucesso!\n");
-    else printf("Erro ao cadastrar 'tome'!\n");
+    if (retorno == 1)
+        printf("Playlist 'tome' cadastrada com sucesso!\n");
+    else
+        printf("Erro ao cadastrar 'tome'!\n");
 
     // --- Adicionar 2 Musicas as Playlists ---
     // Playlist: testando
     PLAYLIST *testando = existe_playlist(*raiz_playlist, "testando");
-    if (testando) {
+    if (testando)
+    {
         MUSICA_PLAYLIST *mp1 = alocar_musica_playlist(strdup("winx"), 2.66, strdup("rail"), strdup("SIM"));
         retorno = inserir_musica_playlist(&testando->arv_musicas_playlist, mp1, "SIM", "rail");
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("Musica 'winx' adicionada a playlist 'testando'!\n");
             testando->quantidade_musicas_playlist++;
-        } else {
-            printf("Erro ao adicionar 'winx' a playlist 'testando'!\n");
         }
+        else
+            printf("Erro ao adicionar 'winx' a playlist 'testando'!\n");
     }
 
     // Playlist: tome
     PLAYLIST *tome = existe_playlist(*raiz_playlist, "tome");
-    if (tome) {
+    if (tome)
+    {
         MUSICA_PLAYLIST *mp2 = alocar_musica_playlist(strdup("kwid"), 1.99, strdup("joao"), strdup("NAO"));
         retorno = inserir_musica_playlist(&tome->arv_musicas_playlist, mp2, "NAO", "joao");
-        if (retorno == 1) {
+        if (retorno == 1)
+        {
             printf("Musica 'kwid' adicionada a playlist 'tome'!\n");
             tome->quantidade_musicas_playlist++;
-        } else {
-            printf("Erro ao adicionar 'kwid' a playlist 'tome'!\n");
         }
+        else
+            printf("Erro ao adicionar 'kwid' a playlist 'tome'!\n");
     }
 }
 
@@ -268,7 +293,8 @@ void menu_geral()
 
                     retorno = inserir_musica(&album->arv_musicas, musica);
 
-                    if (retorno == 1){
+                    if (retorno == 1)
+                    {
                         printf("\nMusica cadastrada com sucesso!\n");
                         album->quantidade_musicas++;
                     }
@@ -276,16 +302,11 @@ void menu_geral()
                         printf("\nMusica nao cadastrada!\n");
                 }
                 else
-                {
                     printf("\nAlbum nao encontrado!\n");
-                }
             }
             else
-            {
                 printf("\nArtista nao encontrado!\n");
-            }
             pausar();
-
             break;
         }
         case 4:
@@ -374,9 +395,7 @@ void menu_geral()
                     printf("\nNenhum album cadastrado desse artista!\n");
             }
             else
-            {
                 printf("\nArtista nao encontrado!\n");
-            }
             pausar();
             break;
         }
@@ -404,9 +423,7 @@ void menu_geral()
                     printf("\nNenhum album desse desse ano para esse artista!\n");
             }
             else
-            {
                 printf("\nArtista nao encontrado!\n");
-            }
             pausar();
             break;
         }
@@ -519,9 +536,9 @@ void menu_geral()
             break;
         }
         case 15:
-        {// Permita remover uma música de uma determinada playlist.
-        
-            char nome_playlist[50]; 
+        { // Permita remover uma música de uma determinada playlist.
+
+            char nome_playlist[50];
             printf("Digite o nome da playlist: ");
             ler_string_simples(nome_playlist, sizeof(nome_playlist));
             PLAYLIST *playlist = existe_playlist(raiz_playlist, nome_playlist);
@@ -529,7 +546,7 @@ void menu_geral()
             if (playlist)
             {
                 char titulo_musica[50], artista_musica[50], album_musica[50];
-                
+
                 printf("Digite o nome da musica: ");
                 ler_string_simples(titulo_musica, sizeof(titulo_musica));
                 printf("Digite o nome do artista: ");
@@ -538,7 +555,8 @@ void menu_geral()
                 ler_string_simples(album_musica, sizeof(album_musica));
 
                 retorno = remove_musica_playlist(&playlist->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
-                if (retorno == 1){
+                if (retorno == 1)
+                {
                     printf("\nMusica removida com sucesso!\n");
                     playlist->quantidade_musicas_playlist--;
                 }
@@ -550,7 +568,8 @@ void menu_geral()
             pausar();
             break;
         }
-        case 16:{
+        case 16:
+        {
             // Permita remover uma playlist, lembre-se de remover a árvore binária da playlist também.
             char nome_playlist[50];
             printf("Digite o nome da playlist: ");
@@ -571,16 +590,17 @@ void menu_geral()
             pausar();
             break;
         }
-        case 17:{
+        case 17:
+        {
             /* Permita remover uma música de um determinado álbum de um determinado artista. Lembre-se só
             poderá ser removida se não fizer parte de nenhuma playlist.*/
-            
+
             char nome_artista[50];
             printf("Digite o nome do artista: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
             ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
 
-            if(artista)
+            if (artista)
             {
                 char titulo_album[50];
                 printf("Digite o titulo do album: ");
@@ -594,7 +614,7 @@ void menu_geral()
                     ler_string_simples(titulo_musica, sizeof(titulo_musica));
                     MUSICAS *musica = existe_musica(album->arv_musicas, titulo_musica);
 
-                    if(musica)
+                    if (musica)
                     {
                         retorno = percorre_todas_as_playlists_buscando_uma_musica(raiz_playlist, titulo_musica, nome_artista, titulo_album);
                         if (retorno == 1)
@@ -608,14 +628,13 @@ void menu_geral()
                                 printf("\nMusica nao encontrada!\n");
                         }
                     }
-                    
                 }
                 else
                     printf("\nAlbum nao encontrado!\n");
             }
             else
                 printf("\nArtista nao encontrado!\n");
-
+            pausar();
             break;
         }
         case 18:

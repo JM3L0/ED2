@@ -118,9 +118,9 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica)
         imprimiu |= imprime_dados_da_musica_album(raiz_alb->esq, nome_musica);
         if (raiz_alb->arv_musicas != NULL)
         {
-            //printf("DEBUG: Antes de buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
+            // printf("DEBUG: Antes de buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
             int encontrou_musica = imprime_dados_da_musica_buscada(raiz_alb->arv_musicas, nome_musica);
-            //printf("DEBUG: Apos buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
+            // printf("DEBUG: Apos buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
             if (encontrou_musica)
             {
                 printf("     Album: %s\n", raiz_alb->titulo_album);
@@ -174,7 +174,8 @@ void liberar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
     }
 }
 
-int eh_folha_musica (MUSICAS *raiz){
+int eh_folha_musica(MUSICAS *raiz)
+{
 
     int eh_folha = 0;
 
@@ -188,7 +189,8 @@ int eh_folha_musica (MUSICAS *raiz){
     return (eh_folha);
 }
 
-MUSICAS *so_um_filho_musica(MUSICAS *raiz){
+MUSICAS *so_um_filho_musica(MUSICAS *raiz)
+{
 
     MUSICAS *no = NULL;
 
@@ -202,18 +204,21 @@ MUSICAS *so_um_filho_musica(MUSICAS *raiz){
     return (no);
 }
 
-int dois_filhos_musica(MUSICAS *raiz){
+int dois_filhos_musica(MUSICAS *raiz)
+{
     return (raiz->esq != NULL && raiz->dir != NULL);
 }
 
-MUSICAS *menor_no_musica(MUSICAS *raiz){
+MUSICAS *menor_no_musica(MUSICAS *raiz)
+{
     MUSICAS *menor = raiz;
     while (menor->esq != NULL)
         menor = menor->esq;
     return (menor);
 }
 
-int remove_musica(MUSICAS **raiz, char *titulo_musica){
+int remove_musica(MUSICAS **raiz, char *titulo_musica)
+{
     int removeu = 1;
     if (*raiz != NULL)
     {
@@ -222,13 +227,9 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica){
             MUSICAS *aux = *raiz, *filho;
 
             if (eh_folha_musica(*raiz))
-            {
                 *raiz = NULL;
-            }
             else if (filho = so_um_filho_musica(*raiz))
-            {
                 *raiz = filho;
-            }
             else
             {
                 aux = menor_no_musica((*raiz)->dir);
@@ -246,15 +247,11 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica){
             free(aux);
         }
         else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
-        {
             removeu = remove_musica(&(*raiz)->esq, titulo_musica);
-        }
         else
-        {
             removeu = remove_musica(&(*raiz)->dir, titulo_musica);
-        }
-    }else{
-        removeu = 0;
     }
+    else
+        removeu = 0;
     return (removeu);
 }

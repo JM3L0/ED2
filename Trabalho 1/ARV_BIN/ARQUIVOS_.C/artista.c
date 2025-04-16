@@ -65,8 +65,9 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
         inseriu = inserir_artista(&(*raiz)->esq, no);
     else if (strcasecmp(no->nome_artista, (*raiz)->nome_artista) > 0)
         inseriu = inserir_artista(&(*raiz)->dir, no);
-    else{
-        
+    else
+    {
+
         limpar_no_artista(no);
         free(no);
         no = NULL;
@@ -179,7 +180,7 @@ void liberar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
         if ((*raiz)->arv_albuns != NULL) // se a arvore de albuns não for nula
         {
             liberar_arv_album(&(*raiz)->arv_albuns); // limpa a arvore de albuns
-            (*raiz)->arv_albuns = NULL; // seta a arvore de albuns como nula
+            (*raiz)->arv_albuns = NULL;              // seta a arvore de albuns como nula
         }
         liberar_arv_artista(&(*raiz)->esq);
         liberar_arv_artista(&(*raiz)->dir);

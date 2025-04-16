@@ -72,22 +72,20 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
     return (inseriu);
 }
 
-int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char* titulo_musica, char* album_musica, char* artista_musica) // percorre todas as playlists e imprime as musicas{
-{   
+int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char *titulo_musica, char *album_musica, char *artista_musica) // percorre todas as playlists e imprime as musicas{
+{
     int retorno = 0;
 
     if (raiz != NULL)
     {
-        if(retorno == 0){
+        if (retorno == 0)
+        {
 
             retorno |= percorre_todas_as_playlists_buscando_uma_musica(raiz->esq, titulo_musica, album_musica, artista_musica);
             if (raiz->arv_musicas_playlist != NULL)
-            {
                 retorno |= procura_musica_playlist(raiz->arv_musicas_playlist, titulo_musica, album_musica, artista_musica);
-            }
             retorno |= percorre_todas_as_playlists_buscando_uma_musica(raiz->dir, titulo_musica, album_musica, artista_musica);
         }
-
     }
     return (retorno);
 }
@@ -173,7 +171,6 @@ PLAYLIST *menor_no_playlist(PLAYLIST *raiz)
     return (menor);
 }
 
-
 int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
 {
     int removeu = 0;
@@ -185,13 +182,9 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
             removeu = 1;
 
             if (eh_folha_playlist(*raiz))
-            {
                 *raiz = NULL;
-            }
             else if ((filho = so_um_filho_playlist(*raiz)) != NULL)
-            {
                 *raiz = filho;
-            }
             else
             {
                 aux = menor_no_playlist((*raiz)->dir);

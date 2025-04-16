@@ -103,9 +103,7 @@ int imprimir_todos_albuns_de_um_artista(ARTISTAS *raiz, char *nome_artista) // i
 
     int imprimiu = 0;
     if (artista != NULL && artista->arv_albuns != NULL)
-    {
         imprimiu = imprimir_todos_albuns(artista->arv_albuns);
-    }
     return (imprimiu);
 }
 
@@ -116,9 +114,7 @@ int imprimir_albuns_artita_ano(ARTISTAS *raiz, char *nome_artista, int ano_lanca
 
     int imprimiu = 0;
     if (artista != NULL && artista->arv_albuns != NULL)
-    {
         imprimiu = imprimir_albuns_ano(artista->arv_albuns, ano_lancamento);
-    }
     return (imprimiu);
 }
 
@@ -173,7 +169,7 @@ void liberar_arv_album(ALBUNS **raiz) // limpa a arvore album
         if ((*raiz)->arv_musicas != NULL) // se a arvore de musicas não for nula
         {
             liberar_arv_musica(&(*raiz)->arv_musicas); // limpa a arvore de musicas
-            (*raiz)->arv_musicas = NULL;              // limpa o ponteiro da arvore de musicas
+            (*raiz)->arv_musicas = NULL;               // limpa o ponteiro da arvore de musicas
         }
         liberar_arv_album(&(*raiz)->esq);
         liberar_arv_album(&(*raiz)->dir);
