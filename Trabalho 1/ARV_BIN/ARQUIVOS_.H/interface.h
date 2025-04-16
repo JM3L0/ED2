@@ -1,6 +1,5 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
-
 #include "artista.h"
 #include "album.h"
 #include "musica.h"

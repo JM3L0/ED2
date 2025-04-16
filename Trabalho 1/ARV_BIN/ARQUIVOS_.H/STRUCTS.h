@@ -40,7 +40,6 @@ typedef struct MUSICA_PLAYLIST
     float duracao_musica;
     char *artista_musica;
     char *album_musica;
-
     struct MUSICA_PLAYLIST *esq, *dir;
 } MUSICA_PLAYLIST;
 

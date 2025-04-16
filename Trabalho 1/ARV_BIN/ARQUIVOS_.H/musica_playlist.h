@@ -1,6 +1,5 @@
 #ifndef MUSICA_PLAYLIST_H
 #define MUSICA_PLAYLIST_H
-
 #include "STRUCTS.h"
 #include "utilitarios.h"
 #include "playlist.h"
@@ -19,6 +18,5 @@ MUSICA_PLAYLIST *menor_musica_playlist(MUSICA_PLAYLIST *raiz);
 int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista);
 void liberar_arv_musica_playlist(MUSICA_PLAYLIST **raiz);
 int procura_musica_playlist(MUSICA_PLAYLIST *raiz, char* titulo_musica, char* artista_musica, char* album_musica);
-
 
 #endif

@@ -1,6 +1,5 @@
 #ifndef ARTISTA_H
 #define ARTISTA_H
-
 #include "utilitarios.h"
 #include "STRUCTS.h"
 
