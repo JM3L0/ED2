@@ -42,7 +42,7 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
         }
     }
 
-    ARTISTAS *rail = existe_artista(*raiz_artista, "rail");
+    rail = existe_artista(*raiz_artista, "rail");
     if (rail) {
         retorno = inserir_album(&rail->arv_albuns, album3);
         if (retorno == 1) {
