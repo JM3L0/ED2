@@ -124,7 +124,7 @@ void liberar_arv_playlist(PLAYLIST **raiz) // apagar tudo (CABUM)
     }
 }
 
-int eh_folha(PLAYLIST *no)
+int eh_folha_playlist(PLAYLIST *no)
 {
     return (no->esq == NULL && no->dir == NULL);
 }
@@ -161,7 +161,7 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
         {
             PLAYLIST *aux, *filho;
 
-            if (eh_folha(*raiz))
+            if (eh_folha_playlist(*raiz))
             {
                 aux = *raiz;
                 *raiz = NULL;
@@ -179,7 +179,7 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
                 (*raiz)->titulo_playlist = aux->titulo_playlist;
                 removeu = remove_playlist(&(*raiz)->dir, aux->titulo_playlist);
             }
-            liberar_arv_musica_playlist(aux->arv_musicas_playlist);
+            liberar_arv_musica_playlist(&aux->arv_musicas_playlist);
             limpar_no_playlist(*raiz);
             free(aux);
         }

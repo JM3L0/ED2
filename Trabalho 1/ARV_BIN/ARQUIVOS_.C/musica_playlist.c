@@ -142,7 +142,7 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 
 /*-------------------------------------- remover musica da playlist* --------------------------------------*/
 
-int eh_folha(MUSICA_PLAYLIST *raiz)
+int eh_folha_musica_playlist(MUSICA_PLAYLIST *raiz)
 {
     return (raiz->esq == NULL && raiz->dir == NULL);
 }
@@ -184,7 +184,7 @@ int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
         {
             MUSICA_PLAYLIST *aux , *filho;
 
-            if (eh_folha(*raiz))
+            if (eh_folha_musica_playlist(*raiz))
             {
                 aux = *raiz;
                 *raiz = NULL;
@@ -238,8 +238,8 @@ void liberar_arv_musica_playlist(MUSICA_PLAYLIST **raiz)
 {
     if (*raiz != NULL)
     {
-        liberar_musica_playlist(&(*raiz)->esq);
-        liberar_musica_playlist(&(*raiz)->dir);
+        liberar_arv_musica_playlist(&(*raiz)->esq);
+        liberar_arv_musica_playlist(&(*raiz)->dir);
         free(*raiz);
         *raiz = NULL;
     }
