@@ -28,6 +28,7 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
     // --- Criação de 2 albuns ---
     ALBUNS *album1 = aloca_no_album(strdup("SIM"), 2000);
     ALBUNS *album2 = aloca_no_album(strdup("NAO"), 3000);
+    ALBUNS *album3 = aloca_no_album(strdup("MUSICS"), 2001);
 
     // Inserir albuns
     ARTISTAS *rail = existe_artista(*raiz_artista, "rail");
@@ -38,6 +39,17 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
             rail->numero_albuns++;
         } else {
             printf("Erro ao cadastrar 'SIM'!\n");
+        }
+    }
+
+    ARTISTAS *rail = existe_artista(*raiz_artista, "rail");
+    if (rail) {
+        retorno = inserir_album(&rail->arv_albuns, album3);
+        if (retorno == 1) {
+            printf("album 'MUSICS' cadastrado para rail!\n");
+            rail->numero_albuns++;
+        } else {
+            printf("Erro ao cadastrar 'MUSICS'!\n");
         }
     }
 
@@ -55,6 +67,7 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
     // --- Criação de 2 Musicas ---
     MUSICAS *musica1 = alocar_musica(strdup("winx"), 2.66);
     MUSICAS *musica2 = alocar_musica(strdup("kwid"), 1.99);
+    MUSICAS *musica3 = alocar_musica(strdup("corola manual"), 2.99);
 
     // Inserir musicas
     ALBUNS *SIM = existe_album(rail->arv_albuns, "SIM");
@@ -65,6 +78,17 @@ void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_pla
             SIM->quantidade_musicas++;
         } else {
             printf("Erro ao cadastrar 'winx'!\n");
+        }
+    }
+
+    ALBUNS *MUSICS = existe_album(rail->arv_albuns, "MUSICS");
+    if (MUSICS) {
+        retorno = inserir_musica(&MUSICS->arv_musicas, musica3);
+        if (retorno == 1) {
+            printf("Musica 'corola manual' cadastrada em MUSICS!\n");
+            MUSICS->quantidade_musicas++;
+        } else {
+            printf("Erro ao cadastrar 'corola manual'!\n");
         }
     }
 
