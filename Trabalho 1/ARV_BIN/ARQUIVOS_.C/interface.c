@@ -497,13 +497,15 @@ void menu_geral()
         case 15:
         {// Permita remover uma música de uma determinada playlist.
         
-            char nome_playlist[50], titulo_musica[50], artista_musica[50], album_musica[50];
+            char nome_playlist[50]; 
             printf("Digite o nome da playlist: ");
             ler_string_simples(nome_playlist, sizeof(nome_playlist));
             PLAYLIST *playlist = existe_playlist(raiz_playlist, nome_playlist);
 
             if (playlist)
             {
+                char titulo_musica[50], artista_musica[50], album_musica[50];
+                
                 printf("Digite o nome da musica: ");
                 ler_string_simples(titulo_musica, sizeof(titulo_musica));
                 printf("Digite o nome do artista: ");
@@ -524,10 +526,27 @@ void menu_geral()
             pausar();
             break;
         }
-        case 16:
+        case 16:{
             // Permita remover uma playlist, lembre-se de remover a árvore binária da playlist também.
-            //  remover_playlist();
+            char nome_playlist[50];
+            printf("Digite o nome da playlist: ");
+            ler_string_simples(nome_playlist, sizeof(nome_playlist));
+
+            PLAYLIST *playlist = existe_playlist(raiz_playlist, nome_playlist);
+
+            if (playlist)
+            {
+                retorno = remove_playlist(&raiz_playlist, nome_playlist);
+                if (retorno == 1)
+                    printf("\nPlaylist removida com sucesso!\n");
+                else
+                    printf("\nErro ao remover playlist!\n");
+            }
+            else
+                printf("\nPlaylist nao encontrada!\n");
+            pausar();
             break;
+        }
         case 17:
             /* Permita remover uma música de um determinado álbum de um determinado artista. Lembre-se só
             poderá ser removida se não fizer parte de nenhuma playlist.*/

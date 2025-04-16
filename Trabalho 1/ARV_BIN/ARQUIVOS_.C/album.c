@@ -166,17 +166,17 @@ void limpar_no_album(ALBUNS *no) // limpa os dados do album sem liberar o nó
     no->titulo_album = NULL;
 }
 
-void limpar_arv_album(ALBUNS **raiz) // limpa a arvore album
+void liberar_arv_album(ALBUNS **raiz) // limpa a arvore album
 {
     if (*raiz != NULL)
     {
         if ((*raiz)->arv_musicas != NULL) // se a arvore de musicas não for nula
         {
-            limpar_arv_musica(&(*raiz)->arv_musicas); // limpa a arvore de musicas
+            liberar_arv_musica(&(*raiz)->arv_musicas); // limpa a arvore de musicas
             (*raiz)->arv_musicas = NULL;              // limpa o ponteiro da arvore de musicas
         }
-        limpar_arv_album(&(*raiz)->esq);
-        limpar_arv_album(&(*raiz)->dir);
+        liberar_arv_album(&(*raiz)->esq);
+        liberar_arv_album(&(*raiz)->dir);
         limpar_no_album(*raiz);
         free(*raiz);
         *raiz = NULL;

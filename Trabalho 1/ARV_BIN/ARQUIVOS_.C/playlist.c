@@ -111,3 +111,84 @@ void limpar_no_playlist(PLAYLIST *no)
         no->titulo_playlist = NULL;
     }
 }
+
+void liberar_arv_playlist(PLAYLIST **raiz) // apagar tudo (CABUM)
+{
+    if (*raiz != NULL)
+    {
+        liberar_arv_playlist(&(*raiz)->esq);
+        liberar_arv_playlist(&(*raiz)->dir);
+        limpar_no_playlist(*raiz);
+        free(*raiz);
+        *raiz = NULL;
+    }
+}
+
+int eh_folha(PLAYLIST *no)
+{
+    return (no->esq == NULL && no->dir == NULL);
+}
+
+PLAYLIST *so_um_filho_playlist(PLAYLIST *no){
+
+    PLAYLIST *filho = NULL;
+    if (no->esq != NULL && no->dir == NULL)
+        filho = no->esq;
+    else if (no->esq == NULL && no->dir != NULL)
+        filho = no->dir;
+
+    return (filho);
+}
+
+PLAYLIST *menor_no_playlist(PLAYLIST *raiz)
+{
+    PLAYLIST *menor = NULL;
+    if (raiz != NULL)
+    {
+        menor = raiz;
+        while (menor->esq != NULL)
+            menor = menor->esq;
+    }
+    return (menor);
+}
+
+int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
+{
+    int removeu = 1;
+    if (*raiz != NULL)
+    {
+        if (strcasecmp((*raiz)->titulo_playlist, titulo_playlist) == 0)
+        {
+            PLAYLIST *aux, *filho;
+
+            if (eh_folha(*raiz))
+            {
+                aux = *raiz;
+                *raiz = NULL;
+                //free(aux);
+            }
+            else if (filho = so_um_filho_playlist(*raiz))
+            {
+                aux = *raiz;
+                *raiz = filho;
+                //free(aux);
+            }
+            else
+            {
+                aux = menor_no_playlist((*raiz)->dir);
+                (*raiz)->titulo_playlist = aux->titulo_playlist;
+                removeu = remove_playlist(&(*raiz)->dir, aux->titulo_playlist);
+            }
+            liberar_arv_musica_playlist(aux->arv_musicas_playlist);
+            limpar_no_playlist(*raiz);
+            free(aux);
+        }
+        else
+        {
+            removeu = remove_playlist(&(*raiz)->esq, titulo_playlist);
+            if (removeu == 0)
+                removeu = remove_playlist(&(*raiz)->dir, titulo_playlist);
+        }
+    }
+    return (removeu);
+}

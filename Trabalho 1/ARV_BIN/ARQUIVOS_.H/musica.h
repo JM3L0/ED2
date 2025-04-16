@@ -14,6 +14,6 @@ int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art, char *nome_musica)
 int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica);
 int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus, char *nome_musica);
 void limpar_no_musica(MUSICAS *no);
-void limpar_arv_musica(MUSICAS **raiz);
+void liberar_arv_musica(MUSICAS **raiz);
 
 #endif

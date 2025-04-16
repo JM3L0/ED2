@@ -14,6 +14,6 @@ int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista);
 int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical);
 int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista);
 void limpar_no_artista(ARTISTAS *raiz);
-void limpar_arv_artista(ARTISTAS **raiz);
+void liberar_arv_artista(ARTISTAS **raiz);
 
 #endif

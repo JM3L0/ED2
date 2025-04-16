@@ -172,17 +172,17 @@ void limpar_no_artista(ARTISTAS *no) // limpa os dados do artista sem liberar o 
     no->estilo_musical = NULL;
 }
 
-void limpar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
+void liberar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
 {
     if (*raiz != NULL)
     {
         if ((*raiz)->arv_albuns != NULL) // se a arvore de albuns não for nula
         {
-            limpar_arv_album(&(*raiz)->arv_albuns); // limpa a arvore de albuns
+            liberar_arv_album(&(*raiz)->arv_albuns); // limpa a arvore de albuns
             (*raiz)->arv_albuns = NULL; // seta a arvore de albuns como nula
         }
-        limpar_arv_artista(&(*raiz)->esq);
-        limpar_arv_artista(&(*raiz)->dir);
+        liberar_arv_artista(&(*raiz)->esq);
+        liberar_arv_artista(&(*raiz)->dir);
         limpar_no_artista(*raiz);
         free(*raiz);
         *raiz = NULL;

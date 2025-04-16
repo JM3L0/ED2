@@ -162,12 +162,12 @@ void limpar_no_musica(MUSICAS *no) // limpa os dados da musica sem liberar o nó
     no->titulo_musica = NULL;
 }
 
-void limpar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
+void liberar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
 {
     if (*raiz != NULL)
     {
-        limpar_arv_musica(&(*raiz)->esq);
-        limpar_arv_musica(&(*raiz)->dir);
+        liberar_arv_musica(&(*raiz)->esq);
+        liberar_arv_musica(&(*raiz)->dir);
         limpar_no_musica(*raiz);
         free(*raiz);
         *raiz = NULL;

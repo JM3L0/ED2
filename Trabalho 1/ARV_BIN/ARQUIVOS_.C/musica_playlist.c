@@ -231,3 +231,16 @@ int remove_musica_platlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
 
     return (removeu);
 }
+
+/*-------------------------------- Liberar Arvore musica playlist --------------------------------*/
+
+void liberar_arv_musica_playlist(MUSICA_PLAYLIST **raiz)
+{
+    if (*raiz != NULL)
+    {
+        liberar_musica_playlist(&(*raiz)->esq);
+        liberar_musica_playlist(&(*raiz)->dir);
+        free(*raiz);
+        *raiz = NULL;
+    }
+}
