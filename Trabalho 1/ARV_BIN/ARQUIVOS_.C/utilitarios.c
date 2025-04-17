@@ -3,16 +3,24 @@
 #include <string.h>
 #include "../ARQUIVOS_.H/utilitarios.h"
 
-char *ler_string() // nunca lhe esquecerei (ou não)
+char *ler_string()
 {
-    char buffer[256], *string;
+    char buffer[256], *string = NULL;
 
-    if (fgets(buffer, sizeof(buffer), stdin) == NULL)
-        string = NULL;
-    else
+    if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {
         buffer[strcspn(buffer, "\n")] = 0;
-        string = strdup(buffer);
+        int i = 0;
+        while (buffer[i] && (buffer[i] == ' ' || buffer[i] == '\t'))
+            i++;
+        if (buffer[i] != '\0')
+        {
+            int j = strlen(buffer) - 1;
+            while (j >= i && (buffer[j] == ' ' || buffer[j] == '\t'))
+                j--;
+            buffer[j + 1] = '\0';
+            string = strdup(buffer + i);
+        }
     }
     return string;
 }

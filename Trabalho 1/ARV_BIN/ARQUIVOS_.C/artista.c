@@ -46,35 +46,27 @@ ARTISTAS *cadastrar_artista()// mais segura contra erros de alocação
 
     printf("Digite o nome do Artista: ");
     nome = ler_string();
-    if (nome == NULL) {
-        printf("Erro: Falha na leitura ou alocação da string!\n");
+    if (nome == NULL) 
         erro = 1;
-    }
 
     if (!erro) {
         printf("Digite o tipo do Artista: ");
         tipo_artista = ler_string();
-        if (tipo_artista == NULL) {
-            printf("Erro: Falha na leitura ou alocação da string!\n");
+        if (tipo_artista == NULL) 
             erro = 1;
-        }
     }
 
     if (!erro) {
         printf("Digite o estilo musical do Artista: ");
         estilo_musical = ler_string();
-        if (estilo_musical == NULL) {
-            printf("Erro: Falha na leitura ou alocação da string!\n");
+        if (estilo_musical == NULL) 
             erro = 1;
-        }
     }
 
     if (!erro) {
         artista = aloca_no_artista(nome, tipo_artista, estilo_musical);
-        if (artista == NULL) {
-            printf("Erro: Falha na alocação de memória!\n");
+        if (artista == NULL) 
             erro = 1;
-        }
     }
 
     if (erro) {
