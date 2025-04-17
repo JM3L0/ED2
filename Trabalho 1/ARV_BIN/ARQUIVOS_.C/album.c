@@ -22,16 +22,34 @@ ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
 
 ALBUNS *cadastrar_album(ALBUNS *album)
 {
-    int ano_lancamento;
+    int ano_lancamento, erro = 0;
     char *titulo_album;
 
     printf("Digite o titulo do album: ");
     titulo_album = ler_string();
 
-    printf("Digite o ano de lancamento do Album: ");
-    ano_lancamento = digitar_int();
+    if (titulo_album == NULL)
+        erro = 1;
 
-    album = aloca_no_album(titulo_album, ano_lancamento);
+    if (!erro)
+    {
+        printf("Digite o ano de lancamento do Album: ");
+        ano_lancamento = digitar_int();
+    }
+
+    if (!erro)
+    {
+        album = aloca_no_album(titulo_album, ano_lancamento);
+        erro = 1;
+    }
+
+    if (erro)
+    {
+        free(titulo_album);
+        free(album);
+        album = NULL;
+    }
+
     return (album);
 }
 
@@ -158,7 +176,7 @@ int mostrar_todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // impr
 
 void limpar_no_album(ALBUNS *no) // limpa os dados do album sem liberar o nó
 {
-    if(no == NULL)
+    if (no != NULL)
     {
         free(no->titulo_album);
         no->titulo_album = NULL;

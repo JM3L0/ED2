@@ -38,22 +38,81 @@ ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista) // deve ser testado
     return (existe_art);
 }
 
-ARTISTAS *cadastrar_artista()
+ARTISTAS *cadastrar_artista()// mais segura contra erros de alocação
 {
-    char *nome, *tipo_artista, *estilo_musical;
-    ARTISTAS *artista;
-
-    artista = NULL;
+    char *nome = NULL, *tipo_artista = NULL, *estilo_musical = NULL;
+    ARTISTAS *artista = NULL;
+    int erro = 0;
 
     printf("Digite o nome do Artista: ");
     nome = ler_string();
-    printf("Digite o tipo do Artista: ");
-    tipo_artista = ler_string();
-    printf("Digite o estilo musical do Artista: ");
-    estilo_musical = ler_string();
-    artista = aloca_no_artista(nome, tipo_artista, estilo_musical);
-    return (artista);
+    if (nome == NULL) {
+        printf("Erro: Falha na leitura ou alocação da string!\n");
+        erro = 1;
+    }
+
+    if (!erro) {
+        printf("Digite o tipo do Artista: ");
+        tipo_artista = ler_string();
+        if (tipo_artista == NULL) {
+            printf("Erro: Falha na leitura ou alocação da string!\n");
+            erro = 1;
+        }
+    }
+
+    if (!erro) {
+        printf("Digite o estilo musical do Artista: ");
+        estilo_musical = ler_string();
+        if (estilo_musical == NULL) {
+            printf("Erro: Falha na leitura ou alocação da string!\n");
+            erro = 1;
+        }
+    }
+
+    if (!erro) {
+        artista = aloca_no_artista(nome, tipo_artista, estilo_musical);
+        if (artista == NULL) {
+            printf("Erro: Falha na alocação de memória!\n");
+            erro = 1;
+        }
+    }
+
+    if (erro) {
+        free(nome);
+        free(tipo_artista);
+        free(estilo_musical);
+        free(artista);
+        artista = NULL;
+    }
+
+    return artista;
 }
+
+// ARTISTAS *cadastrar_artista()
+// {
+//     char *nome, *tipo_artista, *estilo_musical;
+//     ARTISTAS *artista;
+
+//     artista = NULL;
+
+//     printf("Digite o nome do Artista: ");
+//     nome = ler_string();
+//     printf("Digite o tipo do Artista: ");
+//     tipo_artista = ler_string();
+//     printf("Digite o estilo musical do Artista: ");
+//     estilo_musical = ler_string();
+//     artista = aloca_no_artista(nome, tipo_artista, estilo_musical);
+
+//     if (artista == NULL || nome == NULL || tipo_artista == NULL || estilo_musical == NULL)//caso a alocação de artista falhe libera os dados
+//     {
+//         free(nome);
+//         free(tipo_artista);
+//         free(estilo_musical);
+//         free(artista);
+//         artista = NULL;
+//     }
+//     return (artista);
+// }
 
 int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
 {
@@ -162,7 +221,7 @@ int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *t
 
 void limpar_no_artista(ARTISTAS *no) // limpa os dados do artista sem liberar o nó
 {
-    if (no == NULL)
+    if (no != NULL)
     {
         free(no->nome_artista);
         no->nome_artista = NULL;

@@ -104,6 +104,9 @@ void mensagens_de_erro_add_musica_playlist(int erro)
     case 4:
         printf("\nERRO: Artista nao encontrado!\n");
         break;
+    case 5:
+        printf("\nERRO: Erro ao alocar memoria para a musica na playlist!\n");
+        break;
     default:
         printf("\nErro desconhecido!\n");
         break;

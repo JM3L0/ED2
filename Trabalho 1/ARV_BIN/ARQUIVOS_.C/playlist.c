@@ -41,12 +41,25 @@ PLAYLIST *cadastrar_playlist()
 {
     char *titulo_playlist;
     PLAYLIST *playlist;
+    int erro = 0;
 
     playlist = NULL;
 
     printf("Digite o nome da Playlist: ");
     titulo_playlist = ler_string();
-    playlist = aloca_no_playlist(titulo_playlist);
+    if (titulo_playlist == NULL)
+        erro = 1;
+    if (!erro)
+        playlist = aloca_no_playlist(titulo_playlist);
+        if (playlist == NULL)
+            erro = 1;
+
+    if (erro)
+    {
+        free(titulo_playlist);
+        free(playlist);
+        playlist = NULL;
+    }
     return (playlist);
 }
 

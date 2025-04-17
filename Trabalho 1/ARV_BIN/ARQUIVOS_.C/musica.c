@@ -21,14 +21,31 @@ MUSICAS *cadastrar_musica(MUSICAS *musica)
 {
     float duracao_musica;
     char *titulo_musica;
+    int erro = 0;
 
     printf("Digite o titulo da musica: ");
     titulo_musica = ler_string();
 
-    printf("Digite a duracao da Musica: ");
-    duracao_musica = digitar_float();
+    if (titulo_musica == NULL)
+        erro = 1;
+    if(!erro)
+    {
+        printf("Digite a duracao da Musica: ");
+        duracao_musica = digitar_float();
+    }
 
-    musica = alocar_musica(titulo_musica, duracao_musica);
+    if (!erro){
+        musica = alocar_musica(titulo_musica, duracao_musica);
+        if (musica == NULL)
+            erro = 1;
+    }
+
+    if (erro)
+    {
+        free(titulo_musica);
+        free(musica);
+        musica = NULL;
+    }
     return (musica);
 }
 
@@ -158,7 +175,7 @@ int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus, char *nome_musica)
 
 void limpar_no_musica(MUSICAS *no) // limpa os dados da musica sem liberar o nó
 {
-    if (no == NULL)
+    if (no != NULL)
     {
         free(no->titulo_musica);
         no->titulo_musica = NULL;
