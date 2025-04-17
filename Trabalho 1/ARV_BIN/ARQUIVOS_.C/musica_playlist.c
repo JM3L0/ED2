@@ -289,18 +289,17 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
             }
             else
             {
-                aux = menor_musica_playlist((*raiz)->dir);
+                MUSICA_PLAYLIST *menor = menor_musica_playlist((*raiz)->dir);
 
-                (*raiz)->titulo_musica = aux->titulo_musica;
-                (*raiz)->duracao_musica = aux->duracao_musica;
-                (*raiz)->album_musica = aux->album_musica;
-                (*raiz)->artista_musica = aux->artista_musica;
+                // Copia os dados do menor nó
+                (*raiz)->titulo_musica = menor->titulo_musica;
+                (*raiz)->duracao_musica = menor->duracao_musica;
+                (*raiz)->album_musica = menor->album_musica;
+                (*raiz)->artista_musica = menor->artista_musica;
 
-                aux->titulo_musica = NULL;
-                aux->album_musica = NULL;
-                aux->artista_musica = NULL;
-
-                remove_musica_playlist(&(*raiz)->dir, aux->titulo_musica, aux->album_musica, aux->artista_musica);
+                // Remove o menor nó da subárvore direita usando os valores originais
+                removeu = remove_musica_playlist(&(*raiz)->dir, menor->titulo_musica, menor->album_musica, menor->artista_musica);
+                aux = menor; // O nó menor será liberado
             }
 
             free(aux);
