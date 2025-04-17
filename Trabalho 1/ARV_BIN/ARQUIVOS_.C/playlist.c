@@ -47,6 +47,7 @@ PLAYLIST *cadastrar_playlist()
 
     printf("Digite o nome da Playlist: ");
     titulo_playlist = ler_string();
+    
     if (titulo_playlist == NULL)
         erro = 1;
     if (!erro)

@@ -76,14 +76,13 @@ float digitar_float()
     return numero;
 }
 
-void mensagens_de_erro_add_musica_playlist(int erro)
+void mensagens_de_erro_e_sucesso_add_musica_playlist(int erro)
 { // PARA IDENTIFICAR O ERRO DO ADD MUSICA PLAYLIST
     switch (erro)
     {
     case 1:
         printf("\nMusica adicionada a playlist com sucesso\n");
         break;
-
     case 0:
         printf("\nMusica ja existente na playlist!\n");
         break;

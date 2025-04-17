@@ -88,32 +88,6 @@ ARTISTAS *cadastrar_artista()// mais segura contra erros de alocação
     return artista;
 }
 
-// ARTISTAS *cadastrar_artista()
-// {
-//     char *nome, *tipo_artista, *estilo_musical;
-//     ARTISTAS *artista;
-
-//     artista = NULL;
-
-//     printf("Digite o nome do Artista: ");
-//     nome = ler_string();
-//     printf("Digite o tipo do Artista: ");
-//     tipo_artista = ler_string();
-//     printf("Digite o estilo musical do Artista: ");
-//     estilo_musical = ler_string();
-//     artista = aloca_no_artista(nome, tipo_artista, estilo_musical);
-
-//     if (artista == NULL || nome == NULL || tipo_artista == NULL || estilo_musical == NULL)//caso a alocação de artista falhe libera os dados
-//     {
-//         free(nome);
-//         free(tipo_artista);
-//         free(estilo_musical);
-//         free(artista);
-//         artista = NULL;
-//     }
-//     return (artista);
-// }
-
 int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
 {
     int inseriu = 1;

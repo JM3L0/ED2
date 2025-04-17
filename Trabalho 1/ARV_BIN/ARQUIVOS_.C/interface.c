@@ -321,9 +321,7 @@ void menu_geral()
                             printf("\nAlbum nao encontrado!\n");
                     }
                     else
-                    {
                         printf("\nNenhum album cadastrado desse artista!\n");
-                    }
                 }
                 else
                     printf("\nArtista nao encontrado!\n");
@@ -521,7 +519,7 @@ void menu_geral()
                     retorno = cadastrar_musica_playlist(raiz_artista, playlist);
                     if (retorno == 1)
                         playlist->quantidade_musicas_playlist++;
-                    mensagens_de_erro_add_musica_playlist(retorno);
+                    mensagens_de_erro_e_sucesso_add_musica_playlist(retorno);
                 }
                 else
                     printf("\nPlaylist nao encontrada!\n");

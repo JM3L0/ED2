@@ -26,9 +26,7 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
     int inseriu = 1;
 
     if (*raiz == NULL)
-    {
         *raiz = no;
-    }
     else
     {
         // Compara título, álbum e artista como uma chave composta
@@ -46,13 +44,9 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
         {
             // Decide a sub-arvore com base na chave composta
             if ((cmp_titulo < 0) || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
-            {
                 inseriu = inserir_musica_playlist(&(*raiz)->esq, no);
-            }
             else
-            {
                 inseriu = inserir_musica_playlist(&(*raiz)->dir, no);
-            }
         }
     }
 
@@ -180,13 +174,9 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
             MUSICA_PLAYLIST *filho;
 
             if (eh_folha_musica_playlist(*raiz))
-            {
                 *raiz = NULL;
-            }
             else if ((filho = so_um_filho_musica_playlist(*raiz)) != NULL)
-            {
                 *raiz = filho;
-            }
             else
             {
                 MUSICA_PLAYLIST *menor = menor_musica_playlist((*raiz)->dir);
@@ -208,13 +198,9 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
         else
         {
             if ((cmp_titulo < 0) || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
-            {
                 removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-            }
             else
-            {
                 removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-            }
         }
     }
 
