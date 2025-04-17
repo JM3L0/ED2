@@ -45,7 +45,7 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
         else
         {
             // Decide a sub-arvore com base na chave composta
-            if (cmp_titulo < 0 || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
+            if ((cmp_titulo < 0) || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
             {
                 inseriu = inserir_musica_playlist(&(*raiz)->esq, no);
             }
@@ -57,23 +57,6 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
     }
 
     return inseriu;
-}
-
-MUSICA_PLAYLIST *existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica)
-{ // sera utilizado para as musicas
-    MUSICA_PLAYLIST *existe_music_play;
-    existe_music_play = NULL;
-
-    if (raiz != NULL)
-    {
-        if (strcasecmp(raiz->titulo_musica, titulo_musica) == 0 && strcasecmp(raiz->artista_musica, artista_musica) == 0 && strcasecmp(raiz->album_musica, album_musica) == 0)
-            existe_music_play = raiz;
-        else if (strcasecmp(titulo_musica, raiz->titulo_musica) < 0)
-            existe_music_play = existe_musica_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
-        else
-            existe_music_play = existe_musica_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
-    }
-    return (existe_music_play);
 }
 
 int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica) // percorre todas as playlists e imprime as musicas
@@ -224,7 +207,7 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
         }
         else
         {
-            if (cmp_titulo < 0 || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
+            if ((cmp_titulo < 0) || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
             {
                 removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
             }

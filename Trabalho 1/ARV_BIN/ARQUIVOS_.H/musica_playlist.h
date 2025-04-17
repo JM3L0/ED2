@@ -7,7 +7,6 @@
 
 MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_musica, char *nome_artista, char *titulo_album);
 int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no);
-MUSICA_PLAYLIST *existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica);
 int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz);
 int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist);
 int eh_folha_musica_playlist(MUSICA_PLAYLIST *raiz);
