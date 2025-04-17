@@ -49,11 +49,11 @@ PLAYLIST *cadastrar_playlist()
     titulo_playlist = ler_string();
     if (titulo_playlist == NULL)
         erro = 1;
-    if (!erro)
+    if (!erro){
         playlist = aloca_no_playlist(titulo_playlist);
         if (playlist == NULL)
             erro = 1;
-
+    }
     if (erro)
     {
         free(titulo_playlist);
