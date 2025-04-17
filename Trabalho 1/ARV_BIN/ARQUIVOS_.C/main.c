@@ -7,8 +7,12 @@
 #include "../ARQUIVOS_.H/musica.h"
 #include "../ARQUIVOS_.H/playlist.h"
 #include "../ARQUIVOS_.H/musica_playlist.h"
+#include "../ARQUIVOS_.H/TESTES.h"
 
 int main() {
+
+    printf("Executando testes de desempenho...\n\n");
+    //executar_testes();
     menu_geral();
     return 0;
 }

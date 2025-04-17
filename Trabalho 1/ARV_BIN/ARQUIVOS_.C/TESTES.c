@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/time.h>
+#include <time.h>
 #include "../ARQUIVOS_.H/TESTES.h"
 #include "../ARQUIVOS_.H/STRUCTS.h"
 #include "../ARQUIVOS_.H/artista.h"
@@ -8,6 +10,270 @@
 #include "../ARQUIVOS_.H/musica.h"
 #include "../ARQUIVOS_.H/musica_playlist.h"
 
+
+// #define NUM_ARTISTAS 10000
+
+// // Estrutura para armazenar nomes de artistas
+// typedef struct {
+//     char *nome;
+// } ArtistaEntrada;
+
+// // Função para obter tempo com alta precisão
+// double get_time() {
+//     struct timeval tv;
+//     gettimeofday(&tv, NULL);
+//     return tv.tv_sec + tv.tv_usec / 1000000.0;
+// }
+
+// // Gera 1000 nomes de artistas únicos
+// ArtistaEntrada *gerar_entradas() {
+//     ArtistaEntrada *entradas = malloc(NUM_ARTISTAS * sizeof(ArtistaEntrada));
+//     if (!entradas) return NULL;
+
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         char nome[20];
+//         snprintf(nome, sizeof(nome), "Artista%03d", i); // Ex.: Artista000, Artista001
+//         entradas[i].nome = strdup(nome);
+//     }
+//     return entradas;
+// }
+
+// // Embaralha as entradas para ordem aleatória
+// void embaralhar_entradas(ArtistaEntrada *entradas, int tamanho) {
+//     for (int i = tamanho - 1; i > 0; i--) {
+//         int j = rand() % (i + 1);
+//         char *temp = entradas[i].nome;
+//         entradas[i].nome = entradas[j].nome;
+//         entradas[j].nome = temp;
+//     }
+// }
+
+// // Libera as entradas
+// void liberar_entradas(ArtistaEntrada *entradas) {
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         free(entradas[i].nome);
+//     }
+//     free(entradas);
+// }
+
+// // Funções para remoção de artistas
+// int eh_folha_artista(ARTISTAS *no) {
+//     return (no->esq == NULL && no->dir == NULL);
+// }
+
+// ARTISTAS *so_um_filho_artista(ARTISTAS *no) {
+//     if (no->esq != NULL && no->dir == NULL) return no->esq;
+//     if (no->esq == NULL && no->dir != NULL) return no->dir;
+//     return NULL;
+// }
+
+// ARTISTAS *menor_no_artista(ARTISTAS *raiz) {
+//     ARTISTAS *menor = raiz;
+//     while (menor->esq != NULL) menor = menor->esq;
+//     return menor;
+// }
+
+// int remove_artista(ARTISTAS **raiz, char *nome_artista) {
+//     if (*raiz == NULL) return 0;
+
+//     int cmp = strcasecmp(nome_artista, (*raiz)->nome_artista);
+//     if (cmp == 0) {
+//         ARTISTAS *aux = *raiz, *filho;
+//         int removeu = 1;
+
+//         if (eh_folha_artista(*raiz)) {
+//             *raiz = NULL;
+//         } else if ((filho = so_um_filho_artista(*raiz)) != NULL) {
+//             *raiz = filho;
+//         } else {
+//             aux = menor_no_artista((*raiz)->dir);
+//             liberar_arv_album(&(*raiz)->arv_albuns);
+//             limpar_no_artista(*raiz);
+
+//             (*raiz)->nome_artista = aux->nome_artista;
+//             (*raiz)->tipo_artista = aux->tipo_artista;
+//             (*raiz)->estilo_musical = aux->estilo_musical;
+//             (*raiz)->numero_albuns = aux->numero_albuns;
+//             (*raiz)->arv_albuns = aux->arv_albuns;
+
+//             aux->nome_artista = NULL;
+//             aux->tipo_artista = NULL;
+//             aux->estilo_musical = NULL;
+//             aux->arv_albuns = NULL;
+//             removeu = remove_artista(&(*raiz)->dir, aux->nome_artista);
+//         }
+
+//         liberar_arv_album(&aux->arv_albuns);
+//         limpar_no_artista(aux);
+//         free(aux);
+//         return removeu;
+//     } else if (cmp < 0) {
+//         return remove_artista(&(*raiz)->esq, nome_artista);
+//     } else {
+//         return remove_artista(&(*raiz)->dir, nome_artista);
+//     }
+// }
+
+// // Teste de inserção em ordem crescente
+// double testar_insercao_crescente(ArtistaEntrada *entradas, ARTISTAS **raiz) {
+//     double inicio = get_time();
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         ARTISTAS *artista = aloca_no_artista(strdup(entradas[i].nome), strdup("Solo"), strdup("Pop"));
+//         if (artista) {
+//             inserir_artista(raiz, artista);
+//         }
+//     }
+//     double fim = get_time();
+//     return fim - inicio;
+// }
+
+// // Teste de inserção em ordem decrescente
+// double testar_insercao_decrescente(ArtistaEntrada *entradas, ARTISTAS **raiz) {
+//     double inicio = get_time();
+//     for (int i = NUM_ARTISTAS - 1; i >= 0; i--) {
+//         ARTISTAS *artista = aloca_no_artista(strdup(entradas[i].nome), strdup("Solo"), strdup("Pop"));
+//         if (artista) {
+//             inserir_artista(raiz, artista);
+//         }
+//     }
+//     double fim = get_time();
+//     return fim - inicio;
+// }
+
+// // Teste de inserção em ordem aleatória
+// double testar_insercao_aleatoria(ArtistaEntrada *entradas, ARTISTAS **raiz) {
+//     ArtistaEntrada *entradas_copia = malloc(NUM_ARTISTAS * sizeof(ArtistaEntrada));
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         entradas_copia[i].nome = strdup(entradas[i].nome);
+//     }
+//     embaralhar_entradas(entradas_copia, NUM_ARTISTAS);
+
+//     double inicio = get_time();
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         ARTISTAS *artista = aloca_no_artista(strdup(entradas_copia[i].nome), strdup("Solo"), strdup("Pop"));
+//         if (artista) {
+//             inserir_artista(raiz, artista);
+//         }
+//     }
+//     double fim = get_time();
+
+//     liberar_entradas(entradas_copia);
+//     return fim - inicio;
+// }
+
+// // Teste de remoção em ordem crescente
+// double testar_remocao_crescente(ArtistaEntrada *entradas, ARTISTAS **raiz) {
+//     double inicio = get_time();
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         remove_artista(raiz, entradas[i].nome);
+//     }
+//     double fim = get_time();
+//     return fim - inicio;
+// }
+
+// // Teste de remoção em ordem decrescente
+// double testar_remocao_decrescente(ArtistaEntrada *entradas, ARTISTAS **raiz) {
+//     double inicio = get_time();
+//     for (int i = NUM_ARTISTAS - 1; i >= 0; i--) {
+//         remove_artista(raiz, entradas[i].nome);
+//     }
+//     double fim = get_time();
+//     return fim - inicio;
+// }
+
+// // Teste de remoção em ordem aleatória
+// double testar_remocao_aleatoria(ArtistaEntrada *entradas, ARTISTAS **raiz) {
+//     ArtistaEntrada *entradas_copia = malloc(NUM_ARTISTAS * sizeof(ArtistaEntrada));
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         entradas_copia[i].nome = strdup(entradas[i].nome);
+//     }
+//     embaralhar_entradas(entradas_copia, NUM_ARTISTAS);
+
+//     double inicio = get_time();
+//     for (int i = 0; i < NUM_ARTISTAS; i++) {
+//         remove_artista(raiz, entradas_copia[i].nome);
+//     }
+//     double fim = get_time();
+
+//     liberar_entradas(entradas_copia);
+//     return fim - inicio;
+// }
+
+// // Teste de busca de músicas (30 execuções)
+// double testar_busca_musicas(ARTISTAS *raiz_artista, char *nome_artista) {
+//     double tempos[30], media = 0.0;
+
+//     for (int i = 0; i < 30; i++) {
+//         double inicio = get_time();
+//         ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
+//         if (artista && artista->arv_albuns) {
+//             imprimir_todos_albuns_de_um_artista(raiz_artista, nome_artista);
+//         }
+//         double fim = get_time();
+//         tempos[i] = fim - inicio;
+//     }
+
+//     for (int i = 0; i < 30; i++) {
+//         media += tempos[i];
+//     }
+//     media /= 30;
+
+//     return media;
+// }
+
+// // Função principal de testes
+// void executar_testes() {
+//     srand(time(NULL)); // Inicializa semente para embaralhamento
+//     ArtistaEntrada *entradas = gerar_entradas();
+//     if (!entradas) {
+//         printf("Erro ao gerar entradas!\n");
+//         return;
+//     }
+
+//     ARTISTAS *raiz = NULL;
+//     double tempo;
+
+//     // Teste de inserção crescente
+//     tempo = testar_insercao_crescente(entradas, &raiz);
+//     printf("Insercao crescente: %.6f segundos\n", tempo);
+//     liberar_arv_artista(&raiz);
+
+//     // Teste de inserção decrescente
+//     tempo = testar_insercao_decrescente(entradas, &raiz);
+//     printf("Insercao decrescente: %.6f segundos\n", tempo);
+//     liberar_arv_artista(&raiz);
+
+//     // Teste de inserção aleatória
+//     tempo = testar_insercao_aleatoria(entradas, &raiz);
+//     printf("Insercao aleatoria: %.6f segundos\n", tempo);
+
+//     // Teste de remoção crescente
+//     testar_insercao_crescente(entradas, &raiz); // Reinsere para remoção
+//     tempo = testar_remocao_crescente(entradas, &raiz);
+//     printf("Remocao crescente: %.6f segundos\n", tempo);
+//     liberar_arv_artista(&raiz);
+
+//     // Teste de remoção decrescente
+//     testar_insercao_crescente(entradas, &raiz); // Reinsere para remoção
+//     tempo = testar_remocao_decrescente(entradas, &raiz);
+//     printf("Remocao decrescente: %.6f segundos\n", tempo);
+//     liberar_arv_artista(&raiz);
+
+//     // Teste de remoção aleatória
+//     testar_insercao_crescente(entradas, &raiz); // Reinsere para remoção
+//     tempo = testar_remocao_aleatoria(entradas, &raiz);
+//     printf("Remocao aleatoria: %.6f segundos\n", tempo);
+//     liberar_arv_artista(&raiz);
+
+//     // Teste de busca
+//     inicializar_dados_predefinidos(&raiz, NULL); // Usa dados predefinidos
+//     tempo = testar_busca_musicas(raiz, "rail");
+//     printf("Busca de musicas (media de 30 execucoes): %.6f segundos\n", tempo);
+//     liberar_arv_artista(&raiz);
+
+//     liberar_entradas(entradas);
+// }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 static int cadastrar_artistas_predefinidos(ARTISTAS **raiz) {
     int retorno = 1;
     ARTISTAS *artista1 = aloca_no_artista(strdup("rail"), strdup("Banda"), strdup("Rock"));

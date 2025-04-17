@@ -5,5 +5,6 @@
 #include "playlist.h"
 
 void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_playlist);
+//void executar_testes();
 
 #endif
