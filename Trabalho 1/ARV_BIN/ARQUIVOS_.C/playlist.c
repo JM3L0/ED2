@@ -49,7 +49,8 @@ PLAYLIST *cadastrar_playlist()
     titulo_playlist = ler_string();
     if (titulo_playlist == NULL)
         erro = 1;
-    if (!erro){
+    if (!erro)
+    {
         playlist = aloca_no_playlist(titulo_playlist);
         if (playlist == NULL)
             erro = 1;
@@ -147,7 +148,8 @@ void liberar_arv_playlist(PLAYLIST **raiz) // apagar tudo (CABUM)
 {
     if (*raiz != NULL)
     {
-        if ((*raiz)->arv_musicas_playlist != NULL){
+        if ((*raiz)->arv_musicas_playlist != NULL)
+        {
             liberar_arv_musica_playlist(&(*raiz)->arv_musicas_playlist);
             (*raiz)->arv_musicas_playlist = NULL;
         }

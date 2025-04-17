@@ -135,9 +135,7 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica)
         imprimiu |= imprime_dados_da_musica_album(raiz_alb->esq, nome_musica);
         if (raiz_alb->arv_musicas != NULL)
         {
-            // printf("DEBUG: Antes de buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
             int encontrou_musica = imprime_dados_da_musica_buscada(raiz_alb->arv_musicas, nome_musica);
-            // printf("DEBUG: Apos buscar em %s, imprimiu = %d\n", raiz_alb->titulo_album, imprimiu);
             if (encontrou_musica)
             {
                 printf("     Album: %s\n", raiz_alb->titulo_album);

@@ -21,68 +21,43 @@ MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_music
     }
     return (nova_musica_play);
 }
-int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no) {
+int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
+{
     int inseriu = 1;
-    
-    if (*raiz == NULL) {
+
+    if (*raiz == NULL)
+    {
         *raiz = no;
-    } else {
+    }
+    else
+    {
         // Compara título, álbum e artista como uma chave composta
         int cmp_titulo = strcasecmp(no->titulo_musica, (*raiz)->titulo_musica);
         int cmp_album = strcasecmp(no->album_musica, (*raiz)->album_musica);
         int cmp_artista = strcasecmp(no->artista_musica, (*raiz)->artista_musica);
 
         // Verifica se a musica ja existe (todos os campos iguais)
-        if (cmp_titulo == 0 && cmp_album == 0 && cmp_artista == 0) {
+        if (cmp_titulo == 0 && cmp_album == 0 && cmp_artista == 0)
+        {
             free(no);
             inseriu = 0;
-        //aqui <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        } else {
+        }
+        else
+        {
             // Decide a sub-arvore com base na chave composta
-            if (cmp_titulo < 0 || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0)) {
+            if (cmp_titulo < 0 || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
+            {
                 inseriu = inserir_musica_playlist(&(*raiz)->esq, no);
-            } else {
+            }
+            else
+            {
                 inseriu = inserir_musica_playlist(&(*raiz)->dir, no);
             }
         }
     }
-    
+
     return inseriu;
 }
-
-// int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no, char *titulo_album, char *nome_artista)
-// {
-//     int inseriu = 1;
-
-//     if (*raiz == NULL)
-//         *raiz = no;
-//     else if (strcasecmp(no->titulo_musica, (*raiz)->titulo_musica) < 0)
-//         inseriu = inserir_musica_playlist(&(*raiz)->esq, no, nome_artista, titulo_album);
-//     else if (strcasecmp(no->titulo_musica, (*raiz)->titulo_musica) > 0)
-//         inseriu = inserir_musica_playlist(&(*raiz)->dir, no, nome_artista, titulo_album);
-//     else
-//     {
-//         if (strcasecmp(no->album_musica, (*raiz)->album_musica) < 0)
-//             inseriu = inserir_musica_playlist(&(*raiz)->esq, no, nome_artista, titulo_album);
-//         else if (strcasecmp(no->album_musica, (*raiz)->album_musica) > 0)
-//             inseriu = inserir_musica_playlist(&(*raiz)->dir, no, nome_artista, titulo_album);
-//         else
-//         {
-//             if (strcasecmp(no->artista_musica, (*raiz)->artista_musica) < 0)
-//                 inseriu = inserir_musica_playlist(&(*raiz)->esq, no, nome_artista, titulo_album);
-//             else if (strcasecmp(no->artista_musica, (*raiz)->artista_musica) > 0)
-//                 inseriu = inserir_musica_playlist(&(*raiz)->dir, no, nome_artista, titulo_album);
-//             else
-//             {
-//                 free(no);
-//                 no = NULL;
-//                 inseriu = 0;
-//             }
-//         }
-//     }
-
-//     return (inseriu);
-// }
 
 MUSICA_PLAYLIST *existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica)
 { // sera utilizado para as musicas
@@ -145,13 +120,10 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
             if (musica)
             {
                 MUSICA_PLAYLIST *musica_playlist = alocar_musica_playlist(musica->titulo_musica, musica->duracao_musica, artista->nome_artista, album->titulo_album);
-                if (musica_playlist != NULL){
+                if (musica_playlist != NULL)
                     retorno = inserir_musica_playlist(&raiz_playlist->arv_musicas_playlist, musica_playlist);
-                    // musica cadastrada na playlist, retorno = 1
-                    // musica ja existe na playlist, retorno = 0
-                }else{
+                else
                     retorno = 5; // Erro ao alocar memoria para a musica na playlist
-                }
             }
             else
                 retorno = 2; // Musica nao encontrada!
@@ -178,7 +150,6 @@ int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas
     }
     return (imprimiu);
 }
-
 
 /*-------------------------------------- remover musica da playlist* --------------------------------------*/
 
@@ -209,60 +180,6 @@ MUSICA_PLAYLIST *menor_musica_playlist(MUSICA_PLAYLIST *raiz)
         menor = menor->esq;
     return (menor);
 }
-
-// int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista)
-// {
-//     int removeu = 1;
-//     if (*raiz != NULL)
-//     {
-//         if (strcasecmp((*raiz)->titulo_musica, titulo_musica) == 0 && strcasecmp((*raiz)->artista_musica, nome_artista) == 0 && strcasecmp((*raiz)->album_musica, titulo_album) == 0)
-//         {
-//             MUSICA_PLAYLIST *aux = *raiz, *filho;
-
-//             if (eh_folha_musica_playlist(*raiz))
-//                 *raiz = NULL;
-//             else if ((filho = so_um_filho_musica_playlist(*raiz)) != NULL)
-//                 *raiz = filho;
-//             else
-//             {
-//                 aux = menor_musica_playlist((*raiz)->dir);
-
-//                 (*raiz)->titulo_musica = aux->titulo_musica;
-//                 (*raiz)->duracao_musica = aux->duracao_musica;
-//                 (*raiz)->artista_musica = aux->artista_musica;
-//                 (*raiz)->album_musica = aux->album_musica;
-
-//                 remove_musica_playlist(&(*raiz)->dir, aux->titulo_musica, aux->album_musica, aux->artista_musica);
-//             }
-
-//             free(aux);
-//         }
-//         else
-//         {
-//             if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
-//                 removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-//             else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) > 0)
-//                 removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-//             else
-//             {
-//                 if (strcasecmp(titulo_album, (*raiz)->album_musica) < 0)
-//                     removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-//                 else if (strcasecmp(titulo_album, (*raiz)->album_musica) > 0)
-//                     removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-//                 else
-//                 {
-//                     if (strcasecmp(nome_artista, (*raiz)->artista_musica) < 0)
-//                         removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-//                     else // if (strcasecmp(nome_artista, (*raiz)->artista_musica) > 0)
-//                         removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-//                 }
-//             }
-//         }
-//     }
-//     else
-//         removeu = 0; // Raiz nula, nada a remover
-//     return (removeu);
-// }
 
 int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista)
 {
