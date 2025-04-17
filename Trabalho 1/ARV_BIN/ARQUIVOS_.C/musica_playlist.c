@@ -210,58 +210,117 @@ MUSICA_PLAYLIST *menor_musica_playlist(MUSICA_PLAYLIST *raiz)
     return (menor);
 }
 
+// int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista)
+// {
+//     int removeu = 1;
+//     if (*raiz != NULL)
+//     {
+//         if (strcasecmp((*raiz)->titulo_musica, titulo_musica) == 0 && strcasecmp((*raiz)->artista_musica, nome_artista) == 0 && strcasecmp((*raiz)->album_musica, titulo_album) == 0)
+//         {
+//             MUSICA_PLAYLIST *aux = *raiz, *filho;
+
+//             if (eh_folha_musica_playlist(*raiz))
+//                 *raiz = NULL;
+//             else if ((filho = so_um_filho_musica_playlist(*raiz)) != NULL)
+//                 *raiz = filho;
+//             else
+//             {
+//                 aux = menor_musica_playlist((*raiz)->dir);
+
+//                 (*raiz)->titulo_musica = aux->titulo_musica;
+//                 (*raiz)->duracao_musica = aux->duracao_musica;
+//                 (*raiz)->artista_musica = aux->artista_musica;
+//                 (*raiz)->album_musica = aux->album_musica;
+
+//                 remove_musica_playlist(&(*raiz)->dir, aux->titulo_musica, aux->album_musica, aux->artista_musica);
+//             }
+
+//             free(aux);
+//         }
+//         else
+//         {
+//             if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
+//                 removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
+//             else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) > 0)
+//                 removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+//             else
+//             {
+//                 if (strcasecmp(titulo_album, (*raiz)->album_musica) < 0)
+//                     removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
+//                 else if (strcasecmp(titulo_album, (*raiz)->album_musica) > 0)
+//                     removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+//                 else
+//                 {
+//                     if (strcasecmp(nome_artista, (*raiz)->artista_musica) < 0)
+//                         removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
+//                     else // if (strcasecmp(nome_artista, (*raiz)->artista_musica) > 0)
+//                         removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+//                 }
+//             }
+//         }
+//     }
+//     else
+//         removeu = 0; // Raiz nula, nada a remover
+//     return (removeu);
+// }
+
 int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista)
 {
-    int removeu = 1;
-    if (*raiz != NULL)
+    int removeu = 0;
+
+    if (*raiz != NULL && titulo_musica != NULL && titulo_album != NULL && nome_artista != NULL)
     {
-        if (strcasecmp((*raiz)->titulo_musica, titulo_musica) == 0 && strcasecmp((*raiz)->artista_musica, nome_artista) == 0 && strcasecmp((*raiz)->album_musica, titulo_album) == 0)
+        int cmp_titulo = strcasecmp(titulo_musica, (*raiz)->titulo_musica);
+        int cmp_album = strcasecmp(titulo_album, (*raiz)->album_musica);
+        int cmp_artista = strcasecmp(nome_artista, (*raiz)->artista_musica);
+
+        if (cmp_titulo == 0 && cmp_album == 0 && cmp_artista == 0)
         {
-            MUSICA_PLAYLIST *aux = *raiz, *filho;
+            MUSICA_PLAYLIST *aux = *raiz;
+            MUSICA_PLAYLIST *filho;
 
             if (eh_folha_musica_playlist(*raiz))
+            {
                 *raiz = NULL;
+            }
             else if ((filho = so_um_filho_musica_playlist(*raiz)) != NULL)
+            {
                 *raiz = filho;
+            }
             else
             {
                 aux = menor_musica_playlist((*raiz)->dir);
+                limpar_no_musica_playlist(*raiz);
 
                 (*raiz)->titulo_musica = aux->titulo_musica;
                 (*raiz)->duracao_musica = aux->duracao_musica;
-                (*raiz)->artista_musica = aux->artista_musica;
                 (*raiz)->album_musica = aux->album_musica;
+                (*raiz)->artista_musica = aux->artista_musica;
+
+                aux->titulo_musica = NULL;
+                aux->album_musica = NULL;
+                aux->artista_musica = NULL;
 
                 remove_musica_playlist(&(*raiz)->dir, aux->titulo_musica, aux->album_musica, aux->artista_musica);
             }
 
             free(aux);
+            removeu = 1;
         }
         else
         {
-            if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
+            if (cmp_titulo < 0 || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0))
+            {
                 removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-            else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) > 0)
-                removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+            }
             else
             {
-                if (strcasecmp(titulo_album, (*raiz)->album_musica) < 0)
-                    removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-                else if (strcasecmp(titulo_album, (*raiz)->album_musica) > 0)
-                    removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-                else
-                {
-                    if (strcasecmp(nome_artista, (*raiz)->artista_musica) < 0)
-                        removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
-                    else // if (strcasecmp(nome_artista, (*raiz)->artista_musica) > 0)
-                        removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-                }
+                removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
             }
         }
     }
-    else
-        removeu = 0; // Raiz nula, nada a remover
-    return (removeu);
+
+    return removeu;
 }
 
 /*-------------------------------- Liberar Arvore musica playlist --------------------------------*/
