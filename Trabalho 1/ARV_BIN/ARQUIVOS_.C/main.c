@@ -12,7 +12,6 @@
 int main() {
 
     printf("Executando testes de desempenho...\n\n");
-    //executar_testes();
     menu_geral();
     return 0;
 }
