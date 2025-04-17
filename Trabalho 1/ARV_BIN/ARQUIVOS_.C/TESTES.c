@@ -6,6 +6,7 @@
 #include "../ARQUIVOS_.H/artista.h"
 #include "../ARQUIVOS_.H/album.h"
 #include "../ARQUIVOS_.H/musica.h"
+#include "../ARQUIVOS_.H/musica_playlist.h"
 
 static int cadastrar_artistas_predefinidos(ARTISTAS **raiz) {
     int retorno = 1;

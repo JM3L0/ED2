@@ -8,6 +8,7 @@
 #include "../ARQUIVOS_.H/interface.h"
 #include "../ARQUIVOS_.H/playlist.h"
 #include "../ARQUIVOS_.H/musica_playlist.h"
+#include "../ARQUIVOS_.H/TESTES.h"
 
 // void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_playlist)
 // {
