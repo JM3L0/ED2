@@ -124,7 +124,7 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
     int retorno;
 
     char nome_artista[50];
-    printf("Digite o nome do artista da música que deseja adicionar: ");
+    printf("Digite o nome do artista da musica que deseja adicionar: ");
     ler_string_simples(nome_artista, sizeof(nome_artista));
     ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
 
