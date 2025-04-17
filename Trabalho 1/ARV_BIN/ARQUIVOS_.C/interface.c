@@ -241,7 +241,7 @@ void menu_geral()
             para um artista já castrado e o álbum não pode se repetir para um mesmo artista.*/
             char nome_artista[50];
 
-            printf("Digite o nome do artista para qual o album sera cadastrado: ");
+            printf("Digite o nome do artista para cadastrar o album: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
 
             ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
@@ -284,14 +284,14 @@ void menu_geral()
             //  printf("\nCADASTRAR UMA MUSICA\n");
 
             char nome_artista[50];
-            printf("Digite o nome do artista no qual deseja cadastrar a musica: ");
+            printf("Digite o nome do artista para cadastrar a musica: ");
             ler_string_simples(nome_artista, sizeof(nome_artista));
             ARTISTAS *artista = existe_artista(raiz_artista, nome_artista);
 
             if (artista)
             {
                 char titulo_album[50];
-                printf("Digite o titulo do album a qual a musica pertence: ");
+                printf("Digite o titulo do album ao qual a musica pertence: ");
                 ler_string_simples(titulo_album, sizeof(titulo_album));
                 ALBUNS *album = existe_album(artista->arv_albuns, titulo_album);
 
