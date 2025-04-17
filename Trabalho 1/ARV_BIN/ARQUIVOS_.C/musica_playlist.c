@@ -36,6 +36,7 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no) {
         if (cmp_titulo == 0 && cmp_album == 0 && cmp_artista == 0) {
             free(no);
             inseriu = 0;
+        //aqui <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         } else {
             // Decide a sub-arvore com base na chave composta
             if (cmp_titulo < 0 || (cmp_titulo == 0 && cmp_album < 0) || (cmp_titulo == 0 && cmp_album == 0 && cmp_artista < 0)) {
