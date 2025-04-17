@@ -34,7 +34,6 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no) {
 
         // Verifica se a musica ja existe (todos os campos iguais)
         if (cmp_titulo == 0 && cmp_album == 0 && cmp_artista == 0) {
-            limpar_no_musica_playlist(no);
             free(no);
             inseriu = 0;
         } else {
