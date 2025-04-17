@@ -40,9 +40,9 @@ ALBUNS *cadastrar_album(ALBUNS *album)
     if (!erro)
     {
         album = aloca_no_album(titulo_album, ano_lancamento);
-        erro = 1;
+        if(album == NULL)
+            erro = 1;
     }
-
     if (erro)
     {
         free(titulo_album);
