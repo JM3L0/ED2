@@ -290,7 +290,6 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
             else
             {
                 aux = menor_musica_playlist((*raiz)->dir);
-                limpar_no_musica_playlist(*raiz);
 
                 (*raiz)->titulo_musica = aux->titulo_musica;
                 (*raiz)->duracao_musica = aux->duracao_musica;
