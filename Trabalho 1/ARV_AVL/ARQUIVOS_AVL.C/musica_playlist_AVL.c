@@ -50,6 +50,12 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
         }
     }
 
+    if (inseriu)
+    {
+        balanceamento_musica_playlist(raiz);
+        atualizar_altura_musica_playlist(*raiz);
+    }
+
     return inseriu;
 }
 
@@ -201,6 +207,8 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
                 removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
             else
                 removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
+            balanceamento_musica_playlist(raiz);
+            atualizar_altura_musica_playlist(*raiz);
         }
     }
 
@@ -217,5 +225,78 @@ void liberar_arv_musica_playlist(MUSICA_PLAYLIST **raiz)
         liberar_arv_musica_playlist(&(*raiz)->dir);
         free(*raiz);
         *raiz = NULL;
+    }
+}
+
+/*---------------------------------- Funções de Balanceamento ----------------------------------*/
+
+int pegar_altura_musica_playlist(MUSICA_PLAYLIST *raiz)
+{
+    int altura = -1;
+    if (raiz)
+    {
+        altura = raiz->altura_musica_playlist;
+    }
+    return (altura);
+}
+
+void atualizar_altura_musica_playlist(MUSICA_PLAYLIST *raiz)
+{
+    if (raiz != NULL)
+    {
+        int altura_esq = pegar_altura_musica_playlist(raiz->esq);
+        int altura_dir = pegar_altura_musica_playlist(raiz->dir);
+        raiz->altura_musica_playlist = (altura_esq > altura_dir ? altura_esq : altura_dir) + 1;
+    }
+}
+
+int fator_balanceamento_musica_playlist(MUSICA_PLAYLIST *no)
+{
+    int fator = 0;
+    if (no)
+    {
+        fator = pegar_altura_musica_playlist(no->esq) - pegar_altura_musica_playlist(no->dir);
+    }
+    return (fator);
+}
+
+void rotacao_esq_musica_playlist(MUSICA_PLAYLIST **raiz)
+{
+    MUSICA_PLAYLIST *aux;
+    aux = (*raiz)->dir;
+    (*raiz)->dir = aux->esq;
+    aux->esq = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_musica_playlist((*raiz)->esq);
+    atualizar_altura_musica_playlist((*raiz));
+}
+
+void rotacao_dir_musica_playlist(MUSICA_PLAYLIST **raiz)
+{
+    MUSICA_PLAYLIST *aux;
+    aux = (*raiz)->esq;
+    (*raiz)->esq = aux->dir;
+    aux->dir = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_musica_playlist((*raiz)->dir);
+    atualizar_altura_musica_playlist((*raiz));
+}
+
+void balanceamento_musica_playlist(MUSICA_PLAYLIST **raiz)
+{
+    if (*raiz)
+    {
+        if (fator_balanceamento_musica_playlist(*raiz) == 2)
+        {
+            if (fator_balanceamento_musica_playlist((*raiz)->esq) < 0)
+                rotacao_esq_musica_playlist(&((*raiz)->esq));
+            rotacao_dir_musica_playlist(raiz);
+        }
+        else if (fator_balanceamento_musica_playlist(*raiz) == -2)
+        {
+            if (fator_balanceamento_musica_playlist((*raiz)->dir) > 0)
+                rotacao_dir_musica_playlist(&((*raiz)->dir));
+            rotacao_esq_musica_playlist(raiz);
+        }
     }
 }

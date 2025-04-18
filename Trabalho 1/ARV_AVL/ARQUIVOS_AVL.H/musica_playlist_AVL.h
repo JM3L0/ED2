@@ -16,5 +16,11 @@ MUSICA_PLAYLIST *menor_musica_playlist(MUSICA_PLAYLIST *raiz);
 int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *titulo_album, char *nome_artista);
 void liberar_arv_musica_playlist(MUSICA_PLAYLIST **raiz);
 int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char* titulo_musica, char* artista_musica, char* album_musica);
+int pegar_altura_musica_playlist(MUSICA_PLAYLIST *raiz);
+void atualizar_altura_musica_playlist(MUSICA_PLAYLIST *raiz);
+int fator_balanceamento_musica_playlist(MUSICA_PLAYLIST *raiz);
+void rotacao_dir_musica_playlist(MUSICA_PLAYLIST **raiz);
+void rotacao_esq_musica_playlist(MUSICA_PLAYLIST **raiz);
+void balanceamento_musica_playlist(MUSICA_PLAYLIST **raiz);
 
 #endif
