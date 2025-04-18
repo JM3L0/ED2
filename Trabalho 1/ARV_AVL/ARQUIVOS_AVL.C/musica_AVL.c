@@ -263,8 +263,6 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica)
                 (*raiz)->titulo_musica = aux->titulo_musica;
                 (*raiz)->duracao_musica = aux->duracao_musica;
 
-                aux->titulo_musica = NULL;
-
                 remove_musica(&(*raiz)->dir, aux->titulo_musica);
             }
 
