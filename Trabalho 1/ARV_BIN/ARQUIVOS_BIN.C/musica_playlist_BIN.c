@@ -50,7 +50,7 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
         }
     }
 
-    return inseriu;
+    return (inseriu);
 }
 
 int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica) // percorre todas as playlists e imprime as musicas
@@ -203,7 +203,7 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
         }
     }
 
-    return removeu;
+    return (removeu);
 }
 
 /*-------------------------------- Liberar Arvore musica playlist --------------------------------*/
