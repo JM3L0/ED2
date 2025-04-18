@@ -87,6 +87,10 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
         no = NULL;
         inseriu = 0;
     }
+    if(inseriu){
+        balanceamento_album(raiz); // Balanceia a árvore após a inserção
+        atualizar_altura_album(*raiz); // Atualiza a altura do nó raiz
+    }
     return (inseriu);
 }
 
@@ -99,6 +103,7 @@ void mostrar_dados_album(ALBUNS *raiz) // imprime os albuns de acordo com o tipo
         printf("> Album: %s\n", raiz->titulo_album);
         printf("  > Ano: %d\n", raiz->ano_lancamento);
         printf("  > Quantidade de musicas: %d\n\n", raiz->quantidade_musicas);
+        printf("ALTURA: %d\n\n", raiz->altura_album);
     }
 }
 
