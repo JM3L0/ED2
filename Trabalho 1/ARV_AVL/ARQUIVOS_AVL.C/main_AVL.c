@@ -9,8 +9,8 @@
 #include "../ARQUIVOS_AVL.H/musica_playlist_AVL.h"
 #include "../ARQUIVOS_AVL.H/TESTES_AVL.h"
 
-int main() {
-
+int main()
+{
     printf("Executando testes de desempenho...\n\n");
     menu_geral();
     return 0;

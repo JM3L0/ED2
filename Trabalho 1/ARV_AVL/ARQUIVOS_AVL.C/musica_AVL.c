@@ -7,6 +7,7 @@
 MUSICAS *alocar_musica(char *titulo_musica, float duracao_musica)
 {
     MUSICAS *nova_musica = malloc(sizeof(MUSICAS));
+
     if (nova_musica != NULL)
     {
         nova_musica->titulo_musica = titulo_musica;
@@ -96,6 +97,7 @@ MUSICAS *existe_musica(MUSICAS *raiz, char *titulo_musica)
 int imprimir_todas_as_musicas(MUSICAS *raiz) // imprime todas as musicas
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         imprimiu = imprimir_todas_as_musicas(raiz->esq);
@@ -108,11 +110,11 @@ int imprimir_todas_as_musicas(MUSICAS *raiz) // imprime todas as musicas
     }
     return (imprimiu);
 }
-///
+
 int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art, char *nome_musica)
 {
-
     int imprimiu = 0;
+
     if (raiz_art != NULL)
     {
         imprimiu |= imprime_dados_da_musica_album_artista(raiz_art->esq, nome_musica);
@@ -134,8 +136,8 @@ int imprime_dados_da_musica_album_artista(ARTISTAS *raiz_art, char *nome_musica)
 
 int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica)
 {
-
     int imprimiu = 0;
+
     if (raiz_alb != NULL)
     {
         imprimiu |= imprime_dados_da_musica_album(raiz_alb->esq, nome_musica);
@@ -158,8 +160,8 @@ int imprime_dados_da_musica_album(ALBUNS *raiz_alb, char *nome_musica)
 
 int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus, char *nome_musica)
 {
-
     int imprimiu = 0;
+
     if (raiz_mus != NULL)
     {
         imprimiu |= imprime_dados_da_musica_buscada(raiz_mus->esq, nome_musica);
@@ -200,7 +202,6 @@ void liberar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
 
 int eh_folha_musica(MUSICAS *raiz)
 {
-
     int eh_folha = 0;
 
     if (raiz != NULL)
@@ -215,7 +216,6 @@ int eh_folha_musica(MUSICAS *raiz)
 
 MUSICAS *so_um_filho_musica(MUSICAS *raiz)
 {
-
     MUSICAS *no = NULL;
 
     if (raiz != NULL)
@@ -244,6 +244,7 @@ MUSICAS *menor_no_musica(MUSICAS *raiz)
 int remove_musica(MUSICAS **raiz, char *titulo_musica)
 {
     int removeu = 1;
+    
     if (*raiz != NULL)
     {
         if (strcasecmp((*raiz)->titulo_musica, titulo_musica) == 0)
@@ -286,10 +287,9 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica)
 int pegar_altura_musica(MUSICAS *raiz)
 {
     int altura = -1;
+
     if (raiz)
-    {
         altura = raiz->altura_musica;
-    }
     return (altura);
 }
 
@@ -306,10 +306,9 @@ void atualizar_altura_musica(MUSICAS *raiz)
 int fator_balanceamento_musica(MUSICAS *no)
 {
     int fator = 0;
+
     if (no)
-    {
         fator = pegar_altura_musica(no->esq) - pegar_altura_musica(no->dir);
-    }
     return (fator);
 }
 

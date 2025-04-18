@@ -41,9 +41,8 @@ PLAYLIST *cadastrar_playlist()
 {
     char *titulo_playlist;
     PLAYLIST *playlist;
-    int erro = 0;
-
     playlist = NULL;
+    int erro = 0;
 
     printf("Digite o nome da Playlist: ");
     titulo_playlist = ler_string();
@@ -83,7 +82,6 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
         no = NULL;
         inseriu = 0;
     }
-
     return (inseriu);
 }
 
@@ -110,6 +108,7 @@ int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char *titulo
 int imprimir_todas_as_playlists(PLAYLIST *raiz) // apens imprime todas as playlists (titulo da playlist) existentes
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
 
@@ -124,6 +123,7 @@ int imprimir_todas_as_playlists(PLAYLIST *raiz) // apens imprime todas as playli
 int imprime_dados_de_uma_playlist(PLAYLIST *raiz) // imprime os dados da playlist
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         printf("Playlist: %s\n", raiz->titulo_playlist);
@@ -170,8 +170,9 @@ int eh_folha_playlist(PLAYLIST *no)
 
 PLAYLIST *so_um_filho_playlist(PLAYLIST *no)
 {
+    PLAYLIST *filho;
+    filho = NULL;
 
-    PLAYLIST *filho = NULL;
     if (no->esq != NULL && no->dir == NULL)
         filho = no->esq;
     else if (no->esq == NULL && no->dir != NULL)
@@ -182,7 +183,9 @@ PLAYLIST *so_um_filho_playlist(PLAYLIST *no)
 
 PLAYLIST *menor_no_playlist(PLAYLIST *raiz)
 {
-    PLAYLIST *menor = NULL;
+    PLAYLIST *menor;
+    menor = NULL;
+
     if (raiz != NULL)
     {
         menor = raiz;
@@ -195,6 +198,7 @@ PLAYLIST *menor_no_playlist(PLAYLIST *raiz)
 int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
 {
     int removeu = 0;
+
     if (*raiz != NULL)
     {
         if (strcasecmp((*raiz)->titulo_playlist, titulo_playlist) == 0)
@@ -232,5 +236,5 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
                 removeu = remove_playlist(&(*raiz)->dir, titulo_playlist);
         }
     }
-    return removeu;
+    return (removeu);
 }

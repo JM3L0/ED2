@@ -55,13 +55,13 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
         balanceamento_musica_playlist(raiz);
         atualizar_altura_musica_playlist(*raiz);
     }
-
-    return inseriu;
+    return (inseriu);
 }
 
 int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica) // percorre todas as playlists e imprime as musicas
 {
     int achou_mus = 0;
+
     if (raiz != NULL)
     {
         if (achou_mus == 0)
@@ -78,7 +78,6 @@ int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musi
 
 int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 {
-
     int retorno;
 
     char nome_artista[50];
@@ -124,6 +123,7 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas as musicas
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         imprimiu = imprime_todas_as_musicas_da_playlist(raiz->esq);
@@ -212,8 +212,7 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
             atualizar_altura_musica_playlist(*raiz);
         }
     }
-
-    return removeu;
+    return (removeu);
 }
 
 /*-------------------------------- Liberar Arvore musica playlist --------------------------------*/
@@ -235,9 +234,7 @@ int pegar_altura_musica_playlist(MUSICA_PLAYLIST *raiz)
 {
     int altura = -1;
     if (raiz)
-    {
         altura = raiz->altura_musica_playlist;
-    }
     return (altura);
 }
 
@@ -254,16 +251,16 @@ void atualizar_altura_musica_playlist(MUSICA_PLAYLIST *raiz)
 int fator_balanceamento_musica_playlist(MUSICA_PLAYLIST *no)
 {
     int fator = 0;
+
     if (no)
-    {
         fator = pegar_altura_musica_playlist(no->esq) - pegar_altura_musica_playlist(no->dir);
-    }
     return (fator);
 }
 
 void rotacao_esq_musica_playlist(MUSICA_PLAYLIST **raiz)
 {
     MUSICA_PLAYLIST *aux;
+    
     aux = (*raiz)->dir;
     (*raiz)->dir = aux->esq;
     aux->esq = *raiz;
@@ -275,6 +272,7 @@ void rotacao_esq_musica_playlist(MUSICA_PLAYLIST **raiz)
 void rotacao_dir_musica_playlist(MUSICA_PLAYLIST **raiz)
 {
     MUSICA_PLAYLIST *aux;
+
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = *raiz;

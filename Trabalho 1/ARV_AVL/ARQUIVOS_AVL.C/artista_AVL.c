@@ -77,7 +77,7 @@ ARTISTAS *cadastrar_artista()// mais segura contra erros de alocação
         artista = NULL;
     }
 
-    return artista;
+    return (artista);
 }
 
 int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
@@ -216,9 +216,7 @@ int pegar_altura_artista(ARTISTAS *raiz)
 {
     int altura = -1;
     if (raiz)
-    {
         altura = raiz->altura_artista;
-    }
     return (altura);
 }
 
@@ -236,9 +234,7 @@ int fator_balanceamento_artista(ARTISTAS *no)
 {
     int fator = 0;
     if (no)
-    {
         fator = pegar_altura_artista(no->esq) - pegar_altura_artista(no->dir);
-    }
     return (fator);
 }
 

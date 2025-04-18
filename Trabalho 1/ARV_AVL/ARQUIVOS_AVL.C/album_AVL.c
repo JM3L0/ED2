@@ -211,9 +211,7 @@ int pegar_altura_album(ALBUNS *raiz)
 {
     int altura = -1;
     if (raiz)
-    {
         altura = raiz->altura_album;
-    }
     return (altura);
 }
 
@@ -231,9 +229,7 @@ int fator_balanceamento_album(ALBUNS *no)
 {
     int fator = 0;
     if (no)
-    {
         fator = pegar_altura_album(no->esq) - pegar_altura_album(no->dir);
-    }
     return (fator);
 }
 

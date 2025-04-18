@@ -126,7 +126,6 @@ void menu_geral()
             {
                 /* Cadastrar Músicas:   cadastrar as músicas de um álbum de um artista em uma árvore binária organizada pelo título,
                 lembre-se uma música só pode ser cadastrada para um álbum que já existe e a música não pode se repetir para um mesmo álbum.*/
-                //  printf("\nCADASTRAR UMA MUSICA\n");
 
                 char nome_artista[50];
                 printf("Digite o nome do artista para cadastrar a musica: ");
