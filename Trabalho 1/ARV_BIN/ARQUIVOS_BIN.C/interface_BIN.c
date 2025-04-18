@@ -536,6 +536,7 @@ void menu_geral()
                 break;
             default:
                 printf("Opcao invalida!\n");
+                pausar();
             }
         }
     } while (opcao != 0 || opcao2 == 0);
