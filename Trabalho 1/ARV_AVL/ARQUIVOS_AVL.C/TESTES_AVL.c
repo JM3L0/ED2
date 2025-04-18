@@ -3,12 +3,12 @@
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
-#include "../ARQUIVOS_.H/TESTES.h"
-#include "../ARQUIVOS_.H/STRUCTS.h"
-#include "../ARQUIVOS_.H/artista.h"
-#include "../ARQUIVOS_.H/album.h"
-#include "../ARQUIVOS_.H/musica.h"
-#include "../ARQUIVOS_.H/musica_playlist.h"
+#include "../ARQUIVOS_AVL.H/TESTES_AVL.h"
+#include "../ARQUIVOS_AVL.H/STRUCTS_AVL.h"
+#include "../ARQUIVOS_AVL.H/artista_AVL.h"
+#include "../ARQUIVOS_AVL.H/album_AVL.h"
+#include "../ARQUIVOS_AVL.H/musica_AVL.h"
+#include "../ARQUIVOS_AVL.H/musica_playlist_AVL.h"
 
 
 static int cadastrar_artistas_predefinidos(ARTISTAS **raiz) {

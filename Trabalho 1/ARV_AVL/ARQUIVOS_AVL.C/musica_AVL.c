@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ARQUIVOS_.H/musica.h"
-#include "../ARQUIVOS_.H/utilitarios.h"
+#include "../ARQUIVOS_AVL.H/musica_AVL.h"
+#include "../ARQUIVOS_AVL.H/utilitarios_AVL.h"
 
 MUSICAS *alocar_musica(char *titulo_musica, float duracao_musica)
 {

@@ -1,8 +1,8 @@
-#ifndef PLAYLIST_H
-#define PLAYLIST_H
-#include "STRUCTS.h"
-#include "musica.h"
-#include "utilitarios.h"
+#ifndef PLAYLIST_AVL_H
+#define PLAYLIST_AVL_H
+#include "STRUCTS_AVL.h"
+#include "musica_AVL.h"
+#include "utilitarios_AVL.h"
 
 PLAYLIST *aloca_no_playlist(char *titulo_playlist);
 PLAYLIST *existe_playlist(PLAYLIST *raiz, char *titulo_playlist);
