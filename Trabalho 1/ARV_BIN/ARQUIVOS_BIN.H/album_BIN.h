@@ -1,8 +1,8 @@
-#ifndef ALBUM_H
-#define ALBUM_H
-#include "artista.h"
-#include "utilitarios.h"
-#include "STRUCTS.h"
+#ifndef ALBUM_BIN_H
+#define ALBUM_BIN_H
+#include "artista_BIN.h"
+#include "utilitarios_BIN.h"
+#include "STRUCTS_BIN.h"
 
 ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento);
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album);

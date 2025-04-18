@@ -3,6 +3,10 @@
         "playlist.h": "c",
         "utilitarios.h": "c",
         "structs.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "utilitarios_bin.h": "c",
+        "artista_bin.h": "c",
+        "structs_bin.h": "c",
+        "musica_bin.h": "c"
     }
 }

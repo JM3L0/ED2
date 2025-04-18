@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ARQUIVOS_.H/utilitarios.h"
+#include "../ARQUIVOS_BIN.H/utilitarios_BIN.h"
 
 char *ler_string()
 {
