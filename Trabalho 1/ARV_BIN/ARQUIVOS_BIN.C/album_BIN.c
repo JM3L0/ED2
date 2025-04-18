@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ARQUIVOS_BIN.H/album_BIN.h"
-#include "../ARQUIVOS_BIN.H/musica_BIN.h"
-#include "../ARQUIVOS_BIN.H/utilitarios_BIN.h"
+#include "../ARQUIVOS_.H/album.h"
+#include "../ARQUIVOS_.H/musica.h"
+#include "../ARQUIVOS_.H/utilitarios.h"
 
 ALBUNS *aloca_no_album(char *titulo_album, int ano_lancamento)
 {

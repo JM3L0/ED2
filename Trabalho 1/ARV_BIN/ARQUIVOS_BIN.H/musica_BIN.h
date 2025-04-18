@@ -1,8 +1,8 @@
-#ifndef MUSICA_BIN_H
-#define MUSICA_BIN_H
-#include "STRUCTS_BIN.h"
-#include "album_BIN.h"
-#include "utilitarios_BIN.h"
+#ifndef MUSICA_H_INCLUDED
+#define MUSICA_H_INCLUDED
+#include "STRUCTS.h"
+#include "album.h"
+#include "utilitarios.h"
 
 MUSICAS *alocar_musica(char *titulo_musica, float duracao_musica);
 MUSICAS *cadastrar_musica(MUSICAS *musica);

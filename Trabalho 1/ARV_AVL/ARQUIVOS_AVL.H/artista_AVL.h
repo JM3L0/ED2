@@ -1,7 +1,7 @@
-#ifndef ARTISTA_H
-#define ARTISTA_H
-#include "utilitarios.h"
-#include "STRUCTS.h"
+#ifndef ARTISTA_AVL_H
+#define ARTISTA_AVL_H
+#include "utilitarios_AVL.h"
+#include "STRUCTS_AVL.h"
 
 ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical);
 ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista);

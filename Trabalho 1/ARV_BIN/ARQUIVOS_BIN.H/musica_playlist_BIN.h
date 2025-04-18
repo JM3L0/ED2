@@ -1,9 +1,9 @@
-#ifndef MUSICA_PLAYLIST_BIN_H
-#define MUSICA_PLAYLIST_BIN_H
-#include "STRUCTS_BIN.h"
-#include "utilitarios_BIN.h"
-#include "playlist_BIN.h"
-#include "musica_BIN.h"
+#ifndef MUSICA_PLAYLIST_H
+#define MUSICA_PLAYLIST_H
+#include "STRUCTS.h"
+#include "utilitarios.h"
+#include "playlist.h"
+#include "musica.h"
 
 MUSICA_PLAYLIST *alocar_musica_playlist(char *titulo_musica, float duracao_musica, char *nome_artista, char *titulo_album);
 int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no);

@@ -4,9 +4,16 @@
         "utilitarios.h": "c",
         "structs.h": "c",
         "string.h": "c",
+<<<<<<< HEAD
         "utilitarios_bin.h": "c",
         "artista_bin.h": "c",
         "structs_bin.h": "c",
         "musica_bin.h": "c"
+=======
+        "utilitarios_avl.h": "c",
+        "musica_avl.h": "c",
+        "structs_avl.h": "c",
+        "artista_avl.h": "c"
+>>>>>>> 697a7228091286c5c09d190ba265b8aefdc5ca0d
     }
 }

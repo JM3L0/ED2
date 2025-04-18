@@ -1,5 +1,5 @@
-#ifndef UTILITARIOS_BIN_H
-#define UTILITARIOS_BIN_H
+#ifndef UTILITARIOS_H
+#define UTILITARIOS_H
 
 char *ler_string();
 void limpar_buffer();
