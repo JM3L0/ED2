@@ -19,5 +19,11 @@ MUSICAS *so_um_filho_musica(MUSICAS *raiz);
 int dois_filhos_musica(MUSICAS *raiz);
 MUSICAS *menor_no_musica(MUSICAS *raiz);
 int remove_musica(MUSICAS **raiz, char *titulo_musica);
+int pegar_altura_musica(MUSICAS *raiz);
+void atualizar_altura_musica(MUSICAS *raiz);
+int fator_balanceamento_musica(MUSICAS *raiz);
+void rotacao_dir_musica(MUSICAS **raiz);
+void rotacao_esq_musica(MUSICAS **raiz);
+void balanceamento_musica(MUSICAS **raiz);
 
 #endif

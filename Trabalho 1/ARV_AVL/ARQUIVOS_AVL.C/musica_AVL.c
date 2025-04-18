@@ -66,6 +66,11 @@ int inserir_musica(MUSICAS **raiz, MUSICAS *no)
         no = NULL;
         inseriu = 0;
     }
+    
+    if (inseriu ){
+        balanceamento_musica(raiz); // Chama a função de balanceamento após a inserção
+        atualizar_altura_musica(*raiz); // Atualiza a altura do nó após a inserção
+    }
     return (inseriu);
 }
 
@@ -273,4 +278,77 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica)
     else
         removeu = 0;
     return (removeu);
+}
+
+/*---------------------------------- Funções de Balanceamento ----------------------------------*/
+
+int pegar_altura_musica(MUSICAS *raiz)
+{
+    int altura = -1;
+    if (raiz)
+    {
+        altura = raiz->altura_musica;
+    }
+    return (altura);
+}
+
+void atualizar_altura_musica(MUSICAS *raiz)
+{
+    if (raiz != NULL)
+    {
+        int altura_esq = pegar_altura_musica(raiz->esq);
+        int altura_dir = pegar_altura_musica(raiz->dir);
+        raiz->altura_musica = (altura_esq > altura_dir ? altura_esq : altura_dir) + 1;
+    }
+}
+
+int fator_balanceamento_musica(MUSICAS *no)
+{
+    int fator = 0;
+    if (no)
+    {
+        fator = pegar_altura_musica(no->esq) - pegar_altura_musica(no->dir);
+    }
+    return (fator);
+}
+
+void rotacao_esq_musica(MUSICAS **raiz)
+{
+    MUSICAS *aux;
+    aux = (*raiz)->dir;
+    (*raiz)->dir = aux->esq;
+    aux->esq = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_musica((*raiz)->esq);
+    atualizar_altura_musica((*raiz));
+}
+
+void rotacao_dir_musica(MUSICAS **raiz)
+{
+    MUSICAS *aux;
+    aux = (*raiz)->esq;
+    (*raiz)->esq = aux->dir;
+    aux->dir = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_musica((*raiz)->dir);
+    atualizar_altura_musica((*raiz));
+}
+
+void balanceamento_musica(MUSICAS **raiz)
+{
+    if (*raiz)
+    {
+        if (fator_balanceamento_musica(*raiz) == 2)
+        {
+            if (fator_balanceamento_musica((*raiz)->esq) < 0)
+                rotacao_esq_musica(&((*raiz)->esq));
+            rotacao_dir_musica(raiz);
+        }
+        else if (fator_balanceamento_musica(*raiz) == -2)
+        {
+            if (fator_balanceamento_musica((*raiz)->dir) > 0)
+                rotacao_dir_musica(&((*raiz)->dir));
+            rotacao_esq_musica(raiz);
+        }
+    }
 }
