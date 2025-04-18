@@ -102,6 +102,7 @@ int imprimir_todas_as_musicas(MUSICAS *raiz) // imprime todas as musicas
         printf("\n\n");
         printf("Musica: %s\n", raiz->titulo_musica);
         printf("Duracao: %.2f minutos\n", raiz->duracao_musica);
+        printf("Altura: %d\n", raiz->altura_musica);
         imprimiu = imprimir_todas_as_musicas(raiz->dir);
         imprimiu = 1;
     }
@@ -274,6 +275,8 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica)
             removeu = remove_musica(&(*raiz)->esq, titulo_musica);
         else
             removeu = remove_musica(&(*raiz)->dir, titulo_musica);
+        balanceamento_musica(raiz); // Chama a função de balanceamento após a remoção
+        atualizar_altura_musica(*raiz); // Atualiza a altura do nó após a remoção
     }
     else
         removeu = 0;
