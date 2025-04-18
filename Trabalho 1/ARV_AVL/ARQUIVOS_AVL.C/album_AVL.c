@@ -199,3 +199,76 @@ void liberar_arv_album(ALBUNS **raiz) // limpa a arvore album
         *raiz = NULL;
     }
 }
+
+/*---------------------------------- Funções de Balanceamento ----------------------------------*/
+
+int pegar_altura_album(ALBUNS *raiz)
+{
+    int altura = -1;
+    if (raiz)
+    {
+        altura = raiz->altura_album;
+    }
+    return (altura);
+}
+
+void atualizar_altura_album(ALBUNS *raiz)
+{
+    if (raiz != NULL)
+    {
+        int altura_esq = pegar_altura_album(raiz->esq);
+        int altura_dir = pegar_altura_album(raiz->dir);
+        raiz->altura_album = (altura_esq > altura_dir ? altura_esq : altura_dir) + 1;
+    }
+}
+
+int fator_balanceamento_album(ALBUNS *no)
+{
+    int fator = 0;
+    if (no)
+    {
+        fator = pegar_altura_album(no->esq) - pegar_altura_album(no->dir);
+    }
+    return (fator);
+}
+
+void rotacao_esq_album(ALBUNS **raiz)
+{
+    ALBUNS *aux;
+    aux = (*raiz)->dir;
+    (*raiz)->dir = aux->esq;
+    aux->esq = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_album((*raiz)->esq);
+    atualizar_altura_album((*raiz));
+}
+
+void rotacao_dir_album(ALBUNS **raiz)
+{
+    ALBUNS *aux;
+    aux = (*raiz)->esq;
+    (*raiz)->esq = aux->dir;
+    aux->dir = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_album((*raiz)->dir);
+    atualizar_altura_album((*raiz));
+}
+
+void balanceamento_album(ALBUNS **raiz)
+{
+    if (*raiz)
+    {
+        if (fator_balanceamento_album(*raiz) == 2)
+        {
+            if (fator_balanceamento_album((*raiz)->esq) < 0)
+                rotacao_esq_album(&((*raiz)->esq));
+            rotacao_dir_album(raiz);
+        }
+        else if (fator_balanceamento_album(*raiz) == -2)
+        {
+            if (fator_balanceamento_album((*raiz)->dir) > 0)
+                rotacao_dir_album(&((*raiz)->dir));
+            rotacao_esq_album(raiz);
+        }
+    }
+}
