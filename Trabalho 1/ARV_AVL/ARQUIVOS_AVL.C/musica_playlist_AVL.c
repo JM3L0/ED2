@@ -128,6 +128,7 @@ int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas
     {
         imprimiu = imprime_todas_as_musicas_da_playlist(raiz->esq);
         printf("Musica: %s\n", raiz->titulo_musica);
+        printf("Altura: %d\n\n", raiz->altura_musica_playlist);
         imprimiu = imprime_todas_as_musicas_da_playlist(raiz->dir);
         imprimiu = 1;
     }

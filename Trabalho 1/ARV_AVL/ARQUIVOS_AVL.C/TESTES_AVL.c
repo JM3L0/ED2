@@ -38,14 +38,17 @@ static int cadastrar_albuns_predefinidos(ARTISTAS *raiz) {
     ALBUNS *album1 = aloca_no_album(strdup("SIM"), 2000);
     ALBUNS *album2 = aloca_no_album(strdup("NAO"), 3000);
     ALBUNS *album3 = aloca_no_album(strdup("MUSICS"), 2001);
+    ALBUNS *album4 = aloca_no_album(strdup("teste"), 2001); // Album duplicado para teste
 
-    if (!album1 || !album2 || !album3) {
+    if (!album1 || !album2 || !album3 || !album4) {
         limpar_no_album(album1);
         limpar_no_album(album2);
         limpar_no_album(album3);
+        limpar_no_album(album4);
         free(album1);
         free(album2);
         free(album3);
+        free(album4);
         return 0;
     }
 
@@ -57,6 +60,13 @@ static int cadastrar_albuns_predefinidos(ARTISTAS *raiz) {
             rail->numero_albuns++;
         } else {
             printf("Erro ao cadastrar 'SIM'!\n");
+        }
+        retorno &= inserir_album(&rail->arv_albuns, album4);
+        if (retorno) {
+            printf("Album 'teste' cadastrado para rail!\n");
+            rail->numero_albuns++;
+        } else {
+            printf("Erro ao cadastrar 'teste'!\n");
         }
 
         retorno &= inserir_album(&rail->arv_albuns, album3);
@@ -87,14 +97,29 @@ static int cadastrar_musicas_predefinidas(ARTISTAS *raiz) {
     MUSICAS *musica1 = alocar_musica(strdup("winx"), 2.66);
     MUSICAS *musica2 = alocar_musica(strdup("kwid"), 1.99);
     MUSICAS *musica3 = alocar_musica(strdup("corola manual"), 2.99);
+    MUSICAS *musica4 = alocar_musica(strdup("b"), 2.99);
+    MUSICAS *musica5 = alocar_musica(strdup("a"), 2.99);
+    MUSICAS *musica6 = alocar_musica(strdup("c"), 2.99);
+    MUSICAS *musica7 = alocar_musica(strdup("d"), 2.99);
+    MUSICAS *musica8 = alocar_musica(strdup("e"), 2.99);
 
-    if (!musica1 || !musica2 || !musica3) {
+    if (!musica1 || !musica2 || !musica3 || !musica4 || !musica5 || !musica6 || !musica7 || !musica8) {
         limpar_no_musica(musica1);
         limpar_no_musica(musica2);
         limpar_no_musica(musica3);
+        limpar_no_musica(musica4);
+        limpar_no_musica(musica5);
+        limpar_no_musica(musica6);
+        limpar_no_musica(musica7);
+        limpar_no_musica(musica8);
         free(musica1);
         free(musica2);
         free(musica3);
+        free(musica4);
+        free(musica5);
+        free(musica6);
+        free(musica7);
+        free(musica8);
         return 0;
     }
 
@@ -108,6 +133,57 @@ static int cadastrar_musicas_predefinidas(ARTISTAS *raiz) {
                 sim->quantidade_musicas++;
             } else {
                 printf("Erro ao cadastrar 'winx'!\n");
+            }
+        }
+
+        ALBUNS *teste = existe_album(rail->arv_albuns, "teste");
+        if (teste) {
+            retorno &= inserir_musica(&teste->arv_musicas, musica4);
+            if (retorno) {
+                printf("Musica 'b' cadastrada em teste!\n");
+                teste->quantidade_musicas++;
+            } else {
+                printf("Erro ao cadastrar 'b'!\n");
+            }
+        }
+
+        if (teste) {
+            retorno &= inserir_musica(&teste->arv_musicas, musica5);
+            if (retorno) {
+                printf("Musica 'a' cadastrada em teste!\n");
+                teste->quantidade_musicas++;
+            } else {
+                printf("Erro ao cadastrar 'a'!\n");
+            }
+        }
+
+        if (teste) {
+            retorno &= inserir_musica(&teste->arv_musicas, musica6);
+            if (retorno) {
+                printf("Musica 'c' cadastrada em teste!\n");
+                teste->quantidade_musicas++;
+            } else {
+                printf("Erro ao cadastrar 'c'!\n");
+            }
+        }
+
+        if (teste) {
+            retorno &= inserir_musica(&teste->arv_musicas, musica7);
+            if (retorno) {
+                printf("Musica 'd' cadastrada em teste!\n");
+                teste->quantidade_musicas++;
+            } else {
+                printf("Erro ao cadastrar 'd'!\n");
+            }
+        }
+
+        if (teste) {
+            retorno &= inserir_musica(&teste->arv_musicas, musica8);
+            if (retorno) {
+                printf("Musica 'e' cadastrada em teste!\n");
+                teste->quantidade_musicas++;
+            } else {
+                printf("Erro ao cadastrar 'e'!\n");
             }
         }
 
@@ -144,12 +220,15 @@ static int cadastrar_playlists_predefinidas(PLAYLIST **raiz) {
     int retorno = 1;
     PLAYLIST *playlist1 = aloca_no_playlist(strdup("testando"));
     PLAYLIST *playlist2 = aloca_no_playlist(strdup("tome"));
+    PLAYLIST *playlist3 = aloca_no_playlist(strdup("teste"));
 
-    if (!playlist1 || !playlist2) {
+    if (!playlist1 || !playlist2 || !playlist3) {
         limpar_no_playlist(playlist1);
         limpar_no_playlist(playlist2);
+        limpar_no_playlist(playlist3);
         free(playlist1);
         free(playlist2);
+        free(playlist3);
         return 0;
     }
 
@@ -158,6 +237,9 @@ static int cadastrar_playlists_predefinidas(PLAYLIST **raiz) {
 
     retorno &= inserir_playlist(raiz, playlist2);
     printf(retorno ? "Playlist 'tome' cadastrada com sucesso!\n" : "Erro ao cadastrar 'tome'!\n");
+    
+    retorno &= inserir_playlist(raiz, playlist3);
+    printf(retorno ? "Playlist 'teste' cadastrada com sucesso!\n" : "Erro ao cadastrar 'teste'!\n");
 
     return retorno;
 }
@@ -180,6 +262,87 @@ static int adicionar_musicas_playlists_predefinidas(ARTISTAS *raiz_artista, PLAY
             retorno = 0;
         }
     }
+
+    PLAYLIST *teste = existe_playlist(raiz_playlist, "teste");
+    if (teste) {
+        MUSICA_PLAYLIST *mp3 = alocar_musica_playlist(strdup("b"), 2.66, strdup("rail"), strdup("teste"));
+        if (mp3) {
+            retorno &= inserir_musica_playlist(&teste->arv_musicas_playlist, mp3);
+            if (retorno) {
+                printf("Musica 'b' adicionada a playlist 'teste'!\n");
+                teste->quantidade_musicas_playlist++;
+            } else {
+                printf("Erro ao adicionar 'b' a playlist 'teste'!\n");
+            }
+        } else {
+            retorno = 0;
+        }
+    }
+
+    teste = existe_playlist(raiz_playlist, "teste");
+    if (teste) {
+        MUSICA_PLAYLIST *mp4 = alocar_musica_playlist(strdup("a"), 2.66, strdup("rail"), strdup("teste"));
+        if (mp4) {
+            retorno &= inserir_musica_playlist(&teste->arv_musicas_playlist, mp4);
+            if (retorno) {
+                printf("Musica 'a' adicionada a playlist 'teste'!\n");
+                teste->quantidade_musicas_playlist++;
+            } else {
+                printf("Erro ao adicionar 'a' a playlist 'teste'!\n");
+            }
+        } else {
+            retorno = 0;
+        }
+    }
+
+    teste = existe_playlist(raiz_playlist, "teste");
+    if (teste) {
+        MUSICA_PLAYLIST *mp5 = alocar_musica_playlist(strdup("c"), 2.66, strdup("rail"), strdup("teste"));
+        if (mp5) {
+            retorno &= inserir_musica_playlist(&teste->arv_musicas_playlist, mp5);
+            if (retorno) {
+                printf("Musica 'c' adicionada a playlist 'teste'!\n");
+                teste->quantidade_musicas_playlist++;
+            } else {
+                printf("Erro ao adicionar 'c' a playlist 'teste'!\n");
+            }
+        } else {
+            retorno = 0;
+        }
+    }
+
+    teste = existe_playlist(raiz_playlist, "teste");
+    if (teste) {
+        MUSICA_PLAYLIST *mp6 = alocar_musica_playlist(strdup("d"), 2.66, strdup("rail"), strdup("teste"));
+        if (mp6) {
+            retorno &= inserir_musica_playlist(&teste->arv_musicas_playlist, mp6);
+            if (retorno) {
+                printf("Musica 'd' adicionada a playlist 'teste'!\n");
+                teste->quantidade_musicas_playlist++;
+            } else {
+                printf("Erro ao adicionar 'd' a playlist 'teste'!\n");
+            }
+        } else {
+            retorno = 0;
+        }
+    }
+
+    teste = existe_playlist(raiz_playlist, "teste");
+    if (teste) {
+        MUSICA_PLAYLIST *mp7 = alocar_musica_playlist(strdup("e"), 2.66, strdup("rail"), strdup("teste"));
+        if (mp7) {
+            retorno &= inserir_musica_playlist(&teste->arv_musicas_playlist, mp7);
+            if (retorno) {
+                printf("Musica 'e' adicionada a playlist 'teste'!\n");
+                teste->quantidade_musicas_playlist++;
+            } else {
+                printf("Erro ao adicionar 'e' a playlist 'teste'!\n");
+            }
+        } else {
+            retorno = 0;
+        }
+    }
+
 
     PLAYLIST *tome = existe_playlist(raiz_playlist, "tome");
     if (tome) {
