@@ -107,15 +107,15 @@ int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char *titulo
 
 /*---------------------------------- Funções de Printar ----------------------------------*/
 
-int imprimir_playlists(PLAYLIST *raiz) // apens imprime todas as playlists (titulo da playlist) existentes
+int imprimir_todas_as_playlists(PLAYLIST *raiz) // apens imprime todas as playlists (titulo da playlist) existentes
 {
     int imprimiu = 0;
     if (raiz != NULL)
     {
 
-        imprimir_playlists(raiz->esq);
+        imprimir_todas_as_playlists(raiz->esq);
         printf("%s\n", raiz->titulo_playlist);
-        imprimir_playlists(raiz->dir);
+        imprimir_todas_as_playlists(raiz->dir);
         imprimiu = 1;
     }
     return (imprimiu);

@@ -107,15 +107,15 @@ int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char *titulo
 
 /*---------------------------------- Funções de Printar ----------------------------------*/
 
-int imprimir_playlists(PLAYLIST *raiz) // apens imprime todas as playlists (titulo da playlist) existentes
+int imprimir_todas_as_playlists(PLAYLIST *raiz) // apenas imprime todas as playlists (titulo da playlist) existentes
 {
     int imprimiu = 0;
     if (raiz != NULL)
     {
 
-        imprimir_playlists(raiz->esq);
+        imprimir_todas_as_playlists(raiz->esq);
         printf("%s\n", raiz->titulo_playlist);
-        imprimir_playlists(raiz->dir);
+        imprimir_todas_as_playlists(raiz->dir);
         imprimiu = 1;
     }
     return (imprimiu);
@@ -216,8 +216,8 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
                 (*raiz)->quantidade_musicas_playlist = aux->quantidade_musicas_playlist;
                 (*raiz)->arv_musicas_playlist = aux->arv_musicas_playlist;
 
-                aux->titulo_playlist = NULL;      // Evita liberação dupla
-                aux->arv_musicas_playlist = NULL; // Evita liberação dupla
+                // aux->titulo_playlist = NULL;      // Evita liberação dupla
+                // aux->arv_musicas_playlist = NULL; // Evita liberação dupla
                 removeu = remove_playlist(&(*raiz)->dir, aux->titulo_playlist);
             }
 

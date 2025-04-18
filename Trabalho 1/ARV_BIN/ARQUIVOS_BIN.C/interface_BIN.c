@@ -30,6 +30,7 @@ void menu_dos_print_de_opcoes()
     printf("[16] - Remover uma playlist\n");
     printf("[17] - Remover  uma  musica  de  um  determinado  album  de  um  determinado  artista\n");
     printf("[18] - Adicionar musica a uma playlist\n");
+    printf("[19] - Mostrar todas as playlists\n");
     printf("[0] - Encerrar Programa\n");
 }
 
@@ -522,6 +523,19 @@ void menu_geral()
                 }
                 else
                     printf("\nPlaylist nao encontrada!\n");
+                pausar();
+                break;
+            }
+            case 19:
+            {
+                // Mostrar todas as playlists
+                printf("\n\n");
+                printf("Playlists cadastradas:\n\n");
+                printf("--------------------------------------------------\n");
+
+                retorno = imprimir_todas_as_playlists(raiz_playlist);
+                if (retorno == 0)
+                    printf("\nNenhuma playlist cadastrada!\n");
                 pausar();
                 break;
             }
