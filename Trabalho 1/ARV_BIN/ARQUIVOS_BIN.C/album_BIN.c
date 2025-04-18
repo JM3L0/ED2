@@ -40,7 +40,7 @@ ALBUNS *cadastrar_album(ALBUNS *album)
     if (!erro)
     {
         album = aloca_no_album(titulo_album, ano_lancamento);
-        if(album == NULL)
+        if (album == NULL)
             erro = 1;
     }
     if (erro)
@@ -54,7 +54,7 @@ ALBUNS *cadastrar_album(ALBUNS *album)
 }
 
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
-{ 
+{
     ALBUNS *existe_alb;
     existe_alb = NULL;
 
@@ -91,6 +91,7 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
 }
 
 /*---------------------------------- Funções de Imprimir ----------------------------------*/
+
 void mostrar_dados_album(ALBUNS *raiz) // imprime os albuns de acordo com o tipo
 {
     if (raiz != NULL)

@@ -38,7 +38,7 @@ ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista)
     return (existe_art);
 }
 
-ARTISTAS *cadastrar_artista()// mais segura contra erros de alocação
+ARTISTAS *cadastrar_artista()
 {
     char *nome = NULL, *tipo_artista = NULL, *estilo_musical = NULL;
     ARTISTAS *artista = NULL;
@@ -103,6 +103,7 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
 }
 
 /*---------------------------------- Funções de Imprimir ----------------------------------*/
+
 int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
 {
     int imprimiu = 0;

@@ -70,7 +70,7 @@ int inserir_musica(MUSICAS **raiz, MUSICAS *no)
 }
 
 MUSICAS *existe_musica(MUSICAS *raiz, char *titulo_musica)
-{ // sera utilizado para as musicas
+{ 
     MUSICAS *existe_mus;
     existe_mus = NULL;
 
@@ -191,6 +191,8 @@ void liberar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
         *raiz = NULL;
     }
 }
+
+/*---------------------------------- Funções de Remover ----------------------------------*/
 
 int eh_folha_musica(MUSICAS *raiz)
 {

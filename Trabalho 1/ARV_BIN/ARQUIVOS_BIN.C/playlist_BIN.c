@@ -163,6 +163,8 @@ void liberar_arv_playlist(PLAYLIST **raiz) // apagar tudo (CABUM)
     }
 }
 
+/*---------------------------------- Funções de Remover ----------------------------------*/
+
 int eh_folha_playlist(PLAYLIST *no)
 {
     return (no->esq == NULL && no->dir == NULL);
@@ -216,8 +218,6 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
                 (*raiz)->quantidade_musicas_playlist = aux->quantidade_musicas_playlist;
                 (*raiz)->arv_musicas_playlist = aux->arv_musicas_playlist;
 
-                // aux->titulo_playlist = NULL;      // Evita liberação dupla
-                // aux->arv_musicas_playlist = NULL; // Evita liberação dupla
                 removeu = remove_playlist(&(*raiz)->dir, aux->titulo_playlist);
             }
 
