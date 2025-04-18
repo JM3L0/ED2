@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    // Comando de compilação usando caminhos relativos
+    const char *comando = "gcc -o arvore_binaria ../ARQUIVOS_.C/TESTES.c ../ARQUIVOS_.C/playlist.c ../ARQUIVOS_.C/musica_playlist.c ../ARQUIVOS_.H/STRUCTS.h ../ARQUIVOS_.C/main.c ../ARQUIVOS_.C/interface.c ../ARQUIVOS_.C/artista.c ../ARQUIVOS_.C/utilitarios.c ../ARQUIVOS_.C/album.c ../ARQUIVOS_.C/musica.c -I ARQUIVOS_.H";
+
+    printf("Compilando o projeto...\n");
+
+    // Executa o comando de compilação
+    int retorno = system(comando);
+
+    // Verifica se a compilação foi bem-sucedida
+    if (retorno == 0)
+    {
+        printf("Compilacao concluida com sucesso!\n");
+        system("arvore_binaria.exe");
+    }
+    else
+    {
+        printf("Erro durante a compilacao. Codigo de retorno: %d\n", retorno);
+        printf("Certifique-se de que esta executando este programa no diretorio principal do projeto.\n");
+    }
+
+    return 0;
+}
