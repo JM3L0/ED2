@@ -54,7 +54,7 @@ ALBUNS *cadastrar_album(ALBUNS *album)
 }
 
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
-{ // sera utilizado para as musicas
+{ 
     ALBUNS *existe_alb;
     existe_alb = NULL;
 

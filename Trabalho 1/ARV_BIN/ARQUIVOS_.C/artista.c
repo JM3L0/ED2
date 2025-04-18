@@ -21,7 +21,7 @@ ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical)
     return (novo);
 }
 
-ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista) // deve ser testado
+ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista)
 {
     ARTISTAS *existe_art;
     existe_art = NULL;

@@ -193,7 +193,7 @@ void menu_geral()
                 printf("Artistas cadastrados do tipo %s:\n\n", tipo_artista);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprimir_artista_tipo(raiz_artista, tipo_artista); // tem que adicionar o tipo de artista
+                retorno = imprimir_artista_tipo(raiz_artista, tipo_artista);
                 if (retorno == 0)
                     printf("\nNenhum artista desse tipo!\n");
                 pausar();
@@ -210,7 +210,7 @@ void menu_geral()
                 printf("Artistas cadastrados do estilo %s:\n\n", estilo_musical);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprimir_artista_estilo(raiz_artista, estilo_musical); // tem que adicionar o estilo musical
+                retorno = imprimir_artista_estilo(raiz_artista, estilo_musical); 
                 if (retorno == 0)
                     printf("\nNenhum artista desse estilo!\n");
                 pausar();
@@ -334,7 +334,6 @@ void menu_geral()
                 int ano_lancamento;
                 printf("Digite o ano de lancamento: ");
                 ano_lancamento = digitar_int();
-                // limpar_buffer();
 
                 printf("\n\n");
                 printf("Albuns cadastrados no ano %d:\n\n", ano_lancamento);
