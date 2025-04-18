@@ -128,20 +128,6 @@ int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
     return (imprimiu);
 }
 
-// int imprimir_todos_artistas(ARTISTAS *raiz) // Imprime todos os artistas (só o nome) //remover depois
-// {
-//     int imprimiu = 0;
-//     if (raiz != NULL)
-//     {
-//         imprimiu = imprimir_todos_artistas(raiz->esq);
-//         printf("\n\n");
-//         printf("Artista: %s\n", raiz->nome_artista);
-//         imprimiu = imprimir_todos_artistas(raiz->dir);
-//         imprimiu = 1;
-//     }
-//     return (imprimiu);
-// }
-
 int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista) // imprime os artistas de acordo com o tipo
 {
     int imprimiu = 0;
