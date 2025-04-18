@@ -1,8 +1,8 @@
-#ifndef DADOS_PREDEFINIDOS_H
-#define DADOS_PREDEFINIDOS_H
+#ifndef DADOS_PREDEFINIDOS_BIN_H
+#define DADOS_PREDEFINIDOS_BIN_H
 
-#include "artista.h"
-#include "playlist.h"
+#include "artista_BIN.h"
+#include "playlist_BIN.h"
 
 void inicializar_dados_predefinidos(ARTISTAS **raiz_artista, PLAYLIST **raiz_playlist);
 

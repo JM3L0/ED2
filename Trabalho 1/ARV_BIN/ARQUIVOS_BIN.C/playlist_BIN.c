@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ARQUIVOS_.H/utilitarios.h"
-#include "../ARQUIVOS_.H/playlist.h"
-#include "../ARQUIVOS_.H/STRUCTS.h"
-#include "../ARQUIVOS_.H/musica_playlist.h"
+#include "../ARQUIVOS_BIN.H/utilitarios_BIN.h"
+#include "../ARQUIVOS_BIN.H/playlist_BIN.h"
+#include "../ARQUIVOS_BIN.H/STRUCTS_BIN.h"
+#include "../ARQUIVOS_BIN.H/musica_playlist_BIN.h"
 
 PLAYLIST *aloca_no_playlist(char *titulo_playlist)
 {

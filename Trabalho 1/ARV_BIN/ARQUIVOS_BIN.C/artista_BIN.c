@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ARQUIVOS_.H/artista.h"
-#include "../ARQUIVOS_.H/album.h"
-#include "../ARQUIVOS_.H/utilitarios.h"
+#include "../ARQUIVOS_BIN.H/artista_BIN.h"
+#include "../ARQUIVOS_BIN.H/album_BIN.h"
+#include "../ARQUIVOS_BIN.H/utilitarios_BIN.h"
 
 ARTISTAS *aloca_no_artista(char *nome, char *tipo_artista, char *estilo_musical)
 {

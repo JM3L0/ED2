@@ -4,7 +4,7 @@
 int main()
 {
     // Comando de compilação usando caminhos relativos
-    const char *comando = "gcc -o arvore_binaria ../ARQUIVOS_.C/TESTES.c ../ARQUIVOS_.C/playlist.c ../ARQUIVOS_.C/musica_playlist.c ../ARQUIVOS_.H/STRUCTS.h ../ARQUIVOS_.C/main.c ../ARQUIVOS_.C/interface.c ../ARQUIVOS_.C/artista.c ../ARQUIVOS_.C/utilitarios.c ../ARQUIVOS_.C/album.c ../ARQUIVOS_.C/musica.c -I ARQUIVOS_.H";
+    const char *comando = "gcc -o arvore_binaria ../ARQUIVOS_BIN.C/TESTES_BIN.c ../ARQUIVOS_BIN.C/playlist_BIN.c ../ARQUIVOS_BIN.C/musica_playlist_BIN.c ../ARQUIVOS_BIN.C/main_BIN.c ../ARQUIVOS_BIN.C/interface_BIN.c ../ARQUIVOS_BIN.C/artista_BIN.c ../ARQUIVOS_BIN.C/utilitarios_BIN.c ../ARQUIVOS_BIN.C/album_BIN.c ../ARQUIVOS_BIN.C/musica_BIN.c -I ARQUIVOS_.H";
 
     printf("Compilando o projeto...\n");
 
