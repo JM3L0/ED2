@@ -99,6 +99,12 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
         inseriu = 0;
     }
 
+    if (inseriu)
+    {
+        balanceamento_artista(raiz);
+        atualizar_altura_artista(*raiz);
+    }
+
     return (inseriu);
 }
 
@@ -115,25 +121,26 @@ int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
         printf("Tipo: %s\n", raiz->tipo_artista);
         printf("Estilo: %s\n", raiz->estilo_musical);
         printf("Numero de albuns: %d\n", raiz->numero_albuns);
+        printf("Altura: %d\n", raiz->altura_artista);
         imprimiu = imprimir_todos_os_dados_dos_artistas(raiz->dir);
         imprimiu = 1;
     }
     return (imprimiu);
 }
 
-int imprimir_todos_artistas(ARTISTAS *raiz) // Imprime todos os artistas (só o nome)
-{
-    int imprimiu = 0;
-    if (raiz != NULL)
-    {
-        imprimiu = imprimir_todos_artistas(raiz->esq);
-        printf("\n\n");
-        printf("Artista: %s\n", raiz->nome_artista);
-        imprimiu = imprimir_todos_artistas(raiz->dir);
-        imprimiu = 1;
-    }
-    return (imprimiu);
-}
+// int imprimir_todos_artistas(ARTISTAS *raiz) // Imprime todos os artistas (só o nome) //remover depois
+// {
+//     int imprimiu = 0;
+//     if (raiz != NULL)
+//     {
+//         imprimiu = imprimir_todos_artistas(raiz->esq);
+//         printf("\n\n");
+//         printf("Artista: %s\n", raiz->nome_artista);
+//         imprimiu = imprimir_todos_artistas(raiz->dir);
+//         imprimiu = 1;
+//     }
+//     return (imprimiu);
+// }
 
 int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista) // imprime os artistas de acordo com o tipo
 {
@@ -214,5 +221,78 @@ void liberar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
         limpar_no_artista(*raiz);
         free(*raiz);
         *raiz = NULL;
+    }
+}
+
+/*---------------------------------- Funções de Balanceamento ----------------------------------*/
+
+int pegar_altura_artista(ARTISTAS *raiz)
+{
+    int altura = -1;
+    if (raiz)
+    {
+        altura = raiz->altura_artista;
+    }
+    return (altura);
+}
+
+void atualizar_altura_artista(ARTISTAS *raiz)
+{
+    if (raiz != NULL)
+    {
+        int altura_esq = pegar_altura_artista(raiz->esq);
+        int altura_dir = pegar_altura_artista(raiz->dir);
+        raiz->altura_artista = (altura_esq > altura_dir ? altura_esq : altura_dir) + 1;
+    }
+}
+
+int fator_balanceamento_artista(ARTISTAS *no)
+{
+    int fator = 0;
+    if (no)
+    {
+        fator = pegar_altura_artista(no->esq) - pegar_altura_artista(no->dir);
+    }
+    return (fator);
+}
+
+void rotacao_esq_artista(ARTISTAS **raiz)
+{
+    ARTISTAS *aux;
+    aux = (*raiz)->dir;
+    (*raiz)->dir = aux->esq;
+    aux->esq = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_artista((*raiz)->esq);
+    atualizar_altura_artista((*raiz));
+}
+
+void rotacao_dir_artista(ARTISTAS **raiz)
+{
+    ARTISTAS *aux;
+    aux = (*raiz)->esq;
+    (*raiz)->esq = aux->dir;
+    aux->dir = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_artista((*raiz)->dir);
+    atualizar_altura_artista((*raiz));
+}
+
+void balanceamento_artista(ARTISTAS **raiz)
+{
+    if (*raiz)
+    {
+        if (fator_balanceamento_artista(*raiz) == 2)
+        {
+            if (fator_balanceamento_artista((*raiz)->esq) < 0)
+                rotacao_esq_artista(&((*raiz)->esq));
+            rotacao_dir_artista(raiz);
+        }
+        else if (fator_balanceamento_artista(*raiz) == -2)
+        {
+            if (fator_balanceamento_artista((*raiz)->dir) > 0)
+                rotacao_dir_artista(&((*raiz)->dir));
+            rotacao_esq_artista(raiz);
+        }
     }
 }

@@ -14,5 +14,11 @@ int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical);
 int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista);
 void limpar_no_artista(ARTISTAS *raiz);
 void liberar_arv_artista(ARTISTAS **raiz);
+int pegar_altura_artista(ARTISTAS *raiz);
+void atualizar_altura_artista(ARTISTAS *raiz);
+int fator_balanceamento_artista(ARTISTAS *no);
+void rotacao_esq_artista(ARTISTAS **raiz);
+void rotacao_dir_artista(ARTISTAS **raiz);
+void balanceamento_artista(ARTISTAS **raiz);
 
 #endif
