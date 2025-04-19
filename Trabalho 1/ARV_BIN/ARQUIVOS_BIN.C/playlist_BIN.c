@@ -172,7 +172,10 @@ int eh_folha_playlist(PLAYLIST *no)
 
 PLAYLIST *so_um_filho_playlist(PLAYLIST *no)
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> ab0cf364bf96d0b786b7f38f9dc5c1b486a47b11
     PLAYLIST *filho;
     filho = NULL;
     if (no->esq != NULL && no->dir == NULL)
