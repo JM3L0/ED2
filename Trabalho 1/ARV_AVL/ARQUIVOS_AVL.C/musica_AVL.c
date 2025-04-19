@@ -216,7 +216,8 @@ int eh_folha_musica(MUSICAS *raiz)
 
 MUSICAS *so_um_filho_musica(MUSICAS *raiz)
 {
-    MUSICAS *no = NULL;
+    MUSICAS *no;
+    no = NULL;
 
     if (raiz != NULL)
     {
@@ -235,7 +236,8 @@ int dois_filhos_musica(MUSICAS *raiz)
 
 MUSICAS *menor_no_musica(MUSICAS *raiz)
 {
-    MUSICAS *menor = raiz;
+    MUSICAS *menor;
+    menor = raiz;
     while (menor->esq != NULL)
         menor = menor->esq;
     return (menor);

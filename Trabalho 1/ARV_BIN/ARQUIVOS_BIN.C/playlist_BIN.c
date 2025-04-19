@@ -173,7 +173,8 @@ int eh_folha_playlist(PLAYLIST *no)
 PLAYLIST *so_um_filho_playlist(PLAYLIST *no)
 {
 
-    PLAYLIST *filho = NULL;
+    PLAYLIST *filho;
+    filho = NULL;
     if (no->esq != NULL && no->dir == NULL)
         filho = no->esq;
     else if (no->esq == NULL && no->dir != NULL)
@@ -184,7 +185,8 @@ PLAYLIST *so_um_filho_playlist(PLAYLIST *no)
 
 PLAYLIST *menor_no_playlist(PLAYLIST *raiz)
 {
-    PLAYLIST *menor = NULL;
+    PLAYLIST *menor;
+    menor = NULL;
     if (raiz != NULL)
     {
         menor = raiz;

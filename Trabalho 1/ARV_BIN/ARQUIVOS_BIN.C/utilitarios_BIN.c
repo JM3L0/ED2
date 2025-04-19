@@ -5,7 +5,8 @@
 
 char *ler_string()
 {
-    char buffer[256], *string = NULL;
+    char buffer[256], *string;
+    string = NULL;
 
     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
     {

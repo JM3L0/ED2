@@ -136,7 +136,8 @@ int eh_folha_musica_playlist(MUSICA_PLAYLIST *raiz)
 
 MUSICA_PLAYLIST *so_um_filho_musica_playlist(MUSICA_PLAYLIST *raiz)
 {
-    MUSICA_PLAYLIST *filho = NULL;
+    MUSICA_PLAYLIST *filho;
+    filho = NULL;
     if (raiz->esq != NULL && raiz->dir == NULL)
         filho = raiz->esq;
     else if (raiz->esq == NULL && raiz->dir != NULL)

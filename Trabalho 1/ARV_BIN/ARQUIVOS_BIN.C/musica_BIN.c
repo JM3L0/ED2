@@ -212,7 +212,8 @@ int eh_folha_musica(MUSICAS *raiz)
 MUSICAS *so_um_filho_musica(MUSICAS *raiz)
 {
 
-    MUSICAS *no = NULL;
+    MUSICAS *no;
+    no = NULL;
 
     if (raiz != NULL)
     {
