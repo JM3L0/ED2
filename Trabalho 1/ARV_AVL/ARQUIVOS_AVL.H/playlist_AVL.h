@@ -17,5 +17,11 @@ PLAYLIST *so_um_filho_playlist(PLAYLIST *no);
 PLAYLIST *menor_no_playlist(PLAYLIST *raiz);
 int remove_playlist(PLAYLIST **raiz, char *titulo_playlist);
 int percorre_todas_as_playlists_buscando_uma_musica(PLAYLIST *raiz, char* titulo_musica, char* album_musica, char* artista_musica);
+int pegar_altura_playlist(PLAYLIST *raiz);
+void atualizar_altura_playlist(PLAYLIST *raiz);
+int fator_balanceamento_playlist(PLAYLIST *no);
+void rotacao_esq_playlist(PLAYLIST **raiz);
+void rotacao_dir_playlist(PLAYLIST **raiz);
+void balanceamento_playlist(PLAYLIST **raiz);
 
 #endif

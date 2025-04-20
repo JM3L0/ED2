@@ -31,7 +31,7 @@ MUSICAS *cadastrar_musica(MUSICAS *musica)
         erro = 1;
     if(!erro)
     {
-        printf("Digite a duracao da Musica: ");
+        printf("Digite a duracao da Musica (min.seg): ");
         duracao_musica = digitar_float();
     }
 
@@ -103,7 +103,6 @@ int imprimir_todas_as_musicas(MUSICAS *raiz) // imprime todas as musicas
         imprimiu = imprimir_todas_as_musicas(raiz->esq);
         printf("\n\n");
         printf("Musica: %s\n", raiz->titulo_musica);
-        //printf("Duracao: %.2f minutos\n", raiz->duracao_musica);
         printf("Duracao: ");
         imprime_duracao(raiz->duracao_musica);
         printf("Altura: %d\n", raiz->altura_musica);

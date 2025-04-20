@@ -327,11 +327,11 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
             char nome_artista[20], nome_album[20], nome_musica[20];
             int idx_artista = (j % NUM_ARTISTAS) + 1;                               // Artista0001 a NUM_ARTISTAS
             int idx_album = ((j / NUM_ARTISTAS) % NUM_ALBUNS) + 1;                  // Album0001 a NUM_ALBUNS
-            int idx_musica = ((j / (NUM_ARTISTAS * NUM_ALBUNS)) % NUM_MUSICAS) + 1; // Musica0001 a NUM_MUSICAS
+            //int idx_musica = ((j / (NUM_ARTISTAS * NUM_ALBUNS)) % NUM_MUSICAS) + 1; // Musica0001 a NUM_MUSICAS
 
             snprintf(nome_artista, sizeof(nome_artista), "Artista%04d", idx_artista);
             snprintf(nome_album, sizeof(nome_album), "Album%04d", idx_album);
-            snprintf(nome_musica, sizeof(nome_musica), "Musica%04d", idx_musica);
+            //snprintf(nome_musica, sizeof(nome_musica), "Musica%04d", idx_musica);
 
             ARTISTAS *artista = existe_artista(raiz, nome_artista);
             if (!artista)
@@ -347,13 +347,26 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
                 liberar_arv_artista(&raiz);
                 return;
             }
-            MUSICAS *musica = existe_musica(album->arv_musicas, nome_musica);
-            if (!musica)
+
+            for (int k = 0; k < NUM_MUSICAS; k++)
             {
-                fprintf(f_resultados, "Erro: %s nao encontrada para %s, %s\n", nome_musica, nome_artista, nome_album);
-                liberar_arv_artista(&raiz);
-                return;
+                snprintf(nome_musica, sizeof(nome_musica), "Musica%04d", (k % NUM_MUSICAS) + 1);
+                MUSICAS *musica = existe_musica(album->arv_musicas, nome_musica);
+                if (!musica)
+                {
+                    fprintf(f_resultados, "Erro: %s nao encontrada para %s, %s\n", nome_musica, nome_artista, nome_album);
+                    liberar_arv_artista(&raiz);
+                    return;
+                }
             }
+
+            //MUSICAS *musica = existe_musica(album->arv_musicas, nome_musica);
+            //if (!musica)
+            // {
+            //     fprintf(f_resultados, "Erro: %s nao encontrada para %s, %s\n", nome_musica, nome_artista, nome_album);
+            //     liberar_arv_artista(&raiz);
+            //     return;
+            // }
         }
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;

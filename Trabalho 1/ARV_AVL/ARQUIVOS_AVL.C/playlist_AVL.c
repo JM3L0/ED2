@@ -46,7 +46,7 @@ PLAYLIST *cadastrar_playlist()
 
     printf("Digite o nome da Playlist: ");
     titulo_playlist = ler_string();
-    
+
     if (titulo_playlist == NULL)
         erro = 1;
     if (!erro)
@@ -82,6 +82,12 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
         no = NULL;
         inseriu = 0;
     }
+
+    if (inseriu)
+    {
+        atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a inserção
+        balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
+    }
     return (inseriu);
 }
 
@@ -111,9 +117,9 @@ int imprimir_todas_as_playlists(PLAYLIST *raiz) // apens imprime todas as playli
 
     if (raiz != NULL)
     {
-
         imprimir_todas_as_playlists(raiz->esq);
-        printf("%s\n", raiz->titulo_playlist);
+        printf("Nome: %s\n", raiz->titulo_playlist);
+        printf("Altura: %d\n", raiz->altura_playlist);
         imprimir_todas_as_playlists(raiz->dir);
         imprimiu = 1;
     }
@@ -205,38 +211,121 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
     {
         if (strcasecmp((*raiz)->titulo_playlist, titulo_playlist) == 0)
         {
-            PLAYLIST *aux = *raiz, *filho;
+            PLAYLIST *aux, *filho;
+            aux = *raiz;
             removeu = 1;
 
             if (eh_folha_playlist(*raiz))
+            {
                 *raiz = NULL;
+                liberar_arv_musica_playlist(&aux->arv_musicas_playlist);
+                limpar_no_playlist(aux);
+                free(aux);
+            }
             else if ((filho = so_um_filho_playlist(*raiz)) != NULL)
+            {
                 *raiz = filho;
+                liberar_arv_musica_playlist(&aux->arv_musicas_playlist);
+                limpar_no_playlist(aux);
+                free(aux);
+            }
             else
             {
+
                 aux = menor_no_playlist((*raiz)->dir);
                 liberar_arv_musica_playlist(&(*raiz)->arv_musicas_playlist);
                 limpar_no_playlist(*raiz);
 
-                (*raiz)->titulo_playlist = aux->titulo_playlist;
+                (*raiz)->titulo_playlist = strdup(aux->titulo_playlist); // Aloca nova memória para o título da playlist
                 (*raiz)->quantidade_musicas_playlist = aux->quantidade_musicas_playlist;
                 (*raiz)->arv_musicas_playlist = aux->arv_musicas_playlist;
 
-                aux->titulo_playlist = NULL;      // Evita liberação dupla
-                aux->arv_musicas_playlist = NULL; // Evita liberação dupla
                 removeu = remove_playlist(&(*raiz)->dir, aux->titulo_playlist);
             }
 
-            liberar_arv_musica_playlist(&aux->arv_musicas_playlist);
-            limpar_no_playlist(aux);
-            free(aux);
         }
         else
         {
             removeu = remove_playlist(&(*raiz)->esq, titulo_playlist);
             if (!removeu)
-                removeu = remove_playlist(&(*raiz)->dir, titulo_playlist);
+            removeu = remove_playlist(&(*raiz)->dir, titulo_playlist);
+        }
+        if (removeu)
+        {
+            atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a remoção
+            balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
         }
     }
     return (removeu);
+}
+
+/*---------------------------------- Funções de Balanceamento ----------------------------------*/
+
+int pegar_altura_playlist(PLAYLIST *raiz)
+{
+    int altura = -1;
+
+    if (raiz)
+        altura = raiz->altura_playlist;
+    return (altura);
+}
+
+void atualizar_altura_playlist(PLAYLIST *raiz)
+{
+    if (raiz != NULL)
+    {
+        int altura_esq = pegar_altura_playlist(raiz->esq);
+        int altura_dir = pegar_altura_playlist(raiz->dir);
+        raiz->altura_playlist = (altura_esq > altura_dir ? altura_esq : altura_dir) + 1;
+    }
+}
+
+int fator_balanceamento_playlist(PLAYLIST *no)
+{
+    int fator = 0;
+
+    if (no)
+        fator = pegar_altura_playlist(no->esq) - pegar_altura_playlist(no->dir);
+    return (fator);
+}
+
+void rotacao_esq_playlist(PLAYLIST **raiz)
+{
+    PLAYLIST *aux;
+    aux = (*raiz)->dir;
+    (*raiz)->dir = aux->esq;
+    aux->esq = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_playlist((*raiz)->esq);
+    atualizar_altura_playlist((*raiz));
+}
+
+void rotacao_dir_playlist(PLAYLIST **raiz)
+{
+    PLAYLIST *aux;
+    aux = (*raiz)->esq;
+    (*raiz)->esq = aux->dir;
+    aux->dir = *raiz;
+    (*raiz) = aux;
+    atualizar_altura_playlist((*raiz)->dir);
+    atualizar_altura_playlist((*raiz));
+}
+
+void balanceamento_playlist(PLAYLIST **raiz)
+{
+    if (*raiz)
+    {
+        if (fator_balanceamento_playlist(*raiz) == 2)
+        {
+            if (fator_balanceamento_playlist((*raiz)->esq) < 0)
+                rotacao_esq_playlist(&((*raiz)->esq));
+            rotacao_dir_playlist(raiz);
+        }
+        else if (fator_balanceamento_playlist(*raiz) == -2)
+        {
+            if (fator_balanceamento_playlist((*raiz)->dir) > 0)
+                rotacao_dir_playlist(&((*raiz)->dir));
+            rotacao_esq_playlist(raiz);
+        }
+    }
 }

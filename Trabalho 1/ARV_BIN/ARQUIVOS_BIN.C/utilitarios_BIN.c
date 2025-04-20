@@ -130,7 +130,7 @@ void imprime_duracao(float duracao)
     int minutos = (int)duracao;
     float segundos = (duracao - minutos) * 100;
 
-    if (segundos > 59)
+    if (segundos > 59) 
         segundos = 59;
     printf("%d:%02d\n", minutos, (int)segundos);
 }
