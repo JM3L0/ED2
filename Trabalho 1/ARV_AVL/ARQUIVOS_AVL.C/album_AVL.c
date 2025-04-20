@@ -34,7 +34,7 @@ ALBUNS *cadastrar_album(ALBUNS *album)
     if (!erro)
     {
         printf("Digite o ano de lancamento do Album: ");
-        ano_lancamento = digitar_int();
+        ano_lancamento = digitar_ano();
     }
 
     if (!erro)

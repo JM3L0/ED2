@@ -112,3 +112,15 @@ void mensagens_de_erro_e_sucesso_add_musica_playlist(int erro)
         break;
     }
 }
+
+int digitar_ano()
+{
+    int ano = 0;
+    while (scanf("%d", &ano) != 1 || ano < 1850 || ano > 2025)
+    {
+        printf("Ano invalido! Digite novamente: ");
+        limpar_buffer();
+    }
+    limpar_buffer();
+    return ano;
+}

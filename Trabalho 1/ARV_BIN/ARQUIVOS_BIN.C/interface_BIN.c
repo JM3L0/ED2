@@ -272,7 +272,7 @@ void menu_geral()
                     int ano_lancamento;
 
                     printf("Digite o ano de lancamento: ");
-                    ano_lancamento = digitar_int();
+                    ano_lancamento = digitar_ano();
 
                     printf("\n\n");
                     printf("Albuns cadastrados do artista %s no ano %d:\n\n", nome_artista, ano_lancamento);
@@ -333,7 +333,7 @@ void menu_geral()
                 // Mostrar todos os álbuns de um determinado ano de todos os artistas cadastrados
                 int ano_lancamento;
                 printf("Digite o ano de lancamento: ");
-                ano_lancamento = digitar_int();
+                ano_lancamento = digitar_ano();
 
                 printf("\n\n");
                 printf("Albuns cadastrados no ano %d:\n\n", ano_lancamento);

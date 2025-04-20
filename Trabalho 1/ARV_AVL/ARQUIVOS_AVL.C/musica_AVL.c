@@ -200,6 +200,8 @@ void liberar_arv_musica(MUSICAS **raiz) // limpa a arvore musica
     }
 }
 
+/*---------------------------------- Funções de Balancear ----------------------------------*/
+
 int eh_folha_musica(MUSICAS *raiz)
 {
     int eh_folha = 0;

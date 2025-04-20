@@ -163,6 +163,8 @@ void liberar_arv_playlist(PLAYLIST **raiz) // apagar tudo (CABUM)
     }
 }
 
+/*---------------------------------- Funções de Balancear ----------------------------------*/
+
 int eh_folha_playlist(PLAYLIST *no)
 {
     return (no->esq == NULL && no->dir == NULL);

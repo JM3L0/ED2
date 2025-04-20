@@ -45,7 +45,7 @@ void menu_geral()
     no_playlist = NULL;
 
     int opcao, retorno = 0, opcao2;
-    inicializar_dados_predefinidos(&raiz_artista, &raiz_playlist);
+    //inicializar_dados_predefinidos(&raiz_artista, &raiz_playlist);
     do
     {
         menu_dos_print_de_opcoes();
@@ -272,7 +272,7 @@ void menu_geral()
                     int ano_lancamento;
 
                     printf("Digite o ano de lancamento: ");
-                    ano_lancamento = digitar_int();
+                    ano_lancamento = digitar_ano();
 
                     printf("\n\n");
                     printf("Albuns cadastrados do artista %s no ano %d:\n\n", nome_artista, ano_lancamento);

@@ -8,5 +8,6 @@ void ler_string_simples(char *buffer, size_t tamanho);
 void pausar();
 float digitar_float();
 void mensagens_de_erro_e_sucesso_add_musica_playlist(int erro);
+int digitar_ano();
 
 #endif
