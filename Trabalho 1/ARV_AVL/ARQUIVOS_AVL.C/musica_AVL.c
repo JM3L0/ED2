@@ -103,7 +103,9 @@ int imprimir_todas_as_musicas(MUSICAS *raiz) // imprime todas as musicas
         imprimiu = imprimir_todas_as_musicas(raiz->esq);
         printf("\n\n");
         printf("Musica: %s\n", raiz->titulo_musica);
-        printf("Duracao: %.2f minutos\n", raiz->duracao_musica);
+        //printf("Duracao: %.2f minutos\n", raiz->duracao_musica);
+        printf("Duracao: ");
+        imprime_duracao(raiz->duracao_musica);
         printf("Altura: %d\n", raiz->altura_musica);
         imprimiu = imprimir_todas_as_musicas(raiz->dir);
         imprimiu = 1;
@@ -169,7 +171,8 @@ int imprime_dados_da_musica_buscada(MUSICAS *raiz_mus, char *nome_musica)
         {
             printf("\n\n");
             printf(" > Musica: %s\n", raiz_mus->titulo_musica);                // 1 espaço
-            printf("     Duracao: %6.2f minutos\n", raiz_mus->duracao_musica); // 5 espaços
+            printf("     Duracao: "); // 5 espaços
+            imprime_duracao(raiz_mus->duracao_musica);
             imprimiu = 1;
         }
         imprimiu |= imprime_dados_da_musica_buscada(raiz_mus->dir, nome_musica);

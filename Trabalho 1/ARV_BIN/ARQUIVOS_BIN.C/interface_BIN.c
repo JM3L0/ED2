@@ -45,7 +45,7 @@ void menu_geral()
     no_playlist = NULL;
 
     int opcao, retorno = 0, opcao2;
-    inicializar_dados_predefinidos(&raiz_artista, &raiz_playlist);
+    //inicializar_dados_predefinidos(&raiz_artista, &raiz_playlist);
     do
     {
         menu_dos_print_de_opcoes();

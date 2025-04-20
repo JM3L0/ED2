@@ -449,7 +449,13 @@ int main()
 
     gettimeofday(&fimT, NULL);
     double tempo_total = (fimT.tv_sec - inicioT.tv_sec) + (fimT.tv_usec - inicioT.tv_usec) / 1000000.0;
-    fprintf(f_resultados, "\nTempo total de execucao: %.6f segundos\n", tempo_total);
+    int horas = (int)(tempo_total / 3600);
+    int minutos = (int)((tempo_total - horas * 3600) / 60);
+    int segundos = (int)(tempo_total - horas * 3600 - minutos * 60);
+    int milisegundos = (int)((tempo_total - (int)tempo_total) * 1000);
+
+    fprintf(f_resultados, "\nTempo total de execucao: %02d:%02d:%02d:%03d (horas:minutos:segundos:milisegundos)\n", horas, minutos, segundos, milisegundos);
+
 
     fclose(f_resultados);
     printf("Testes concluidos. Resultados salvos em resultados_tempos.txt\n");

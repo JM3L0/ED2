@@ -9,5 +9,6 @@ void pausar();
 float digitar_float();
 void mensagens_de_erro_e_sucesso_add_musica_playlist(int erro);
 int digitar_ano();
+void imprime_duracao(float duracao);
 
 #endif
