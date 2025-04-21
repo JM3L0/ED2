@@ -20,7 +20,7 @@ PLAYLIST *aloca_no_playlist(char *titulo_playlist)
     return (novo);
 }
 
-PLAYLIST *existe_playlist(PLAYLIST *raiz, char *titulo_playlist) // deve ser testado
+PLAYLIST *existe_playlist(PLAYLIST *raiz, char *titulo_playlist)
 {
     PLAYLIST *existe_play;
     existe_play = NULL;
@@ -83,7 +83,6 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
         no = NULL;
         inseriu = 0;
     }
-
     return (inseriu);
 }
 
@@ -154,7 +153,6 @@ void liberar_arv_playlist(PLAYLIST **raiz) // apagar tudo (CABUM)
             liberar_arv_musica_playlist(&(*raiz)->arv_musicas_playlist);
             (*raiz)->arv_musicas_playlist = NULL;
         }
-
         liberar_arv_playlist(&(*raiz)->esq);
         liberar_arv_playlist(&(*raiz)->dir);
         limpar_no_playlist(*raiz);
@@ -174,6 +172,7 @@ PLAYLIST *so_um_filho_playlist(PLAYLIST *no)
 {
     PLAYLIST *filho;
     filho = NULL;
+
     if (no->esq != NULL && no->dir == NULL)
         filho = no->esq;
     else if (no->esq == NULL && no->dir != NULL)
@@ -186,6 +185,7 @@ PLAYLIST *menor_no_playlist(PLAYLIST *raiz)
 {
     PLAYLIST *menor;
     menor = NULL;
+
     if (raiz != NULL)
     {
         menor = raiz;
@@ -198,6 +198,7 @@ PLAYLIST *menor_no_playlist(PLAYLIST *raiz)
 int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
 {
     int removeu = 0;
+    
     if (*raiz != NULL)
     {
         if (strcasecmp((*raiz)->titulo_playlist, titulo_playlist) == 0)

@@ -294,6 +294,7 @@ int fator_balanceamento_playlist(PLAYLIST *no)
 void rotacao_esq_playlist(PLAYLIST **raiz)
 {
     PLAYLIST *aux;
+
     aux = (*raiz)->dir;
     (*raiz)->dir = aux->esq;
     aux->esq = *raiz;
@@ -305,6 +306,7 @@ void rotacao_esq_playlist(PLAYLIST **raiz)
 void rotacao_dir_playlist(PLAYLIST **raiz)
 {
     PLAYLIST *aux;
+    
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = *raiz;

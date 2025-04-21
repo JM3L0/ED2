@@ -40,13 +40,13 @@ ARTISTAS *existe_artista(ARTISTAS *raiz, char *nome_artista)
 
 ARTISTAS *cadastrar_artista()
 {
+    int erro = 0;
     char *nome, *tipo_artista, *estilo_musical;
     ARTISTAS *artista ;
+    artista = NULL;
     nome = NULL;
     tipo_artista = NULL;
     estilo_musical = NULL;
-    artista = NULL;
-    int erro = 0;
 
     printf("Digite o nome do Artista: ");
     nome = ler_string();

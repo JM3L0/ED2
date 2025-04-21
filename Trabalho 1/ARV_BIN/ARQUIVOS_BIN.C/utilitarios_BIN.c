@@ -81,7 +81,6 @@ float digitar_float()
         limpar_buffer();
     }
     limpar_buffer();
-
     return numero;
 }
 

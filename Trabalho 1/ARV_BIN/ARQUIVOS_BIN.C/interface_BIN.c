@@ -45,7 +45,6 @@ void menu_geral()
     no_playlist = NULL;
 
     int opcao, retorno = 0, opcao2;
-    //inicializar_dados_predefinidos(&raiz_artista, &raiz_playlist);
     do
     {
         menu_dos_print_de_opcoes();
@@ -68,7 +67,6 @@ void menu_geral()
                 
                     printf("\nErro de alocacao!\n");
                 else{
-
                     retorno = inserir_artista(&raiz_artista, no_artista);
                     if (retorno == 1)
                         printf("\nArtista cadastrado com sucesso!\n");

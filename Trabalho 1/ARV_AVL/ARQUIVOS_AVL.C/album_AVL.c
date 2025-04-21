@@ -30,13 +30,11 @@ ALBUNS *cadastrar_album(ALBUNS *album)
 
     if (titulo_album == NULL)
         erro = 1;
-
     if (!erro)
     {
         printf("Digite o ano de lancamento do Album: ");
         ano_lancamento = digitar_ano();
     }
-
     if (!erro)
     {
         album = aloca_no_album(titulo_album, ano_lancamento);
@@ -49,7 +47,6 @@ ALBUNS *cadastrar_album(ALBUNS *album)
         free(album);
         album = NULL;
     }
-
     return (album);
 }
 
@@ -110,6 +107,7 @@ void mostrar_dados_album(ALBUNS *raiz) // imprime os albuns de acordo com o tipo
 int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns (só o nome)
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         imprimiu = imprimir_todos_albuns(raiz->esq);
@@ -161,6 +159,7 @@ int imprimir_albuns_ano(ALBUNS *raiz, int ano_lancamento) // Imprime todos os al
 int mostrar_todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento) // imprime os albuns de acordo com o ano
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         imprimiu |= mostrar_todos_artistas_album_ano(raiz->esq, ano_lancamento);
@@ -210,6 +209,7 @@ void liberar_arv_album(ALBUNS **raiz) // limpa a arvore album
 int pegar_altura_album(ALBUNS *raiz)
 {
     int altura = -1;
+
     if (raiz)
         altura = raiz->altura_album;
     return (altura);
@@ -228,6 +228,7 @@ void atualizar_altura_album(ALBUNS *raiz)
 int fator_balanceamento_album(ALBUNS *no)
 {
     int fator = 0;
+
     if (no)
         fator = pegar_altura_album(no->esq) - pegar_altura_album(no->dir);
     return (fator);
@@ -236,6 +237,7 @@ int fator_balanceamento_album(ALBUNS *no)
 void rotacao_esq_album(ALBUNS **raiz)
 {
     ALBUNS *aux;
+
     aux = (*raiz)->dir;
     (*raiz)->dir = aux->esq;
     aux->esq = *raiz;
@@ -247,6 +249,7 @@ void rotacao_esq_album(ALBUNS **raiz)
 void rotacao_dir_album(ALBUNS **raiz)
 {
     ALBUNS *aux;
+    
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = *raiz;

@@ -45,7 +45,7 @@ void menu_geral()
     no_playlist = NULL;
 
     int opcao, retorno = 0, opcao2;
-    //inicializar_dados_predefinidos(&raiz_artista, &raiz_playlist);
+
     do
     {
         menu_dos_print_de_opcoes();
@@ -54,7 +54,8 @@ void menu_geral()
         printf("\n[1] - SIM\n[0] - NAO\nDeseja prosseguir com a acao?: ");
         opcao2 = digitar_int();
 
-        if(opcao2 == 1){
+        if (opcao2 == 1)
+        {
             switch (opcao)
             {
             case 1:
@@ -64,11 +65,10 @@ void menu_geral()
                 o  usuário  pode  cadastrar  um  artista  a  qualquer  momento,  não  permita cadastro repetido.*/
 
                 no_artista = cadastrar_artista();
-                if(no_artista == NULL)
-                
+                if (no_artista == NULL)
                     printf("\nErro de alocacao!\n");
-                else{
-
+                else
+                {
                     retorno = inserir_artista(&raiz_artista, no_artista);
                     if (retorno == 1)
                         printf("\nArtista cadastrado com sucesso!\n");
@@ -100,10 +100,9 @@ void menu_geral()
 
                     if (album == NULL)
                         printf("\nErro de alocacao!\n");
-                    else{
-
+                    else
+                    {
                         retorno = inserir_album(&artista->arv_albuns, album);
-        
                         if (retorno == 1)
                         {
                             printf("\nAlbum cadastrado com sucesso!\n");
@@ -145,13 +144,13 @@ void menu_geral()
                         musica = NULL;
 
                         musica = cadastrar_musica(musica);
-                        
+
                         if (musica == NULL)
                             printf("\nErro de alocacao!\n");
                         else
                         {
                             retorno = inserir_musica(&album->arv_musicas, musica);
-        
+
                             if (retorno == 1)
                             {
                                 printf("\nMusica cadastrada com sucesso!\n");
@@ -210,7 +209,7 @@ void menu_geral()
                 printf("Artistas cadastrados do estilo %s:\n\n", estilo_musical);
                 printf("--------------------------------------------------\n");
 
-                retorno = imprimir_artista_estilo(raiz_artista, estilo_musical); 
+                retorno = imprimir_artista_estilo(raiz_artista, estilo_musical);
                 if (retorno == 0)
                     printf("\nNenhum artista desse estilo!\n");
                 pausar();

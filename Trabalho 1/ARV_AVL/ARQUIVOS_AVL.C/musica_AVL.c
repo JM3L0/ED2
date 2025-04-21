@@ -34,13 +34,11 @@ MUSICAS *cadastrar_musica(MUSICAS *musica)
         printf("Digite a duracao da Musica (min.seg): ");
         duracao_musica = digitar_float();
     }
-
     if (!erro){
         musica = alocar_musica(titulo_musica, duracao_musica);
         if (musica == NULL)
             erro = 1;
     }
-
     if (erro)
     {
         free(titulo_musica);
@@ -326,6 +324,7 @@ int fator_balanceamento_musica(MUSICAS *no)
 void rotacao_esq_musica(MUSICAS **raiz)
 {
     MUSICAS *aux;
+
     aux = (*raiz)->dir;
     (*raiz)->dir = aux->esq;
     aux->esq = *raiz;
@@ -337,6 +336,7 @@ void rotacao_esq_musica(MUSICAS **raiz)
 void rotacao_dir_musica(MUSICAS **raiz)
 {
     MUSICAS *aux;
+    
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = *raiz;

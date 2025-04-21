@@ -59,20 +59,17 @@ ARTISTAS *cadastrar_artista()// mais segura contra erros de alocação
         if (tipo_artista == NULL) 
             erro = 1;
     }
-
     if (!erro) {
         printf("Digite o estilo musical do Artista: ");
         estilo_musical = ler_string();
         if (estilo_musical == NULL) 
             erro = 1;
     }
-
     if (!erro) {
         artista = aloca_no_artista(nome, tipo_artista, estilo_musical);
         if (artista == NULL) 
             erro = 1;
     }
-
     if (erro) {
         free(nome);
         free(tipo_artista);
@@ -80,7 +77,6 @@ ARTISTAS *cadastrar_artista()// mais segura contra erros de alocação
         free(artista);
         artista = NULL;
     }
-
     return (artista);
 }
 
@@ -96,19 +92,16 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
         inseriu = inserir_artista(&(*raiz)->dir, no);
     else
     {
-
         limpar_no_artista(no);
         free(no);
         no = NULL;
         inseriu = 0;
     }
-
     if (inseriu)
     {
         balanceamento_artista(raiz);
         atualizar_altura_artista(*raiz);
     }
-
     return (inseriu);
 }
 
@@ -135,6 +128,7 @@ int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
 int imprimir_artista_tipo(ARTISTAS *raiz, char *tipo_artista) // imprime os artistas de acordo com o tipo
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         imprimiu |= imprimir_artista_tipo(raiz->esq, tipo_artista);
@@ -167,6 +161,7 @@ int imprimir_artista_estilo(ARTISTAS *raiz, char *estilo_musical) // imprime os 
 int imprimir_artista_estilo_e_tipo(ARTISTAS *raiz, char *estilo_musical, char *tipo_artista) // imprime os artistas de acordo com o estilo musical e tipo de artista
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         imprimiu |= imprimir_artista_estilo_e_tipo(raiz->esq, estilo_musical, tipo_artista);
@@ -219,6 +214,7 @@ void liberar_arv_artista(ARTISTAS **raiz) // limpa a arvore artista
 int pegar_altura_artista(ARTISTAS *raiz)
 {
     int altura = -1;
+
     if (raiz)
         altura = raiz->altura_artista;
     return (altura);
@@ -237,6 +233,7 @@ void atualizar_altura_artista(ARTISTAS *raiz)
 int fator_balanceamento_artista(ARTISTAS *no)
 {
     int fator = 0;
+
     if (no)
         fator = pegar_altura_artista(no->esq) - pegar_altura_artista(no->dir);
     return (fator);
@@ -245,6 +242,7 @@ int fator_balanceamento_artista(ARTISTAS *no)
 void rotacao_esq_artista(ARTISTAS **raiz)
 {
     ARTISTAS *aux;
+
     aux = (*raiz)->dir;
     (*raiz)->dir = aux->esq;
     aux->esq = *raiz;
@@ -256,6 +254,7 @@ void rotacao_esq_artista(ARTISTAS **raiz)
 void rotacao_dir_artista(ARTISTAS **raiz)
 {
     ARTISTAS *aux;
+    
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = *raiz;

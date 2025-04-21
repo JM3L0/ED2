@@ -1,5 +1,6 @@
 #ifndef STRUCTS_BIN_H
 #define STRUCTS_BIN_H
+
 typedef struct MUSICAS
 {
     char *titulo_musica;

@@ -49,7 +49,6 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
                 inseriu = inserir_musica_playlist(&(*raiz)->dir, no);
         }
     }
-
     return (inseriu);
 }
 
@@ -117,6 +116,7 @@ int cadastrar_musica_playlist(ARTISTAS *raiz_artista, PLAYLIST *raiz_playlist)
 int imprime_todas_as_musicas_da_playlist(MUSICA_PLAYLIST *raiz) // imprime todas as musicas
 {
     int imprimiu = 0;
+
     if (raiz != NULL)
     {
         imprimiu = imprime_todas_as_musicas_da_playlist(raiz->esq);
@@ -138,6 +138,7 @@ MUSICA_PLAYLIST *so_um_filho_musica_playlist(MUSICA_PLAYLIST *raiz)
 {
     MUSICA_PLAYLIST *filho;
     filho = NULL;
+
     if (raiz->esq != NULL && raiz->dir == NULL)
         filho = raiz->esq;
     else if (raiz->esq == NULL && raiz->dir != NULL)
@@ -153,6 +154,7 @@ int dois_filhos(MUSICA_PLAYLIST *raiz)
 MUSICA_PLAYLIST *menor_musica_playlist(MUSICA_PLAYLIST *raiz)
 {
     MUSICA_PLAYLIST *menor = raiz;
+
     while (menor->esq != NULL)
         menor = menor->esq;
     return (menor);
@@ -170,8 +172,8 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
 
         if (cmp_titulo == 0 && cmp_album == 0 && cmp_artista == 0)
         {
-            MUSICA_PLAYLIST *aux = *raiz;
-            MUSICA_PLAYLIST *filho;
+            MUSICA_PLAYLIST *aux, *filho;
+            aux = *raiz;
 
             if (eh_folha_musica_playlist(*raiz))
                 *raiz = NULL;
@@ -191,7 +193,6 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
                 removeu = remove_musica_playlist(&(*raiz)->dir, menor->titulo_musica, menor->album_musica, menor->artista_musica);
                 aux = menor; // O nó menor será liberado
             }
-
             free(aux);
             removeu = 1;
         }
@@ -203,7 +204,6 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
                 removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
         }
     }
-
     return (removeu);
 }
 
