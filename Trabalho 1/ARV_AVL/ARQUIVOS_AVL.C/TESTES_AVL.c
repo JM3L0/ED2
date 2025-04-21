@@ -231,15 +231,15 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         soma_tv += tempo;
         // fprintf(f_resultados, "Artistas inseridos: %d\n", artistas_inseridos);
-        printf("Artistas inseridos: %d; Execucao %d de %d (tempo de exec) %.6f s\n", artistas_inseridos, i + 1, NUM_EXECUCOES, tempo);
-        fprintf(f_resultados, "Artistas inseridos: %d; Execucao %d de %d (tempo de exec) %.6f s\n", artistas_inseridos, i + 1, NUM_EXECUCOES, tempo);
+        printf("Artistas inseridos: %d; Execucao %d de %d (tempo de exec) %.12f s\n", artistas_inseridos, i + 1, NUM_EXECUCOES, tempo);
+        fprintf(f_resultados, "Artistas inseridos: %d; Execucao %d de %d (tempo de exec) %.12f s\n", artistas_inseridos, i + 1, NUM_EXECUCOES, tempo);
         art_ins += artistas_inseridos;
         liberar_arv_artista(&raiz);
         raiz = NULL;
     }
     fprintf(f_resultados, "-------------------------------------------\n");
     fprintf(f_resultados, "Artistas inseridos: %d (%d por execucao)\n", art_ins, NUM_ARTISTAS);
-    fprintf(f_resultados, "Insercao artistas (%s, media %d exec): %.6f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "Insercao artistas (%s, media %d exec): %.12f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
     fprintf(f_resultados, "-------------------------------------------\n");
 
     // Inserir artistas para testes subsequentes
@@ -261,8 +261,8 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         soma_tv += tempo;
         // fprintf(f_resultados, "Albuns inseridos: %d\n", albuns_inseridos);
-        printf("Albuns inseridos: %d; Execucao %d de %d (tempo de exec): %.6f s\n", albuns_inseridos, i + 1, NUM_EXECUCOES, tempo);
-        fprintf(f_resultados, "Albuns inseridos: %d; Execucao %d de %d (tempo de exec): %.6f s\n", albuns_inseridos, i + 1, NUM_EXECUCOES, tempo);
+        printf("Albuns inseridos: %d; Execucao %d de %d (tempo de exec): %.12f s\n", albuns_inseridos, i + 1, NUM_EXECUCOES, tempo);
+        fprintf(f_resultados, "Albuns inseridos: %d; Execucao %d de %d (tempo de exec): %.12f s\n", albuns_inseridos, i + 1, NUM_EXECUCOES, tempo);
         alb_ins += albuns_inseridos;
         ARTISTAS *atual = raiz;
         while (atual)
@@ -274,7 +274,7 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
     }
     fprintf(f_resultados, "-------------------------------------------\n");
     fprintf(f_resultados, "Albuns inseridos: %d (%d por execucao)\n", alb_ins, NUM_ALBUNS);
-    fprintf(f_resultados, "Insercao albuns (%s, media %d exec): %.6f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "Insercao albuns (%s, media %d exec): %.12f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
     fprintf(f_resultados, "-------------------------------------------\n");
 
     // Inserir álbuns para testes subsequentes
@@ -296,8 +296,8 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         soma_tv += tempo;
-        printf("Musicas inseridas: %d; Execucao %d de %d (tempo de exec): %.6f s\n", musicas_inseridas, i + 1, NUM_EXECUCOES, tempo);
-        fprintf(f_resultados, "Musicas inseridas: %d; Execucao %d de %d (tempo de exec): %.6f s\n", musicas_inseridas, i + 1, NUM_EXECUCOES, tempo);
+        printf("Musicas inseridas: %d; Execucao %d de %d (tempo de exec): %.12f s\n", musicas_inseridas, i + 1, NUM_EXECUCOES, tempo);
+        fprintf(f_resultados, "Musicas inseridas: %d; Execucao %d de %d (tempo de exec): %.12f s\n", musicas_inseridas, i + 1, NUM_EXECUCOES, tempo);
         mus_ins += musicas_inseridas;
         ARTISTAS *artista = raiz;
         while (artista)
@@ -314,7 +314,7 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
     }
     fprintf(f_resultados, "-------------------------------------------\n");
     fprintf(f_resultados, "Musicas inseridas: %d (%d por execucao)\n", mus_ins, NUM_MUSICAS);
-    fprintf(f_resultados, "Insercao musicas (%s, media %d exec): %.6f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "Insercao musicas (%s, media %d exec): %.12f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
     fprintf(f_resultados, "-------------------------------------------\n");
 
     // Inserir músicas para testes subsequentes
@@ -481,13 +481,13 @@ int main()
 
     gettimeofday(&fimT, NULL);
     double tempo_total = (fimT.tv_sec - inicioT.tv_sec) + (fimT.tv_usec - inicioT.tv_usec) / 1000000.0;
-    int horas = (int)(tempo_total / 3600);
-    int minutos = (int)((tempo_total - horas * 3600) / 60);
-    int segundos = (int)(tempo_total - horas * 3600 - minutos * 60);
-    int milisegundos = (int)((tempo_total - (int)tempo_total) * 1000);
+    // int horas = (int)(tempo_total / 3600);
+    // int minutos = (int)((tempo_total - horas * 3600) / 60);
+    // int segundos = (int)(tempo_total - horas * 3600 - minutos * 60);
+    // int milisegundos = (int)((tempo_total - (int)tempo_total) * 1000);
 
-    fprintf(f_resultados, "\nTempo total de execucao: %02d:%02d:%02d:%03d (horas:minutos:segundos:milisegundos)\n", horas, minutos, segundos, milisegundos);
-
+    // fprintf(f_resultados, "\nTempo total de execucao: %02d:%02d:%02d:%03d (horas:minutos:segundos:milisegundos)\n", horas, minutos, segundos, milisegundos);
+    fprintf(f_resultados, "\nTempo total de execucao: %.12f segundos\n", tempo_total);
 
     fclose(f_resultados);
     printf("Testes concluidos. Resultados salvos em resultados_tempos.txt\n");

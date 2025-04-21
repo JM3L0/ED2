@@ -1,513 +1,257 @@
 Arquivo de Resultados de Testes ARVORE-BINARIA
 Numero de Execucoes 30
 === Testes com Ordem Crescente ===
-Artistas inseridos: 1000; Execucao 1 de 30 (tempo de exec) 0.019755 s
-Artistas inseridos: 1000; Execucao 2 de 30 (tempo de exec) 0.020590 s
-Artistas inseridos: 1000; Execucao 3 de 30 (tempo de exec) 0.019876 s
-Artistas inseridos: 1000; Execucao 4 de 30 (tempo de exec) 0.020666 s
-Artistas inseridos: 1000; Execucao 5 de 30 (tempo de exec) 0.019572 s
-Artistas inseridos: 1000; Execucao 6 de 30 (tempo de exec) 0.020586 s
-Artistas inseridos: 1000; Execucao 7 de 30 (tempo de exec) 0.020226 s
-Artistas inseridos: 1000; Execucao 8 de 30 (tempo de exec) 0.019571 s
-Artistas inseridos: 1000; Execucao 9 de 30 (tempo de exec) 0.021028 s
-Artistas inseridos: 1000; Execucao 10 de 30 (tempo de exec) 0.023771 s
-Artistas inseridos: 1000; Execucao 11 de 30 (tempo de exec) 0.020118 s
-Artistas inseridos: 1000; Execucao 12 de 30 (tempo de exec) 0.019984 s
-Artistas inseridos: 1000; Execucao 13 de 30 (tempo de exec) 0.022560 s
-Artistas inseridos: 1000; Execucao 14 de 30 (tempo de exec) 0.021043 s
-Artistas inseridos: 1000; Execucao 15 de 30 (tempo de exec) 0.025802 s
-Artistas inseridos: 1000; Execucao 16 de 30 (tempo de exec) 0.028599 s
-Artistas inseridos: 1000; Execucao 17 de 30 (tempo de exec) 0.031128 s
-Artistas inseridos: 1000; Execucao 18 de 30 (tempo de exec) 0.027065 s
-Artistas inseridos: 1000; Execucao 19 de 30 (tempo de exec) 0.021325 s
-Artistas inseridos: 1000; Execucao 20 de 30 (tempo de exec) 0.018562 s
-Artistas inseridos: 1000; Execucao 21 de 30 (tempo de exec) 0.022053 s
-Artistas inseridos: 1000; Execucao 22 de 30 (tempo de exec) 0.022270 s
-Artistas inseridos: 1000; Execucao 23 de 30 (tempo de exec) 0.020531 s
-Artistas inseridos: 1000; Execucao 24 de 30 (tempo de exec) 0.022606 s
-Artistas inseridos: 1000; Execucao 25 de 30 (tempo de exec) 0.020561 s
-Artistas inseridos: 1000; Execucao 26 de 30 (tempo de exec) 0.020115 s
-Artistas inseridos: 1000; Execucao 27 de 30 (tempo de exec) 0.018868 s
-Artistas inseridos: 1000; Execucao 28 de 30 (tempo de exec) 0.020044 s
-Artistas inseridos: 1000; Execucao 29 de 30 (tempo de exec) 0.019846 s
-Artistas inseridos: 1000; Execucao 30 de 30 (tempo de exec) 0.021227 s
+Artistas inseridos: 2000; Execucao 1 de 30 (tempo de exec) 0.077227 s
+Artistas inseridos: 2000; Execucao 2 de 30 (tempo de exec) 0.059957 s
+Artistas inseridos: 2000; Execucao 3 de 30 (tempo de exec) 0.059900 s
+Artistas inseridos: 2000; Execucao 4 de 30 (tempo de exec) 0.063968 s
+Artistas inseridos: 2000; Execucao 5 de 30 (tempo de exec) 0.060741 s
+Artistas inseridos: 2000; Execucao 6 de 30 (tempo de exec) 0.075406 s
+Artistas inseridos: 2000; Execucao 7 de 30 (tempo de exec) 0.067988 s
+Artistas inseridos: 2000; Execucao 8 de 30 (tempo de exec) 0.066717 s
+Artistas inseridos: 2000; Execucao 9 de 30 (tempo de exec) 0.059484 s
+Artistas inseridos: 2000; Execucao 10 de 30 (tempo de exec) 0.063148 s
+Artistas inseridos: 2000; Execucao 11 de 30 (tempo de exec) 0.079213 s
+Artistas inseridos: 2000; Execucao 12 de 30 (tempo de exec) 0.063605 s
+Artistas inseridos: 2000; Execucao 13 de 30 (tempo de exec) 0.078973 s
+Artistas inseridos: 2000; Execucao 14 de 30 (tempo de exec) 0.074095 s
+Artistas inseridos: 2000; Execucao 15 de 30 (tempo de exec) 0.069945 s
+Artistas inseridos: 2000; Execucao 16 de 30 (tempo de exec) 0.061872 s
+Artistas inseridos: 2000; Execucao 17 de 30 (tempo de exec) 0.066627 s
+Artistas inseridos: 2000; Execucao 18 de 30 (tempo de exec) 0.072006 s
+Artistas inseridos: 2000; Execucao 19 de 30 (tempo de exec) 0.051634 s
+Artistas inseridos: 2000; Execucao 20 de 30 (tempo de exec) 0.063180 s
+Artistas inseridos: 2000; Execucao 21 de 30 (tempo de exec) 0.063247 s
+Artistas inseridos: 2000; Execucao 22 de 30 (tempo de exec) 0.062939 s
+Artistas inseridos: 2000; Execucao 23 de 30 (tempo de exec) 0.071962 s
+Artistas inseridos: 2000; Execucao 24 de 30 (tempo de exec) 0.054816 s
+Artistas inseridos: 2000; Execucao 25 de 30 (tempo de exec) 0.063147 s
+Artistas inseridos: 2000; Execucao 26 de 30 (tempo de exec) 0.067006 s
+Artistas inseridos: 2000; Execucao 27 de 30 (tempo de exec) 0.059554 s
+Artistas inseridos: 2000; Execucao 28 de 30 (tempo de exec) 0.078509 s
+Artistas inseridos: 2000; Execucao 29 de 30 (tempo de exec) 0.063469 s
+Artistas inseridos: 2000; Execucao 30 de 30 (tempo de exec) 0.063190 s
 -------------------------------------------
-Artistas inseridos: 30000 (1000 por execucao)
-Insercao artistas (crescente, media 30 exec): 0.021665 s
+Artistas inseridos: 60000 (2000 por execucao)
+Insercao artistas (crescente, media 30 exec): 0.066117 s
 -------------------------------------------
-Albuns inseridos: 10000; Execucao 1 de 30 (tempo de exec): 0.206099 s
-Albuns inseridos: 10000; Execucao 2 de 30 (tempo de exec): 0.206744 s
-Albuns inseridos: 10000; Execucao 3 de 30 (tempo de exec): 0.204293 s
-Albuns inseridos: 10000; Execucao 4 de 30 (tempo de exec): 0.209315 s
-Albuns inseridos: 10000; Execucao 5 de 30 (tempo de exec): 0.211735 s
-Albuns inseridos: 10000; Execucao 6 de 30 (tempo de exec): 0.203493 s
-Albuns inseridos: 10000; Execucao 7 de 30 (tempo de exec): 0.199563 s
-Albuns inseridos: 10000; Execucao 8 de 30 (tempo de exec): 0.195845 s
-Albuns inseridos: 10000; Execucao 9 de 30 (tempo de exec): 0.195796 s
-Albuns inseridos: 10000; Execucao 10 de 30 (tempo de exec): 0.196001 s
-Albuns inseridos: 10000; Execucao 11 de 30 (tempo de exec): 0.199035 s
-Albuns inseridos: 10000; Execucao 12 de 30 (tempo de exec): 0.199139 s
-Albuns inseridos: 10000; Execucao 13 de 30 (tempo de exec): 0.198602 s
-Albuns inseridos: 10000; Execucao 14 de 30 (tempo de exec): 0.196023 s
-Albuns inseridos: 10000; Execucao 15 de 30 (tempo de exec): 0.201155 s
-Albuns inseridos: 10000; Execucao 16 de 30 (tempo de exec): 0.199418 s
-Albuns inseridos: 10000; Execucao 17 de 30 (tempo de exec): 0.203031 s
-Albuns inseridos: 10000; Execucao 18 de 30 (tempo de exec): 0.197308 s
-Albuns inseridos: 10000; Execucao 19 de 30 (tempo de exec): 0.194224 s
-Albuns inseridos: 10000; Execucao 20 de 30 (tempo de exec): 0.197033 s
-Albuns inseridos: 10000; Execucao 21 de 30 (tempo de exec): 0.204626 s
-Albuns inseridos: 10000; Execucao 22 de 30 (tempo de exec): 0.458416 s
-Albuns inseridos: 10000; Execucao 23 de 30 (tempo de exec): 0.617876 s
-Albuns inseridos: 10000; Execucao 24 de 30 (tempo de exec): 0.622671 s
-Albuns inseridos: 10000; Execucao 25 de 30 (tempo de exec): 0.626199 s
-Albuns inseridos: 10000; Execucao 26 de 30 (tempo de exec): 0.608358 s
-Albuns inseridos: 10000; Execucao 27 de 30 (tempo de exec): 0.620136 s
-Albuns inseridos: 10000; Execucao 28 de 30 (tempo de exec): 0.634383 s
-Albuns inseridos: 10000; Execucao 29 de 30 (tempo de exec): 0.238883 s
-Albuns inseridos: 10000; Execucao 30 de 30 (tempo de exec): 0.189082 s
+Albuns inseridos: 40000; Execucao 1 de 30 (tempo de exec): 1.436107 s
+Albuns inseridos: 40000; Execucao 2 de 30 (tempo de exec): 1.380244 s
+Albuns inseridos: 40000; Execucao 3 de 30 (tempo de exec): 1.391581 s
+Albuns inseridos: 40000; Execucao 4 de 30 (tempo de exec): 1.384620 s
+Albuns inseridos: 40000; Execucao 5 de 30 (tempo de exec): 1.405514 s
+Albuns inseridos: 40000; Execucao 6 de 30 (tempo de exec): 1.399833 s
+Albuns inseridos: 40000; Execucao 7 de 30 (tempo de exec): 3.561025 s
+Albuns inseridos: 40000; Execucao 8 de 30 (tempo de exec): 2.125415 s
+Albuns inseridos: 40000; Execucao 9 de 30 (tempo de exec): 1.391599 s
+Albuns inseridos: 40000; Execucao 10 de 30 (tempo de exec): 1.402556 s
+Albuns inseridos: 40000; Execucao 11 de 30 (tempo de exec): 1.377856 s
+Albuns inseridos: 40000; Execucao 12 de 30 (tempo de exec): 1.418587 s
+Albuns inseridos: 40000; Execucao 13 de 30 (tempo de exec): 1.427390 s
+Albuns inseridos: 40000; Execucao 14 de 30 (tempo de exec): 1.409194 s
+Albuns inseridos: 40000; Execucao 15 de 30 (tempo de exec): 1.410583 s
+Albuns inseridos: 40000; Execucao 16 de 30 (tempo de exec): 1.415194 s
+Albuns inseridos: 40000; Execucao 17 de 30 (tempo de exec): 3.348868 s
+Albuns inseridos: 40000; Execucao 18 de 30 (tempo de exec): 2.339484 s
+Albuns inseridos: 40000; Execucao 19 de 30 (tempo de exec): 1.439734 s
+Albuns inseridos: 40000; Execucao 20 de 30 (tempo de exec): 1.423782 s
+Albuns inseridos: 40000; Execucao 21 de 30 (tempo de exec): 1.412645 s
+Albuns inseridos: 40000; Execucao 22 de 30 (tempo de exec): 1.408501 s
+Albuns inseridos: 40000; Execucao 23 de 30 (tempo de exec): 1.405512 s
+Albuns inseridos: 40000; Execucao 24 de 30 (tempo de exec): 1.420751 s
+Albuns inseridos: 40000; Execucao 25 de 30 (tempo de exec): 1.430578 s
+Albuns inseridos: 40000; Execucao 26 de 30 (tempo de exec): 1.414541 s
+Albuns inseridos: 40000; Execucao 27 de 30 (tempo de exec): 3.234593 s
+Albuns inseridos: 40000; Execucao 28 de 30 (tempo de exec): 2.451565 s
+Albuns inseridos: 40000; Execucao 29 de 30 (tempo de exec): 1.412574 s
+Albuns inseridos: 40000; Execucao 30 de 30 (tempo de exec): 1.387406 s
 -------------------------------------------
-Albuns inseridos: 300000 (10 por execucao)
-Insercao albuns (crescente, media 30 exec): 0.294483 s
+Albuns inseridos: 1200000 (20 por execucao)
+Insercao albuns (crescente, media 30 exec): 1.695594 s
 -------------------------------------------
-Musicas inseridas: 100000; Execucao 1 de 30 (tempo de exec): 2.052635 s
-Musicas inseridas: 100000; Execucao 2 de 30 (tempo de exec): 2.088705 s
-Musicas inseridas: 100000; Execucao 3 de 30 (tempo de exec): 2.067043 s
-Musicas inseridas: 100000; Execucao 4 de 30 (tempo de exec): 3.106041 s
-Musicas inseridas: 100000; Execucao 5 de 30 (tempo de exec): 3.891866 s
-Musicas inseridas: 100000; Execucao 6 de 30 (tempo de exec): 2.031757 s
-Musicas inseridas: 100000; Execucao 7 de 30 (tempo de exec): 4.515499 s
-Musicas inseridas: 100000; Execucao 8 de 30 (tempo de exec): 2.443435 s
-Musicas inseridas: 100000; Execucao 9 de 30 (tempo de exec): 2.046719 s
-Musicas inseridas: 100000; Execucao 10 de 30 (tempo de exec): 5.011923 s
-Musicas inseridas: 100000; Execucao 11 de 30 (tempo de exec): 2.109646 s
-Musicas inseridas: 100000; Execucao 12 de 30 (tempo de exec): 3.313364 s
-Musicas inseridas: 100000; Execucao 13 de 30 (tempo de exec): 3.707315 s
-Musicas inseridas: 100000; Execucao 14 de 30 (tempo de exec): 2.071230 s
-Musicas inseridas: 100000; Execucao 15 de 30 (tempo de exec): 4.906542 s
-Musicas inseridas: 100000; Execucao 16 de 30 (tempo de exec): 2.176619 s
-Musicas inseridas: 100000; Execucao 17 de 30 (tempo de exec): 2.154506 s
-Musicas inseridas: 100000; Execucao 18 de 30 (tempo de exec): 4.899991 s
-Musicas inseridas: 100000; Execucao 19 de 30 (tempo de exec): 2.065911 s
-Musicas inseridas: 100000; Execucao 20 de 30 (tempo de exec): 4.179702 s
-Musicas inseridas: 100000; Execucao 21 de 30 (tempo de exec): 2.925854 s
-Musicas inseridas: 100000; Execucao 22 de 30 (tempo de exec): 2.089270 s
-Musicas inseridas: 100000; Execucao 23 de 30 (tempo de exec): 2.112765 s
-Musicas inseridas: 100000; Execucao 24 de 30 (tempo de exec): 2.168566 s
-Musicas inseridas: 100000; Execucao 25 de 30 (tempo de exec): 4.985894 s
-Musicas inseridas: 100000; Execucao 26 de 30 (tempo de exec): 2.191684 s
-Musicas inseridas: 100000; Execucao 27 de 30 (tempo de exec): 3.305447 s
-Musicas inseridas: 100000; Execucao 28 de 30 (tempo de exec): 3.820851 s
-Musicas inseridas: 100000; Execucao 29 de 30 (tempo de exec): 2.100245 s
-Musicas inseridas: 100000; Execucao 30 de 30 (tempo de exec): 4.994895 s
+Musicas inseridas: 800000; Execucao 1 de 30 (tempo de exec): 41.641159 s
+Musicas inseridas: 800000; Execucao 2 de 30 (tempo de exec): 37.735133 s
+Musicas inseridas: 800000; Execucao 3 de 30 (tempo de exec): 40.673168 s
+Musicas inseridas: 800000; Execucao 4 de 30 (tempo de exec): 43.132533 s
+Musicas inseridas: 800000; Execucao 5 de 30 (tempo de exec): 43.146889 s
+Musicas inseridas: 800000; Execucao 6 de 30 (tempo de exec): 40.310082 s
+Musicas inseridas: 800000; Execucao 7 de 30 (tempo de exec): 43.375248 s
+Musicas inseridas: 800000; Execucao 8 de 30 (tempo de exec): 40.364941 s
+Musicas inseridas: 800000; Execucao 9 de 30 (tempo de exec): 40.356010 s
+Musicas inseridas: 800000; Execucao 10 de 30 (tempo de exec): 40.378560 s
+Musicas inseridas: 800000; Execucao 11 de 30 (tempo de exec): 40.334274 s
+Musicas inseridas: 800000; Execucao 12 de 30 (tempo de exec): 43.106690 s
+Musicas inseridas: 800000; Execucao 13 de 30 (tempo de exec): 43.156412 s
+Musicas inseridas: 800000; Execucao 14 de 30 (tempo de exec): 42.892218 s
+Musicas inseridas: 800000; Execucao 15 de 30 (tempo de exec): 42.818595 s
+Musicas inseridas: 800000; Execucao 16 de 30 (tempo de exec): 39.988195 s
+Musicas inseridas: 800000; Execucao 17 de 30 (tempo de exec): 42.887695 s
+Musicas inseridas: 800000; Execucao 18 de 30 (tempo de exec): 40.149320 s
+Musicas inseridas: 800000; Execucao 19 de 30 (tempo de exec): 42.861098 s
+Musicas inseridas: 800000; Execucao 20 de 30 (tempo de exec): 39.956781 s
+Musicas inseridas: 800000; Execucao 21 de 30 (tempo de exec): 40.147908 s
+Musicas inseridas: 800000; Execucao 22 de 30 (tempo de exec): 43.822934 s
+Musicas inseridas: 800000; Execucao 23 de 30 (tempo de exec): 41.316748 s
+Musicas inseridas: 800000; Execucao 24 de 30 (tempo de exec): 39.557490 s
+Musicas inseridas: 800000; Execucao 25 de 30 (tempo de exec): 43.250486 s
+Musicas inseridas: 800000; Execucao 26 de 30 (tempo de exec): 39.999283 s
+Musicas inseridas: 800000; Execucao 27 de 30 (tempo de exec): 40.094009 s
+Musicas inseridas: 800000; Execucao 28 de 30 (tempo de exec): 39.990850 s
+Musicas inseridas: 800000; Execucao 29 de 30 (tempo de exec): 42.928275 s
+Musicas inseridas: 800000; Execucao 30 de 30 (tempo de exec): 43.964454 s
 -------------------------------------------
-Musicas inseridas: 3000000 (10 por execucao)
-Insercao musicas (crescente, media 30 exec): 3.051197 s
+Musicas inseridas: 24000000 (20 por execucao)
+Insercao musicas (crescente, media 30 exec): 41.477915 s
 -------------------------------------------
-Busca musica (crescente, execucao 1 de 30, media 1000 rep): 0.000035722000 s
-Busca musica (crescente, execucao 2 de 30, media 1000 rep): 0.000036205000 s
-Busca musica (crescente, execucao 3 de 30, media 1000 rep): 0.000038304000 s
-Busca musica (crescente, execucao 4 de 30, media 1000 rep): 0.000037777000 s
-Busca musica (crescente, execucao 5 de 30, media 1000 rep): 0.000038745000 s
-Busca musica (crescente, execucao 6 de 30, media 1000 rep): 0.000037935000 s
-Busca musica (crescente, execucao 7 de 30, media 1000 rep): 0.000036508000 s
-Busca musica (crescente, execucao 8 de 30, media 1000 rep): 0.000037125000 s
-Busca musica (crescente, execucao 9 de 30, media 1000 rep): 0.000037006000 s
-Busca musica (crescente, execucao 10 de 30, media 1000 rep): 0.000035899000 s
-Busca musica (crescente, execucao 11 de 30, media 1000 rep): 0.000035765000 s
-Busca musica (crescente, execucao 12 de 30, media 1000 rep): 0.000036245000 s
-Busca musica (crescente, execucao 13 de 30, media 1000 rep): 0.000037105000 s
-Busca musica (crescente, execucao 14 de 30, media 1000 rep): 0.000036697000 s
-Busca musica (crescente, execucao 15 de 30, media 1000 rep): 0.000038381000 s
-Busca musica (crescente, execucao 16 de 30, media 1000 rep): 0.000036464000 s
-Busca musica (crescente, execucao 17 de 30, media 1000 rep): 0.000036942000 s
-Busca musica (crescente, execucao 18 de 30, media 1000 rep): 0.000036309000 s
-Busca musica (crescente, execucao 19 de 30, media 1000 rep): 0.000036547000 s
-Busca musica (crescente, execucao 20 de 30, media 1000 rep): 0.000039279000 s
-Busca musica (crescente, execucao 21 de 30, media 1000 rep): 0.000036767000 s
-Busca musica (crescente, execucao 22 de 30, media 1000 rep): 0.000035381000 s
-Busca musica (crescente, execucao 23 de 30, media 1000 rep): 0.000036935000 s
-Busca musica (crescente, execucao 24 de 30, media 1000 rep): 0.000036838000 s
-Busca musica (crescente, execucao 25 de 30, media 1000 rep): 0.000036540000 s
-Busca musica (crescente, execucao 26 de 30, media 1000 rep): 0.000035898000 s
-Busca musica (crescente, execucao 27 de 30, media 1000 rep): 0.000037358000 s
-Busca musica (crescente, execucao 28 de 30, media 1000 rep): 0.000036838000 s
-Busca musica (crescente, execucao 29 de 30, media 1000 rep): 0.000037890000 s
-Busca musica (crescente, execucao 30 de 30, media 1000 rep): 0.000036446000 s
+Busca musica (crescente, execucao 1 de 30, media 1000 rep): 0.000037435000 s
+Busca musica (crescente, execucao 2 de 30, media 1000 rep): 0.000063388000 s
+Busca musica (crescente, execucao 3 de 30, media 1000 rep): 0.000032348000 s
+Busca musica (crescente, execucao 4 de 30, media 1000 rep): 0.000061389000 s
+Busca musica (crescente, execucao 5 de 30, media 1000 rep): 0.000033632000 s
+Busca musica (crescente, execucao 6 de 30, media 1000 rep): 0.000047285000 s
+Busca musica (crescente, execucao 7 de 30, media 1000 rep): 0.000061917000 s
+Busca musica (crescente, execucao 8 de 30, media 1000 rep): 0.000034027000 s
+Busca musica (crescente, execucao 9 de 30, media 1000 rep): 0.000052235000 s
+Busca musica (crescente, execucao 10 de 30, media 1000 rep): 0.000053571000 s
+Busca musica (crescente, execucao 11 de 30, media 1000 rep): 0.000037547000 s
+Busca musica (crescente, execucao 12 de 30, media 1000 rep): 0.000061274000 s
+Busca musica (crescente, execucao 13 de 30, media 1000 rep): 0.000034593000 s
+Busca musica (crescente, execucao 14 de 30, media 1000 rep): 0.000061869000 s
+Busca musica (crescente, execucao 15 de 30, media 1000 rep): 0.000045069000 s
+Busca musica (crescente, execucao 16 de 30, media 1000 rep): 0.000047462000 s
+Busca musica (crescente, execucao 17 de 30, media 1000 rep): 0.000047849000 s
+Busca musica (crescente, execucao 18 de 30, media 1000 rep): 0.000047574000 s
+Busca musica (crescente, execucao 19 de 30, media 1000 rep): 0.000047802000 s
+Busca musica (crescente, execucao 20 de 30, media 1000 rep): 0.000048030000 s
+Busca musica (crescente, execucao 21 de 30, media 1000 rep): 0.000048021000 s
+Busca musica (crescente, execucao 22 de 30, media 1000 rep): 0.000047132000 s
+Busca musica (crescente, execucao 23 de 30, media 1000 rep): 0.000036119000 s
+Busca musica (crescente, execucao 24 de 30, media 1000 rep): 0.000047709000 s
+Busca musica (crescente, execucao 25 de 30, media 1000 rep): 0.000047109000 s
+Busca musica (crescente, execucao 26 de 30, media 1000 rep): 0.000032351000 s
+Busca musica (crescente, execucao 27 de 30, media 1000 rep): 0.000063964000 s
+Busca musica (crescente, execucao 28 de 30, media 1000 rep): 0.000031107000 s
+Busca musica (crescente, execucao 29 de 30, media 1000 rep): 0.000047423000 s
+Busca musica (crescente, execucao 30 de 30, media 1000 rep): 0.000045515000 s
 
-Busca musica (crescente, media 30 exec com 1000 rep cada): 0.000036928367 s
+Busca musica (crescente, media 30 exec com 1000 rep cada): 0.000046758200 s
 -------------------------------------------
-Remocao musica variada (crescente, execucao 1 de 30, media 1000 rep): 0.000022833000 s
-Remocao musica variada (crescente, execucao 2 de 30, media 1000 rep): 0.000024742000 s
-Remocao musica variada (crescente, execucao 3 de 30, media 1000 rep): 0.000023124000 s
-Remocao musica variada (crescente, execucao 4 de 30, media 1000 rep): 0.000022948000 s
-Remocao musica variada (crescente, execucao 5 de 30, media 1000 rep): 0.000024016000 s
-Remocao musica variada (crescente, execucao 6 de 30, media 1000 rep): 0.000023329000 s
-Remocao musica variada (crescente, execucao 7 de 30, media 1000 rep): 0.000022222000 s
-Remocao musica variada (crescente, execucao 8 de 30, media 1000 rep): 0.000025870000 s
-Remocao musica variada (crescente, execucao 9 de 30, media 1000 rep): 0.000024692000 s
-Remocao musica variada (crescente, execucao 10 de 30, media 1000 rep): 0.000025257000 s
-Remocao musica variada (crescente, execucao 11 de 30, media 1000 rep): 0.000024646000 s
-Remocao musica variada (crescente, execucao 12 de 30, media 1000 rep): 0.000025800000 s
-Remocao musica variada (crescente, execucao 13 de 30, media 1000 rep): 0.000025923000 s
-Remocao musica variada (crescente, execucao 14 de 30, media 1000 rep): 0.000023810000 s
-Remocao musica variada (crescente, execucao 15 de 30, media 1000 rep): 0.000025337000 s
-Remocao musica variada (crescente, execucao 16 de 30, media 1000 rep): 0.000024302000 s
-Remocao musica variada (crescente, execucao 17 de 30, media 1000 rep): 0.000022906000 s
-Remocao musica variada (crescente, execucao 18 de 30, media 1000 rep): 0.000024248000 s
-Remocao musica variada (crescente, execucao 19 de 30, media 1000 rep): 0.000023588000 s
-Remocao musica variada (crescente, execucao 20 de 30, media 1000 rep): 0.000035433000 s
-Remocao musica variada (crescente, execucao 21 de 30, media 1000 rep): 0.000037122000 s
-Remocao musica variada (crescente, execucao 22 de 30, media 1000 rep): 0.000029901000 s
-Remocao musica variada (crescente, execucao 23 de 30, media 1000 rep): 0.000023756000 s
-Remocao musica variada (crescente, execucao 24 de 30, media 1000 rep): 0.000025391000 s
-Remocao musica variada (crescente, execucao 25 de 30, media 1000 rep): 0.000023715000 s
-Remocao musica variada (crescente, execucao 26 de 30, media 1000 rep): 0.000022813000 s
-Remocao musica variada (crescente, execucao 27 de 30, media 1000 rep): 0.000024463000 s
-Remocao musica variada (crescente, execucao 28 de 30, media 1000 rep): 0.000025763000 s
-Remocao musica variada (crescente, execucao 29 de 30, media 1000 rep): 0.000025724000 s
-Remocao musica variada (crescente, execucao 30 de 30, media 1000 rep): 0.000022813000 s
+Remocao musica variada (crescente, execucao 1 de 30, media 1000 rep): 0.000015891000 s
+Remocao musica variada (crescente, execucao 2 de 30, media 1000 rep): 0.000016029000 s
+Remocao musica variada (crescente, execucao 3 de 30, media 1000 rep): 0.000031856000 s
+Remocao musica variada (crescente, execucao 4 de 30, media 1000 rep): 0.000019897000 s
+Remocao musica variada (crescente, execucao 5 de 30, media 1000 rep): 0.000022960000 s
+Remocao musica variada (crescente, execucao 6 de 30, media 1000 rep): 0.000020654000 s
+Remocao musica variada (crescente, execucao 7 de 30, media 1000 rep): 0.000024031000 s
+Remocao musica variada (crescente, execucao 8 de 30, media 1000 rep): 0.000005612000 s
+Remocao musica variada (crescente, execucao 9 de 30, media 1000 rep): 0.000030881000 s
+Remocao musica variada (crescente, execucao 10 de 30, media 1000 rep): 0.000015773000 s
+Remocao musica variada (crescente, execucao 11 de 30, media 1000 rep): 0.000031409000 s
+Remocao musica variada (crescente, execucao 12 de 30, media 1000 rep): 0.000017804000 s
+Remocao musica variada (crescente, execucao 13 de 30, media 1000 rep): 0.000014356000 s
+Remocao musica variada (crescente, execucao 14 de 30, media 1000 rep): 0.000034979000 s
+Remocao musica variada (crescente, execucao 15 de 30, media 1000 rep): 0.000013130000 s
+Remocao musica variada (crescente, execucao 16 de 30, media 1000 rep): 0.000029601000 s
+Remocao musica variada (crescente, execucao 17 de 30, media 1000 rep): 0.000015885000 s
+Remocao musica variada (crescente, execucao 18 de 30, media 1000 rep): 0.000023324000 s
+Remocao musica variada (crescente, execucao 19 de 30, media 1000 rep): 0.000026210000 s
+Remocao musica variada (crescente, execucao 20 de 30, media 1000 rep): 0.000013927000 s
+Remocao musica variada (crescente, execucao 21 de 30, media 1000 rep): 0.000028744000 s
+Remocao musica variada (crescente, execucao 22 de 30, media 1000 rep): 0.000022536000 s
+Remocao musica variada (crescente, execucao 23 de 30, media 1000 rep): 0.000014724000 s
+Remocao musica variada (crescente, execucao 24 de 30, media 1000 rep): 0.000028479000 s
+Remocao musica variada (crescente, execucao 25 de 30, media 1000 rep): 0.000022062000 s
+Remocao musica variada (crescente, execucao 26 de 30, media 1000 rep): 0.000016128000 s
+Remocao musica variada (crescente, execucao 27 de 30, media 1000 rep): 0.000025780000 s
+Remocao musica variada (crescente, execucao 28 de 30, media 1000 rep): 0.000015820000 s
+Remocao musica variada (crescente, execucao 29 de 30, media 1000 rep): 0.000015873000 s
+Remocao musica variada (crescente, execucao 30 de 30, media 1000 rep): 0.000032090000 s
 
-Remocao musica variada (crescente, media 30 exec com 1000 rep cada): 0.000025216233 s
+Remocao musica variada (crescente, media 30 exec com 1000 rep cada): 0.000021548167 s
 -------------------------------------------
 
 === Testes com Ordem Decrescente ===
-Artistas inseridos: 1000; Execucao 1 de 30 (tempo de exec) 0.011135 s
-Artistas inseridos: 1000; Execucao 2 de 30 (tempo de exec) 0.011076 s
-Artistas inseridos: 1000; Execucao 3 de 30 (tempo de exec) 0.011040 s
-Artistas inseridos: 1000; Execucao 4 de 30 (tempo de exec) 0.011090 s
-Artistas inseridos: 1000; Execucao 5 de 30 (tempo de exec) 0.011158 s
-Artistas inseridos: 1000; Execucao 6 de 30 (tempo de exec) 0.013463 s
-Artistas inseridos: 1000; Execucao 7 de 30 (tempo de exec) 0.010216 s
-Artistas inseridos: 1000; Execucao 8 de 30 (tempo de exec) 0.010100 s
-Artistas inseridos: 1000; Execucao 9 de 30 (tempo de exec) 0.011652 s
-Artistas inseridos: 1000; Execucao 10 de 30 (tempo de exec) 0.010341 s
-Artistas inseridos: 1000; Execucao 11 de 30 (tempo de exec) 0.012091 s
-Artistas inseridos: 1000; Execucao 12 de 30 (tempo de exec) 0.011491 s
-Artistas inseridos: 1000; Execucao 13 de 30 (tempo de exec) 0.011092 s
-Artistas inseridos: 1000; Execucao 14 de 30 (tempo de exec) 0.010566 s
-Artistas inseridos: 1000; Execucao 15 de 30 (tempo de exec) 0.011790 s
-Artistas inseridos: 1000; Execucao 16 de 30 (tempo de exec) 0.011212 s
-Artistas inseridos: 1000; Execucao 17 de 30 (tempo de exec) 0.011679 s
-Artistas inseridos: 1000; Execucao 18 de 30 (tempo de exec) 0.012805 s
-Artistas inseridos: 1000; Execucao 19 de 30 (tempo de exec) 0.010563 s
-Artistas inseridos: 1000; Execucao 20 de 30 (tempo de exec) 0.011565 s
-Artistas inseridos: 1000; Execucao 21 de 30 (tempo de exec) 0.010780 s
-Artistas inseridos: 1000; Execucao 22 de 30 (tempo de exec) 0.011159 s
-Artistas inseridos: 1000; Execucao 23 de 30 (tempo de exec) 0.010593 s
-Artistas inseridos: 1000; Execucao 24 de 30 (tempo de exec) 0.010570 s
-Artistas inseridos: 1000; Execucao 25 de 30 (tempo de exec) 0.010094 s
-Artistas inseridos: 1000; Execucao 26 de 30 (tempo de exec) 0.011958 s
-Artistas inseridos: 1000; Execucao 27 de 30 (tempo de exec) 0.012529 s
-Artistas inseridos: 1000; Execucao 28 de 30 (tempo de exec) 0.011676 s
-Artistas inseridos: 1000; Execucao 29 de 30 (tempo de exec) 0.012143 s
-Artistas inseridos: 1000; Execucao 30 de 30 (tempo de exec) 0.010118 s
+Artistas inseridos: 2000; Execucao 1 de 30 (tempo de exec) 0.041073 s
+Artistas inseridos: 2000; Execucao 2 de 30 (tempo de exec) 0.036147 s
+Artistas inseridos: 2000; Execucao 3 de 30 (tempo de exec) 0.023454 s
+Artistas inseridos: 2000; Execucao 4 de 30 (tempo de exec) 0.050786 s
+Artistas inseridos: 2000; Execucao 5 de 30 (tempo de exec) 0.035913 s
+Artistas inseridos: 2000; Execucao 6 de 30 (tempo de exec) 0.035482 s
+Artistas inseridos: 2000; Execucao 7 de 30 (tempo de exec) 0.034634 s
+Artistas inseridos: 2000; Execucao 8 de 30 (tempo de exec) 0.031775 s
+Artistas inseridos: 2000; Execucao 9 de 30 (tempo de exec) 0.050006 s
+Artistas inseridos: 2000; Execucao 10 de 30 (tempo de exec) 0.029223 s
+Artistas inseridos: 2000; Execucao 11 de 30 (tempo de exec) 0.042807 s
+Artistas inseridos: 2000; Execucao 12 de 30 (tempo de exec) 0.036525 s
+Artistas inseridos: 2000; Execucao 13 de 30 (tempo de exec) 0.031567 s
+Artistas inseridos: 2000; Execucao 14 de 30 (tempo de exec) 0.035511 s
+Artistas inseridos: 2000; Execucao 15 de 30 (tempo de exec) 0.032155 s
+Artistas inseridos: 2000; Execucao 16 de 30 (tempo de exec) 0.043716 s
+Artistas inseridos: 2000; Execucao 17 de 30 (tempo de exec) 0.039491 s
+Artistas inseridos: 2000; Execucao 18 de 30 (tempo de exec) 0.031915 s
+Artistas inseridos: 2000; Execucao 19 de 30 (tempo de exec) 0.039139 s
+Artistas inseridos: 2000; Execucao 20 de 30 (tempo de exec) 0.036887 s
+Artistas inseridos: 2000; Execucao 21 de 30 (tempo de exec) 0.024186 s
+Artistas inseridos: 2000; Execucao 22 de 30 (tempo de exec) 0.052092 s
+Artistas inseridos: 2000; Execucao 23 de 30 (tempo de exec) 0.037842 s
+Artistas inseridos: 2000; Execucao 24 de 30 (tempo de exec) 0.037230 s
+Artistas inseridos: 2000; Execucao 25 de 30 (tempo de exec) 0.037567 s
+Artistas inseridos: 2000; Execucao 26 de 30 (tempo de exec) 0.039802 s
+Artistas inseridos: 2000; Execucao 27 de 30 (tempo de exec) 0.042070 s
+Artistas inseridos: 2000; Execucao 28 de 30 (tempo de exec) 0.037876 s
+Artistas inseridos: 2000; Execucao 29 de 30 (tempo de exec) 0.031630 s
+Artistas inseridos: 2000; Execucao 30 de 30 (tempo de exec) 0.042497 s
 -------------------------------------------
-Artistas inseridos: 30000 (1000 por execucao)
-Insercao artistas (decrescente, media 30 exec): 0.011258 s
+Artistas inseridos: 60000 (2000 por execucao)
+Insercao artistas (decrescente, media 30 exec): 0.037367 s
 -------------------------------------------
-Albuns inseridos: 10000; Execucao 1 de 30 (tempo de exec): 0.203242 s
-Albuns inseridos: 10000; Execucao 2 de 30 (tempo de exec): 0.202258 s
-Albuns inseridos: 10000; Execucao 3 de 30 (tempo de exec): 0.196076 s
-Albuns inseridos: 10000; Execucao 4 de 30 (tempo de exec): 0.202992 s
-Albuns inseridos: 10000; Execucao 5 de 30 (tempo de exec): 0.205110 s
-Albuns inseridos: 10000; Execucao 6 de 30 (tempo de exec): 0.204375 s
-Albuns inseridos: 10000; Execucao 7 de 30 (tempo de exec): 0.195221 s
-Albuns inseridos: 10000; Execucao 8 de 30 (tempo de exec): 0.201256 s
-Albuns inseridos: 10000; Execucao 9 de 30 (tempo de exec): 0.203635 s
-Albuns inseridos: 10000; Execucao 10 de 30 (tempo de exec): 0.203145 s
-Albuns inseridos: 10000; Execucao 11 de 30 (tempo de exec): 0.263111 s
-Albuns inseridos: 10000; Execucao 12 de 30 (tempo de exec): 0.212171 s
-Albuns inseridos: 10000; Execucao 13 de 30 (tempo de exec): 0.203310 s
-Albuns inseridos: 10000; Execucao 14 de 30 (tempo de exec): 0.202483 s
-Albuns inseridos: 10000; Execucao 15 de 30 (tempo de exec): 0.209416 s
-Albuns inseridos: 10000; Execucao 16 de 30 (tempo de exec): 0.208085 s
-Albuns inseridos: 10000; Execucao 17 de 30 (tempo de exec): 0.206140 s
-Albuns inseridos: 10000; Execucao 18 de 30 (tempo de exec): 0.214694 s
-Albuns inseridos: 10000; Execucao 19 de 30 (tempo de exec): 0.202700 s
-Albuns inseridos: 10000; Execucao 20 de 30 (tempo de exec): 0.579492 s
-Albuns inseridos: 10000; Execucao 21 de 30 (tempo de exec): 0.657715 s
-Albuns inseridos: 10000; Execucao 22 de 30 (tempo de exec): 0.648043 s
-Albuns inseridos: 10000; Execucao 23 de 30 (tempo de exec): 0.652066 s
-Albuns inseridos: 10000; Execucao 24 de 30 (tempo de exec): 0.639360 s
-Albuns inseridos: 10000; Execucao 25 de 30 (tempo de exec): 0.655759 s
-Albuns inseridos: 10000; Execucao 26 de 30 (tempo de exec): 0.482905 s
-Albuns inseridos: 10000; Execucao 27 de 30 (tempo de exec): 0.198701 s
-Albuns inseridos: 10000; Execucao 28 de 30 (tempo de exec): 0.199891 s
-Albuns inseridos: 10000; Execucao 29 de 30 (tempo de exec): 0.196472 s
-Albuns inseridos: 10000; Execucao 30 de 30 (tempo de exec): 0.203327 s
+Albuns inseridos: 40000; Execucao 1 de 30 (tempo de exec): 2.524883 s
+Albuns inseridos: 40000; Execucao 2 de 30 (tempo de exec): 3.060910 s
+Albuns inseridos: 40000; Execucao 3 de 30 (tempo de exec): 1.355145 s
+Albuns inseridos: 40000; Execucao 4 de 30 (tempo de exec): 1.387800 s
+Albuns inseridos: 40000; Execucao 5 de 30 (tempo de exec): 2.385297 s
+Albuns inseridos: 40000; Execucao 6 de 30 (tempo de exec): 3.190866 s
+Albuns inseridos: 40000; Execucao 7 de 30 (tempo de exec): 1.393212 s
+Albuns inseridos: 40000; Execucao 8 de 30 (tempo de exec): 1.390563 s
+Albuns inseridos: 40000; Execucao 9 de 30 (tempo de exec): 1.388750 s
+Albuns inseridos: 40000; Execucao 10 de 30 (tempo de exec): 1.399841 s
+Albuns inseridos: 40000; Execucao 11 de 30 (tempo de exec): 1.396125 s
+Albuns inseridos: 40000; Execucao 12 de 30 (tempo de exec): 2.322809 s
+Albuns inseridos: 40000; Execucao 13 de 30 (tempo de exec): 3.281919 s
+Albuns inseridos: 40000; Execucao 14 de 30 (tempo de exec): 1.401321 s
+Albuns inseridos: 40000; Execucao 15 de 30 (tempo de exec): 1.412259 s
+Albuns inseridos: 40000; Execucao 16 de 30 (tempo de exec): 1.411446 s
+Albuns inseridos: 40000; Execucao 17 de 30 (tempo de exec): 1.417622 s
+Albuns inseridos: 40000; Execucao 18 de 30 (tempo de exec): 1.403890 s
+Albuns inseridos: 40000; Execucao 19 de 30 (tempo de exec): 2.476180 s
+Albuns inseridos: 40000; Execucao 20 de 30 (tempo de exec): 3.132443 s
+Albuns inseridos: 40000; Execucao 21 de 30 (tempo de exec): 1.384081 s
+Albuns inseridos: 40000; Execucao 22 de 30 (tempo de exec): 1.399865 s
+Albuns inseridos: 40000; Execucao 23 de 30 (tempo de exec): 2.479720 s
+Albuns inseridos: 40000; Execucao 24 de 30 (tempo de exec): 3.120847 s
+Albuns inseridos: 40000; Execucao 25 de 30 (tempo de exec): 1.411332 s
+Albuns inseridos: 40000; Execucao 26 de 30 (tempo de exec): 1.397534 s
+Albuns inseridos: 40000; Execucao 27 de 30 (tempo de exec): 2.510479 s
+Albuns inseridos: 40000; Execucao 28 de 30 (tempo de exec): 3.093383 s
+Albuns inseridos: 40000; Execucao 29 de 30 (tempo de exec): 1.375618 s
+Albuns inseridos: 40000; Execucao 30 de 30 (tempo de exec): 1.415431 s
 -------------------------------------------
-Albuns inseridos: 300000 (10 por execucao)
-Insercao albuns (decrescente, media 30 exec): 0.301772 s
+Albuns inseridos: 1200000 (20 por execucao)
+Insercao albuns (decrescente, media 30 exec): 1.957386 s
 -------------------------------------------
-Musicas inseridas: 100000; Execucao 1 de 30 (tempo de exec): 2.129807 s
-Musicas inseridas: 100000; Execucao 2 de 30 (tempo de exec): 4.551297 s
-Musicas inseridas: 100000; Execucao 3 de 30 (tempo de exec): 2.499392 s
-Musicas inseridas: 100000; Execucao 4 de 30 (tempo de exec): 2.234001 s
-Musicas inseridas: 100000; Execucao 5 de 30 (tempo de exec): 4.970146 s
-Musicas inseridas: 100000; Execucao 6 de 30 (tempo de exec): 2.039752 s
-Musicas inseridas: 100000; Execucao 7 de 30 (tempo de exec): 2.058428 s
-Musicas inseridas: 100000; Execucao 8 de 30 (tempo de exec): 2.088160 s
-Musicas inseridas: 100000; Execucao 9 de 30 (tempo de exec): 3.292934 s
-Musicas inseridas: 100000; Execucao 10 de 30 (tempo de exec): 3.762132 s
-Musicas inseridas: 100000; Execucao 11 de 30 (tempo de exec): 2.070654 s
-Musicas inseridas: 100000; Execucao 12 de 30 (tempo de exec): 2.062543 s
-Musicas inseridas: 100000; Execucao 13 de 30 (tempo de exec): 2.079807 s
-Musicas inseridas: 100000; Execucao 14 de 30 (tempo de exec): 4.717825 s
-Musicas inseridas: 100000; Execucao 15 de 30 (tempo de exec): 2.296070 s
-Musicas inseridas: 100000; Execucao 16 de 30 (tempo de exec): 2.119619 s
-Musicas inseridas: 100000; Execucao 17 de 30 (tempo de exec): 4.909187 s
-Musicas inseridas: 100000; Execucao 18 de 30 (tempo de exec): 2.122294 s
-Musicas inseridas: 100000; Execucao 19 de 30 (tempo de exec): 3.342133 s
-Musicas inseridas: 100000; Execucao 20 de 30 (tempo de exec): 3.794365 s
-Musicas inseridas: 100000; Execucao 21 de 30 (tempo de exec): 2.096079 s
-Musicas inseridas: 100000; Execucao 22 de 30 (tempo de exec): 4.953906 s
-Musicas inseridas: 100000; Execucao 23 de 30 (tempo de exec): 2.096857 s
-Musicas inseridas: 100000; Execucao 24 de 30 (tempo de exec): 2.285424 s
-Musicas inseridas: 100000; Execucao 25 de 30 (tempo de exec): 4.863760 s
-Musicas inseridas: 100000; Execucao 26 de 30 (tempo de exec): 2.089372 s
-Musicas inseridas: 100000; Execucao 27 de 30 (tempo de exec): 3.993236 s
-Musicas inseridas: 100000; Execucao 28 de 30 (tempo de exec): 3.062861 s
-Musicas inseridas: 100000; Execucao 29 de 30 (tempo de exec): 2.096400 s
-Musicas inseridas: 100000; Execucao 30 de 30 (tempo de exec): 4.962118 s
--------------------------------------------
-Musicas inseridas: 3000000 (10 por execucao)
-Insercao musicas (decrescente, media 30 exec): 3.054685 s
--------------------------------------------
-Busca musica (decrescente, execucao 1 de 30, media 1000 rep): 0.000039451000 s
-Busca musica (decrescente, execucao 2 de 30, media 1000 rep): 0.000042386000 s
-Busca musica (decrescente, execucao 3 de 30, media 1000 rep): 0.000041039000 s
-Busca musica (decrescente, execucao 4 de 30, media 1000 rep): 0.000040126000 s
-Busca musica (decrescente, execucao 5 de 30, media 1000 rep): 0.000039864000 s
-Busca musica (decrescente, execucao 6 de 30, media 1000 rep): 0.000040412000 s
-Busca musica (decrescente, execucao 7 de 30, media 1000 rep): 0.000041368000 s
-Busca musica (decrescente, execucao 8 de 30, media 1000 rep): 0.000046388000 s
-Busca musica (decrescente, execucao 9 de 30, media 1000 rep): 0.000042463000 s
-Busca musica (decrescente, execucao 10 de 30, media 1000 rep): 0.000041305000 s
-Busca musica (decrescente, execucao 11 de 30, media 1000 rep): 0.000040751000 s
-Busca musica (decrescente, execucao 12 de 30, media 1000 rep): 0.000040807000 s
-Busca musica (decrescente, execucao 13 de 30, media 1000 rep): 0.000040810000 s
-Busca musica (decrescente, execucao 14 de 30, media 1000 rep): 0.000039698000 s
-Busca musica (decrescente, execucao 15 de 30, media 1000 rep): 0.000039919000 s
-Busca musica (decrescente, execucao 16 de 30, media 1000 rep): 0.000039518000 s
-Busca musica (decrescente, execucao 17 de 30, media 1000 rep): 0.000041446000 s
-Busca musica (decrescente, execucao 18 de 30, media 1000 rep): 0.000040239000 s
-Busca musica (decrescente, execucao 19 de 30, media 1000 rep): 0.000040697000 s
-Busca musica (decrescente, execucao 20 de 30, media 1000 rep): 0.000040184000 s
-Busca musica (decrescente, execucao 21 de 30, media 1000 rep): 0.000038655000 s
-Busca musica (decrescente, execucao 22 de 30, media 1000 rep): 0.000039944000 s
-Busca musica (decrescente, execucao 23 de 30, media 1000 rep): 0.000039280000 s
-Busca musica (decrescente, execucao 24 de 30, media 1000 rep): 0.000040907000 s
-Busca musica (decrescente, execucao 25 de 30, media 1000 rep): 0.000039315000 s
-Busca musica (decrescente, execucao 26 de 30, media 1000 rep): 0.000041177000 s
-Busca musica (decrescente, execucao 27 de 30, media 1000 rep): 0.000042133000 s
-Busca musica (decrescente, execucao 28 de 30, media 1000 rep): 0.000045692000 s
-Busca musica (decrescente, execucao 29 de 30, media 1000 rep): 0.000040110000 s
-Busca musica (decrescente, execucao 30 de 30, media 1000 rep): 0.000041915000 s
-
-Busca musica (decrescente, media 30 exec com 1000 rep cada): 0.000040933300 s
--------------------------------------------
-Remocao musica variada (decrescente, execucao 1 de 30, media 1000 rep): 0.000026240000 s
-Remocao musica variada (decrescente, execucao 2 de 30, media 1000 rep): 0.000026876000 s
-Remocao musica variada (decrescente, execucao 3 de 30, media 1000 rep): 0.000023305000 s
-Remocao musica variada (decrescente, execucao 4 de 30, media 1000 rep): 0.000024168000 s
-Remocao musica variada (decrescente, execucao 5 de 30, media 1000 rep): 0.000026033000 s
-Remocao musica variada (decrescente, execucao 6 de 30, media 1000 rep): 0.000025909000 s
-Remocao musica variada (decrescente, execucao 7 de 30, media 1000 rep): 0.000024966000 s
-Remocao musica variada (decrescente, execucao 8 de 30, media 1000 rep): 0.000024081000 s
-Remocao musica variada (decrescente, execucao 9 de 30, media 1000 rep): 0.000024835000 s
-Remocao musica variada (decrescente, execucao 10 de 30, media 1000 rep): 0.000024729000 s
-Remocao musica variada (decrescente, execucao 11 de 30, media 1000 rep): 0.000024296000 s
-Remocao musica variada (decrescente, execucao 12 de 30, media 1000 rep): 0.000024962000 s
-Remocao musica variada (decrescente, execucao 13 de 30, media 1000 rep): 0.000025297000 s
-Remocao musica variada (decrescente, execucao 14 de 30, media 1000 rep): 0.000025877000 s
-Remocao musica variada (decrescente, execucao 15 de 30, media 1000 rep): 0.000025940000 s
-Remocao musica variada (decrescente, execucao 16 de 30, media 1000 rep): 0.000024802000 s
-Remocao musica variada (decrescente, execucao 17 de 30, media 1000 rep): 0.000025237000 s
-Remocao musica variada (decrescente, execucao 18 de 30, media 1000 rep): 0.000025060000 s
-Remocao musica variada (decrescente, execucao 19 de 30, media 1000 rep): 0.000024689000 s
-Remocao musica variada (decrescente, execucao 20 de 30, media 1000 rep): 0.000023840000 s
-Remocao musica variada (decrescente, execucao 21 de 30, media 1000 rep): 0.000025284000 s
-Remocao musica variada (decrescente, execucao 22 de 30, media 1000 rep): 0.000024630000 s
-Remocao musica variada (decrescente, execucao 23 de 30, media 1000 rep): 0.000025774000 s
-Remocao musica variada (decrescente, execucao 24 de 30, media 1000 rep): 0.000024176000 s
-Remocao musica variada (decrescente, execucao 25 de 30, media 1000 rep): 0.000037397000 s
-Remocao musica variada (decrescente, execucao 26 de 30, media 1000 rep): 0.000078090000 s
-Remocao musica variada (decrescente, execucao 27 de 30, media 1000 rep): 0.000078105000 s
-Remocao musica variada (decrescente, execucao 28 de 30, media 1000 rep): 0.000078594000 s
-Remocao musica variada (decrescente, execucao 29 de 30, media 1000 rep): 0.000074509000 s
-Remocao musica variada (decrescente, execucao 30 de 30, media 1000 rep): 0.000075710000 s
-
-Remocao musica variada (decrescente, media 30 exec com 1000 rep cada): 0.000034113700 s
--------------------------------------------
-
-=== Testes com Ordem Aleatoria ===
-Artistas inseridos: 1000; Execucao 1 de 30 (tempo de exec) 0.004083 s
-Artistas inseridos: 1000; Execucao 2 de 30 (tempo de exec) 0.004032 s
-Artistas inseridos: 1000; Execucao 3 de 30 (tempo de exec) 0.002565 s
-Artistas inseridos: 1000; Execucao 4 de 30 (tempo de exec) 0.002991 s
-Artistas inseridos: 1000; Execucao 5 de 30 (tempo de exec) 0.005195 s
-Artistas inseridos: 1000; Execucao 6 de 30 (tempo de exec) 0.004562 s
-Artistas inseridos: 1000; Execucao 7 de 30 (tempo de exec) 0.005564 s
-Artistas inseridos: 1000; Execucao 8 de 30 (tempo de exec) 0.003562 s
-Artistas inseridos: 1000; Execucao 9 de 30 (tempo de exec) 0.005554 s
-Artistas inseridos: 1000; Execucao 10 de 30 (tempo de exec) 0.003920 s
-Artistas inseridos: 1000; Execucao 11 de 30 (tempo de exec) 0.005311 s
-Artistas inseridos: 1000; Execucao 12 de 30 (tempo de exec) 0.006677 s
-Artistas inseridos: 1000; Execucao 13 de 30 (tempo de exec) 0.006302 s
-Artistas inseridos: 1000; Execucao 14 de 30 (tempo de exec) 0.004840 s
-Artistas inseridos: 1000; Execucao 15 de 30 (tempo de exec) 0.003632 s
-Artistas inseridos: 1000; Execucao 16 de 30 (tempo de exec) 0.005260 s
-Artistas inseridos: 1000; Execucao 17 de 30 (tempo de exec) 0.004555 s
-Artistas inseridos: 1000; Execucao 18 de 30 (tempo de exec) 0.005120 s
-Artistas inseridos: 1000; Execucao 19 de 30 (tempo de exec) 0.005054 s
-Artistas inseridos: 1000; Execucao 20 de 30 (tempo de exec) 0.005834 s
-Artistas inseridos: 1000; Execucao 21 de 30 (tempo de exec) 0.004166 s
-Artistas inseridos: 1000; Execucao 22 de 30 (tempo de exec) 0.006029 s
-Artistas inseridos: 1000; Execucao 23 de 30 (tempo de exec) 0.004113 s
-Artistas inseridos: 1000; Execucao 24 de 30 (tempo de exec) 0.004605 s
-Artistas inseridos: 1000; Execucao 25 de 30 (tempo de exec) 0.004041 s
-Artistas inseridos: 1000; Execucao 26 de 30 (tempo de exec) 0.004685 s
-Artistas inseridos: 1000; Execucao 27 de 30 (tempo de exec) 0.005334 s
-Artistas inseridos: 1000; Execucao 28 de 30 (tempo de exec) 0.004631 s
-Artistas inseridos: 1000; Execucao 29 de 30 (tempo de exec) 0.005690 s
-Artistas inseridos: 1000; Execucao 30 de 30 (tempo de exec) 0.004002 s
--------------------------------------------
-Artistas inseridos: 30000 (1000 por execucao)
-Insercao artistas (aleatorio, media 30 exec): 0.004730 s
--------------------------------------------
-Albuns inseridos: 10000; Execucao 1 de 30 (tempo de exec): 0.071182 s
-Albuns inseridos: 10000; Execucao 2 de 30 (tempo de exec): 0.057777 s
-Albuns inseridos: 10000; Execucao 3 de 30 (tempo de exec): 0.063240 s
-Albuns inseridos: 10000; Execucao 4 de 30 (tempo de exec): 0.066146 s
-Albuns inseridos: 10000; Execucao 5 de 30 (tempo de exec): 0.060442 s
-Albuns inseridos: 10000; Execucao 6 de 30 (tempo de exec): 0.057829 s
-Albuns inseridos: 10000; Execucao 7 de 30 (tempo de exec): 0.062886 s
-Albuns inseridos: 10000; Execucao 8 de 30 (tempo de exec): 0.062098 s
-Albuns inseridos: 10000; Execucao 9 de 30 (tempo de exec): 0.086810 s
-Albuns inseridos: 10000; Execucao 10 de 30 (tempo de exec): 0.064197 s
-Albuns inseridos: 10000; Execucao 11 de 30 (tempo de exec): 0.071299 s
-Albuns inseridos: 10000; Execucao 12 de 30 (tempo de exec): 0.064184 s
-Albuns inseridos: 10000; Execucao 13 de 30 (tempo de exec): 0.060808 s
-Albuns inseridos: 10000; Execucao 14 de 30 (tempo de exec): 0.062820 s
-Albuns inseridos: 10000; Execucao 15 de 30 (tempo de exec): 0.058472 s
-Albuns inseridos: 10000; Execucao 16 de 30 (tempo de exec): 0.063406 s
-Albuns inseridos: 10000; Execucao 17 de 30 (tempo de exec): 0.064572 s
-Albuns inseridos: 10000; Execucao 18 de 30 (tempo de exec): 0.068053 s
-Albuns inseridos: 10000; Execucao 19 de 30 (tempo de exec): 0.061418 s
-Albuns inseridos: 10000; Execucao 20 de 30 (tempo de exec): 0.063002 s
-Albuns inseridos: 10000; Execucao 21 de 30 (tempo de exec): 0.062513 s
-Albuns inseridos: 10000; Execucao 22 de 30 (tempo de exec): 0.064085 s
-Albuns inseridos: 10000; Execucao 23 de 30 (tempo de exec): 0.071909 s
-Albuns inseridos: 10000; Execucao 24 de 30 (tempo de exec): 0.061839 s
-Albuns inseridos: 10000; Execucao 25 de 30 (tempo de exec): 0.064365 s
-Albuns inseridos: 10000; Execucao 26 de 30 (tempo de exec): 0.069315 s
-Albuns inseridos: 10000; Execucao 27 de 30 (tempo de exec): 0.057057 s
-Albuns inseridos: 10000; Execucao 28 de 30 (tempo de exec): 0.067217 s
-Albuns inseridos: 10000; Execucao 29 de 30 (tempo de exec): 0.062675 s
-Albuns inseridos: 10000; Execucao 30 de 30 (tempo de exec): 0.062465 s
--------------------------------------------
-Albuns inseridos: 300000 (10 por execucao)
-Insercao albuns (aleatorio, media 30 exec): 0.064469 s
--------------------------------------------
-Musicas inseridas: 100000; Execucao 1 de 30 (tempo de exec): 0.925248 s
-Musicas inseridas: 100000; Execucao 2 de 30 (tempo de exec): 0.738891 s
-Musicas inseridas: 100000; Execucao 3 de 30 (tempo de exec): 0.311834 s
-Musicas inseridas: 100000; Execucao 4 de 30 (tempo de exec): 0.302105 s
-Musicas inseridas: 100000; Execucao 5 de 30 (tempo de exec): 0.285222 s
-Musicas inseridas: 100000; Execucao 6 de 30 (tempo de exec): 0.276689 s
-Musicas inseridas: 100000; Execucao 7 de 30 (tempo de exec): 0.280432 s
-Musicas inseridas: 100000; Execucao 8 de 30 (tempo de exec): 0.293844 s
-Musicas inseridas: 100000; Execucao 9 de 30 (tempo de exec): 0.304239 s
-Musicas inseridas: 100000; Execucao 10 de 30 (tempo de exec): 0.294889 s
-Musicas inseridas: 100000; Execucao 11 de 30 (tempo de exec): 0.300093 s
-Musicas inseridas: 100000; Execucao 12 de 30 (tempo de exec): 0.293977 s
-Musicas inseridas: 100000; Execucao 13 de 30 (tempo de exec): 0.285574 s
-Musicas inseridas: 100000; Execucao 14 de 30 (tempo de exec): 0.305684 s
-Musicas inseridas: 100000; Execucao 15 de 30 (tempo de exec): 0.299906 s
-Musicas inseridas: 100000; Execucao 16 de 30 (tempo de exec): 0.291348 s
-Musicas inseridas: 100000; Execucao 17 de 30 (tempo de exec): 0.288929 s
-Musicas inseridas: 100000; Execucao 18 de 30 (tempo de exec): 0.290842 s
-Musicas inseridas: 100000; Execucao 19 de 30 (tempo de exec): 0.290723 s
-Musicas inseridas: 100000; Execucao 20 de 30 (tempo de exec): 0.283346 s
-Musicas inseridas: 100000; Execucao 21 de 30 (tempo de exec): 0.286465 s
-Musicas inseridas: 100000; Execucao 22 de 30 (tempo de exec): 0.281419 s
-Musicas inseridas: 100000; Execucao 23 de 30 (tempo de exec): 0.283788 s
-Musicas inseridas: 100000; Execucao 24 de 30 (tempo de exec): 0.279717 s
-Musicas inseridas: 100000; Execucao 25 de 30 (tempo de exec): 0.317261 s
-Musicas inseridas: 100000; Execucao 26 de 30 (tempo de exec): 0.341784 s
-Musicas inseridas: 100000; Execucao 27 de 30 (tempo de exec): 0.364336 s
-Musicas inseridas: 100000; Execucao 28 de 30 (tempo de exec): 0.376304 s
-Musicas inseridas: 100000; Execucao 29 de 30 (tempo de exec): 0.385778 s
-Musicas inseridas: 100000; Execucao 30 de 30 (tempo de exec): 0.371672 s
--------------------------------------------
-Musicas inseridas: 3000000 (10 por execucao)
-Insercao musicas (aleatorio, media 30 exec): 0.341078 s
--------------------------------------------
-Busca musica (aleatorio, execucao 1 de 30, media 1000 rep): 0.000030474000 s
-Busca musica (aleatorio, execucao 2 de 30, media 1000 rep): 0.000028743000 s
-Busca musica (aleatorio, execucao 3 de 30, media 1000 rep): 0.000029358000 s
-Busca musica (aleatorio, execucao 4 de 30, media 1000 rep): 0.000029610000 s
-Busca musica (aleatorio, execucao 5 de 30, media 1000 rep): 0.000030141000 s
-Busca musica (aleatorio, execucao 6 de 30, media 1000 rep): 0.000028378000 s
-Busca musica (aleatorio, execucao 7 de 30, media 1000 rep): 0.000028329000 s
-Busca musica (aleatorio, execucao 8 de 30, media 1000 rep): 0.000029014000 s
-Busca musica (aleatorio, execucao 9 de 30, media 1000 rep): 0.000027613000 s
-Busca musica (aleatorio, execucao 10 de 30, media 1000 rep): 0.000027763000 s
-Busca musica (aleatorio, execucao 11 de 30, media 1000 rep): 0.000027259000 s
-Busca musica (aleatorio, execucao 12 de 30, media 1000 rep): 0.000030500000 s
-Busca musica (aleatorio, execucao 13 de 30, media 1000 rep): 0.000028392000 s
-Busca musica (aleatorio, execucao 14 de 30, media 1000 rep): 0.000027398000 s
-Busca musica (aleatorio, execucao 15 de 30, media 1000 rep): 0.000028190000 s
-Busca musica (aleatorio, execucao 16 de 30, media 1000 rep): 0.000027110000 s
-Busca musica (aleatorio, execucao 17 de 30, media 1000 rep): 0.000026362000 s
-Busca musica (aleatorio, execucao 18 de 30, media 1000 rep): 0.000027478000 s
-Busca musica (aleatorio, execucao 19 de 30, media 1000 rep): 0.000026241000 s
-Busca musica (aleatorio, execucao 20 de 30, media 1000 rep): 0.000027027000 s
-Busca musica (aleatorio, execucao 21 de 30, media 1000 rep): 0.000026767000 s
-Busca musica (aleatorio, execucao 22 de 30, media 1000 rep): 0.000024659000 s
-Busca musica (aleatorio, execucao 23 de 30, media 1000 rep): 0.000026271000 s
-Busca musica (aleatorio, execucao 24 de 30, media 1000 rep): 0.000026890000 s
-Busca musica (aleatorio, execucao 25 de 30, media 1000 rep): 0.000026878000 s
-Busca musica (aleatorio, execucao 26 de 30, media 1000 rep): 0.000024621000 s
-Busca musica (aleatorio, execucao 27 de 30, media 1000 rep): 0.000023883000 s
-Busca musica (aleatorio, execucao 28 de 30, media 1000 rep): 0.000024884000 s
-Busca musica (aleatorio, execucao 29 de 30, media 1000 rep): 0.000026906000 s
-Busca musica (aleatorio, execucao 30 de 30, media 1000 rep): 0.000024183000 s
-
-Busca musica (aleatorio, media 30 exec com 1000 rep cada): 0.000027377400 s
--------------------------------------------
-Remocao musica variada (aleatorio, execucao 1 de 30, media 1000 rep): 0.000009690000 s
-Remocao musica variada (aleatorio, execucao 2 de 30, media 1000 rep): 0.000008024000 s
-Remocao musica variada (aleatorio, execucao 3 de 30, media 1000 rep): 0.000007067000 s
-Remocao musica variada (aleatorio, execucao 4 de 30, media 1000 rep): 0.000009476000 s
-Remocao musica variada (aleatorio, execucao 5 de 30, media 1000 rep): 0.000007641000 s
-Remocao musica variada (aleatorio, execucao 6 de 30, media 1000 rep): 0.000007604000 s
-Remocao musica variada (aleatorio, execucao 7 de 30, media 1000 rep): 0.000008073000 s
-Remocao musica variada (aleatorio, execucao 8 de 30, media 1000 rep): 0.000008811000 s
-Remocao musica variada (aleatorio, execucao 9 de 30, media 1000 rep): 0.000009536000 s
-Remocao musica variada (aleatorio, execucao 10 de 30, media 1000 rep): 0.000011041000 s
-Remocao musica variada (aleatorio, execucao 11 de 30, media 1000 rep): 0.000008658000 s
-Remocao musica variada (aleatorio, execucao 12 de 30, media 1000 rep): 0.000008690000 s
-Remocao musica variada (aleatorio, execucao 13 de 30, media 1000 rep): 0.000007608000 s
-Remocao musica variada (aleatorio, execucao 14 de 30, media 1000 rep): 0.000007566000 s
-Remocao musica variada (aleatorio, execucao 15 de 30, media 1000 rep): 0.000008600000 s
-Remocao musica variada (aleatorio, execucao 16 de 30, media 1000 rep): 0.000009120000 s
-Remocao musica variada (aleatorio, execucao 17 de 30, media 1000 rep): 0.000008565000 s
-Remocao musica variada (aleatorio, execucao 18 de 30, media 1000 rep): 0.000007326000 s
-Remocao musica variada (aleatorio, execucao 19 de 30, media 1000 rep): 0.000008590000 s
-Remocao musica variada (aleatorio, execucao 20 de 30, media 1000 rep): 0.000008575000 s
-Remocao musica variada (aleatorio, execucao 21 de 30, media 1000 rep): 0.000008547000 s
-Remocao musica variada (aleatorio, execucao 22 de 30, media 1000 rep): 0.000006557000 s
-Remocao musica variada (aleatorio, execucao 23 de 30, media 1000 rep): 0.000007587000 s
-Remocao musica variada (aleatorio, execucao 24 de 30, media 1000 rep): 0.000008559000 s
-Remocao musica variada (aleatorio, execucao 25 de 30, media 1000 rep): 0.000008093000 s
-Remocao musica variada (aleatorio, execucao 26 de 30, media 1000 rep): 0.000009137000 s
-Remocao musica variada (aleatorio, execucao 27 de 30, media 1000 rep): 0.000008843000 s
-Remocao musica variada (aleatorio, execucao 28 de 30, media 1000 rep): 0.000008108000 s
-Remocao musica variada (aleatorio, execucao 29 de 30, media 1000 rep): 0.000008115000 s
-Remocao musica variada (aleatorio, execucao 30 de 30, media 1000 rep): 0.000007567000 s
-
-Remocao musica variada (aleatorio, media 30 exec com 1000 rep cada): 0.000008379133 s
--------------------------------------------
-
-Tempo total de execucao: 00:03:45:047 (horas:minutos:segundos:milisegundos)
+Musicas inseridas: 800000; Execucao 1 de 30 (tempo de exec): 39.822141 s
+Musicas inseridas: 800000; Execucao 2 de 30 (tempo de exec): 42.887835 s
+Musicas inseridas: 800000; Execucao 3 de 30 (tempo de exec): 42.890490 s
+Musicas inseridas: 800000; Execucao 4 de 30 (tempo de exec): 44.208750 s
+Musicas inseridas: 800000; Execucao 5 de 30 (tempo de exec): 38.365632 s
+Musicas inseridas: 800000; Execucao 6 de 30 (tempo de exec): 42.806949 s
+Musicas inseridas: 800000; Execucao 7 de 30 (tempo de exec): 42.740568 s
+Musicas inseridas: 800000; Execucao 8 de 30 (tempo de exec): 40.098239 s
+Musicas inseridas: 800000; Execucao 9 de 30 (tempo de exec): 41.526958 s
+Musicas inseridas: 800000; Execucao 10 de 30 (tempo de exec): 44.137379 s
+Musicas inseridas: 800000; Execucao 11 de 30 (tempo de exec): 37.708213 s
+Musicas inseridas: 800000; Execucao 12 de 30 (tempo de exec): 37.374154 s
+Musicas inseridas: 800000; Execucao 13 de 30 (tempo de exec): 43.017042 s
+Musicas inseridas: 800000; Execucao 14 de 30 (tempo de exec): 36.895302 s
+Musicas inseridas: 800000; Execucao 15 de 30 (tempo de exec): 42.629075 s
+Musicas inseridas: 800000; Execucao 16 de 30 (tempo de exec): 37.038310 s

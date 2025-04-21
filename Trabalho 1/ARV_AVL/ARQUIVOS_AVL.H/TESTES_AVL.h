@@ -4,12 +4,12 @@
 #include "artista_AVL.h"
 #include "playlist_AVL.h"
 
-#define NUM_ARTISTAS 1000
-#define NUM_ALBUNS 10
-#define NUM_MUSICAS 10
+#define NUM_ARTISTAS 3000
+#define NUM_ALBUNS 30
+#define NUM_MUSICAS 30
 
 //não muda mais
-#define NUM_EXECUCOES 30
+#define NUM_EXECUCOES 10
 #define REPETICOES_RAPIDAS 1000
 
 #define CAMINHO_ARQUIVOS "../ENTRADAS_AVL/" // Ajuste para "../ENTRADAS/" se necessário
