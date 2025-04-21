@@ -231,13 +231,16 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         soma_tv += tempo;
         // fprintf(f_resultados, "Artistas inseridos: %d\n", artistas_inseridos);
-        printf("Artistas inseridos: %d; Execucao %d de %d\n", artistas_inseridos, i + 1, NUM_EXECUCOES);
+        printf("Artistas inseridos: %d; Execucao %d de %d (tempo de exec) %.6f s\n", artistas_inseridos, i + 1, NUM_EXECUCOES, tempo);
+        fprintf(f_resultados, "Artistas inseridos: %d; Execucao %d de %d (tempo de exec) %.6f s\n", artistas_inseridos, i + 1, NUM_EXECUCOES, tempo);
         art_ins += artistas_inseridos;
         liberar_arv_artista(&raiz);
         raiz = NULL;
     }
+    fprintf(f_resultados, "-------------------------------------------\n");
     fprintf(f_resultados, "Artistas inseridos: %d (%d por execucao)\n", art_ins, NUM_ARTISTAS);
     fprintf(f_resultados, "Insercao artistas (%s, media %d exec): %.6f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "-------------------------------------------\n");
 
     // Inserir artistas para testes subsequentes
     int artistas_inseridos = inserir_artistas(&raiz, arquivo_artistas);
@@ -258,7 +261,8 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         soma_tv += tempo;
         // fprintf(f_resultados, "Albuns inseridos: %d\n", albuns_inseridos);
-        printf("Albuns inseridos: %d; Execucao %d de %d\n", albuns_inseridos, i + 1, NUM_EXECUCOES);
+        printf("Albuns inseridos: %d; Execucao %d de %d (tempo de exec): %.6f s\n", albuns_inseridos, i + 1, NUM_EXECUCOES, tempo);
+        fprintf(f_resultados, "Albuns inseridos: %d; Execucao %d de %d (tempo de exec): %.6f s\n", albuns_inseridos, i + 1, NUM_EXECUCOES, tempo);
         alb_ins += albuns_inseridos;
         ARTISTAS *atual = raiz;
         while (atual)
@@ -268,8 +272,10 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
             atual = atual->dir;
         }
     }
+    fprintf(f_resultados, "-------------------------------------------\n");
     fprintf(f_resultados, "Albuns inseridos: %d (%d por execucao)\n", alb_ins, NUM_ALBUNS);
     fprintf(f_resultados, "Insercao albuns (%s, media %d exec): %.6f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "-------------------------------------------\n");
 
     // Inserir álbuns para testes subsequentes
     int albuns_inseridos = inserir_albuns(raiz, arquivo_albuns);
@@ -290,7 +296,8 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         soma_tv += tempo;
-        printf("Musicas inseridas: %d; Execucao %d de %d\n", musicas_inseridas, i + 1, NUM_EXECUCOES);
+        printf("Musicas inseridas: %d; Execucao %d de %d (tempo de exec): %.6f s\n", musicas_inseridas, i + 1, NUM_EXECUCOES, tempo);
+        fprintf(f_resultados, "Musicas inseridas: %d; Execucao %d de %d (tempo de exec): %.6f s\n", musicas_inseridas, i + 1, NUM_EXECUCOES, tempo);
         mus_ins += musicas_inseridas;
         ARTISTAS *artista = raiz;
         while (artista)
@@ -305,8 +312,10 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
             artista = artista->dir;
         }
     }
+    fprintf(f_resultados, "-------------------------------------------\n");
     fprintf(f_resultados, "Musicas inseridas: %d (%d por execucao)\n", mus_ins, NUM_MUSICAS);
     fprintf(f_resultados, "Insercao musicas (%s, media %d exec): %.6f s\n", sufixo, NUM_EXECUCOES, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "-------------------------------------------\n");
 
     // Inserir músicas para testes subsequentes
     int musicas_inseridas = inserir_musicas(raiz, arquivo_musicas);
@@ -357,11 +366,11 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
 
             for (int k = 0; k < NUM_MUSICAS; k++)
             {
+                int idx_musica = ((j / (NUM_ARTISTAS * NUM_ALBUNS)) % NUM_MUSICAS) + 1; // Musica0001 a NUM_MUSICAS
+                snprintf(nome_musica, sizeof(nome_musica), "Musica%04d", idx_musica);
                 MUSICAS *musica = existe_musica(album->arv_musicas, nome_musica);
                 if (!musica)
                 {
-                    int idx_musica = ((j / (NUM_ARTISTAS * NUM_ALBUNS)) % NUM_MUSICAS) + 1; // Musica0001 a NUM_MUSICAS
-                    snprintf(nome_musica, sizeof(nome_musica), "Musica%04d", idx_musica);
                     fprintf(f_resultados, "Erro: %s nao encontrada para %s, %s\n", nome_musica, nome_artista, nome_album);
                     liberar_arv_artista(&raiz);
                     return;
@@ -435,11 +444,12 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         }
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
-        // soma_tv += tempo / REPETICOES_RAPIDAS;
+        //soma_tv += tempo / REPETICOES_RAPIDAS;
         soma_tv += tempo;
     }
     fprintf(f_resultados, "Remocao musica variada (%s, media %d exec com %d rep cada): %.12f s\n", sufixo, NUM_EXECUCOES, REPETICOES_RAPIDAS, soma_tv / NUM_EXECUCOES);
-
+    fprintf(f_resultados, "-------------------------------------------\n");
+    
     liberar_arv_artista(&raiz);
 }
 
