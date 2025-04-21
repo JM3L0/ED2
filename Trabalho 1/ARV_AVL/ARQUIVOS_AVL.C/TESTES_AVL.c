@@ -380,9 +380,13 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         // soma_tv += tempo / REPETICOES_RAPIDAS;
-        soma_tv += tempo;
+        soma_tv += tempo / REPETICOES_RAPIDAS;
+        //fprintf(f_resultados, "Busca musica (%s, execucao %d de %d, media %d rep): %.12f s\n", sufixo, i + 1, NUM_EXECUCOES, REPETICOES_RAPIDAS, tempo / REPETICOES_RAPIDAS);
+        fprintf(f_resultados, "Busca musica (%s, execucao %d de %d, media %d rep): %.12f s\n", sufixo, i + 1, NUM_EXECUCOES, REPETICOES_RAPIDAS, (tempo / REPETICOES_RAPIDAS));
+        printf("Busca musica (%s, execucao %d de %d, media %d rep): %.12f s\n", sufixo, i + 1, NUM_EXECUCOES, REPETICOES_RAPIDAS, (tempo / REPETICOES_RAPIDAS));
     }
-    fprintf(f_resultados, "Busca musica variada (%s, media %d exec com %d rep cada): %.12f s\n", sufixo, NUM_EXECUCOES, REPETICOES_RAPIDAS, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "\nBusca musica (%s, media %d exec com %d rep cada): %.12f s\n", sufixo, NUM_EXECUCOES, REPETICOES_RAPIDAS, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "-------------------------------------------\n");
 
     // Remoção de músicas variadas (diferentes artistas, álbuns e músicas)
     soma_tv = 0.0;
@@ -445,9 +449,11 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
         //soma_tv += tempo / REPETICOES_RAPIDAS;
-        soma_tv += tempo;
+        soma_tv += tempo / REPETICOES_RAPIDAS;
+        fprintf(f_resultados, "Remocao musica variada (%s, execucao %d de %d, media %d rep): %.12f s\n", sufixo, i + 1, NUM_EXECUCOES, REPETICOES_RAPIDAS, (tempo / REPETICOES_RAPIDAS));
+        printf("Remocao musica variada (%s, execucao %d de %d, media %d rep): %.12f s\n", sufixo, i + 1, NUM_EXECUCOES, REPETICOES_RAPIDAS, (tempo / REPETICOES_RAPIDAS));
     }
-    fprintf(f_resultados, "Remocao musica variada (%s, media %d exec com %d rep cada): %.12f s\n", sufixo, NUM_EXECUCOES, REPETICOES_RAPIDAS, soma_tv / NUM_EXECUCOES);
+    fprintf(f_resultados, "\nRemocao musica variada (%s, media %d exec com %d rep cada): %.12f s\n", sufixo, NUM_EXECUCOES, REPETICOES_RAPIDAS, soma_tv / NUM_EXECUCOES);
     fprintf(f_resultados, "-------------------------------------------\n");
     
     liberar_arv_artista(&raiz);
