@@ -4,11 +4,11 @@
 #include "artista_AVL.h"
 #include "playlist_AVL.h"
 
-#define NUM_ARTISTAS 100
+#define NUM_ARTISTAS 1000
 #define NUM_ALBUNS 10
-#define NUM_MUSICAS 5
+#define NUM_MUSICAS 10
 #define NUM_EXECUCOES 30
-#define REPETICOES_RAPIDAS 1000000
+#define REPETICOES_RAPIDAS 1000
 #define CAMINHO_ARQUIVOS "../ENTRADAS_AVL/" // Ajuste para "../ENTRADAS/" se necessário
 
 int inserir_artistas(ARTISTAS **raiz, const char *arquivo);
