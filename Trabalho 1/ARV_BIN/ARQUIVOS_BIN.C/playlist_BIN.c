@@ -47,7 +47,7 @@ PLAYLIST *cadastrar_playlist()
 
     printf("Digite o nome da Playlist: ");
     titulo_playlist = ler_string();
-    
+
     if (titulo_playlist == NULL)
         erro = 1;
     if (!erro)
@@ -206,25 +206,33 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
             removeu = 1;
 
             if (eh_folha_playlist(*raiz))
+            {
                 *raiz = NULL;
+                liberar_arv_musica_playlist(&aux->arv_musicas_playlist);
+                limpar_no_playlist(aux);
+                free(aux);
+            }
             else if ((filho = so_um_filho_playlist(*raiz)) != NULL)
+            {
                 *raiz = filho;
+                liberar_arv_musica_playlist(&aux->arv_musicas_playlist);
+                limpar_no_playlist(aux);
+                free(aux);
+            }
             else
             {
                 aux = menor_no_playlist((*raiz)->dir);
                 liberar_arv_musica_playlist(&(*raiz)->arv_musicas_playlist);
                 limpar_no_playlist(*raiz);
 
-                (*raiz)->titulo_playlist = aux->titulo_playlist;
+                (*raiz)->titulo_playlist = strdup(aux->titulo_playlist);
                 (*raiz)->quantidade_musicas_playlist = aux->quantidade_musicas_playlist;
                 (*raiz)->arv_musicas_playlist = aux->arv_musicas_playlist;
 
+                aux->arv_musicas_playlist = NULL;
+
                 removeu = remove_playlist(&(*raiz)->dir, aux->titulo_playlist);
             }
-
-            liberar_arv_musica_playlist(&aux->arv_musicas_playlist);
-            limpar_no_playlist(aux);
-            free(aux);
         }
         else
         {
