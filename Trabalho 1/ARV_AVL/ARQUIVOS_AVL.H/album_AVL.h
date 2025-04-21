@@ -14,8 +14,8 @@ int imprimir_albuns_artita_ano(ARTISTAS *raiz, char *nome_artista, int ano_lanca
 int imprimir_albuns_ano(ALBUNS *raiz, int ano_lancamento);
 int mostrar_todos_artistas_album_ano(ARTISTAS *raiz, int ano_lancamento);
 void mostrar_dados_album(ALBUNS *raiz);
-void limpar_no_album(ALBUNS *raiz);   // limpa os dados do album sem liberar o nó
-void liberar_arv_album(ALBUNS **raiz); // limpa a arvore album
+void limpar_no_album(ALBUNS *raiz);
+void liberar_arv_album(ALBUNS **raiz);
 int pegar_altura_album(ALBUNS *raiz);
 void atualizar_altura_album(ALBUNS *raiz);
 int fator_balanceamento_album(ALBUNS *no);
