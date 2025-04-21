@@ -357,7 +357,8 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         }
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
-        soma_tv += tempo / REPETICOES_RAPIDAS;
+        // soma_tv += tempo / REPETICOES_RAPIDAS;
+        soma_tv += tempo;
     }
     fprintf(f_resultados, "Busca musica variada (%s, media %d exec com %d rep cada): %.12f s\n", sufixo, NUM_EXECUCOES, REPETICOES_RAPIDAS, soma_tv / NUM_EXECUCOES);
 
@@ -421,7 +422,8 @@ void testar_operacao(const char *sufixo, FILE *f_resultados)
         }
         gettimeofday(&fim_tv, NULL);
         double tempo = (fim_tv.tv_sec - inicio_tv.tv_sec) + (fim_tv.tv_usec - inicio_tv.tv_usec) / 1000000.0;
-        soma_tv += tempo / REPETICOES_RAPIDAS;
+        //soma_tv += tempo / REPETICOES_RAPIDAS;
+        soma_tv += tempo;
     }
     fprintf(f_resultados, "Remocao musica variada (%s, media %d exec com %d rep cada): %.12f s\n", sufixo, NUM_EXECUCOES, REPETICOES_RAPIDAS, soma_tv / NUM_EXECUCOES);
 

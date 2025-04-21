@@ -258,23 +258,28 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica)
             MUSICAS *aux, *filho;
             aux = *raiz;
 
-            if (eh_folha_musica(*raiz))
+            if (eh_folha_musica(*raiz)){
                 *raiz = NULL;
-            else if ((filho = so_um_filho_musica(*raiz)) != NULL)
+                limpar_no_musica(aux);
+                free(aux);
+
+            }
+            else if ((filho = so_um_filho_musica(*raiz)) != NULL){
                 *raiz = filho;
+                limpar_no_musica(aux);
+                free(aux);
+
+            }
             else
             {
                 aux = menor_no_musica((*raiz)->dir);
                 limpar_no_musica(*raiz);
 
-                (*raiz)->titulo_musica = aux->titulo_musica;
+                (*raiz)->titulo_musica = strdup(aux->titulo_musica);
                 (*raiz)->duracao_musica = aux->duracao_musica;
 
                 remove_musica(&(*raiz)->dir, aux->titulo_musica);
             }
-
-            limpar_no_musica(aux);
-            free(aux);
         }
         else if (strcasecmp(titulo_musica, (*raiz)->titulo_musica) < 0)
             removeu = remove_musica(&(*raiz)->esq, titulo_musica);

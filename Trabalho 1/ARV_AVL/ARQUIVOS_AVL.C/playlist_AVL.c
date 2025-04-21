@@ -85,8 +85,8 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
 
     if (inseriu)
     {
-        atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a inserção
         balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
+        atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a inserção
     }
     return (inseriu);
 }
@@ -240,20 +240,22 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
                 (*raiz)->quantidade_musicas_playlist = aux->quantidade_musicas_playlist;
                 (*raiz)->arv_musicas_playlist = aux->arv_musicas_playlist;
 
+                aux->arv_musicas_playlist = NULL;
+
                 removeu = remove_playlist(&(*raiz)->dir, aux->titulo_playlist);
             }
-
         }
         else
         {
-            removeu = remove_playlist(&(*raiz)->esq, titulo_playlist);
-            if (!removeu)
-            removeu = remove_playlist(&(*raiz)->dir, titulo_playlist);
+            if(strcasecmp(titulo_playlist, (*raiz)->titulo_playlist) < 0)
+                removeu = remove_playlist(&(*raiz)->esq, titulo_playlist);
+            else
+                removeu = remove_playlist(&(*raiz)->dir, titulo_playlist);
         }
         if (removeu)
         {
-            atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a remoção
             balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
+            atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a remoção
         }
     }
     return (removeu);
