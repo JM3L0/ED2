@@ -118,7 +118,6 @@ int imprimir_todos_os_dados_dos_artistas(ARTISTAS *raiz)
         printf("Tipo: %s\n", raiz->tipo_artista);
         printf("Estilo: %s\n", raiz->estilo_musical);
         printf("Numero de albuns: %d\n", raiz->numero_albuns);
-        printf("Altura: %d\n", raiz->altura_artista);
         imprimiu = imprimir_todos_os_dados_dos_artistas(raiz->dir);
         imprimiu = 1;
     }

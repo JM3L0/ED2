@@ -103,7 +103,6 @@ int imprimir_todas_as_musicas(MUSICAS *raiz) // imprime todas as musicas
         printf("Musica: %s\n", raiz->titulo_musica);
         printf("Duracao: ");
         imprime_duracao(raiz->duracao_musica);
-        printf("Altura: %d\n", raiz->altura_musica);
         imprimiu = imprimir_todas_as_musicas(raiz->dir);
         imprimiu = 1;
     }

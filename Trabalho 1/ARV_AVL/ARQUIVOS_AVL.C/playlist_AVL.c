@@ -119,7 +119,6 @@ int imprimir_todas_as_playlists(PLAYLIST *raiz) // apens imprime todas as playli
     {
         imprimir_todas_as_playlists(raiz->esq);
         printf("Nome: %s\n", raiz->titulo_playlist);
-        printf("Altura: %d\n", raiz->altura_playlist);
         imprimir_todas_as_playlists(raiz->dir);
         imprimiu = 1;
     }
