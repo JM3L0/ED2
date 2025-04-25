@@ -8,7 +8,6 @@
 #include "../ARQUIVOS_BIN.H/interface_BIN.h"
 #include "../ARQUIVOS_BIN.H/playlist_BIN.h"
 #include "../ARQUIVOS_BIN.H/musica_playlist_BIN.h"
-#include "../ARQUIVOS_BIN.H/TESTES_BIN.h"
 
 void menu_dos_print_de_opcoes()
 {

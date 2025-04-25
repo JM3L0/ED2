@@ -7,7 +7,6 @@
 #include "../ARQUIVOS_BIN.H/musica_BIN.h"
 #include "../ARQUIVOS_BIN.H/playlist_BIN.h"
 #include "../ARQUIVOS_BIN.H/musica_playlist_BIN.h"
-#include "../ARQUIVOS_BIN.H/TESTES_BIN.h"
 
 int main()
 {

@@ -8,7 +8,6 @@
 #include "../ARQUIVOS_AVL.H/interface_AVL.h"
 #include "../ARQUIVOS_AVL.H/playlist_AVL.h"
 #include "../ARQUIVOS_AVL.H/musica_playlist_AVL.h"
-#include "../ARQUIVOS_AVL.H/TESTES_AVL.h"
 
 void menu_dos_print_de_opcoes()
 {
