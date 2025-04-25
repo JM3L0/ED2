@@ -248,7 +248,7 @@ void menu_geral()
                     printf("Albuns cadastrados do artista %s:\n\n", nome_artista);
                     printf("--------------------------------------------------\n");
 
-                    retorno = imprimir_todos_albuns_de_um_artista(raiz_artista, nome_artista);
+                    retorno = imprimir_todos_albuns_de_um_artista(artista);
                     if (retorno == 0)
                         printf("\nNenhum album cadastrado desse artista!\n");
                 }
@@ -276,7 +276,7 @@ void menu_geral()
                     printf("Albuns cadastrados do artista %s no ano %d:\n\n", nome_artista, ano_lancamento);
                     printf("--------------------------------------------------\n");
 
-                    retorno = imprimir_albuns_artita_ano(raiz_artista, nome_artista, ano_lancamento);
+                    retorno = imprimir_albuns_artita_ano(artista, ano_lancamento);
                     if (retorno == 0)
                         printf("\nNenhum album desse desse ano para esse artista!\n");
                 }
