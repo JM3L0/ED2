@@ -58,7 +58,7 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
     return (inseriu);
 }
 
-int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica) // percorre todas as playlists e imprime as musicas
+int existe_musica_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musica, char *artista_musica, char *album_musica) // percorre todas as playlists e imprime as musicas
 {
     int achou_mus = 0;
 
@@ -67,10 +67,10 @@ int verifica_se_musica_esta_na_playlist(MUSICA_PLAYLIST *raiz, char *titulo_musi
         if (achou_mus == 0)
         {
 
-            achou_mus |= verifica_se_musica_esta_na_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
+            achou_mus |= existe_musica_playlist(raiz->esq, titulo_musica, artista_musica, album_musica);
             if (strcasecmp(raiz->titulo_musica, titulo_musica) == 0 && strcasecmp(raiz->artista_musica, artista_musica) == 0 && strcasecmp(raiz->album_musica, album_musica) == 0)
                 achou_mus = 1;
-            achou_mus |= verifica_se_musica_esta_na_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
+            achou_mus |= existe_musica_playlist(raiz->dir, titulo_musica, artista_musica, album_musica);
         }
     }
     return (achou_mus);
