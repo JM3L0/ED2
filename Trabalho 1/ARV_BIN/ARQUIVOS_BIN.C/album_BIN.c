@@ -117,10 +117,7 @@ int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns de um artista
 }
 
 int imprimir_todos_albuns_de_um_artista(ARTISTAS *artista) // imprime os artistas de acordo com o tipo
-{                                                                           // FUNÇÃO FILTRO
-    // ARTISTAS *artista;
-    // artista = existe_artista(raiz, nome_artista);
-
+{                                                          // FUNÇÃO FILTRO
     int imprimiu = 0;
     if (artista != NULL && artista->arv_albuns != NULL)
         imprimiu = imprimir_todos_albuns(artista->arv_albuns);
@@ -128,10 +125,7 @@ int imprimir_todos_albuns_de_um_artista(ARTISTAS *artista) // imprime os artista
 }
 
 int imprimir_albuns_artita_ano(ARTISTAS *artista, int ano_lancamento) // imprime os albuns de acordo com o tipo
-{                                                                                      // FUNÇÃO FILTRO
-    // ARTISTAS *artista;
-    // artista = existe_artista(raiz, nome_artista);
-
+{                                                                     // FUNÇÃO FILTRO
     int imprimiu = 0;
     if (artista != NULL && artista->arv_albuns != NULL)
         imprimiu = imprimir_albuns_ano(artista->arv_albuns, ano_lancamento);

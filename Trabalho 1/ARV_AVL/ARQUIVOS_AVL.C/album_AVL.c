@@ -38,7 +38,7 @@ ALBUNS *cadastrar_album(ALBUNS *album)
     if (!erro)
     {
         album = aloca_no_album(titulo_album, ano_lancamento);
-        if(album == NULL)
+        if (album == NULL)
             erro = 1;
     }
     if (erro)
@@ -51,7 +51,7 @@ ALBUNS *cadastrar_album(ALBUNS *album)
 }
 
 ALBUNS *existe_album(ALBUNS *raiz, char *titulo_album)
-{ 
+{
     ALBUNS *existe_alb;
     existe_alb = NULL;
 
@@ -84,8 +84,9 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
         no = NULL;
         inseriu = 0;
     }
-    if(inseriu){
-        balanceamento_album(raiz); // Balanceia a árvore após a inserção
+    if (inseriu)
+    {
+        balanceamento_album(raiz);     // Balanceia a árvore após a inserção
         atualizar_altura_album(*raiz); // Atualiza a altura do nó raiz
     }
     return (inseriu);
@@ -117,22 +118,16 @@ int imprimir_todos_albuns(ALBUNS *raiz) // Imprime todos os albuns (só o nome)
     return (imprimiu);
 }
 
-int imprimir_todos_albuns_de_um_artista(ARTISTAS *raiz, char *nome_artista) // imprime os artistas de acordo com o tipo
-{                                                                           // FUNÇÃO FILTRO
-    ARTISTAS *artista;
-    artista = existe_artista(raiz, nome_artista);
-
+int imprimir_todos_albuns_de_um_artista(ARTISTAS *artista) // imprime os artistas de acordo com o tipo
+{                                                          // FUNÇÃO FILTRO;
     int imprimiu = 0;
     if (artista != NULL && artista->arv_albuns != NULL)
         imprimiu = imprimir_todos_albuns(artista->arv_albuns);
     return (imprimiu);
 }
 
-int imprimir_albuns_artita_ano(ARTISTAS *raiz, char *nome_artista, int ano_lancamento) // imprime os albuns de acordo com o tipo
-{                                                                                      // FUNÇÃO FILTRO
-    ARTISTAS *artista;
-    artista = existe_artista(raiz, nome_artista);
-
+int imprimir_albuns_artita_ano(ARTISTAS *artista, int ano_lancamento) // imprime os albuns de acordo com o tipo
+{                                                                     // FUNÇÃO FILTRO
     int imprimiu = 0;
     if (artista != NULL && artista->arv_albuns != NULL)
         imprimiu = imprimir_albuns_ano(artista->arv_albuns, ano_lancamento);
@@ -248,7 +243,7 @@ void rotacao_esq_album(ALBUNS **raiz)
 void rotacao_dir_album(ALBUNS **raiz)
 {
     ALBUNS *aux;
-    
+
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = *raiz;
