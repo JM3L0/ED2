@@ -21,7 +21,8 @@ typedef struct CEP
 
 typedef struct CIDADES
 {
-    char *cidade;
+    char *nome_cidade;
+    int populacao_city;
     int cor;
     struct CEP *cep;
     struct CIDADES *esq, *dir;
@@ -30,8 +31,9 @@ typedef struct CIDADES
 
 typedef struct ESTADOS// lista duplamente encadeada
 {
-    char *estado;
-    int cor;
+    char *nome_estado;
+    char *nome_capital;
+    int quant_city;
     struct CIDADES *cidade;
     struct ESTADOS *prox, *ant;
 
@@ -41,8 +43,9 @@ typedef struct PESSOAS
 {
     char CPF[12];
     char *nome_pessoa;
-    char city_natal[9];
-    char city_atual[9];
+    char cep_city_natal[9];
+    char cep_city_atual[9];
+    int cor;
     DATA data_nasc;
 
 } PESSOAS;
