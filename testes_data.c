@@ -4,6 +4,10 @@
 #include "Trabalho 2/Arv_VP/Arv_VP_H/STRUCTS.h"
 #include "Trabalho 2/Arv_VP/Arv_VP_H/utilitarios.h"
 
+/*cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2"
+gcc -o testes_data testes_data.c "Trabalho 2\Arv_VP\Arv_VP_C\utilitarios.c" -I.
+.\testes_data*/
+
 // OBSERVACAO IMPORTANTE: A funcao validar_data em utilitarios.c 
 // nao possui um return ao final. Isso precisa ser corrigido para:
 // return valida;

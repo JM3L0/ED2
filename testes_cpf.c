@@ -5,6 +5,10 @@
 #include "Trabalho 2/Arv_VP/Arv_VP_H/STRUCTS.h"
 #include "Trabalho 2/Arv_VP/Arv_VP_H/utilitarios.h"
 
+/*cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2"
+gcc -o testes_cpf testes_cpf.c "Trabalho 2\Arv_VP\Arv_VP_C\utilitarios.c" -I.
+.\testes_cpf*/
+
 // Funcao para testar validar_cpf
 void testar_validar_cpf() {
     printf("\n===== TESTE DA FUNCAO validar_cpf =====\n");

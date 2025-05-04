@@ -4,6 +4,10 @@
 #include "Trabalho 2/Arv_VP/Arv_VP_H/STRUCTS.h"
 #include "Trabalho 2/Arv_VP/Arv_VP_H/utilitarios.h"
 
+/*cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2"
+gcc -o testes_cep testes_cep.c "Trabalho 2\Arv_VP\Arv_VP_C\utilitarios.c" -I.
+.\testes_cep*/
+
 // Funcao para testar validar_cep
 void testar_validar_cep() {
     printf("\n===== TESTE DA FUNCAO validar_cep =====\n");

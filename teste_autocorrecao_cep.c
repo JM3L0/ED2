@@ -4,6 +4,11 @@
 #include "Trabalho 2/Arv_VP/Arv_VP_H/STRUCTS.h"
 #include "Trabalho 2/Arv_VP/Arv_VP_H/utilitarios.h"
 
+
+/*cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2"
+gcc -o teste_autocorrecao_cep teste_autocorrecao_cep.c "Trabalho 2\Arv_VP\Arv_VP_C\utilitarios.c" -I.
+.\teste_autocorrecao_cep*/
+
 int main() {
     printf("===== TESTE DE AUTOCORRECAO DE CEP =====\n\n");
     
