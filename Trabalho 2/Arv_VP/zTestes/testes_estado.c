@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Arv_VP/Arv_VP_H/Estados.h"
-#include "../Arv_VP/Arv_VP_H/utilitarios.h"
-#include "../Arv_VP/Arv_VP_H/STRUCTS.h"
+#include "../Arv_VP_H/Estados.h"
+#include "../Arv_VP_H/utilitarios.h"
+#include "../Arv_VP_H/STRUCTS.h"
 
 /* cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2\Trabalho 2"
 
