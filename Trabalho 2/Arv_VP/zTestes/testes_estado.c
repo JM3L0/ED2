@@ -7,9 +7,9 @@
 
 /* cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2\Trabalho 2"
 
-gcc -o zTestes/teste_estado zTestes/testes_estado.c Arv_VP/Arv_VP_C/Estados.c Arv_VP/Arv_VP_C/utilitarios.c -I Arv_VP/Arv_VP_H
+gcc -o Arv_VP/zTestes/teste_estado Arv_VP/zTestes/testes_estado.c Arv_VP/Arv_VP_C/Estados.c Arv_VP/Arv_VP_C/utilitarios.c -I Arv_VP/Arv_VP_H
 
-zTestes\teste_estado */
+Arv_VP\zTestes\teste_estado */
 
 // Estrutura para registrar os resultados dos testes
 typedef struct {
@@ -19,7 +19,7 @@ typedef struct {
 } ResultadoTeste;
 
 // Variaveis globais para controle dos resultados
-#define MAX_TESTES 10
+#define MAX_TESTES 100
 ResultadoTeste resultados[MAX_TESTES];
 int num_testes = 0;
 

@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "Trabalho 2/Arv_VP/Arv_VP_H/STRUCTS.h"
-#include "Trabalho 2/Arv_VP/Arv_VP_H/utilitarios.h"
+#include "../Arv_VP_H/STRUCTS.h"
+#include "../Arv_VP_H/utilitarios.h"
 
-/*cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2"
-gcc -o testes_cpf testes_cpf.c "Trabalho 2\Arv_VP\Arv_VP_C\utilitarios.c" -I.
-.\testes_cpf*/
+/*cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2\Trabalho 2"
+gcc -o Arv_VP/zTestes/teste_cpf Arv_VP/zTestes/testes_cpf.c Arv_VP/Arv_VP_C/utilitarios.c -I Arv_VP/Arv_VP_H
+Arv_VP\zTestes\teste_cpf*/
 
 // Funcao para testar validar_cpf
 void testar_validar_cpf() {
