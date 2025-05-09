@@ -1,7 +1,7 @@
 #pragma once
 
-#define RED 1
 #define BLACK 0
+#define RED 1
 
 typedef struct DATA// DATA DE NASCIMENTO
 {

@@ -53,14 +53,12 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado)
     return resultado;
 }
 
-int cadastro_estado()
+int cadastro_estado(ESTADOS **cabeca)
 {
     int erro = 0;
-    char *nome_estado, *nome_capital;
-    ESTADOS *estado;
-    estado = NULL;
-    nome_estado = NULL;
-    nome_capital = NULL;
+    char *nome_estado;
+    char *nome_capital;
+    ESTADOS *estado = NULL;
 
     printf("Digite o nome do Estado: ");
     nome_estado = ler_string();
@@ -72,13 +70,18 @@ int cadastro_estado()
         printf("Digite o nome da Capital: ");
         nome_capital = ler_string();
         if (nome_capital == NULL)
+        {
+            free(nome_estado);
             erro = 1;
+        }
     }
 
     if (!erro)
     {
         estado = criar_estado(nome_estado, nome_capital);
         if (estado == NULL)
+            erro = 1;
+        else if (!inserir_estado_rec(cabeca, estado))
             erro = 1;
     }
 
