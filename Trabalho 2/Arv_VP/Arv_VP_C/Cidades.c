@@ -109,13 +109,13 @@ void balancear_RB(CIDADES **raiz)
 {
     if(*raiz != NULL)
     {
-        if(retornar_cor((*raiz)->esq) == BLACK && retornar_cor((*raiz)->dir) == RED)
+        if(corCidade((*raiz)->esq) == BLACK && corCidade((*raiz)->dir) == RED)
             rotacao_esquerda(raiz);
 
-        if(retornar_cor((*raiz)->esq) == RED && retornar_cor((*raiz)->esq->esq) == RED)
+        if(corCidade((*raiz)->esq) == RED && corCidade((*raiz)->esq->esq) == RED)
             rotacao_direita(raiz);
 
-        if(retornar_cor((*raiz)->esq) == RED && retornar_cor((*raiz)->dir) == RED)
+        if(corCidade((*raiz)->esq) == RED && corCidade((*raiz)->dir) == RED)
             trocar_cor(*raiz);
     }
 }
@@ -348,7 +348,7 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
                     (*raiz)->populacao_city = menor->populacao_city;
                     menor->populacao_city = temp_pop;
                     
-                    char *temp_cep = (*raiz)->cep;
+                    CEP *temp_cep = (*raiz)->cep;
                     (*raiz)->cep = menor->cep;
                     menor->cep = temp_cep;
                     
