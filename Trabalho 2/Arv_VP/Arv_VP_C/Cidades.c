@@ -198,9 +198,9 @@ void imprimir_cidade(CIDADES *cidade) {
         printf("Cidade: %s\n", cidade->nome_cidade);
         printf("População: %d\n", cidade->populacao_city);
         printf("Cor: %s\n", cidade->cor == RED ? "Vermelho" : "Preto");
-        if(cidade->cep != NULL) {
-            printf("CEP: %s\n", cidade->cep);
-        }
+        // if(cidade->cep != NULL) {
+        //     printf("CEP: %s\n", cidade->cep); // pode imprimir a arvore de CEP (pensar nisso posteriormente)
+        // }
         printf("------------------------\n");
     }
 }
