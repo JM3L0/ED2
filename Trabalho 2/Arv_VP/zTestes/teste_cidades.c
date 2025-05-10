@@ -1,5 +1,5 @@
 /*
-cd "c:\Users\raild\Downloads\UFPI\4° período\ED2\Trabalho 2\Arv_VP\zTestes"
+cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2\Trabalho 2\Arv_VP\zTestes"
 gcc -o teste_cidades teste_cidades.c ../Arv_VP_C/Cidades.c ../Arv_VP_C/utilitarios.c -I "../Arv_VP_H"
 .\teste_cidades
 */
@@ -131,38 +131,60 @@ void teste_criacao_cidade() {
 // Teste de insercao de cidade
 void teste_insercao_cidade() {
     CIDADES *raiz = NULL;
+    int resultado;
     
     printf("CASO 1: Inserir em arvore vazia\n");
     CIDADES *cidade1 = criaCidade(duplicar_string("Teresina"), 800000);
-    CIDADES *inserido = inserir_Cidade(&raiz, cidade1);
-    exibir_resultado("Inserir cidade em arvore vazia", inserido != NULL);
+    resultado = inserir_Cidade(&raiz, cidade1);
+    exibir_resultado("Inserir cidade em arvore vazia", resultado == 1);
     exibir_resultado("Raiz possui cor PRETA apos insercao", raiz != NULL && raiz->cor == BLACK);
     exibir_resultado("Contagem de nos correta (1)", contar_nos_arvore(raiz) == 1);
     
     printf("\nCASO 2: Inserir cidade a esquerda (ordem alfabetica)\n");
     CIDADES *cidade2 = criaCidade(duplicar_string("Belem"), 1400000);
-    inserido = inserir_Cidade(&raiz, cidade2);
-    exibir_resultado("Inserir cidade a esquerda", inserido != NULL);
+    resultado = inserir_Cidade(&raiz, cidade2);
+    exibir_resultado("Inserir cidade a esquerda", resultado == 1);
     exibir_resultado("Contagem de nos correta (2)", contar_nos_arvore(raiz) == 2);
     
     printf("\nCASO 3: Inserir cidade a direita (ordem alfabetica)\n");
     CIDADES *cidade3 = criaCidade(duplicar_string("Vitoria"), 350000);
-    inserido = inserir_Cidade(&raiz, cidade3);
-    exibir_resultado("Inserir cidade a direita", inserido != NULL);
+    resultado = inserir_Cidade(&raiz, cidade3);
+    exibir_resultado("Inserir cidade a direita", resultado == 1);
     exibir_resultado("Contagem de nos correta (3)", contar_nos_arvore(raiz) == 3);
     
     printf("\nCASO 4: Inserir mais cidades para testar balanceamento\n");
     CIDADES *cidade4 = criaCidade(duplicar_string("Curitiba"), 1800000);
-    inserido = inserir_Cidade(&raiz, cidade4);
+    resultado = inserir_Cidade(&raiz, cidade4);
     CIDADES *cidade5 = criaCidade(duplicar_string("Manaus"), 2100000);
-    inserido = inserir_Cidade(&raiz, cidade5);
+    resultado = inserir_Cidade(&raiz, cidade5);
     CIDADES *cidade6 = criaCidade(duplicar_string("Fortaleza"), 2600000);
-    inserido = inserir_Cidade(&raiz, cidade6);
+    resultado = inserir_Cidade(&raiz, cidade6);
     CIDADES *cidade7 = criaCidade(duplicar_string("Macapa"), 450000);
-    inserido = inserir_Cidade(&raiz, cidade7);
+    resultado = inserir_Cidade(&raiz, cidade7);
+    CIDADES *cidade8 = criaCidade(duplicar_string("Salvador"), 2900000);
+    resultado = inserir_Cidade(&raiz, cidade8);
+    CIDADES *cidade9 = criaCidade(duplicar_string("Joao Pessoa"), 800000);
+    resultado = inserir_Cidade(&raiz, cidade9);
+    CIDADES *cidade10 = criaCidade(duplicar_string("Natal"), 890000);
+    resultado = inserir_Cidade(&raiz, cidade10);
+    CIDADES *cidade11 = criaCidade(duplicar_string("Recife"), 1650000);
+    resultado = inserir_Cidade(&raiz, cidade11);
+    CIDADES *cidade12 = criaCidade(duplicar_string("Sao Paulo"), 12000000);
+    resultado = inserir_Cidade(&raiz, cidade12);
     
     exibir_resultado("Inserir multiplas cidades para teste de balanceamento", 
-                    contar_nos_arvore(raiz) == 7);
+                    contar_nos_arvore(raiz) == 12);
+    
+    printf("\nCASO 5: Tentar inserir cidade que já existe\n");
+    CIDADES *cidade_duplicada = criaCidade(duplicar_string("Teresina"), 900000);
+    resultado = inserir_Cidade(&raiz, cidade_duplicada);
+    exibir_resultado("Tentar inserir cidade duplicada", resultado == 0);
+    
+    // Se a inserção falhou, precisamos liberar a cidade manualmente
+    if(resultado == 0) {
+        limpar_no_cidade(cidade_duplicada);
+        free(cidade_duplicada);
+    }
     
     printf("\nResultado da arvore apos insercoes:\n");
     imprimir_todas_cidades(raiz);
@@ -175,42 +197,51 @@ void teste_insercao_cidade() {
 // Teste de busca de cidade
 void teste_busca_cidade() {
     CIDADES *raiz = NULL;
+    int resultado;
     
-    // Criar arvore para testes
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Belem"), 1400000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Curitiba"), 1800000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Fortaleza"), 2600000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Macapa"), 450000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Manaus"), 2100000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Teresina"), 800000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Vitoria"), 350000));
+    // Criar arvore para testes com mais cidades
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Belem"), 1400000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Curitiba"), 1800000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Fortaleza"), 2600000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Macapa"), 450000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Manaus"), 2100000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Teresina"), 800000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Vitoria"), 350000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Salvador"), 2900000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Joao Pessoa"), 800000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Natal"), 890000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Recife"), 1650000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Sao Paulo"), 12000000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Rio de Janeiro"), 6700000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Brasilia"), 3000000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Palmas"), 300000));
     
     printf("Arvore para testes criada com %d cidades\n", contar_nos_arvore(raiz));
     
     printf("\nCASO 1: Buscar cidade existente (raiz)\n");
-    CIDADES *resultado = buscar_cidade(raiz, "Teresina");
-    exibir_resultado("Buscar cidade na raiz", resultado != NULL && strcmp(resultado->nome_cidade, "Teresina") == 0);
+    CIDADES *resultado_busca = buscar_cidade(raiz, "Teresina");
+    exibir_resultado("Buscar cidade na raiz", resultado_busca != NULL && strcmp(resultado_busca->nome_cidade, "Teresina") == 0);
     
     printf("\nCASO 2: Buscar cidade existente (folha)\n");
-    resultado = buscar_cidade(raiz, "Vitoria");
-    exibir_resultado("Buscar cidade folha", resultado != NULL && strcmp(resultado->nome_cidade, "Vitoria") == 0);
+    resultado_busca = buscar_cidade(raiz, "Vitoria");
+    exibir_resultado("Buscar cidade folha", resultado_busca != NULL && strcmp(resultado_busca->nome_cidade, "Vitoria") == 0);
     
     printf("\nCASO 3: Buscar cidade existente (no interno)\n");
-    resultado = buscar_cidade(raiz, "Fortaleza");
-    exibir_resultado("Buscar cidade no interno", resultado != NULL && strcmp(resultado->nome_cidade, "Fortaleza") == 0);
+    resultado_busca = buscar_cidade(raiz, "Fortaleza");
+    exibir_resultado("Buscar cidade no interno", resultado_busca != NULL && strcmp(resultado_busca->nome_cidade, "Fortaleza") == 0);
     
     printf("\nCASO 4: Busca case-insensitive\n");
-    resultado = buscar_cidade(raiz, "MANAUS");
-    exibir_resultado("Busca case-insensitive", resultado != NULL && strcasecmp(resultado->nome_cidade, "MANAUS") == 0);
+    resultado_busca = buscar_cidade(raiz, "MANAUS");
+    exibir_resultado("Busca case-insensitive", resultado_busca != NULL && strcasecmp(resultado_busca->nome_cidade, "MANAUS") == 0);
     
     printf("\nCASO 5: Buscar cidade inexistente\n");
-    resultado = buscar_cidade(raiz, "Salvador");
-    exibir_resultado("Buscar cidade inexistente retorna NULL", resultado == NULL);
+    resultado_busca = buscar_cidade(raiz, "Picos");
+    exibir_resultado("Buscar cidade inexistente retorna NULL", resultado_busca == NULL);
     
     printf("\nCASO 6: Buscar em arvore vazia\n");
     CIDADES *raiz_vazia = NULL;
-    resultado = buscar_cidade(raiz_vazia, "Qualquer");
-    exibir_resultado("Buscar em arvore vazia retorna NULL", resultado == NULL);
+    resultado_busca = buscar_cidade(raiz_vazia, "Qualquer");
+    exibir_resultado("Buscar em arvore vazia retorna NULL", resultado_busca == NULL);
     
     // Limpar arvore
     desalocar_arvore_cidades(&raiz);
@@ -322,14 +353,22 @@ void teste_remocao_cidade() {
     CIDADES *raiz = NULL;
     int resultado;
     
-    // Criar arvore para testes
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Belem"), 1400000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Curitiba"), 1800000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Fortaleza"), 2600000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Macapa"), 450000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Manaus"), 2100000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Teresina"), 800000));
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Vitoria"), 350000));
+    // Criar arvore para testes com mais cidades
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Belem"), 1400000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Curitiba"), 1800000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Fortaleza"), 2600000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Macapa"), 450000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Manaus"), 2100000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Teresina"), 800000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Vitoria"), 350000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Salvador"), 2900000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Joao Pessoa"), 800000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Natal"), 890000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Recife"), 1650000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Sao Paulo"), 12000000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Rio de Janeiro"), 6700000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Brasilia"), 3000000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Palmas"), 300000));
     
     int contagem_inicial = contar_nos_arvore(raiz);
     printf("Arvore para testes criada com %d cidades\n", contagem_inicial);
@@ -340,11 +379,9 @@ void teste_remocao_cidade() {
     exibir_resultado("Contagem de nos apos remocao", contar_nos_arvore(raiz) == contagem_inicial - 1);
     
     printf("\nCASO 2: Remover cidade com um filho\n");
-    // Inserir uma cidade que garantidamente terá apenas um filho
-    inserir_Cidade(&raiz, criaCidade(duplicar_string("Aracaju"), 650000));
+    resultado = inserir_Cidade(&raiz, criaCidade(duplicar_string("Aracaju"), 650000));
     int contagem_atual = contar_nos_arvore(raiz);
     
-    // Tentamos remover uma cidade que provavelmente tem um filho
     resultado = remover_cidade_arvore(&raiz, "Belem");
     exibir_resultado("Remover cidade com um filho", resultado == 1);
     exibir_resultado("Contagem de nos apos remocao", contar_nos_arvore(raiz) == contagem_atual - 1);
@@ -355,18 +392,25 @@ void teste_remocao_cidade() {
     
     printf("\nCASO 4: Remover cidade inexistente\n");
     resultado = remover_cidade_arvore(&raiz, "Salvador");
+    exibir_resultado("Remover cidade existente retorna 1", resultado == 1);
+    
+    printf("\nCASO 5: Tentar remover cidade que não existe\n");
+    resultado = remover_cidade_arvore(&raiz, "Porto Alegre");
     exibir_resultado("Remover cidade inexistente retorna 0", resultado == 0);
     
-    printf("\nCASO 5: Remover todas as cidades ate arvore ficar vazia\n");
+    resultado = remover_cidade_arvore(&raiz, "Campo Grande");
+    exibir_resultado("Remover outra cidade inexistente retorna 0", resultado == 0);
+    
+    printf("\nCASO 6: Remover todas as cidades ate arvore ficar vazia\n");
     while (raiz != NULL) {
-        CIDADES *cidade = raiz; // Pegar a raiz atual
+        CIDADES *cidade = raiz;
         resultado = remover_cidade_arvore(&raiz, cidade->nome_cidade);
         exibir_resultado("Remover cidade da arvore", resultado == 1);
     }
     
     exibir_resultado("Arvore vazia apos remover todas as cidades", raiz == NULL);
     
-    printf("\nCASO 6: Remover de arvore vazia\n");
+    printf("\nCASO 7: Remover de arvore vazia\n");
     resultado = remover_cidade_arvore(&raiz, "Qualquer");
     exibir_resultado("Remover de arvore vazia retorna 0", resultado == 0);
 }

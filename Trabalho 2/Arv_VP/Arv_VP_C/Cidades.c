@@ -8,6 +8,46 @@
 
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
+// =================================
+// INSERCAO
+// =================================
+
+int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
+{
+    int inseriu = 0;
+
+    if(*raiz == NULL)
+    {
+        *raiz = novaCidade;
+        inseriu = 1;
+    }
+    else if(strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
+    {
+        inseriu = inserir_no_Cidade(&((*raiz)->esq), novaCidade);
+    }
+    else if(strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
+    {
+        inseriu = inserir_no_Cidade(&((*raiz)->dir), novaCidade);
+    }
+
+    if (inseriu) {
+        balancear_RB(raiz);
+    }
+
+    return inseriu;
+}
+
+int inserir_Cidade(CIDADES **raiz, CIDADES *novaCidade)
+{
+    int inseriu;
+    inseriu = inserir_no_Cidade(raiz, novaCidade);
+
+    if(*raiz != NULL)
+        (*raiz)->cor = BLACK;
+
+    return inseriu;
+}
+
 CIDADES *alocaCidade(){
     CIDADES *cidade;
     cidade = (CIDADES *)malloc(sizeof(CIDADES));
@@ -62,9 +102,9 @@ CIDADES *cadastrarCidade(){
     return novaCidade;
 }
 
-int corCidade(CIDADES *cidade){
-    return cidade == NULL ? BLACK : cidade->cor;
-}
+// =================================
+// ROTAÇÃO
+// =================================
 
 void rotacao_esquerda(CIDADES **raiz)
 {
@@ -94,6 +134,14 @@ void rotacao_direita(CIDADES **raiz)
 
 }
 
+// =================================
+// PROPRIEDADES
+// =================================
+
+int corCidade(CIDADES *cidade){
+    return cidade == NULL ? BLACK : cidade->cor;
+}
+
 void trocar_cor(CIDADES *raiz)
 {
     raiz->cor = !(raiz->cor);
@@ -120,38 +168,10 @@ void balancear_RB(CIDADES **raiz)
     }
 }
 
-CIDADES *inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
-{
-    if(*raiz == NULL)
-    {
-        *raiz = novaCidade;
-    }
-    else if(strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
-    {
-        inserir_no_Cidade(&((*raiz)->esq), novaCidade);
-    }
-    else if(strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
-    {
-        inserir_no_Cidade(&((*raiz)->dir), novaCidade);
-    }
 
-    balancear_RB(raiz);
-
-    return *raiz;
-}
-
-CIDADES *inserir_Cidade(CIDADES **raiz, CIDADES *novaCidade)
-{
-    CIDADES *inseriu;
-    inseriu = inserir_no_Cidade(raiz, novaCidade);
-
-    if(*raiz != NULL)
-        (*raiz)->cor = BLACK;
-
-    return inseriu;
-}
-
-/*------------------------------- Tem que conferir a partir daqui ------------------------------------*/
+// =================================
+// BUSCA E IMPRESSÃO
+// =================================
 
 // Função para buscar uma cidade na árvore pelo nome
 CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade) {
@@ -204,19 +224,6 @@ void imprimir_todas_cidades(CIDADES *raiz) {
     }
 }
 
-// Funções auxiliares para remoção
-CIDADES *encontrar_menor_cidade(CIDADES *raiz) {
-    CIDADES *menor = raiz;
-    
-    if(raiz != NULL) {
-        while(menor->esq != NULL) {
-            menor = menor->esq;
-        }
-    }
-    
-    return menor;
-}
-
 // Função para limpar o nó da cidade (apenas liberar o nome)
 void limpar_no_cidade(CIDADES *cidade) {
     if (cidade != NULL && cidade->nome_cidade != NULL) {
@@ -224,6 +231,10 @@ void limpar_no_cidade(CIDADES *cidade) {
         cidade->nome_cidade = NULL;
     }
 }
+
+// =================================
+// DESALOCACAO
+// =================================
 
 // Função para desalocar completamente uma cidade
 void desalocar_cidade(CIDADES **raiz)
@@ -260,8 +271,66 @@ void desalocar_arvore_cidades(CIDADES **raiz)
     }
 }
 
+// =================================
+// CONSULTA ÁRVORE
+// =================================
+
+int consulta_cidade(CIDADES *raiz, char *nome_cidade) {
+    int resultado = 0;
+    
+    if (raiz != NULL) {
+        int comparacao = strcasecmp(nome_cidade, raiz->nome_cidade);
+        
+        if (comparacao == 0) {
+            resultado = 1;
+        } else if (comparacao < 0) {
+            resultado = consulta_cidade(raiz->esq, nome_cidade);
+        } else {
+            resultado = consulta_cidade(raiz->dir, nome_cidade);
+        }
+    }
+    
+    return resultado;
+}
+
+// =================================
+// REMOÇÃO
+// =================================
+
+// Funções auxiliares para remoção
+CIDADES *encontrar_menor_cidade(CIDADES *raiz) {
+    CIDADES *menor = raiz;
+    
+    if(raiz != NULL) {
+        while(menor->esq != NULL) {
+            menor = menor->esq;
+        }
+    }
+    
+    return menor;
+}
+
+void trocar_informacoes_cidades(CIDADES *cidade1, CIDADES *cidade2) {
+    if (cidade1 != NULL && cidade2 != NULL) {
+        // Troca os nomes
+        char *temp_nome = cidade1->nome_cidade;
+        cidade1->nome_cidade = cidade2->nome_cidade;
+        cidade2->nome_cidade = temp_nome;
+        
+        // Troca as populações
+        int temp_pop = cidade1->populacao_city;
+        cidade1->populacao_city = cidade2->populacao_city;
+        cidade2->populacao_city = temp_pop;
+        
+        // Troca os CEPs
+        CEP *temp_cep = cidade1->cep;
+        cidade1->cep = cidade2->cep;
+        cidade2->cep = temp_cep;
+    }
+}
+
 // Função para mover um nó vermelho para a esquerda durante a remoção
-void mover_esquerda(CIDADES **raiz)
+void mover2_esquerda(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
@@ -274,7 +343,7 @@ void mover_esquerda(CIDADES **raiz)
 }
 
 // Função para mover um nó vermelho para a direita durante a remoção
-void mover_direita(CIDADES **raiz)
+void mover2_direita(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
@@ -294,7 +363,7 @@ void remover_menor_cidade_arv(CIDADES **raiz)
     else
     {
         if(corCidade((*raiz)->esq) == BLACK && corCidade((*raiz)->esq->esq) == BLACK)
-            mover_esquerda(raiz);
+            mover2_esquerda(raiz);
 
         remover_menor_cidade_arv(&((*raiz)->esq));
         balancear_RB(raiz);
@@ -315,7 +384,7 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
             if((*raiz)->esq != NULL)
             {
                 if(corCidade((*raiz)->esq) == BLACK && corCidade((*raiz)->esq->esq) == BLACK)
-                    mover_esquerda(raiz);
+                    mover2_esquerda(raiz);
             }
                 
             removeu = remover_cidade_no(&((*raiz)->esq), nome_cidade);
@@ -332,26 +401,13 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
                 if((*raiz)->dir != NULL)
                 {
                     if(corCidade((*raiz)->dir) == BLACK && corCidade((*raiz)->dir->esq) == BLACK)
-                        mover_direita(raiz);
+                        mover2_direita(raiz);
                 }
 
                 if(resultado == 0)
                 {
                     CIDADES *menor = encontrar_menor_cidade((*raiz)->dir);
-                    
-                    // Troca completa de informações entre os nós
-                    char *temp_nome = (*raiz)->nome_cidade;
-                    (*raiz)->nome_cidade = menor->nome_cidade;
-                    menor->nome_cidade = temp_nome;
-                    
-                    int temp_pop = (*raiz)->populacao_city;
-                    (*raiz)->populacao_city = menor->populacao_city;
-                    menor->populacao_city = temp_pop;
-                    
-                    CEP *temp_cep = (*raiz)->cep;
-                    (*raiz)->cep = menor->cep;
-                    menor->cep = temp_cep;
-                    
+                    trocar_informacoes_cidades(*raiz, menor);
                     // Remove o menor (que agora contém os dados do nó que queríamos remover)
                     remover_menor_cidade_arv(&((*raiz)->dir));
                 }
@@ -374,11 +430,89 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
 // Função principal para remoção - mantém a raiz preta
 int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade)
 {
-    int removeu = remover_cidade_no(raiz, nome_cidade);
-    
+    int removeu = consulta_cidade(*raiz, nome_cidade);
+
+    if (removeu) {
+        removeu = remover_cidade_no(raiz, nome_cidade);
+    }
+
     if(*raiz != NULL)
         (*raiz)->cor = BLACK;
 
     return removeu;
 }
 
+
+// CIDADES* remover_no_cidade_recursivo(CIDADES* H, char *nome_cidade) {
+//     if(H == NULL)
+//         return NULL;
+        
+//     int comparacao = strcasecmp(nome_cidade, H->nome_cidade);
+    
+//     if(comparacao < 0) {
+//         if(corCidade(H->esq) == BLACK && (H->esq == NULL || corCidade(H->esq->esq) == BLACK))
+//             mover2_esquerda(&H);
+
+//         H->esq = remover_no_cidade_recursivo(H->esq, nome_cidade);
+//     } else {
+//         if(corCidade(H->esq) == RED)
+//             rotacao_direita(&H);
+
+//         if(comparacao == 0 && H->dir == NULL) {
+//             desalocar_cidade(&H);
+//             return NULL;
+//         }
+
+//         if(corCidade(H->dir) == BLACK && (H->dir == NULL || corCidade(H->dir->esq) == BLACK))
+//             mover2_direita(&H);
+
+//         if(comparacao == 0) {
+//             CIDADES* menor = encontrar_menor_cidade(H->dir);
+            
+//             // Troca de informações
+//             char *temp_nome = H->nome_cidade;
+//             H->nome_cidade = menor->nome_cidade;
+//             menor->nome_cidade = temp_nome;
+            
+//             int temp_pop = H->populacao_city;
+//             H->populacao_city = menor->populacao_city;
+//             menor->populacao_city = temp_pop;
+            
+//             CEP *temp_cep = H->cep;
+//             H->cep = menor->cep;
+//             menor->cep = temp_cep;
+            
+//             H->dir = remover_menor_cidade_recursivo(H->dir);
+//         } else
+//             H->dir = remover_no_cidade_recursivo(H->dir, nome_cidade);
+//     }
+    
+//     balancear_RB(&H);
+//     return H;
+// }
+
+// CIDADES* remover_menor_cidade_recursivo(CIDADES* H) {
+//     if(H->esq == NULL) {
+//         desalocar_cidade(&H);
+//         return NULL;
+//     }
+    
+//     if(corCidade(H->esq) == BLACK && (H->esq == NULL || corCidade(H->esq->esq) == BLACK))
+//         mover2_esquerda(&H);
+        
+//     H->esq = remover_menor_cidade_recursivo(H->esq);
+    
+//     balancear_RB(&H);
+//     return H;
+// }
+
+// int remover_cidade_RB(CIDADES **raiz, char *nome_cidade) {
+//     if(consulta_ArvLLRB(raiz,valor)){
+//         struct NO* h = *raiz;
+//         *raiz = remove_NO(h,valor);
+//         if(*raiz != NULL)
+//             (*raiz)->cor = BLACK;
+//         return 1;
+//     }else
+//         return 0;
+// }
