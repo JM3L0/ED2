@@ -13,7 +13,7 @@ void rotacao_esquerda(CIDADES **raiz);
 void rotacao_direita(CIDADES **raiz);
 
 // Propriedades da árvore
-int corCidade(CIDADES *cidade);
+int cor(CIDADES *cidade);
 void trocar_cor(CIDADES *raiz);
 void balancear_RB(CIDADES **raiz);
 
@@ -39,3 +39,5 @@ void mover2_direita(CIDADES **raiz);
 void remover_menor_cidade_arv(CIDADES **raiz);
 int remover_cidade_no(CIDADES **raiz, char *nome_cidade);
 int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade); 
+
+// especificas do trabalho

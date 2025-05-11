@@ -176,7 +176,32 @@ int validar_cep(const char *cep)
 }
 
 // Captura o CEP do usuário e valida o formato
-int capturar_cep(char *cep)
+// int capturar_cep(char *cep)
+// {
+//     int sucesso = 0;
+//     char entrada[11]; // 9 caracteres (XXXXX-XXX) + \n + \0
+//     printf("Digite o CEP (XXXXX-XXX): ");
+//     if (fgets(entrada, sizeof(entrada), stdin))
+//     {
+//         entrada[strcspn(entrada, "\n")] = '\0';
+//         if (validar_cep(entrada))
+//         {
+//             strcpy(cep, entrada);
+//             sucesso = 1;
+//         }
+//         else
+//         {
+//             printf("Erro: CEP deve ter formato XXXXX-XXX!\n");
+//         }
+//     }
+//     else
+//     {
+//         printf("Erro: falha na leitura!\n");
+//     }
+//     return sucesso;
+// }
+
+int capturar_cep(char *cep)// já captura, valida e autocorrige o CEP
 {
     int sucesso = 0;
     char entrada[11]; // 9 caracteres (XXXXX-XXX) + \n + \0
@@ -184,14 +209,16 @@ int capturar_cep(char *cep)
     if (fgets(entrada, sizeof(entrada), stdin))
     {
         entrada[strcspn(entrada, "\n")] = '\0';
-        if (validar_cep(entrada))
-        {
+
+        if (validar_cep(entrada)) {
             strcpy(cep, entrada);
             sucesso = 1;
-        }
-        else
-        {
-            printf("Erro: CEP deve ter formato XXXXX-XXX!\n");
+        } else if (autocorrigir_cep(entrada, entrada) && validar_cep(entrada)) {
+            strcpy(cep, entrada);
+            sucesso = 1;
+            printf("Aviso: CEP autocorrigido para %s\n", cep);
+        } else {
+            printf("Erro: CEP inválido!\n");
         }
     }
     else

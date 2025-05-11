@@ -138,7 +138,7 @@ void rotacao_direita(CIDADES **raiz)
 // PROPRIEDADES
 // =================================
 
-int corCidade(CIDADES *cidade){
+int cor(CIDADES *cidade){
     return cidade == NULL ? BLACK : cidade->cor;
 }
 
@@ -157,13 +157,13 @@ void balancear_RB(CIDADES **raiz)
 {
     if(*raiz != NULL)
     {
-        if(corCidade((*raiz)->esq) == BLACK && corCidade((*raiz)->dir) == RED)
+        if(cor((*raiz)->esq) == BLACK && cor((*raiz)->dir) == RED)
             rotacao_esquerda(raiz);
 
-        if(corCidade((*raiz)->esq) == RED && corCidade((*raiz)->esq->esq) == RED)
+        if(cor((*raiz)->esq) == RED && cor((*raiz)->esq->esq) == RED)
             rotacao_direita(raiz);
 
-        if(corCidade((*raiz)->esq) == RED && corCidade((*raiz)->dir) == RED)
+        if(cor((*raiz)->esq) == RED && cor((*raiz)->dir) == RED)
             trocar_cor(*raiz);
     }
 }
@@ -233,7 +233,7 @@ void limpar_no_cidade(CIDADES *cidade) {
 }
 
 // =================================
-// DESALOCACAO
+// DESALOCAÇÃO
 // =================================
 
 // Função para desalocar completamente uma cidade
@@ -334,7 +334,7 @@ void mover2_esquerda(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
-    if((*raiz)->dir != NULL && corCidade((*raiz)->dir->esq) == RED)
+    if((*raiz)->dir != NULL && cor((*raiz)->dir->esq) == RED)
     {
         rotacao_direita(&((*raiz)->dir));
         rotacao_esquerda(raiz);
@@ -347,7 +347,7 @@ void mover2_direita(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
-    if((*raiz)->esq != NULL && corCidade((*raiz)->esq->esq) == RED)
+    if((*raiz)->esq != NULL && cor((*raiz)->esq->esq) == RED)
     {
         rotacao_direita(raiz);
         trocar_cor(*raiz);
@@ -362,7 +362,7 @@ void remover_menor_cidade_arv(CIDADES **raiz)
     }
     else
     {
-        if(corCidade((*raiz)->esq) == BLACK && corCidade((*raiz)->esq->esq) == BLACK)
+        if(cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
             mover2_esquerda(raiz);
 
         remover_menor_cidade_arv(&((*raiz)->esq));
@@ -383,14 +383,14 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
         {
             if((*raiz)->esq != NULL)
             {
-                if(corCidade((*raiz)->esq) == BLACK && corCidade((*raiz)->esq->esq) == BLACK)
+                if(cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
                     mover2_esquerda(raiz);
             }
                 
             removeu = remover_cidade_no(&((*raiz)->esq), nome_cidade);
         }
         else {
-            if(corCidade((*raiz)->esq) == RED)
+            if(cor((*raiz)->esq) == RED)
                 rotacao_direita(raiz);
 
             if(resultado == 0 && (*raiz)->dir == NULL) {
@@ -400,7 +400,7 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
             {
                 if((*raiz)->dir != NULL)
                 {
-                    if(corCidade((*raiz)->dir) == BLACK && corCidade((*raiz)->dir->esq) == BLACK)
+                    if(cor((*raiz)->dir) == BLACK && cor((*raiz)->dir->esq) == BLACK)
                         mover2_direita(raiz);
                 }
 
@@ -442,77 +442,6 @@ int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade)
     return removeu;
 }
 
-
-// CIDADES* remover_no_cidade_recursivo(CIDADES* H, char *nome_cidade) {
-//     if(H == NULL)
-//         return NULL;
-        
-//     int comparacao = strcasecmp(nome_cidade, H->nome_cidade);
-    
-//     if(comparacao < 0) {
-//         if(corCidade(H->esq) == BLACK && (H->esq == NULL || corCidade(H->esq->esq) == BLACK))
-//             mover2_esquerda(&H);
-
-//         H->esq = remover_no_cidade_recursivo(H->esq, nome_cidade);
-//     } else {
-//         if(corCidade(H->esq) == RED)
-//             rotacao_direita(&H);
-
-//         if(comparacao == 0 && H->dir == NULL) {
-//             desalocar_cidade(&H);
-//             return NULL;
-//         }
-
-//         if(corCidade(H->dir) == BLACK && (H->dir == NULL || corCidade(H->dir->esq) == BLACK))
-//             mover2_direita(&H);
-
-//         if(comparacao == 0) {
-//             CIDADES* menor = encontrar_menor_cidade(H->dir);
-            
-//             // Troca de informações
-//             char *temp_nome = H->nome_cidade;
-//             H->nome_cidade = menor->nome_cidade;
-//             menor->nome_cidade = temp_nome;
-            
-//             int temp_pop = H->populacao_city;
-//             H->populacao_city = menor->populacao_city;
-//             menor->populacao_city = temp_pop;
-            
-//             CEP *temp_cep = H->cep;
-//             H->cep = menor->cep;
-//             menor->cep = temp_cep;
-            
-//             H->dir = remover_menor_cidade_recursivo(H->dir);
-//         } else
-//             H->dir = remover_no_cidade_recursivo(H->dir, nome_cidade);
-//     }
-    
-//     balancear_RB(&H);
-//     return H;
-// }
-
-// CIDADES* remover_menor_cidade_recursivo(CIDADES* H) {
-//     if(H->esq == NULL) {
-//         desalocar_cidade(&H);
-//         return NULL;
-//     }
-    
-//     if(corCidade(H->esq) == BLACK && (H->esq == NULL || corCidade(H->esq->esq) == BLACK))
-//         mover2_esquerda(&H);
-        
-//     H->esq = remover_menor_cidade_recursivo(H->esq);
-    
-//     balancear_RB(&H);
-//     return H;
-// }
-
-// int remover_cidade_RB(CIDADES **raiz, char *nome_cidade) {
-//     if(consulta_ArvLLRB(raiz,valor)){
-//         struct NO* h = *raiz;
-//         *raiz = remove_NO(h,valor);
-//         if(*raiz != NULL)
-//             (*raiz)->cor = BLACK;
-//         return 1;
-//     }else
-//         return 0;
-// }
+// =================================
+// ESPECÍFICAS DO TRABALHO
+// =================================

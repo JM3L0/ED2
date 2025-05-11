@@ -13,7 +13,7 @@ typedef struct DATA// DATA DE NASCIMENTO
 
 typedef struct CEP
 {
-    char cep[9];
+    char cep[10];
     int cor;
     struct CEP *esq, *dir;
 
@@ -43,9 +43,10 @@ typedef struct PESSOAS
 {
     char CPF[12];
     char *nome_pessoa;
-    char cep_city_natal[9];
-    char cep_city_atual[9];
+    char cep_city_natal[10];
+    char cep_city_atual[10];
     int cor;
     DATA data_nasc;
+    struct PESSOAS *esq, *dir;
 
 } PESSOAS;
