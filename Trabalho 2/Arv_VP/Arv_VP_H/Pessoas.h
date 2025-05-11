@@ -12,7 +12,7 @@ void rotacao_esquerda(PESSOAS **raiz);
 void rotacao_direita(PESSOAS **raiz);
 
 // propriedades de pessoas
-int cor(PESSOAS *pessoa);
+int Cor(PESSOAS *pessoa);
 void trocar_cor(PESSOAS *raiz);
 void balancear_RB(PESSOAS **raiz);
 

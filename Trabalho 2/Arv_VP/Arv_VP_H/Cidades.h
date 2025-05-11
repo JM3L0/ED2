@@ -13,7 +13,7 @@ void rotacao_esquerda(CIDADES **raiz);
 void rotacao_direita(CIDADES **raiz);
 
 // Propriedades da árvore
-int cor(CIDADES *cidade);
+int Cor(CIDADES *cidade);
 void trocar_cor(CIDADES *raiz);
 void balancear_RB(CIDADES **raiz);
 

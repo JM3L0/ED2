@@ -5,7 +5,6 @@
 #include "../Arv_VP_H/utilitarios.h"
 #include "../Arv_VP_H/STRUCTS.h"
 
-
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
 // =================================
@@ -16,21 +15,22 @@ int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
 {
     int inseriu = 0;
 
-    if(*raiz == NULL)
+    if (*raiz == NULL)
     {
         *raiz = novaCidade;
         inseriu = 1;
     }
-    else if(strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
+    else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
     {
         inseriu = inserir_no_Cidade(&((*raiz)->esq), novaCidade);
     }
-    else if(strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
+    else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
     {
         inseriu = inserir_no_Cidade(&((*raiz)->dir), novaCidade);
     }
 
-    if (inseriu) {
+    if (inseriu)
+    {
         balancear_RB(raiz);
     }
 
@@ -42,16 +42,18 @@ int inserir_Cidade(CIDADES **raiz, CIDADES *novaCidade)
     int inseriu;
     inseriu = inserir_no_Cidade(raiz, novaCidade);
 
-    if(*raiz != NULL)
+    if (*raiz != NULL)
         (*raiz)->cor = BLACK;
 
     return inseriu;
 }
 
-CIDADES *alocaCidade(){
+CIDADES *alocaCidade()
+{
     CIDADES *cidade;
     cidade = (CIDADES *)malloc(sizeof(CIDADES));
-    if (cidade == NULL) {
+    if (cidade == NULL)
+    {
         printf("Erro ao alocar memoria para a cidade.\n");
         exit(EXIT_FAILURE);
     }
@@ -73,32 +75,39 @@ CIDADES *criaCidade(char *nome_cidade, int populacao_city)
     return cidade;
 }
 
-CIDADES *cadastrarCidade(){
+CIDADES *cadastrarCidade()
+{
     CIDADES *novaCidade;
     novaCidade = NULL;
     char *nome_cidade;
     int populacao, erro = 0;
 
-    printf("Digite o nome da cidade: "); 
+    printf("Digite o nome da cidade: ");
     nome_cidade = ler_string();
 
-    if (nome_cidade == NULL){
+    if (nome_cidade == NULL)
+    {
         erro = 1;
     }
 
-    if (erro == 0) {
+    if (erro == 0)
+    {
         printf("Digite a populacao da cidade: ");
         populacao = digitar_int();
     }
 
-    if (erro == 0) {
+    if (erro == 0)
+    {
         novaCidade = criaCidade(nome_cidade, populacao);
-    } else{
-        if (nome_cidade != NULL) {
+    }
+    else
+    {
+        if (nome_cidade != NULL)
+        {
             free(nome_cidade);
         }
     }
-    
+
     return novaCidade;
 }
 
@@ -117,7 +126,6 @@ void rotacao_esquerda(CIDADES **raiz)
 
     (*raiz)->cor = (*raiz)->esq->cor;
     (*raiz)->esq->cor = RED;
-    
 }
 
 void rotacao_direita(CIDADES **raiz)
@@ -131,14 +139,14 @@ void rotacao_direita(CIDADES **raiz)
 
     (*raiz)->cor = (*raiz)->dir->cor;
     (*raiz)->dir->cor = RED;
-
 }
 
 // =================================
 // PROPRIEDADES
 // =================================
 
-int cor(CIDADES *cidade){
+int Cor(CIDADES *cidade)
+{
     return cidade == NULL ? BLACK : cidade->cor;
 }
 
@@ -146,55 +154,63 @@ void trocar_cor(CIDADES *raiz)
 {
     raiz->cor = !(raiz->cor);
 
-    if(raiz->esq != NULL)
+    if (raiz->esq != NULL)
         raiz->esq->cor = !(raiz->esq->cor);
 
-    if(raiz->dir != NULL)
-        raiz->dir->cor =!(raiz->dir->cor);
+    if (raiz->dir != NULL)
+        raiz->dir->cor = !(raiz->dir->cor);
 }
 
 void balancear_RB(CIDADES **raiz)
 {
-    if(*raiz != NULL)
+    if (*raiz != NULL)
     {
-        if(cor((*raiz)->esq) == BLACK && cor((*raiz)->dir) == RED)
+        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->dir) == RED)
             rotacao_esquerda(raiz);
 
-        if(cor((*raiz)->esq) == RED && cor((*raiz)->esq->esq) == RED)
+        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->esq->esq) == RED)
             rotacao_direita(raiz);
 
-        if(cor((*raiz)->esq) == RED && cor((*raiz)->dir) == RED)
+        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->dir) == RED)
             trocar_cor(*raiz);
     }
 }
-
 
 // =================================
 // BUSCA E IMPRESSÃO
 // =================================
 
 // Função para buscar uma cidade na árvore pelo nome
-CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade) {
+CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade)
+{
     CIDADES *resultado = NULL;
-    
-    if(raiz != NULL) {
+
+    if (raiz != NULL)
+    {
         int comparacao = strcasecmp(nome_cidade, raiz->nome_cidade);
-        
-        if(comparacao == 0) {
+
+        if (comparacao == 0)
+        {
             resultado = raiz;
-        } else if(comparacao < 0) {
+        }
+        else if (comparacao < 0)
+        {
             resultado = buscar_cidade(raiz->esq, nome_cidade);
-        } else {
+        }
+        else
+        {
             resultado = buscar_cidade(raiz->dir, nome_cidade);
         }
     }
-    
+
     return resultado;
 }
 
 // Função auxiliar para imprimir informações de uma cidade
-void imprimir_cidade(CIDADES *cidade) {
-    if(cidade != NULL) {
+void imprimir_cidade(CIDADES *cidade)
+{
+    if (cidade != NULL)
+    {
         printf("Cidade: %s\n", cidade->nome_cidade);
         printf("População: %d\n", cidade->populacao_city);
         printf("Cor: %s\n", cidade->cor == RED ? "Vermelho" : "Preto");
@@ -206,8 +222,10 @@ void imprimir_cidade(CIDADES *cidade) {
 }
 
 // Função para imprimir todas as cidades em ordem alfabética
-void imprimir_cidades_em_ordem(CIDADES *raiz) {
-    if(raiz != NULL) {
+void imprimir_cidades_em_ordem(CIDADES *raiz)
+{
+    if (raiz != NULL)
+    {
         imprimir_cidades_em_ordem(raiz->esq);
         imprimir_cidade(raiz);
         imprimir_cidades_em_ordem(raiz->dir);
@@ -215,18 +233,24 @@ void imprimir_cidades_em_ordem(CIDADES *raiz) {
 }
 
 // Função para imprimir todas as cidades
-void imprimir_todas_cidades(CIDADES *raiz) {
-    if(raiz == NULL) {
+void imprimir_todas_cidades(CIDADES *raiz)
+{
+    if (raiz == NULL)
+    {
         printf("Não há cidades cadastradas.\n");
-    } else {
+    }
+    else
+    {
         printf("=== Lista de Cidades ===\n");
         imprimir_cidades_em_ordem(raiz);
     }
 }
 
 // Função para limpar o nó da cidade (apenas liberar o nome)
-void limpar_no_cidade(CIDADES *cidade) {
-    if (cidade != NULL && cidade->nome_cidade != NULL) {
+void limpar_no_cidade(CIDADES *cidade)
+{
+    if (cidade != NULL && cidade->nome_cidade != NULL)
+    {
         free(cidade->nome_cidade);
         cidade->nome_cidade = NULL;
     }
@@ -239,14 +263,16 @@ void limpar_no_cidade(CIDADES *cidade) {
 // Função para desalocar completamente uma cidade
 void desalocar_cidade(CIDADES **raiz)
 {
-    if(*raiz != NULL)
+    if (*raiz != NULL)
     {
-        if((*raiz)->nome_cidade != NULL) {
+        if ((*raiz)->nome_cidade != NULL)
+        {
             free((*raiz)->nome_cidade);
             (*raiz)->nome_cidade = NULL;
         }
-        
-        if((*raiz)->cep != NULL) {
+
+        if ((*raiz)->cep != NULL)
+        {
             free((*raiz)->cep);
             (*raiz)->cep = NULL;
         }
@@ -275,21 +301,28 @@ void desalocar_arvore_cidades(CIDADES **raiz)
 // CONSULTA ÁRVORE
 // =================================
 
-int consulta_cidade(CIDADES *raiz, char *nome_cidade) {
+int consulta_cidade(CIDADES *raiz, char *nome_cidade)
+{
     int resultado = 0;
-    
-    if (raiz != NULL) {
+
+    if (raiz != NULL)
+    {
         int comparacao = strcasecmp(nome_cidade, raiz->nome_cidade);
-        
-        if (comparacao == 0) {
+
+        if (comparacao == 0)
+        {
             resultado = 1;
-        } else if (comparacao < 0) {
+        }
+        else if (comparacao < 0)
+        {
             resultado = consulta_cidade(raiz->esq, nome_cidade);
-        } else {
+        }
+        else
+        {
             resultado = consulta_cidade(raiz->dir, nome_cidade);
         }
     }
-    
+
     return resultado;
 }
 
@@ -298,30 +331,35 @@ int consulta_cidade(CIDADES *raiz, char *nome_cidade) {
 // =================================
 
 // Funções auxiliares para remoção
-CIDADES *encontrar_menor_cidade(CIDADES *raiz) {
+CIDADES *encontrar_menor_cidade(CIDADES *raiz)
+{
     CIDADES *menor = raiz;
-    
-    if(raiz != NULL) {
-        while(menor->esq != NULL) {
+
+    if (raiz != NULL)
+    {
+        while (menor->esq != NULL)
+        {
             menor = menor->esq;
         }
     }
-    
+
     return menor;
 }
 
-void trocar_informacoes_cidades(CIDADES *cidade1, CIDADES *cidade2) {
-    if (cidade1 != NULL && cidade2 != NULL) {
+void trocar_informacoes_cidades(CIDADES *cidade1, CIDADES *cidade2)
+{
+    if (cidade1 != NULL && cidade2 != NULL)
+    {
         // Troca os nomes
         char *temp_nome = cidade1->nome_cidade;
         cidade1->nome_cidade = cidade2->nome_cidade;
         cidade2->nome_cidade = temp_nome;
-        
+
         // Troca as populações
         int temp_pop = cidade1->populacao_city;
         cidade1->populacao_city = cidade2->populacao_city;
         cidade2->populacao_city = temp_pop;
-        
+
         // Troca os CEPs
         CEP *temp_cep = cidade1->cep;
         cidade1->cep = cidade2->cep;
@@ -334,7 +372,7 @@ void mover2_esquerda(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
-    if((*raiz)->dir != NULL && cor((*raiz)->dir->esq) == RED)
+    if ((*raiz)->dir != NULL && cor((*raiz)->dir->esq) == RED)
     {
         rotacao_direita(&((*raiz)->dir));
         rotacao_esquerda(raiz);
@@ -347,7 +385,7 @@ void mover2_direita(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
-    if((*raiz)->esq != NULL && cor((*raiz)->esq->esq) == RED)
+    if ((*raiz)->esq != NULL && Cor((*raiz)->esq->esq) == RED)
     {
         rotacao_direita(raiz);
         trocar_cor(*raiz);
@@ -357,12 +395,13 @@ void mover2_direita(CIDADES **raiz)
 // Função para remover a menor cidade da árvore
 void remover_menor_cidade_arv(CIDADES **raiz)
 {
-    if((*raiz)->esq == NULL) {
+    if ((*raiz)->esq == NULL)
+    {
         desalocar_cidade(raiz);
     }
     else
     {
-        if(cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
+        if (cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
             mover2_esquerda(raiz);
 
         remover_menor_cidade_arv(&((*raiz)->esq));
@@ -375,36 +414,38 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
 {
     int removeu = 1;
 
-    if((*raiz) != NULL)
+    if ((*raiz) != NULL)
     {
         int resultado = strcasecmp(nome_cidade, (*raiz)->nome_cidade);
 
-        if(resultado < 0)
+        if (resultado < 0)
         {
-            if((*raiz)->esq != NULL)
+            if ((*raiz)->esq != NULL)
             {
-                if(cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
+                if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
                     mover2_esquerda(raiz);
             }
-                
+
             removeu = remover_cidade_no(&((*raiz)->esq), nome_cidade);
         }
-        else {
-            if(cor((*raiz)->esq) == RED)
+        else
+        {
+            if (Cor((*raiz)->esq) == RED)
                 rotacao_direita(raiz);
 
-            if(resultado == 0 && (*raiz)->dir == NULL) {
+            if (resultado == 0 && (*raiz)->dir == NULL)
+            {
                 desalocar_cidade(raiz);
             }
             else
             {
-                if((*raiz)->dir != NULL)
+                if ((*raiz)->dir != NULL)
                 {
-                    if(cor((*raiz)->dir) == BLACK && cor((*raiz)->dir->esq) == BLACK)
+                    if (Cor((*raiz)->dir) == BLACK && Cor((*raiz)->dir->esq) == BLACK)
                         mover2_direita(raiz);
                 }
 
-                if(resultado == 0)
+                if (resultado == 0)
                 {
                     CIDADES *menor = encontrar_menor_cidade((*raiz)->dir);
                     trocar_informacoes_cidades(*raiz, menor);
@@ -415,9 +456,10 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
                     removeu = remover_cidade_no(&((*raiz)->dir), nome_cidade);
             }
         }
-        
+
         // Rebalanceia a árvore se o nó atual ainda existe
-        if(*raiz != NULL) {
+        if (*raiz != NULL)
+        {
             balancear_RB(raiz);
         }
     }
@@ -432,11 +474,12 @@ int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade)
 {
     int removeu = consulta_cidade(*raiz, nome_cidade);
 
-    if (removeu) {
+    if (removeu)
+    {
         removeu = remover_cidade_no(raiz, nome_cidade);
     }
 
-    if(*raiz != NULL)
+    if (*raiz != NULL)
         (*raiz)->cor = BLACK;
 
     return removeu;

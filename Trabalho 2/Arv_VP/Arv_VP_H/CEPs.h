@@ -15,7 +15,7 @@ void rotacao_esquerda(CEP **raiz);
 void rotacao_direita(CEP **raiz);
 
 // propriedades
-int cor(CEP *cep);
+int Cor(CEP *cep);
 void trocar_cor(CEP *raiz);
 void balancear_RB(CEP **raiz);
 

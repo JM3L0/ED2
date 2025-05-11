@@ -102,21 +102,21 @@ void limpar_estado(ESTADOS *estado)
 int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
 {
     int resultado = 0;
-    
+
     if (*cabeca != NULL)
     {
         if (strcasecmp((*cabeca)->nome_estado, nome_estado) == 0)
         {
             ESTADOS *temp = *cabeca;
-            
+
             *cabeca = temp->prox; // Update the head pointer
-            
+
             if (*cabeca != NULL)
                 (*cabeca)->ant = temp->ant; // Update prev pointer of next node
-                
+
             limpar_estado(temp);
             free(temp);
-            
+
             resultado = 1; // Estado removido com sucesso
         }
         else
@@ -124,7 +124,7 @@ int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
             resultado = remover_estado_rec(&((*cabeca)->prox), nome_estado);
         }
     }
-    
+
     return resultado;
 }
 

@@ -5,7 +5,7 @@ gcc -o interface interface.c Estados.c Cidades.c CEPs.c Pessoas.c utilitarios.c 
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h>f
 
 #include "../Arv_VP_H/CEPs.h"
 #include "../Arv_VP_H/Cidades.h"

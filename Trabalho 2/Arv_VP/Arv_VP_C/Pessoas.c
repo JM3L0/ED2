@@ -5,7 +5,6 @@
 #include "../Arv_VP_H/STRUCTS.h"
 #include "../Arv_VP_H/Pessoas.h"
 
-
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
 // =================================
@@ -16,21 +15,22 @@ int inserir_no_pessoa(PESSOAS **raiz, PESSOAS *novapessoa)
 {
     int inseriu = 0;
 
-    if(*raiz == NULL)
+    if (*raiz == NULL)
     {
         *raiz = novapessoa;
         inseriu = 1;
     }
-    else if(strcasecmp(novapessoa->CPF, (*raiz)->CPF) < 0)
+    else if (strcasecmp(novapessoa->CPF, (*raiz)->CPF) < 0)
     {
         inseriu = inserir_no_pessoa(&((*raiz)->esq), novapessoa);
     }
-    else if(strcasecmp(novapessoa->CPF, (*raiz)->CPF) > 0)
+    else if (strcasecmp(novapessoa->CPF, (*raiz)->CPF) > 0)
     {
         inseriu = inserir_no_pessoa(&((*raiz)->dir), novapessoa);
     }
 
-    if (inseriu) {
+    if (inseriu)
+    {
         balancear_RB(raiz);
     }
 
@@ -42,23 +42,25 @@ int inserir_pessoa(PESSOAS **raiz, PESSOAS *novapessoa)
     int inseriu;
     inseriu = inserir_no_pessoa(raiz, novapessoa);
 
-    if(*raiz != NULL)
+    if (*raiz != NULL)
         (*raiz)->cor = BLACK;
 
     return inseriu;
 }
 
-PESSOAS *alocaPessoa(){
+PESSOAS *alocaPessoa()
+{
     PESSOAS *pessoa;
     pessoa = (PESSOAS *)malloc(sizeof(PESSOAS));
-    if (pessoa == NULL) {
+    if (pessoa == NULL)
+    {
         printf("Erro ao alocar memoria para a pessoa.\n");
         exit(EXIT_FAILURE);
     }
     return pessoa;
 }
 
-PESSOAS *criaPessoa(char* nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc)
+PESSOAS *criaPessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc)
 {
     PESSOAS *pessoa;
     pessoa = alocaPessoa();
@@ -76,7 +78,8 @@ PESSOAS *criaPessoa(char* nome_pessoa, char *CPF, char *cep_natal, char *cep_atu
     return pessoa;
 }
 
-PESSOAS *cadastrarpessoa(char *cep_natal, char *cep_atual) {
+PESSOAS *cadastrarpessoa(char *cep_natal, char *cep_atual)
+{
     PESSOAS *pessoa = NULL;
     DATA data_nasc;
     char CPF[12];
@@ -86,21 +89,24 @@ PESSOAS *cadastrarpessoa(char *cep_natal, char *cep_atual) {
     printf("Digite o nome da pessoa: ");
     nome_pessoa = ler_string();
 
-    if (nome_pessoa != NULL) {
+    if (nome_pessoa != NULL)
+    {
         retorno = capturar_cpf(CPF);
-        
-        if (retorno) {
+
+        if (retorno)
+        {
             // Alocação de memória para a data de nascimento
-            
+
             retorno = capturar_data(&data_nasc);
 
             pessoa = criaPessoa(nome_pessoa, CPF, cep_natal, cep_atual, data_nasc);
-            
         }
     }
     // Limpeza em caso de falha
-    if (!retorno) {
-        if (nome_pessoa != NULL) {
+    if (!retorno)
+    {
+        if (nome_pessoa != NULL)
+        {
             free(nome_pessoa);
         }
     }
@@ -123,7 +129,6 @@ void rotacao_esquerda(PESSOAS **raiz)
 
     (*raiz)->cor = (*raiz)->esq->cor;
     (*raiz)->esq->cor = RED;
-    
 }
 
 void rotacao_direita(PESSOAS **raiz)
@@ -137,14 +142,14 @@ void rotacao_direita(PESSOAS **raiz)
 
     (*raiz)->cor = (*raiz)->dir->cor;
     (*raiz)->dir->cor = RED;
-
 }
 
 // =================================
 // PROPRIEDADES
 // =================================
 
-int cor(PESSOAS *pessoa){
+int Cor(PESSOAS *pessoa)
+{
     return pessoa == NULL ? BLACK : pessoa->cor;
 }
 
@@ -152,55 +157,63 @@ void trocar_cor(PESSOAS *raiz)
 {
     raiz->cor = !(raiz->cor);
 
-    if(raiz->esq != NULL)
+    if (raiz->esq != NULL)
         raiz->esq->cor = !(raiz->esq->cor);
 
-    if(raiz->dir != NULL)
-        raiz->dir->cor =!(raiz->dir->cor);
+    if (raiz->dir != NULL)
+        raiz->dir->cor = !(raiz->dir->cor);
 }
 
 void balancear_RB(PESSOAS **raiz)
 {
-    if(*raiz != NULL)
+    if (*raiz != NULL)
     {
-        if(cor((*raiz)->esq) == BLACK && cor((*raiz)->dir) == RED)
+        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->dir) == RED)
             rotacao_esquerda(raiz);
 
-        if(cor((*raiz)->esq) == RED && cor((*raiz)->esq->esq) == RED)
+        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->esq->esq) == RED)
             rotacao_direita(raiz);
 
-        if(cor((*raiz)->esq) == RED && cor((*raiz)->dir) == RED)
+        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->dir) == RED)
             trocar_cor(*raiz);
     }
 }
-
 
 // =================================
 // BUSCA E IMPRESSÃO
 // =================================
 
 // Função para buscar uma pessoa na árvore pelo nome
-PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF) {
+PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF)
+{
     PESSOAS *resultado = NULL;
-    
-    if(raiz != NULL) {
+
+    if (raiz != NULL)
+    {
         int comparacao = strcasecmp(CPF, raiz->CPF);
-        
-        if(comparacao == 0) {
+
+        if (comparacao == 0)
+        {
             resultado = raiz;
-        } else if(comparacao < 0) {
+        }
+        else if (comparacao < 0)
+        {
             resultado = buscar_pessoa(raiz->esq, CPF);
-        } else {
+        }
+        else
+        {
             resultado = buscar_pessoa(raiz->dir, CPF);
         }
     }
-    
+
     return resultado;
 }
 
 // Função auxiliar para imprimir informações de uma pessoa
-void imprimir_pessoa(PESSOAS *pessoa) {
-    if(pessoa != NULL) {
+void imprimir_pessoa(PESSOAS *pessoa)
+{
+    if (pessoa != NULL)
+    {
 
         printf("NOME: %s\n", pessoa->nome_pessoa);
         printf("CPF: %s\n", pessoa->CPF);
@@ -214,8 +227,10 @@ void imprimir_pessoa(PESSOAS *pessoa) {
 }
 
 // Função para imprimir todas as pessoas em ordem alfabética
-void imprimir_pessoas_em_ordem(PESSOAS *raiz) {
-    if(raiz != NULL) {
+void imprimir_pessoas_em_ordem(PESSOAS *raiz)
+{
+    if (raiz != NULL)
+    {
         imprimir_pessoas_em_ordem(raiz->esq);
         imprimir_pessoa(raiz);
         imprimir_pessoas_em_ordem(raiz->dir);
@@ -223,10 +238,14 @@ void imprimir_pessoas_em_ordem(PESSOAS *raiz) {
 }
 
 // Função para imprimir todas as pessoas
-void imprimir_todas_pessoas(PESSOAS *raiz) {
-    if(raiz == NULL) {
+void imprimir_todas_pessoas(PESSOAS *raiz)
+{
+    if (raiz == NULL)
+    {
         printf("Nao ha pessoas cadastradas.\n");
-    } else {
+    }
+    else
+    {
         printf("=== Lista de pessoas ===\n");
         imprimir_pessoas_em_ordem(raiz);
     }
@@ -239,9 +258,10 @@ void imprimir_todas_pessoas(PESSOAS *raiz) {
 // Função para desalocar completamente uma pessoa
 void desalocar_pessoa(PESSOAS **raiz)
 {
-    if(*raiz != NULL)
+    if (*raiz != NULL)
     {
-        if((*raiz)->nome_pessoa != NULL) {
+        if ((*raiz)->nome_pessoa != NULL)
+        {
             free((*raiz)->nome_pessoa);
             (*raiz)->nome_pessoa = NULL;
         }
@@ -270,21 +290,28 @@ void desalocar_arvore_pessoas(PESSOAS **raiz)
 // CONSULTA ÁRVORE
 // =================================
 
-int consulta_pessoa(PESSOAS *raiz, char *CPF) {
+int consulta_pessoa(PESSOAS *raiz, char *CPF)
+{
     int resultado = 0;
-    
-    if (raiz != NULL) {
+
+    if (raiz != NULL)
+    {
         int comparacao = strcasecmp(CPF, raiz->CPF);
-        
-        if (comparacao == 0) {
+
+        if (comparacao == 0)
+        {
             resultado = 1;
-        } else if (comparacao < 0) {
+        }
+        else if (comparacao < 0)
+        {
             resultado = consulta_pessoa(raiz->esq, CPF);
-        } else {
+        }
+        else
+        {
             resultado = consulta_pessoa(raiz->dir, CPF);
         }
     }
-    
+
     return resultado;
 }
 
@@ -293,34 +320,39 @@ int consulta_pessoa(PESSOAS *raiz, char *CPF) {
 // =================================
 
 // Funções auxiliares para remoção
-PESSOAS *encontrar_menor_pessoa(PESSOAS *raiz) {
+PESSOAS *encontrar_menor_pessoa(PESSOAS *raiz)
+{
     PESSOAS *menor = raiz;
-    
-    if(raiz != NULL) {
-        while(menor->esq != NULL) {
+
+    if (raiz != NULL)
+    {
+        while (menor->esq != NULL)
+        {
             menor = menor->esq;
         }
     }
-    
+
     return menor;
 }
 
-void trocar_informacoes_pessoas(PESSOAS *pessoa1, PESSOAS *pessoa2) {
-    if (pessoa1 != NULL && pessoa2 != NULL) {
+void trocar_informacoes_pessoas(PESSOAS *pessoa1, PESSOAS *pessoa2)
+{
+    if (pessoa1 != NULL && pessoa2 != NULL)
+    {
         // Troca os nomes
         char *temp_nome = pessoa1->nome_pessoa;
         pessoa1->nome_pessoa = pessoa2->nome_pessoa;
         pessoa2->nome_pessoa = temp_nome;
-        
+
         // Troca os CPFs
         strcpy(pessoa1->CPF, pessoa2->CPF);
-        
+
         // Troca os CEPs natais
         strcpy(pessoa1->cep_city_natal, pessoa2->cep_city_natal);
-        
+
         // Troca os CEPs atuais
         strcpy(pessoa1->cep_city_atual, pessoa2->cep_city_atual);
-        
+
         // Troca as datas de nascimento
         pessoa1->data_nasc = pessoa2->data_nasc;
     }
@@ -331,7 +363,7 @@ void mover2_esquerda(PESSOAS **raiz)
 {
     trocar_cor(*raiz);
 
-    if((*raiz)->dir != NULL && cor((*raiz)->dir->esq) == RED)
+    if ((*raiz)->dir != NULL && Cor((*raiz)->dir->esq) == RED)
     {
         rotacao_direita(&((*raiz)->dir));
         rotacao_esquerda(raiz);
@@ -344,7 +376,7 @@ void mover2_direita(PESSOAS **raiz)
 {
     trocar_cor(*raiz);
 
-    if((*raiz)->esq != NULL && cor((*raiz)->esq->esq) == RED)
+    if ((*raiz)->esq != NULL && Cor((*raiz)->esq->esq) == RED)
     {
         rotacao_direita(raiz);
         trocar_cor(*raiz);
@@ -354,12 +386,13 @@ void mover2_direita(PESSOAS **raiz)
 // Função para remover a menor pessoa da árvore
 void remover_menor_pessoa_arv(PESSOAS **raiz)
 {
-    if((*raiz)->esq == NULL) {
+    if ((*raiz)->esq == NULL)
+    {
         desalocar_pessoa(raiz);
     }
     else
     {
-        if(cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
+        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
             mover2_esquerda(raiz);
 
         remover_menor_pessoa_arv(&((*raiz)->esq));
@@ -372,36 +405,38 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
 {
     int removeu = 1;
 
-    if((*raiz) != NULL)
+    if ((*raiz) != NULL)
     {
         int resultado = strcasecmp(CPF, (*raiz)->CPF);
 
-        if(resultado < 0)
+        if (resultado < 0)
         {
-            if((*raiz)->esq != NULL)
+            if ((*raiz)->esq != NULL)
             {
-                if(cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
+                if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
                     mover2_esquerda(raiz);
             }
-                
+
             removeu = remover_pessoa_no(&((*raiz)->esq), CPF);
         }
-        else {
-            if(cor((*raiz)->esq) == RED)
+        else
+        {
+            if (Cor((*raiz)->esq) == RED)
                 rotacao_direita(raiz);
 
-            if(resultado == 0 && (*raiz)->dir == NULL) {
+            if (resultado == 0 && (*raiz)->dir == NULL)
+            {
                 desalocar_pessoa(raiz);
             }
             else
             {
-                if((*raiz)->dir != NULL)
+                if ((*raiz)->dir != NULL)
                 {
-                    if(cor((*raiz)->dir) == BLACK && cor((*raiz)->dir->esq) == BLACK)
+                    if (Cor((*raiz)->dir) == BLACK && Cor((*raiz)->dir->esq) == BLACK)
                         mover2_direita(raiz);
                 }
 
-                if(resultado == 0)
+                if (resultado == 0)
                 {
                     PESSOAS *menor = encontrar_menor_pessoa((*raiz)->dir);
                     trocar_informacoes_pessoas(*raiz, menor);
@@ -412,9 +447,10 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
                     removeu = remover_pessoa_no(&((*raiz)->dir), CPF);
             }
         }
-        
+
         // Rebalanceia a árvore se o nó atual ainda existe
-        if(*raiz != NULL) {
+        if (*raiz != NULL)
+        {
             balancear_RB(raiz);
         }
     }
@@ -429,11 +465,12 @@ int remover_pessoa_arvore(PESSOAS **raiz, char *CPF)
 {
     int removeu = consulta_pessoa(*raiz, CPF);
 
-    if (removeu) {
+    if (removeu)
+    {
         removeu = remover_pessoa_no(raiz, CPF);
     }
 
-    if(*raiz != NULL)
+    if (*raiz != NULL)
         (*raiz)->cor = BLACK;
 
     return removeu;

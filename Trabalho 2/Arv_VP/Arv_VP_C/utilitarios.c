@@ -42,7 +42,8 @@ int dias_no_mes(int mes, int ano)
     return dias;
 }
 
-int validar_data (DATA *data){
+int validar_data(DATA *data)
+{
     DATA data_atual;
     obter_data_atual(&data_atual);
 
@@ -72,7 +73,6 @@ int validar_data (DATA *data){
     }
     return valida;
 }
-
 
 // Captura e valida a data de nascimento do usuário
 int capturar_data(DATA *data)
@@ -201,7 +201,7 @@ int validar_cep(const char *cep)
 //     return sucesso;
 // }
 
-int capturar_cep(char *cep)// já captura, valida e autocorrige o CEP
+int capturar_cep(char *cep) // já captura, valida e autocorrige o CEP
 {
     int sucesso = 0;
     char entrada[11]; // 9 caracteres (XXXXX-XXX) + \n + \0
@@ -210,14 +210,19 @@ int capturar_cep(char *cep)// já captura, valida e autocorrige o CEP
     {
         entrada[strcspn(entrada, "\n")] = '\0';
 
-        if (validar_cep(entrada)) {
+        if (validar_cep(entrada))
+        {
             strcpy(cep, entrada);
             sucesso = 1;
-        } else if (autocorrigir_cep(entrada, entrada) && validar_cep(entrada)) {
+        }
+        else if (autocorrigir_cep(entrada, entrada) && validar_cep(entrada))
+        {
             strcpy(cep, entrada);
             sucesso = 1;
             printf("Aviso: CEP autocorrigido para %s\n", cep);
-        } else {
+        }
+        else
+        {
             printf("Erro: CEP inválido!\n");
         }
     }
@@ -229,33 +234,38 @@ int capturar_cep(char *cep)// já captura, valida e autocorrige o CEP
 }
 
 // Tenta autocorrigir o formato do CEP para XXXXX-XXX
-int autocorrigir_cep(char *cep_entrada, char *cep_corrigido) {
-    int sucesso = 0;  // Valor de retorno padrão (falha)
-    
-    if (cep_entrada && cep_corrigido) {
+int autocorrigir_cep(char *cep_entrada, char *cep_corrigido)
+{
+    int sucesso = 0; // Valor de retorno padrão (falha)
+
+    if (cep_entrada && cep_corrigido)
+    {
         // Inicializa o CEP corrigido como vazio
         cep_corrigido[0] = '\0';
-        
+
         // Buffer para armazenar apenas os dígitos
         char digitos[9];
         int pos_digito = 0;
-        
+
         // Extrai apenas os dígitos
-        for (int i = 0; cep_entrada[i] != '\0' && pos_digito < 8; i++) {
-            if (isdigit(cep_entrada[i])) {
+        for (int i = 0; cep_entrada[i] != '\0' && pos_digito < 8; i++)
+        {
+            if (isdigit(cep_entrada[i]))
+            {
                 digitos[pos_digito++] = cep_entrada[i];
             }
         }
-        
+
         // Verifica se temos exatamente 8 dígitos
-        if (pos_digito == 8) {
+        if (pos_digito == 8)
+        {
             // Formata como XXXXX-XXX
-            digitos[8] = '\0';  // Garante que a string termina corretamente
+            digitos[8] = '\0'; // Garante que a string termina corretamente
             sprintf(cep_corrigido, "%.5s-%.3s", digitos, digitos + 5);
-            sucesso = 1;  // Correção bem-sucedida
+            sucesso = 1; // Correção bem-sucedida
         }
     }
-    
+
     return sucesso;
 }
 
