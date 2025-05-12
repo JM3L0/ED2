@@ -52,7 +52,7 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado)
     return resultado;
 }
 
-ESTADOS *cadastro_estado(ESTADOS **cabeca)
+ESTADOS *cadastro_estado()
 {
     int erro = 0;
     char *nome_estado;
