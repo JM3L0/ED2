@@ -19,7 +19,6 @@ ESTADOS *criar_estado(char *nome_estado, char *nome_capital)
         novo_estado->prox = NULL;
         novo_estado->ant = NULL;
     }
-
     return novo_estado;
 }
 
@@ -53,12 +52,13 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado)
     return resultado;
 }
 
-int cadastro_estado(ESTADOS **cabeca)
+ESTADOS *cadastro_estado(ESTADOS **cabeca)
 {
     int erro = 0;
     char *nome_estado;
     char *nome_capital;
-    ESTADOS *estado = NULL;
+    ESTADOS *estado;
+    estado = NULL;
 
     printf("Digite o nome do Estado: ");
     nome_estado = ler_string();
@@ -81,11 +81,11 @@ int cadastro_estado(ESTADOS **cabeca)
         estado = criar_estado(nome_estado, nome_capital);
         if (estado == NULL)
             erro = 1;
-        else if (!inserir_estado_rec(cabeca, estado))
-            erro = 1;
+        // else if (!inserir_estado_rec(cabeca, estado))
+        //     erro = 1;
     }
-
-    return erro;
+    //o resto do código deve ser feito na interface.c
+    return estado;
 }
 
 void limpar_estado(ESTADOS *estado)
@@ -107,12 +107,15 @@ int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
     {
         if (strcasecmp((*cabeca)->nome_estado, nome_estado) == 0)
         {
-            ESTADOS *temp = *cabeca;
+            ESTADOS *temp;
+            temp = *cabeca;
 
-            *cabeca = temp->prox; // Update the head pointer
+            *cabeca = temp->prox; // Atualiza o ponteiro da cabeça
 
             if (*cabeca != NULL)
-                (*cabeca)->ant = temp->ant; // Update prev pointer of next node
+                (*cabeca)->ant = temp->ant; // Atualiza o ponteiro anterior do próximo nó
+            if (temp->ant != NULL)
+                temp->ant->prox = *cabeca; // Atualiza o ponteiro próximo do nó anterior
 
             limpar_estado(temp);
             free(temp);
@@ -120,9 +123,7 @@ int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
             resultado = 1; // Estado removido com sucesso
         }
         else
-        {
             resultado = remover_estado_rec(&((*cabeca)->prox), nome_estado);
-        }
     }
 
     return resultado;
@@ -142,7 +143,9 @@ int mostrar_estado(ESTADOS *estado)
 int mostrar_todos_estados(ESTADOS *cabeca)
 {
     int impresso = 0;
-    ESTADOS *atual = cabeca;
+    ESTADOS *atual;
+    atual = cabeca;
+
     while (atual != NULL)
     {
         if (mostrar_estado(atual))
