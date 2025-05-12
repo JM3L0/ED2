@@ -84,12 +84,8 @@ ESTADOS *cadastro_estado(ESTADOS **cabeca)
         // else if (!inserir_estado_rec(cabeca, estado))
         //     erro = 1;
     }
-<<<<<<< HEAD
     //o resto do código deve ser feito na interface.c
     return estado;
-=======
-    return erro;
->>>>>>> 1ae024e70958c93b9c67690c5f46326cdd610d1e
 }
 
 void limpar_estado(ESTADOS *estado)
@@ -149,11 +145,7 @@ int mostrar_todos_estados(ESTADOS *cabeca)
     int impresso = 0;
     ESTADOS *atual;
     atual = cabeca;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 1ae024e70958c93b9c67690c5f46326cdd610d1e
     while (atual != NULL)
     {
         if (mostrar_estado(atual))
