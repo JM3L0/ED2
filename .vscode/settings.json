@@ -2,6 +2,7 @@
     "files.associations": {
         "cstdlib": "c",
         "stdio.h": "c",
-        "utilitarios.h": "c"
+        "utilitarios.h": "c",
+        "stdlib.h": "c"
     }
 }

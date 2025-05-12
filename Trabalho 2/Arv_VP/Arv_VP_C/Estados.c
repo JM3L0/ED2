@@ -6,6 +6,24 @@
 #include "../Arv_VP_H/utilitarios.h"
 #include "../Arv_VP_H/STRUCTS.h"
 
+ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado){
+    ESTADOS *resultado = NULL;
+    ESTADOS *atual = cabeca;
+
+    while (atual != NULL && resultado == NULL)
+    {
+        if (strcasecmp(atual->nome_estado, nome_estado) == 0)
+        {
+            resultado = atual; // Estado encontrado
+        }
+        else
+        {
+            atual = atual->prox;
+        }
+    }
+    return resultado;
+}
+
 ESTADOS *criar_estado(char *nome_estado, char *nome_capital)
 {
     ESTADOS *novo_estado = (ESTADOS *)malloc(sizeof(ESTADOS));
@@ -62,25 +80,27 @@ ESTADOS *cadastro_estado()
 
     printf("Digite o nome do Estado: ");
     nome_estado = ler_string();
-    if (nome_estado == NULL)
+    if (nome_estado == NULL){
         erro = 1;
-
-    if (!erro)
-    {
-        printf("Digite o nome da Capital: ");
-        nome_capital = ler_string();
-        if (nome_capital == NULL)
-        {
-            free(nome_estado);
-            erro = 1;
-        }
+        free(nome_estado);
     }
+
+    // if (!erro)
+    // {
+    //     printf("Digite o nome da Capital: ");
+    //     nome_capital = ler_string();
+    //     if (nome_capital == NULL)
+    //     {
+    //         free(nome_estado);
+    //         erro = 1;
+    //     }
+    // }
 
     if (!erro)
     {
         estado = criar_estado(nome_estado, nome_capital);
-        if (estado == NULL)
-            erro = 1;
+        // if (estado == NULL)
+        //     erro = 1;
         // else if (!inserir_estado_rec(cabeca, estado))
         //     erro = 1;
     }
@@ -88,14 +108,21 @@ ESTADOS *cadastro_estado()
     return estado;
 }
 
-void limpar_estado(ESTADOS *estado)
+void desalocar_estado(ESTADOS **estado)
 {
     if (estado != NULL)
     {
-        free(estado->nome_estado);
-        estado->nome_estado = NULL;
-        free(estado->nome_capital);
-        estado->nome_capital = NULL;
+        free((*estado)->nome_estado);
+        (*estado)->nome_estado = NULL;
+        free((*estado)->nome_capital);
+        (*estado)->nome_capital = NULL;
+
+        if ((*estado)->cidade != NULL)
+        {
+            // Desalocar a árvore de cidades associada ao estado
+            desalocar_arvore_cidades(&((*estado)->cidade));
+        }
+        free(*estado);
     }
 }
 

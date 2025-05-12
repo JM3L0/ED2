@@ -5,7 +5,7 @@ gcc -o interface interface.c Estados.c Cidades.c CEPs.c Pessoas.c utilitarios.c 
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>f
+#include <string.h>
 
 #include "../Arv_VP_H/CEPs.h"
 #include "../Arv_VP_H/Cidades.h"
@@ -35,7 +35,10 @@ void menu_print()
 
 void menu_geral()
 {
-    int opcao1, opcao2;
+    ESTADOS *cabeca_estado;
+    cabeca_estado = NULL;
+
+    int opcao1, opcao2, retorno = 0;
 
     do
     {
@@ -49,13 +52,174 @@ void menu_geral()
             switch (opcao1)
             {
             case 1:
+            {
+                ESTADOS *novo_estado = cadastro_estado();
+                CIDADES *capital = NULL;
+
+                if (novo_estado != NULL)
+                {
+                    retorno = inserir_estado_rec(&cabeca_estado, novo_estado);
+
+                    if (retorno)
+                    {
+
+                        printf("== Cadastro de Capital ==\n");
+                        capital = cadastroCidade();
+
+                        if (capital != NULL)
+                        {
+                            retorno = inserir_Cidade(&novo_estado->cidade, capital);
+                            novo_estado->quant_city = 1;
+                        }
+                        else
+                        {
+                            printf("Erro ao cadastrar a capital.\n");
+                        }
+                    }
+                    else
+                    {
+                        printf("Erro ao cadastrar o estado.\n");
+                    }
+                }
+                if (retorno == 0)
+                {
+                    desalocar_cidade(&capital);
+                    desalocar_estado(&novo_estado);
+                }
                 break;
-            case 2:
+            }
+            case 2:{
+                ESTADOS *estado;
+                char nome_estado[100];
+
+                printf("Digite o nome do estado para qual a cidade sera inserida: ");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+
+                estado = existe_estado(cabeca_estado, nome_estado);
+                if (estado){
+                    CIDADES *novaCidade = cadastrarCidade();
+                    if (novaCidade)
+                    {
+                        retorno = inserir_Cidade(&estado->cidade, novaCidade);
+                        
+                        if (retorno){
+
+                            estado->quant_city++;
+
+                            printf("Cadastre o CEP da cidade: ");
+
+                            do{
+                                CEP *novoCEP = cadastrarCEP();
+                                if (novoCEP)
+                                {
+                                    retorno = inserir_CEP(&(novaCidade->cep), novoCEP);
+                                    if (retorno)
+                                    {
+                                        printf("CEP cadastrado com sucesso.\n");
+                                        printf("Deseja cadastrar outro CEP? [1] - SIM [0] - NAO: ");
+                                        opcao2 = digitar_int();
+                                    }
+                                    else
+                                    {
+                                        printf("Erro ao inserir o CEP.\n");
+                                    }
+                                }
+                                else
+                                {
+                                    printf("Erro ao cadastrar o CEP.\n");
+                                }
+                            }while (opcao2 == 1);
+                            
+                        }
+                    }
+                    else
+                    {
+                        printf("Erro ao cadastrar a cidade.\n");
+                    }
+                }
+                else
+                {
+                    printf("Estado nao encontrado.\n");
+                }
+
                 break;
-            case 3:
+            }
+            case 3:{
+                ESTADOS *estado;
+                char nome_estado[100];
+
+                printf("Digite o nome do estado para qual o CEP sera inserido: ");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+                estado = existe_estado(cabeca_estado, nome_estado);
+                if (estado){
+
+                    CIDADES *cidade;
+                    char nome_cidade[100];
+                    printf("Digite o nome da cidade para qual o CEP sera inserido: ");
+                    ler_string_simples(nome_cidade, sizeof(nome_cidade));
+                    cidade = buscar_cidade(estado->cidade, nome_cidade);
+                    if (cidade)
+                    {
+                        CEP *novoCEP = cadastrarCEP();
+                        if (novoCEP)
+                        {
+                            retorno = inserir_CEP(&cidade->cep, novoCEP);
+                        }
+                        else
+                        {
+                            printf("Erro ao cadastrar o CEP.\n");
+                        }
+                    }
+                    else
+                    {
+                        printf("Cidade nao encontrada.\n");
+                    }
+                }else
+                {
+                    printf("Estado nao encontrado.\n");
+                }
+
                 break;
-            case 4:
+            }
+            case 4:{
+                ESTADOS *estado;
+                char nome_estado[100];
+
+                printf("Digite o nome do estado de onde o CEP sera removido: ");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+                estado = existe_estado(cabeca_estado, nome_estado);
+                if (estado){
+
+                    CIDADES *cidade;
+                    char nome_cidade[100];
+                    printf("Digite o nome da cidade de onde o CEP sera removido: ");
+                    ler_string_simples(nome_cidade, sizeof(nome_cidade));
+                    cidade = buscar_cidade(estado->cidade, nome_cidade);
+                    if (cidade)
+                    {
+                        char str_cep[10];
+                        printf("Digite o CEP a ser removido: ");
+                        ler_string_simples(str_cep, sizeof(str_cep));
+                        retorno = remover_CEP_arvore(&cidade->cep, str_cep);
+                        if (retorno)
+                        {
+                            printf("CEP removido com sucesso.\n");
+                        }
+                        else
+                        {
+                            printf("Erro ao remover o CEP.\n");
+                        }
+                    }
+                    else
+                    {
+                        printf("Cidade nao encontrada.\n");
+                    }
+                }else
+                {
+                    printf("Estado nao encontrado.\n");
+                }
                 break;
+            }
             case 5:
                 break;
             case 6:
