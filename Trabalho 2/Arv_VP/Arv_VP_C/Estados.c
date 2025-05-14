@@ -109,6 +109,24 @@ ESTADOS *cadastro_estado()
     return estado;
 }
 
+ESTADOS *verifica_estado_mais_populoso(ESTADOS *cabeca)
+{
+    ESTADOS *estado_mais_populoso;
+    estado_mais_populoso = NULL;
+    int maior_populacao = -1;
+
+    while (cabeca != NULL)
+    {
+        if (cabeca->populacao_estado > maior_populacao)
+        {
+            maior_populacao = cabeca->populacao_estado;
+            estado_mais_populoso = cabeca;
+        }
+        cabeca = cabeca->prox;
+    }
+    return (estado_mais_populoso);
+}
+
 void desalocar_estado(ESTADOS **estado)
 {
     if (estado != NULL)

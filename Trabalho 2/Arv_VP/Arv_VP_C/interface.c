@@ -226,8 +226,18 @@ void menu_geral()
                 break;
             case 6:
                 break;
-            case 7:
+            case 7:{
+                ESTADOS *estado = verifica_estado_mais_populoso(cabeca_estado);
+
+                if (estado)
+                {
+                    printf("Estado mais populoso: %s\n", estado->nome_estado);
+                    printf("Populacao: %d\n", estado->populacao_estado);
+                }
+                else
+                    printf("Nenhum estado cadastrado.\n");
                 break;
+            } 
             case 8:
                 break;
             case 9:
