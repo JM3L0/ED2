@@ -79,26 +79,29 @@ int capturar_data(DATA *data)
 {
     int sucesso = 0;
     char entrada[11];
-    printf("Digite a data de nascimento (DD/MM/AAAA): ");
-    if (fgets(entrada, sizeof(entrada), stdin))
-    {
-        entrada[strcspn(entrada, "\n")] = '\0';
-        if (sscanf(entrada, "%2d/%2d/%4d", &data->dia, &data->mes, &data->ano) == 3)
+
+    do {
+        printf("Digite a data de nascimento (DD/MM/AAAA): ");
+        if (fgets(entrada, sizeof(entrada), stdin))
         {
-            if (validar_data(data))
+            entrada[strcspn(entrada, "\n")] = '\0';
+            if (sscanf(entrada, "%2d/%2d/%4d", &data->dia, &data->mes, &data->ano) == 3)
             {
-                sucesso = 1;
+                if (validar_data(data))
+                {
+                    sucesso = 1;
+                }
+                else
+                {
+                    printf("Erro: data invalida!\n");
+                }
             }
             else
             {
-                printf("Erro: data invalida!\n");
+                printf("Erro: formato invalida!\n");
             }
         }
-        else
-        {
-            printf("Erro: formato invalida!\n");
-        }
-    }
+    }while (sucesso == 0);
     return sucesso;
 }
 
@@ -133,24 +136,29 @@ int capturar_cpf(char *cpf)
 {
     int sucesso = 0;
     char entrada[13]; // 11 dígitos + \n + \0
-    printf("Digite o CPF (11 digitos, sem pontos ou traços): ");
-    if (fgets(entrada, sizeof(entrada), stdin))
-    {
-        entrada[strcspn(entrada, "\n")] = '\0';
-        if (validar_cpf(entrada))
+
+    do {
+
+        printf("Digite o CPF (11 digitos, sem pontos ou traços): ");
+        if (fgets(entrada, sizeof(entrada), stdin))
         {
-            strcpy(cpf, entrada);
-            sucesso = 1;
+            entrada[strcspn(entrada, "\n")] = '\0';
+            if (validar_cpf(entrada))
+            {
+                strcpy(cpf, entrada);
+                sucesso = 1;
+            }
+            else
+            {
+                printf("Erro: CPF deve ter 11 digitos numericos!\n");
+            }
         }
         else
         {
-            printf("Erro: CPF deve ter 11 digitos numericos!\n");
+            printf("Erro: falha na leitura!\n");
         }
-    }
-    else
-    {
-        printf("Erro: falha na leitura!\n");
-    }
+    }while (sucesso == 0);
+
     return sucesso;
 }
 
@@ -205,31 +213,35 @@ int capturar_cep(char *cep) // já captura, valida e autocorrige o CEP
 {
     int sucesso = 0;
     char entrada[11]; // 9 caracteres (XXXXX-XXX) + \n + \0
-    printf("Digite o CEP (XXXXX-XXX): ");
-    if (fgets(entrada, sizeof(entrada), stdin))
-    {
-        entrada[strcspn(entrada, "\n")] = '\0';
 
-        if (validar_cep(entrada))
+    do
+    {
+        printf("Digite o CEP (XXXXX-XXX): ");
+        if (fgets(entrada, sizeof(entrada), stdin))
         {
-            strcpy(cep, entrada);
-            sucesso = 1;
-        }
-        else if (autocorrigir_cep(entrada, entrada) && validar_cep(entrada))
-        {
-            strcpy(cep, entrada);
-            sucesso = 1;
-            printf("Aviso: CEP autocorrigido para %s\n", cep);
+            entrada[strcspn(entrada, "\n")] = '\0';
+
+            if (validar_cep(entrada))
+            {
+                strcpy(cep, entrada);
+                sucesso = 1;
+            }
+            else if (autocorrigir_cep(entrada, entrada) && validar_cep(entrada))
+            {
+                strcpy(cep, entrada);
+                sucesso = 1;
+                printf("Aviso: CEP autocorrigido para %s\n", cep);
+            }
+            else
+            {
+                printf("Erro: CEP inválido! Digite novamente\n");
+            }
         }
         else
         {
-            printf("Erro: CEP inválido!\n");
+            printf("Erro: falha na leitura!\n");
         }
-    }
-    else
-    {
-        printf("Erro: falha na leitura!\n");
-    }
+    } while (sucesso == 0);
     return sucesso;
 }
 
