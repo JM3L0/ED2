@@ -6,14 +6,13 @@ gcc -o interface interface.c Estados.c Cidades.c CEPs.c Pessoas.c utilitarios.c 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "../Arv_VP_H/CEPs.h"
-#include "../Arv_VP_H/Cidades.h"
-#include "../Arv_VP_H/Estados.h"
-#include "../Arv_VP_H/Pessoas.h"
-#include "../Arv_VP_H/STRUCTS.h"
-#include "../Arv_VP_H/utilitarios.h"
-#include "../Arv_VP_H/interface.h"
+#include "../Arv_VP_H/CEPs_VP.h"
+#include "../Arv_VP_H/Cidades_VP.h"
+#include "../Arv_VP_H/Estados_VP.h"
+#include "../Arv_VP_H/Pessoas_VP.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
+#include "../Arv_VP_H/interface_VP.h"
 
 void menu_print()
 {
@@ -84,7 +83,7 @@ void menu_geral()
                 }
                 if (retorno == 0)
                 {
-                    desalocar_cidade(&capital);
+                    limpa_no_cidade(&capital);
                     desalocar_estado(&novo_estado);
                 }
                 break;

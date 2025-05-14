@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Arv_VP_H/utilitarios.h"
-#include "../Arv_VP_H/STRUCTS.h"
-#include "../Arv_VP_H/CEPs.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/CEPs_VP.h"
 
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
@@ -52,22 +52,10 @@ int inserir_CEP(CEP **raiz, CEP *novoCEP)
 // CRIACAO
 // =================================
 
-CEP *alocaCEP()
-{
-    CEP *cep;
-    cep = (CEP *)malloc(sizeof(CEP));
-    if (cep == NULL)
-    {
-        printf("Erro ao alocar memoria para a cep.\n");
-        exit(EXIT_FAILURE);
-    }
-    return cep;
-}
-
-CEP *criaCEP(char *str_cep)
+CEP *alocaCEP(char *str_cep)
 {
     CEP *no_cep;
-    no_cep = alocaCEP();
+    no_cep = (CEP *)malloc(sizeof(CEP));
 
     strcpy(no_cep->cep, str_cep);
     no_cep->cor = RED;
@@ -90,7 +78,7 @@ CEP *cadastrarCEP()
 
     if (erro == 0)
     {
-        novoCEP = criaCEP(str_cep);
+        novoCEP = alocaCEP(str_cep);
     }
 
     return novoCEP;
@@ -232,7 +220,7 @@ void imprimir_todos_CEP(CEP *raiz)
 // =================================
 
 // Função para desalocar um cep
-void desalocar_CEP(CEP **raiz)
+void libera_no_CEP(CEP **raiz)
 {
     if (*raiz != NULL)
     {
@@ -252,7 +240,7 @@ void desalocar_arvore_CEP(CEP **raiz)
         if ((*raiz)->dir != NULL)
             desalocar_arvore_CEP(&((*raiz)->dir));
 
-        desalocar_CEP(raiz);
+        libera_no_CEP(raiz);
     }
 }
 
@@ -344,7 +332,7 @@ void remover_menor_CEP_arv(CEP **raiz)
 {
     if ((*raiz)->esq == NULL)
     {
-        desalocar_CEP(raiz);
+        libera_no_CEP(raiz);
     }
     else
     {
@@ -382,7 +370,7 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
 
             if (resultado == 0 && (*raiz)->dir == NULL)
             {
-                desalocar_CEP(raiz);
+                libera_no_CEP(raiz);
             }
             else
             {
@@ -456,15 +444,12 @@ int percorre_cidade_procurando_CEP(CIDADES *raiz, char *cep){
     int encontrado = 0;
 
     if (raiz != NULL ){
-        if (raiz->cep != NULL){
+        if (raiz->cep != NULL)
             encontrado |= consulta_CEP(raiz->cep, cep);
-        }
-        if (encontrado == 0){
+        if (encontrado == 0)
             encontrado |= percorre_cidade_procurando_CEP(raiz->esq, cep);
-        }
-        if (encontrado == 0){
+        if (encontrado == 0)
             encontrado |= percorre_cidade_procurando_CEP(raiz->dir, cep);
-        }
     }
     return encontrado;
 }

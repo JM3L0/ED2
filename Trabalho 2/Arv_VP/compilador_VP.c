@@ -4,9 +4,9 @@
 int main()
 {
     // Comando de compilação usando caminhos relativos
-    const char *comando = "gcc -o arvore_VP ../ARQUIVOS_VP.C/main_VP.c ../ARQUIVOS_VP.C/CEPs.c ../ARQUIVOS_VP.C/Cidades.c ../ARQUIVOS_VP.H/STRUCTS_VP.h ../ARQUIVOS_VP.C/interface_VP.c ../ARQUIVOS_VP.C/Estados.c ../ARQUIVOS_VP.C/utilitarios_VP.c ../ARQUIVOS_VP.C/Pessoas.c -I ARQUIVOS_VP.H";
-    //../ARQUIVOS_VP.C/main_VP.c
-    //../ARQUIVOS_VP.C/TESTES_VP.c
+    const char *comando = "gcc -o arvore_VP ../Arv_VP_C/main_VP.c ../Arv_VP_C/CEPs_VP.c ../Arv_VP_C/Cidades_VP.c ../Arv_VP_C/interface_VP.c ../Arv_VP_C/Estados_VP.c ../Arv_VP_C/utilitarios_VP.c ../Arv_VP_C/Pessoas_VP.c -I Arv_VP_H";
+    //../Arv_VP_C/main_VP.c
+    //../Arv_VP_C/TESTES_VP.c
 
     printf("Compilando o projeto...\n");
 

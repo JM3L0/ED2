@@ -3,8 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include "../Arv_VP_H/STRUCTS.h"
-#include "../Arv_VP_H/utilitarios.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
 
 ////////////////////////////////////////////// DATA //////////////////////////////////////////////
 
@@ -28,17 +28,11 @@ int dias_no_mes(int mes, int ano)
 {
     int dias;
     if (mes == 2)
-    {
         dias = eh_bissexto(ano) ? 29 : 28;
-    }
     else if (mes == 4 || mes == 6 || mes == 9 || mes == 11)
-    {
         dias = 30;
-    }
     else
-    {
         dias = 31;
-    }
     return dias;
 }
 
@@ -49,27 +43,17 @@ int validar_data(DATA *data)
 
     int valida = 1;
     if (data->ano < 1900 || data->ano > data_atual.ano)
-    {
         valida = 0;
-    }
     else if (data->mes < 1 || data->mes > 12)
-    {
         valida = 0;
-    }
     else if (data->dia < 1 || data->dia > dias_no_mes(data->mes, data->ano))
-    {
         valida = 0;
-    }
     else if (data->ano == data_atual.ano)
     {
         if (data->mes > data_atual.mes)
-        {
             valida = 0;
-        }
         else if (data->mes == data_atual.mes && data->dia > data_atual.dia)
-        {
             valida = 0;
-        }
     }
     return valida;
 }
@@ -88,18 +72,12 @@ int capturar_data(DATA *data)
             if (sscanf(entrada, "%2d/%2d/%4d", &data->dia, &data->mes, &data->ano) == 3)
             {
                 if (validar_data(data))
-                {
                     sucesso = 1;
-                }
                 else
-                {
                     printf("Erro: data invalida!\n");
-                }
             }
             else
-            {
                 printf("Erro: formato invalida!\n");
-            }
         }
     }while (sucesso == 0);
     return sucesso;
@@ -122,9 +100,7 @@ int validar_cpf(const char *cpf)
         for (int i = 0; i < 11 && todos_digitos; i++)
         {
             if (!isdigit(cpf[i]))
-            {
                 todos_digitos = 0;
-            }
         }
         valido = todos_digitos;
     }
@@ -149,14 +125,10 @@ int capturar_cpf(char *cpf)
                 sucesso = 1;
             }
             else
-            {
                 printf("Erro: CPF deve ter 11 digitos numericos!\n");
-            }
         }
         else
-        {
             printf("Erro: falha na leitura!\n");
-        }
     }while (sucesso == 0);
 
     return sucesso;
@@ -174,9 +146,7 @@ int validar_cep(const char *cep)
         for (int i = 0; i < 9 && formato_ok; i++)
         {
             if (i != 5 && !isdigit(cep[i]))
-            {
                 formato_ok = 0;
-            }
         }
         valido = formato_ok;
     }
@@ -233,14 +203,10 @@ int capturar_cep(char *cep) // já captura, valida e autocorrige o CEP
                 printf("Aviso: CEP autocorrigido para %s\n", cep);
             }
             else
-            {
                 printf("Erro: CEP inválido! Digite novamente\n");
-            }
         }
         else
-        {
             printf("Erro: falha na leitura!\n");
-        }
     } while (sucesso == 0);
     return sucesso;
 }
@@ -263,9 +229,7 @@ int autocorrigir_cep(char *cep_entrada, char *cep_corrigido)
         for (int i = 0; cep_entrada[i] != '\0' && pos_digito < 8; i++)
         {
             if (isdigit(cep_entrada[i]))
-            {
                 digitos[pos_digito++] = cep_entrada[i];
-            }
         }
 
         // Verifica se temos exatamente 8 dígitos
@@ -338,8 +302,7 @@ int digitar_int() // muito bom
 
 void limpar_buffer()
 {
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n');
 }
 
 void pausar()
@@ -347,7 +310,6 @@ void pausar()
     printf("\n\nPressione Enter para continuar...");
     int c;
     do
-    {
         c = getchar();
-    } while (c != '\n' && c != EOF); // Consome tudo até o Enter
+    while (c != '\n' && c != EOF); // Consome tudo até o Enter
 }

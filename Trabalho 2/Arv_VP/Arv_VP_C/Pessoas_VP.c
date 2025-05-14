@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Arv_VP_H/utilitarios.h"
-#include "../Arv_VP_H/STRUCTS.h"
-#include "../Arv_VP_H/Pessoas.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/Pessoas_VP.h"
 
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
@@ -21,19 +21,12 @@ int inserir_no_pessoa(PESSOAS **raiz, PESSOAS *novapessoa)
         inseriu = 1;
     }
     else if (strcasecmp(novapessoa->CPF, (*raiz)->CPF) < 0)
-    {
         inseriu = inserir_no_pessoa(&((*raiz)->esq), novapessoa);
-    }
     else if (strcasecmp(novapessoa->CPF, (*raiz)->CPF) > 0)
-    {
         inseriu = inserir_no_pessoa(&((*raiz)->dir), novapessoa);
-    }
 
     if (inseriu)
-    {
         balancear_RB(raiz);
-    }
-
     return inseriu;
 }
 
@@ -48,22 +41,10 @@ int inserir_pessoa(PESSOAS **raiz, PESSOAS *novapessoa)
     return inseriu;
 }
 
-PESSOAS *alocaPessoa()
+PESSOAS *aloca_pessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc)
 {
     PESSOAS *pessoa;
     pessoa = (PESSOAS *)malloc(sizeof(PESSOAS));
-    if (pessoa == NULL)
-    {
-        printf("Erro ao alocar memoria para a pessoa.\n");
-        exit(EXIT_FAILURE);
-    }
-    return pessoa;
-}
-
-PESSOAS *criaPessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc)
-{
-    PESSOAS *pessoa;
-    pessoa = alocaPessoa();
 
     pessoa->nome_pessoa = nome_pessoa;
     strcpy(pessoa->CPF, CPF);
@@ -78,7 +59,7 @@ PESSOAS *criaPessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_atu
     return pessoa;
 }
 
-PESSOAS *cadastrarpessoa(char *cep_natal, char *cep_atual)
+PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual)
 {
     PESSOAS *pessoa = NULL;
     DATA data_nasc;
@@ -99,16 +80,14 @@ PESSOAS *cadastrarpessoa(char *cep_natal, char *cep_atual)
 
             retorno = capturar_data(&data_nasc);
 
-            pessoa = criaPessoa(nome_pessoa, CPF, cep_natal, cep_atual, data_nasc);
+            pessoa = aloca_pessoa(nome_pessoa, CPF, cep_natal, cep_atual, data_nasc);
         }
     }
     // Limpeza em caso de falha
     if (!retorno)
     {
         if (nome_pessoa != NULL)
-        {
             free(nome_pessoa);
-        }
     }
 
     return pessoa;
@@ -193,17 +172,11 @@ PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF)
         int comparacao = strcasecmp(CPF, raiz->CPF);
 
         if (comparacao == 0)
-        {
             resultado = raiz;
-        }
         else if (comparacao < 0)
-        {
             resultado = buscar_pessoa(raiz->esq, CPF);
-        }
         else
-        {
             resultado = buscar_pessoa(raiz->dir, CPF);
-        }
     }
 
     return resultado;
@@ -241,9 +214,7 @@ void imprimir_pessoas_em_ordem(PESSOAS *raiz)
 void imprimir_todas_pessoas(PESSOAS *raiz)
 {
     if (raiz == NULL)
-    {
         printf("Nao ha pessoas cadastradas.\n");
-    }
     else
     {
         printf("=== Lista de pessoas ===\n");
@@ -256,7 +227,7 @@ void imprimir_todas_pessoas(PESSOAS *raiz)
 // =================================
 
 // Função para desalocar completamente uma pessoa
-void desalocar_pessoa(PESSOAS **raiz)
+void liberar_no_pessoa(PESSOAS **raiz)
 {
     if (*raiz != NULL)
     {
@@ -272,17 +243,17 @@ void desalocar_pessoa(PESSOAS **raiz)
 }
 
 // Função para desalocar toda a árvore de pessoas
-void desalocar_arvore_pessoas(PESSOAS **raiz)
+void liberar_arvore_pessoas(PESSOAS **raiz)
 {
     if (*raiz != NULL)
     {
         if ((*raiz)->esq != NULL)
-            desalocar_arvore_pessoas(&((*raiz)->esq));
+            liberar_arvore_pessoas(&((*raiz)->esq));
 
         if ((*raiz)->dir != NULL)
-            desalocar_arvore_pessoas(&((*raiz)->dir));
+            liberar_arvore_pessoas(&((*raiz)->dir));
 
-        desalocar_pessoa(raiz);
+        liberar_no_pessoa(raiz);
     }
 }
 
@@ -299,19 +270,12 @@ int consulta_pessoa(PESSOAS *raiz, char *CPF)
         int comparacao = strcasecmp(CPF, raiz->CPF);
 
         if (comparacao == 0)
-        {
             resultado = 1;
-        }
         else if (comparacao < 0)
-        {
             resultado = consulta_pessoa(raiz->esq, CPF);
-        }
         else
-        {
             resultado = consulta_pessoa(raiz->dir, CPF);
-        }
     }
-
     return resultado;
 }
 
@@ -327,9 +291,7 @@ PESSOAS *encontrar_menor_pessoa(PESSOAS *raiz)
     if (raiz != NULL)
     {
         while (menor->esq != NULL)
-        {
             menor = menor->esq;
-        }
     }
 
     return menor;
@@ -387,9 +349,7 @@ void mover2_direita(PESSOAS **raiz)
 void remover_menor_pessoa_arv(PESSOAS **raiz)
 {
     if ((*raiz)->esq == NULL)
-    {
-        desalocar_pessoa(raiz);
-    }
+        liberar_no_pessoa(raiz);
     else
     {
         if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
@@ -426,7 +386,7 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
 
             if (resultado == 0 && (*raiz)->dir == NULL)
             {
-                desalocar_pessoa(raiz);
+                liberar_no_pessoa(raiz);
             }
             else
             {
