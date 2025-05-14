@@ -21,19 +21,12 @@ int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
         inseriu = 1;
     }
     else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
-    {
         inseriu = inserir_no_Cidade(&((*raiz)->esq), novaCidade);
-    }
     else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
-    {
         inseriu = inserir_no_Cidade(&((*raiz)->dir), novaCidade);
-    }
 
     if (inseriu)
-    {
         balancear_RB(raiz);
-    }
-
     return inseriu;
 }
 
@@ -44,26 +37,13 @@ int inserir_Cidade(CIDADES **raiz, CIDADES *novaCidade)
 
     if (*raiz != NULL)
         (*raiz)->cor = BLACK;
-
     return inseriu;
 }
 
-CIDADES *alocaCidade()
+CIDADES *aloca_Cidade(char *nome_cidade, int populacao_city)
 {
     CIDADES *cidade;
     cidade = (CIDADES *)malloc(sizeof(CIDADES));
-    if (cidade == NULL)
-    {
-        printf("Erro ao alocar memoria para a cidade.\n");
-        exit(EXIT_FAILURE);
-    }
-    return cidade;
-}
-
-CIDADES *criaCidade(char *nome_cidade, int populacao_city)
-{
-    CIDADES *cidade;
-    cidade = alocaCidade();
 
     cidade->nome_cidade = nome_cidade;
     cidade->populacao_city = populacao_city;
@@ -86,9 +66,7 @@ CIDADES *cadastrarCidade()
     nome_cidade = ler_string();
 
     if (nome_cidade == NULL)
-    {
         erro = 1;
-    }
 
     if (erro == 0)
     {
@@ -97,17 +75,12 @@ CIDADES *cadastrarCidade()
     }
 
     if (erro == 0)
-    {
-        novaCidade = criaCidade(nome_cidade, populacao);
-    }
+        novaCidade = aloca_Cidade(nome_cidade, populacao);
     else
     {
         if (nome_cidade != NULL)
-        {
             free(nome_cidade);
-        }
     }
-
     return novaCidade;
 }
 
@@ -190,17 +163,11 @@ CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade)
         int comparacao = strcasecmp(nome_cidade, raiz->nome_cidade);
 
         if (comparacao == 0)
-        {
             resultado = raiz;
-        }
         else if (comparacao < 0)
-        {
             resultado = buscar_cidade(raiz->esq, nome_cidade);
-        }
         else
-        {
             resultado = buscar_cidade(raiz->dir, nome_cidade);
-        }
     }
 
     return resultado;
@@ -236,9 +203,7 @@ void imprimir_cidades_em_ordem(CIDADES *raiz)
 void imprimir_todas_cidades(CIDADES *raiz)
 {
     if (raiz == NULL)
-    {
         printf("Não há cidades cadastradas.\n");
-    }
     else
     {
         printf("=== Lista de Cidades ===\n");
@@ -247,7 +212,7 @@ void imprimir_todas_cidades(CIDADES *raiz)
 }
 
 // Função para limpar o nó da cidade (apenas liberar o nome)
-void limpar_no_cidade(CIDADES *cidade)
+void limpar_info_no_cidade(CIDADES *cidade)
 {
     if (cidade != NULL && cidade->nome_cidade != NULL)
     {
@@ -261,7 +226,7 @@ void limpar_no_cidade(CIDADES *cidade)
 // =================================
 
 // Função para desalocar completamente uma cidade
-void desalocar_cidade(CIDADES **raiz)
+void limpa_no_cidade(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
@@ -283,17 +248,17 @@ void desalocar_cidade(CIDADES **raiz)
 }
 
 // Função para desalocar toda a árvore de cidades
-void desalocar_arvore_cidades(CIDADES **raiz)
+void limpa_arvore_cidades(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
         if ((*raiz)->esq != NULL)
-            desalocar_arvore_cidades(&((*raiz)->esq));
+            limpa_arvore_cidades(&((*raiz)->esq));
 
         if ((*raiz)->dir != NULL)
-            desalocar_arvore_cidades(&((*raiz)->dir));
+            limpa_arvore_cidades(&((*raiz)->dir));
 
-        desalocar_cidade(raiz);
+        limpa_no_cidade(raiz);
     }
 }
 
@@ -310,17 +275,11 @@ int consulta_cidade(CIDADES *raiz, char *nome_cidade)
         int comparacao = strcasecmp(nome_cidade, raiz->nome_cidade);
 
         if (comparacao == 0)
-        {
             resultado = 1;
-        }
         else if (comparacao < 0)
-        {
             resultado = consulta_cidade(raiz->esq, nome_cidade);
-        }
         else
-        {
             resultado = consulta_cidade(raiz->dir, nome_cidade);
-        }
     }
 
     return resultado;
@@ -338,9 +297,7 @@ CIDADES *encontrar_menor_cidade(CIDADES *raiz)
     if (raiz != NULL)
     {
         while (menor->esq != NULL)
-        {
             menor = menor->esq;
-        }
     }
 
     return menor;
@@ -396,9 +353,7 @@ void mover2_direita(CIDADES **raiz)
 void remover_menor_cidade_arv(CIDADES **raiz)
 {
     if ((*raiz)->esq == NULL)
-    {
-        desalocar_cidade(raiz);
-    }
+        limpa_no_cidade(raiz);
     else
     {
         if (cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
@@ -435,7 +390,7 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
 
             if (resultado == 0 && (*raiz)->dir == NULL)
             {
-                desalocar_cidade(raiz);
+                limpa_no_cidade(raiz);
             }
             else
             {
@@ -475,9 +430,7 @@ int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade)
     int removeu = consulta_cidade(*raiz, nome_cidade);
 
     if (removeu)
-    {
         removeu = remover_cidade_no(raiz, nome_cidade);
-    }
 
     if (*raiz != NULL)
         (*raiz)->cor = BLACK;
@@ -489,19 +442,21 @@ int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade)
 // ESPECÍFICAS DO TRABALHO
 // =================================
 
-CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_capital){
-    CIDADES *cidade_mais_populosa;
-    cidade_mais_populosa = NULL;
-    int maior_populacao = -1;
-    int comp = strcasecmp(nome_capital, raiz->nome_cidade);
+CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_capital)
+{
+    CIDADES *mais_populosa = NULL;
 
-    if(raiz != NULL){
-        if(raiz->populacao_city > maior_populacao && comp != 0){
-            maior_populacao = raiz->populacao_city;
-            cidade_mais_populosa = raiz;
-        }
-        cidade_mais_populosa = verifica_cidade_mais_populosa_nao_capital(raiz->esq, nome_capital);
-        cidade_mais_populosa = verifica_cidade_mais_populosa_nao_capital(raiz->dir, nome_capital);
+    if (raiz)
+    {
+        mais_populosa = verifica_cidade_mais_populosa_nao_capital(raiz->esq, nome_capital);
+        CIDADES *dir = verifica_cidade_mais_populosa_nao_capital(raiz->dir, nome_capital);
+
+        if (strcasecmp(nome_capital, raiz->nome_cidade) != 0 && (!mais_populosa || raiz->populacao_city > mais_populosa->populacao_city))
+            mais_populosa = raiz;
+
+        if (dir != NULL && (mais_populosa == NULL || dir->populacao_city > mais_populosa->populacao_city))
+            mais_populosa = dir;
     }
-    return (cidade_mais_populosa);
+
+    return mais_populosa;
 }

@@ -6,8 +6,7 @@ int inserir_no_CEP(CEP **raiz, CEP *novoCEP);
 int inserir_CEP(CEP **raiz, CEP *novoCEP);
 
 // criacao de CEP
-CEP *alocaCEP();
-CEP *criaCEP(char *str_cep);
+CEP *alocaCEP(char *str_cep);
 CEP *cadastrarCEP();
 
 // rotacao de CEP
@@ -26,8 +25,8 @@ void imprimir_CEP_em_ordem(CEP *raiz);
 void imprimir_todos_CEP(CEP *raiz);
 
 // desalocacao
-void desalocar_CEP(CEP **raiz);
-void desalocar_arvore_CEP(CEP **raiz);
+void libera_no_CEP(CEP **raiz);
+void libera_arvore_CEP(CEP **raiz);
 
 //consulta
 int consulta_CEP(CEP *raiz, char *str_cep);
@@ -42,3 +41,5 @@ int remover_CEP_no(CEP **raiz, char *str_cep);
 int remover_CEP_arvore(CEP **raiz, char *str_cep);
 
 // especificas do trabalho
+int percorre_estado_procurando_CEP(ESTADOS *cabeca, char *cep);
+int percorre_cidade_procurando_CEP(CIDADES *raiz, char *cep);

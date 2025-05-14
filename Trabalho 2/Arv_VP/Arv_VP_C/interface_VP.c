@@ -83,7 +83,7 @@ void menu_geral()
                 }
                 if (retorno == 0)
                 {
-                    desalocar_cidade(&capital);
+                    limpa_no_cidade(&capital);
                     desalocar_estado(&novo_estado);
                 }
                 break;

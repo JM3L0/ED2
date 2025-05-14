@@ -4,8 +4,7 @@
 // Incerções e alocações
 int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade);
 int inserir_Cidade(CIDADES **raiz, CIDADES *novaCidade);
-CIDADES *alocaCidade();
-CIDADES *criaCidade(char *nome_cidade, int populacao_city);
+CIDADES *aloca_Cidade(char *nome_cidade, int populacao_city);
 CIDADES *cadastrarCidade();
 
 // Rotações
@@ -22,11 +21,11 @@ CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade);
 void imprimir_cidade(CIDADES *cidade);
 void imprimir_cidades_em_ordem(CIDADES *raiz);
 void imprimir_todas_cidades(CIDADES *raiz);
-void limpar_no_cidade(CIDADES *cidade);
+void limpar_info_no_cidade(CIDADES *cidade);
 
 // Desalocação
-void desalocar_cidade(CIDADES **raiz);
-void desalocar_arvore_cidades(CIDADES **raiz);
+void limpa_no_cidade(CIDADES **raiz);
+void limpa_arvore_cidades(CIDADES **raiz);
 
 //consulta
 int consulta_cidade(CIDADES *raiz, char *nome_cidade);

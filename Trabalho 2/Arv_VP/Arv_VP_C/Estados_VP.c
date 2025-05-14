@@ -13,18 +13,14 @@ ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado){
     while (atual != NULL && resultado == NULL)
     {
         if (strcasecmp(atual->nome_estado, nome_estado) == 0)
-        {
             resultado = atual; // Estado encontrado
-        }
         else
-        {
             atual = atual->prox;
-        }
     }
     return resultado;
 }
 
-ESTADOS *criar_estado(char *nome_estado, char *nome_capital)
+ESTADOS *aloca_estado(char *nome_estado, char *nome_capital)
 {
     ESTADOS *novo_estado = (ESTADOS *)malloc(sizeof(ESTADOS));
     if (novo_estado != NULL)
@@ -64,9 +60,7 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado)
         resultado = 1;
     }
     else
-    {
         resultado = inserir_estado_rec(&((*cabeca)->prox), novo_estado);
-    }
 
     return resultado;
 }
@@ -99,7 +93,7 @@ ESTADOS *cadastro_estado()
 
     if (!erro)
     {
-        estado = criar_estado(nome_estado, nome_capital);
+        estado = aloca_estado(nome_estado, nome_capital);
         // if (estado == NULL)
         //     erro = 1;
         // else if (!inserir_estado_rec(cabeca, estado))

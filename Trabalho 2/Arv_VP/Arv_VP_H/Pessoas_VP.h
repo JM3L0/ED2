@@ -3,9 +3,8 @@
 // insercao de pessoas
 int inserir_no_pessoa(PESSOAS **raiz, PESSOAS *novaPessoa);
 int inserir_pessoa(PESSOAS **raiz, PESSOAS *novaPessoa);
-PESSOAS *alocaPessoa();
-PESSOAS *criaPessoa(char* nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc);
-PESSOAS *cadastrarpessoa(char *cep_natal, char *cep_atual);
+PESSOAS *aloca_pessoa(char* nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc);
+PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual);
 
 // rotacao de pessoas
 void rotacao_esquerda(PESSOAS **raiz);
@@ -23,8 +22,8 @@ void imprimir_pessoas_em_ordem(PESSOAS *raiz);
 void imprimir_todas_pessoas(PESSOAS *raiz);
 
 // desalocacao de pessoas
-void desalocar_pessoa(PESSOAS **raiz);
-void desalocar_arvore_pessoas(PESSOAS **raiz);
+void liberar_no_pessoa(PESSOAS **raiz);
+void liberar_arvore_pessoas(PESSOAS **raiz);
 
 // consulta de pessoas
 int consulta_pessoa(PESSOAS *raiz, char *CPF);
