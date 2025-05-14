@@ -230,15 +230,15 @@ void libera_no_CEP(CEP **raiz)
 }
 
 // Função para desalocar toda a árvore de CEPs
-void libera_arvore_CEP(CEP **raiz)
+void desalocar_arvore_CEP(CEP **raiz)
 {
     if (*raiz != NULL)
     {
         if ((*raiz)->esq != NULL)
-            libera_arvore_CEP(&((*raiz)->esq));
+            desalocar_arvore_CEP(&((*raiz)->esq));
 
         if ((*raiz)->dir != NULL)
-            libera_arvore_CEP(&((*raiz)->dir));
+            desalocar_arvore_CEP(&((*raiz)->dir));
 
         libera_no_CEP(raiz);
     }

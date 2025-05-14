@@ -1,4 +1,5 @@
 #pragma once
+#include "../Arv_VP_H/STRUCTS_VP.h"
 
 // insercao de CEP
 
@@ -26,7 +27,7 @@ void imprimir_todos_CEP(CEP *raiz);
 
 // desalocacao
 void libera_no_CEP(CEP **raiz);
-void libera_arvore_CEP(CEP **raiz);
+void desalocar_arvore_CEP(CEP **raiz);
 
 //consulta
 int consulta_CEP(CEP *raiz, char *str_cep);

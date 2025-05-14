@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../Arv_VP_H/STRUCTS_VP.h"
 // insercao de pessoas
 int inserir_no_pessoa(PESSOAS **raiz, PESSOAS *novaPessoa);
 int inserir_pessoa(PESSOAS **raiz, PESSOAS *novaPessoa);

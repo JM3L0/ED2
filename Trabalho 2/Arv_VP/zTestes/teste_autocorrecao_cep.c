@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Arv_VP_H/STRUCTS.h"
-#include "../Arv_VP_H/utilitarios.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
 
 /*cd "c:\Users\jsous\OneDrive\Área de Trabalho\ED2\Trabalho 2"
 gcc -o Arv_VP/zTestes/teste_autocorrecao_cep Arv_VP/zTestes/teste_autocorrecao_cep.c Arv_VP/Arv_VP_C/utilitarios.c -I Arv_VP/Arv_VP_H

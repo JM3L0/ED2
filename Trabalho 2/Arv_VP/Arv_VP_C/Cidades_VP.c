@@ -329,7 +329,7 @@ void mover2_esquerda(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
-    if ((*raiz)->dir != NULL && cor((*raiz)->dir->esq) == RED)
+    if ((*raiz)->dir != NULL && Cor((*raiz)->dir->esq) == RED)
     {
         rotacao_direita(&((*raiz)->dir));
         rotacao_esquerda(raiz);
@@ -356,7 +356,7 @@ void remover_menor_cidade_arv(CIDADES **raiz)
         limpa_no_cidade(raiz);
     else
     {
-        if (cor((*raiz)->esq) == BLACK && cor((*raiz)->esq->esq) == BLACK)
+        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
             mover2_esquerda(raiz);
 
         remover_menor_cidade_arv(&((*raiz)->esq));
