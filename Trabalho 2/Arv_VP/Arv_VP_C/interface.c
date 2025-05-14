@@ -227,7 +227,8 @@ void menu_geral()
             case 6:
                 break;
             case 7:{
-                ESTADOS *estado = verifica_estado_mais_populoso(cabeca_estado);
+                ESTADOS *estado;
+                estado = verifica_estado_mais_populoso(cabeca_estado);
 
                 if (estado)
                 {
@@ -238,7 +239,7 @@ void menu_geral()
                 break;
             } 
             case 8:{
-                ESTADOS* estado;
+                ESTADOS *estado;
                 estado = NULL;
                 char nome_estado[100];
                 
@@ -259,8 +260,23 @@ void menu_geral()
                     printf("Estado nao encontrado.\n");
                 break;
             }
-            case 9:
+            case 9:{
+                char nome_estado[100];
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+                ESTADOS *estado;
+
+                estado = existe_estado(estado, nome_estado);
+                if(estado){
+                    CIDADES *cidade_mais_populosa;
+                    cidade_mais_populosa = verifica_cidade_mais_populosa_nao_capital(estado->cidade, estado->nome_capital);
+
+                    if(cidade_mais_populosa)
+                        printf("A cidade mais populosa do estado %s sem ser a capital eh: %s\n", estado->nome_estado, cidade_mais_populosa->nome_cidade);
+                    else
+                        printf("Nenhuma cidade encontrada.\n");
+                }
                 break;
+            }
             case 10:
                 break;
             case 11:

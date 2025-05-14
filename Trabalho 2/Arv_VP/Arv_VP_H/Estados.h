@@ -9,3 +9,4 @@ void desalocar_estado(ESTADOS **estado);
 int remover_estado_rec(ESTADOS **cabeca, char *nome_estado);
 int mostrar_estado(ESTADOS *estado);
 int mostrar_todos_estados(ESTADOS *cabeca);
+ESTADOS *verifica_estado_mais_populoso(ESTADOS* cabeca);
