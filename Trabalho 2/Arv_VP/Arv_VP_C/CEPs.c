@@ -100,7 +100,7 @@ CEP *cadastrarCEP()
 // ROTAÇÃO
 // =================================
 
-void rotacao_esquerda(CEP **raiz)
+static void rotacao_esquerda(CEP **raiz)
 {
     CEP *aux;
 
@@ -113,7 +113,7 @@ void rotacao_esquerda(CEP **raiz)
     (*raiz)->esq->cor = RED;
 }
 
-void rotacao_direita(CEP **raiz)
+static void rotacao_direita(CEP **raiz)
 {
     CEP *aux;
 
@@ -130,12 +130,12 @@ void rotacao_direita(CEP **raiz)
 // PROPRIEDADES
 // =================================
 
-int Cor(CEP *cep)
+static int Cor(CEP *cep)
 {
     return cep == NULL ? BLACK : cep->cor;
 }
 
-void trocar_cor(CEP *raiz)
+static void trocar_cor(CEP *raiz)
 {
     raiz->cor = !(raiz->cor);
 
@@ -146,7 +146,7 @@ void trocar_cor(CEP *raiz)
         raiz->dir->cor = !(raiz->dir->cor);
 }
 
-void balancear_RB(CEP **raiz)
+static void balancear_RB(CEP **raiz)
 {
     if (*raiz != NULL)
     {
@@ -315,7 +315,7 @@ void trocar_informacoes_CEP(CEP *cep1, CEP *cep2)
 }
 
 // Função para mover um nó vermelho para a esquerda durante a remoção
-void mover2_esquerda(CEP **raiz)
+static void mover2_esquerda(CEP **raiz)
 {
     trocar_cor(*raiz);
 
@@ -328,7 +328,7 @@ void mover2_esquerda(CEP **raiz)
 }
 
 // Função para mover um nó vermelho para a direita durante a remoção
-void mover2_direita(CEP **raiz)
+static void mover2_direita(CEP **raiz)
 {
     trocar_cor(*raiz);
 

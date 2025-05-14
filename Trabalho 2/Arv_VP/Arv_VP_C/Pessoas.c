@@ -148,12 +148,12 @@ void rotacao_direita(PESSOAS **raiz)
 // PROPRIEDADES
 // =================================
 
-int Cor(PESSOAS *pessoa)
+static int Cor(PESSOAS *pessoa)
 {
     return pessoa == NULL ? BLACK : pessoa->cor;
 }
 
-void trocar_cor(PESSOAS *raiz)
+static void trocar_cor(PESSOAS *raiz)
 {
     raiz->cor = !(raiz->cor);
 
@@ -164,7 +164,7 @@ void trocar_cor(PESSOAS *raiz)
         raiz->dir->cor = !(raiz->dir->cor);
 }
 
-void balancear_RB(PESSOAS **raiz)
+static void balancear_RB(PESSOAS **raiz)
 {
     if (*raiz != NULL)
     {

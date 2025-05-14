@@ -9,13 +9,13 @@ CIDADES *criaCidade(char *nome_cidade, int populacao_city);
 CIDADES *cadastrarCidade();
 
 // Rotações
-void rotacao_esquerda(CIDADES **raiz);
-void rotacao_direita(CIDADES **raiz);
+static void rotacao_esquerda(CIDADES **raiz);
+static void rotacao_direita(CIDADES **raiz);
 
 // Propriedades da árvore
-int Cor(CIDADES *cidade);
-void trocar_cor(CIDADES *raiz);
-void balancear_RB(CIDADES **raiz);
+static int Cor(CIDADES *cidade);
+static void trocar_cor(CIDADES *raiz);
+static void balancear_RB(CIDADES **raiz);
 
 // Busca e impressão
 CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade);
@@ -34,8 +34,8 @@ int consulta_cidade(CIDADES *raiz, char *nome_cidade);
 // Remoção
 CIDADES *encontrar_menor_cidade(CIDADES *raiz);
 void trocar_informacoes_cidades(CIDADES *cidade1, CIDADES *cidade2);
-void mover2_esquerda(CIDADES **raiz);
-void mover2_direita(CIDADES **raiz);
+static void mover2_esquerda(CIDADES **raiz);
+static void mover2_direita(CIDADES **raiz);
 void remover_menor_cidade_arv(CIDADES **raiz);
 int remover_cidade_no(CIDADES **raiz, char *nome_cidade);
 int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade); 

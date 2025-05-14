@@ -11,13 +11,13 @@ CEP *criaCEP(char *str_cep);
 CEP *cadastrarCEP();
 
 // rotacao de CEP
-void rotacao_esquerda(CEP **raiz);
-void rotacao_direita(CEP **raiz);
+static void rotacao_esquerda(CEP **raiz);
+static void rotacao_direita(CEP **raiz);
 
 // propriedades
-int Cor(CEP *cep);
-void trocar_cor(CEP *raiz);
-void balancear_RB(CEP **raiz);
+static int Cor(CEP *cep);
+static void trocar_cor(CEP *raiz);
+static void balancear_RB(CEP **raiz);
 
 // busca e impressao
 CEP *buscar_CEP(CEP *raiz, char *str_cep);
@@ -35,8 +35,8 @@ int consulta_CEP(CEP *raiz, char *str_cep);
 // removal
 CEP *encontrar_menor_CEP(CEP *raiz);
 void trocar_informacoes_CEP(CEP *cep1, CEP *cep2);
-void mover2_esquerda(CEP **raiz);
-void mover2_direita(CEP **raiz);
+static void mover2_esquerda(CEP **raiz);
+static void mover2_direita(CEP **raiz);
 void remover_menor_CEP_arv(CEP **raiz);
 int remover_CEP_no(CEP **raiz, char *str_cep);
 int remover_CEP_arvore(CEP **raiz, char *str_cep);

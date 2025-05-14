@@ -115,7 +115,7 @@ CIDADES *cadastrarCidade()
 // ROTAÇÃO
 // =================================
 
-void rotacao_esquerda(CIDADES **raiz)
+static void rotacao_esquerda(CIDADES **raiz)
 {
     CIDADES *aux;
 
@@ -128,7 +128,7 @@ void rotacao_esquerda(CIDADES **raiz)
     (*raiz)->esq->cor = RED;
 }
 
-void rotacao_direita(CIDADES **raiz)
+static void rotacao_direita(CIDADES **raiz)
 {
     CIDADES *aux;
 
@@ -145,12 +145,12 @@ void rotacao_direita(CIDADES **raiz)
 // PROPRIEDADES
 // =================================
 
-int Cor(CIDADES *cidade)
+static int Cor(CIDADES *cidade)
 {
     return cidade == NULL ? BLACK : cidade->cor;
 }
 
-void trocar_cor(CIDADES *raiz)
+static void trocar_cor(CIDADES *raiz)
 {
     raiz->cor = !(raiz->cor);
 
@@ -161,7 +161,7 @@ void trocar_cor(CIDADES *raiz)
         raiz->dir->cor = !(raiz->dir->cor);
 }
 
-void balancear_RB(CIDADES **raiz)
+static void balancear_RB(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
@@ -368,7 +368,7 @@ void trocar_informacoes_cidades(CIDADES *cidade1, CIDADES *cidade2)
 }
 
 // Função para mover um nó vermelho para a esquerda durante a remoção
-void mover2_esquerda(CIDADES **raiz)
+static void mover2_esquerda(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
@@ -381,7 +381,7 @@ void mover2_esquerda(CIDADES **raiz)
 }
 
 // Função para mover um nó vermelho para a direita durante a remoção
-void mover2_direita(CIDADES **raiz)
+static void mover2_direita(CIDADES **raiz)
 {
     trocar_cor(*raiz);
 
