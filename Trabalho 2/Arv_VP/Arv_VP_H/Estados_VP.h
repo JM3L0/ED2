@@ -1,5 +1,5 @@
 #pragma once
-#include "../Arv_VP_H/STRUCTS.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
 
 ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado);
 ESTADOS *criar_estado(char *nome_estado, char *nome_capital);

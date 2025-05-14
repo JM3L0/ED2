@@ -3,8 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include "../Arv_VP_H/STRUCTS.h"
-#include "../Arv_VP_H/utilitarios.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
 
 ////////////////////////////////////////////// DATA //////////////////////////////////////////////
 

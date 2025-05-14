@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Arv_VP_H/utilitarios.h"
-#include "../Arv_VP_H/STRUCTS.h"
-#include "../Arv_VP_H/Pessoas.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/Pessoas_VP.h"
 
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 

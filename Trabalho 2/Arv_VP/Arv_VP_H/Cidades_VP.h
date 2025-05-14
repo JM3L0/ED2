@@ -1,5 +1,5 @@
 #pragma once
-#include "../Arv_VP_H/STRUCTS.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
 
 // Incerções e alocações
 int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade);

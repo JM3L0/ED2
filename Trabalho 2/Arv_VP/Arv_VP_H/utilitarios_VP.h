@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Arv_VP_H/STRUCTS.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
 
 void obter_data_atual(DATA *data_atual);
 int eh_bissexto(int ano);

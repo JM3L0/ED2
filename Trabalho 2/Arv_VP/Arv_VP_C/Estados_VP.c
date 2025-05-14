@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../Arv_VP_H/Estados.h"
-#include "../Arv_VP_H/utilitarios.h"
-#include "../Arv_VP_H/STRUCTS.h"
+#include "../Arv_VP_H/Estados_VP.h"
+#include "../Arv_VP_H/utilitarios_VP.h"
+#include "../Arv_VP_H/STRUCTS_VP.h"
 
 ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado){
     ESTADOS *resultado = NULL;
