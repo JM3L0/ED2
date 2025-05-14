@@ -233,8 +233,7 @@ void menu_geral()
                 {
                     printf("Estado mais populoso: %s\n", estado->nome_estado);
                     printf("Populacao: %d\n", estado->populacao_estado);
-                }
-                else
+                }else
                     printf("Nenhum estado cadastrado.\n");
                 break;
             } 
@@ -246,8 +245,16 @@ void menu_geral()
                 ler_string_simples(nome_estado, sizeof(nome_estado));
 
                 estado = existe_estado(cabeca_estado, nome_estado);
-                if(estado)
-                    printf("A populacao da capital do estado %s eh: %d\n", estado->nome_estado, estado->cidade->populacao_city);
+                if(estado){
+                    CIDADES *capital;
+                    capital = NULL;
+
+                    capital = buscar_cidade(estado->cidade, estado->nome_capital);
+                    if(capital)
+                        printf("A populacao da capital do estado %s eh: %d\n", estado->nome_estado, capital->populacao_city);
+                    else
+                        printf("ERRO: Capital nao encontrada\n");
+                }
                 else
                     printf("Estado nao encontrado.\n");
                 break;
