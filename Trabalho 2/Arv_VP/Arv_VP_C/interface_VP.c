@@ -63,7 +63,7 @@ void menu_geral()
                     {
 
                         printf("== Cadastro de Capital ==\n");
-                        capital = cadastroCidade();
+                        capital = cadastrarCidade();
 
                         if (capital != NULL)
                         {
@@ -293,10 +293,4 @@ void menu_geral()
             }
         }
     } while (opcao1 != 0);
-}
-
-int main()
-{
-    menu_geral();
-    return 0;
 }

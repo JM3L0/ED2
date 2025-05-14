@@ -26,7 +26,7 @@ int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
         inseriu = inserir_no_Cidade(&((*raiz)->dir), novaCidade);
 
     if (inseriu)
-        balancear_RB(raiz);
+        balancear_RB_cidade(raiz);
     return inseriu;
 }
 
@@ -88,7 +88,7 @@ CIDADES *cadastrarCidade()
 // ROTAÇÃO
 // =================================
 
-static void rotacao_esquerda(CIDADES **raiz)
+void rotacao_esquerda_cidade(CIDADES **raiz)
 {
     CIDADES *aux;
 
@@ -101,7 +101,7 @@ static void rotacao_esquerda(CIDADES **raiz)
     (*raiz)->esq->cor = RED;
 }
 
-static void rotacao_direita(CIDADES **raiz)
+void rotacao_direita_cidade(CIDADES **raiz)
 {
     CIDADES *aux;
 
@@ -118,12 +118,12 @@ static void rotacao_direita(CIDADES **raiz)
 // PROPRIEDADES
 // =================================
 
-static int Cor(CIDADES *cidade)
+int Cor_cidade(CIDADES *cidade)
 {
     return cidade == NULL ? BLACK : cidade->cor;
 }
 
-static void trocar_cor(CIDADES *raiz)
+void trocar_cor_cidade(CIDADES *raiz)
 {
     raiz->cor = !(raiz->cor);
 
@@ -134,18 +134,18 @@ static void trocar_cor(CIDADES *raiz)
         raiz->dir->cor = !(raiz->dir->cor);
 }
 
-static void balancear_RB(CIDADES **raiz)
+void balancear_RB_cidade(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
-        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->dir) == RED)
-            rotacao_esquerda(raiz);
+        if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->dir) == RED)
+            rotacao_esquerda_cidade(raiz);
 
-        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->esq->esq) == RED)
-            rotacao_direita(raiz);
+        if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->esq->esq) == RED)
+            rotacao_direita_cidade(raiz);
 
-        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->dir) == RED)
-            trocar_cor(*raiz);
+        if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->dir) == RED)
+            trocar_cor_cidade(*raiz);
     }
 }
 
@@ -325,27 +325,27 @@ void trocar_informacoes_cidades(CIDADES *cidade1, CIDADES *cidade2)
 }
 
 // Função para mover um nó vermelho para a esquerda durante a remoção
-static void mover2_esquerda(CIDADES **raiz)
+void mover2_esquerda_cidade(CIDADES **raiz)
 {
-    trocar_cor(*raiz);
+    trocar_cor_cidade(*raiz);
 
-    if ((*raiz)->dir != NULL && Cor((*raiz)->dir->esq) == RED)
+    if ((*raiz)->dir != NULL && Cor_cidade((*raiz)->dir->esq) == RED)
     {
-        rotacao_direita(&((*raiz)->dir));
-        rotacao_esquerda(raiz);
-        trocar_cor(*raiz);
+        rotacao_direita_cidade(&((*raiz)->dir));
+        rotacao_esquerda_cidade(raiz);
+        trocar_cor_cidade(*raiz);
     }
 }
 
 // Função para mover um nó vermelho para a direita durante a remoção
-static void mover2_direita(CIDADES **raiz)
+void mover2_direita_cidade(CIDADES **raiz)
 {
-    trocar_cor(*raiz);
+    trocar_cor_cidade(*raiz);
 
-    if ((*raiz)->esq != NULL && Cor((*raiz)->esq->esq) == RED)
+    if ((*raiz)->esq != NULL && Cor_cidade((*raiz)->esq->esq) == RED)
     {
-        rotacao_direita(raiz);
-        trocar_cor(*raiz);
+        rotacao_direita_cidade(raiz);
+        trocar_cor_cidade(*raiz);
     }
 }
 
@@ -356,11 +356,11 @@ void remover_menor_cidade_arv(CIDADES **raiz)
         limpa_no_cidade(raiz);
     else
     {
-        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
-            mover2_esquerda(raiz);
+        if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->esq->esq) == BLACK)
+            mover2_esquerda_cidade(raiz);
 
         remover_menor_cidade_arv(&((*raiz)->esq));
-        balancear_RB(raiz);
+        balancear_RB_cidade(raiz);
     }
 }
 
@@ -377,16 +377,16 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
         {
             if ((*raiz)->esq != NULL)
             {
-                if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
-                    mover2_esquerda(raiz);
+                if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->esq->esq) == BLACK)
+                    mover2_esquerda_cidade(raiz);
             }
 
             removeu = remover_cidade_no(&((*raiz)->esq), nome_cidade);
         }
         else
         {
-            if (Cor((*raiz)->esq) == RED)
-                rotacao_direita(raiz);
+            if (Cor_cidade((*raiz)->esq) == RED)
+                rotacao_direita_cidade(raiz);
 
             if (resultado == 0 && (*raiz)->dir == NULL)
             {
@@ -396,8 +396,8 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
             {
                 if ((*raiz)->dir != NULL)
                 {
-                    if (Cor((*raiz)->dir) == BLACK && Cor((*raiz)->dir->esq) == BLACK)
-                        mover2_direita(raiz);
+                    if (Cor_cidade((*raiz)->dir) == BLACK && Cor_cidade((*raiz)->dir->esq) == BLACK)
+                        mover2_direita_cidade(raiz);
                 }
 
                 if (resultado == 0)
@@ -415,7 +415,7 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
         // Rebalanceia a árvore se o nó atual ainda existe
         if (*raiz != NULL)
         {
-            balancear_RB(raiz);
+            balancear_RB_cidade(raiz);
         }
     }
     else

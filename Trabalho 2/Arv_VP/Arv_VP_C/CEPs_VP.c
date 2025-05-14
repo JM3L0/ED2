@@ -31,7 +31,7 @@ int inserir_no_CEP(CEP **raiz, CEP *novoCEP)
 
     if (inseriu)
     {
-        balancear_RB(raiz);
+        balancear_RB_CEP(raiz);
     }
 
     return inseriu;
@@ -88,7 +88,7 @@ CEP *cadastrarCEP()
 // ROTAÇÃO
 // =================================
 
-static void rotacao_esquerda(CEP **raiz)
+void rotacao_esquerda(CEP **raiz)
 {
     CEP *aux;
 
@@ -101,7 +101,7 @@ static void rotacao_esquerda(CEP **raiz)
     (*raiz)->esq->cor = RED;
 }
 
-static void rotacao_direita(CEP **raiz)
+void rotacao_direita(CEP **raiz)
 {
     CEP *aux;
 
@@ -118,12 +118,12 @@ static void rotacao_direita(CEP **raiz)
 // PROPRIEDADES
 // =================================
 
-static int Cor(CEP *cep)
+int Cor_CEP(CEP *cep)
 {
     return cep == NULL ? BLACK : cep->cor;
 }
 
-static void trocar_cor(CEP *raiz)
+void trocar_cor_CEP(CEP *raiz)
 {
     raiz->cor = !(raiz->cor);
 
@@ -134,18 +134,18 @@ static void trocar_cor(CEP *raiz)
         raiz->dir->cor = !(raiz->dir->cor);
 }
 
-static void balancear_RB(CEP **raiz)
+void balancear_RB_CEP(CEP **raiz)
 {
     if (*raiz != NULL)
     {
-        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->dir) == RED)
+        if (Cor_CEP((*raiz)->esq) == BLACK && Cor_CEP((*raiz)->dir) == RED)
             rotacao_esquerda(raiz);
 
-        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->esq->esq) == RED)
+        if (Cor_CEP((*raiz)->esq) == RED && Cor_CEP((*raiz)->esq->esq) == RED)
             rotacao_direita(raiz);
 
-        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->dir) == RED)
-            trocar_cor(*raiz);
+        if (Cor_CEP((*raiz)->esq) == RED && Cor_CEP((*raiz)->dir) == RED)
+            trocar_cor_CEP(*raiz);
     }
 }
 
@@ -303,27 +303,27 @@ void trocar_informacoes_CEP(CEP *cep1, CEP *cep2)
 }
 
 // Função para mover um nó vermelho para a esquerda durante a remoção
-static void mover2_esquerda(CEP **raiz)
+void mover2_esquerda_CEP(CEP **raiz)
 {
-    trocar_cor(*raiz);
+    trocar_cor_CEP(*raiz);
 
-    if ((*raiz)->dir != NULL && Cor((*raiz)->dir->esq) == RED)
+    if ((*raiz)->dir != NULL && Cor_CEP((*raiz)->dir->esq) == RED)
     {
         rotacao_direita(&((*raiz)->dir));
         rotacao_esquerda(raiz);
-        trocar_cor(*raiz);
+        trocar_cor_CEP(*raiz);
     }
 }
 
 // Função para mover um nó vermelho para a direita durante a remoção
-static void mover2_direita(CEP **raiz)
+void mover2_direita_CEP(CEP **raiz)
 {
-    trocar_cor(*raiz);
+    trocar_cor_CEP(*raiz);
 
-    if ((*raiz)->esq != NULL && Cor((*raiz)->esq->esq) == RED)
+    if ((*raiz)->esq != NULL && Cor_CEP((*raiz)->esq->esq) == RED)
     {
         rotacao_direita(raiz);
-        trocar_cor(*raiz);
+        trocar_cor_CEP(*raiz);
     }
 }
 
@@ -336,11 +336,11 @@ void remover_menor_CEP_arv(CEP **raiz)
     }
     else
     {
-        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
-            mover2_esquerda(raiz);
+        if (Cor_CEP((*raiz)->esq) == BLACK && Cor_CEP((*raiz)->esq->esq) == BLACK)
+            mover2_esquerda_CEP(raiz);
 
         remover_menor_CEP_arv(&((*raiz)->esq));
-        balancear_RB(raiz);
+        balancear_RB_CEP(raiz);
     }
 }
 
@@ -357,15 +357,15 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
         {
             if ((*raiz)->esq != NULL)
             {
-                if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
-                    mover2_esquerda(raiz);
+                if (Cor_CEP((*raiz)->esq) == BLACK && Cor_CEP((*raiz)->esq->esq) == BLACK)
+                    mover2_esquerda_CEP(raiz);
             }
 
             removeu = remover_CEP_no(&((*raiz)->esq), str_cep);
         }
         else
         {
-            if (Cor((*raiz)->esq) == RED)
+            if (Cor_CEP((*raiz)->esq) == RED)
                 rotacao_direita(raiz);
 
             if (resultado == 0 && (*raiz)->dir == NULL)
@@ -376,8 +376,8 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
             {
                 if ((*raiz)->dir != NULL)
                 {
-                    if (Cor((*raiz)->dir) == BLACK && Cor((*raiz)->dir->esq) == BLACK)
-                        mover2_direita(raiz);
+                    if (Cor_CEP((*raiz)->dir) == BLACK && Cor_CEP((*raiz)->dir->esq) == BLACK)
+                        mover2_direita_CEP(raiz);
                 }
 
                 if (resultado == 0)
@@ -395,7 +395,7 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
         // Rebalanceia a árvore se o nó atual ainda existe
         if (*raiz != NULL)
         {
-            balancear_RB(raiz);
+            balancear_RB_CEP(raiz);
         }
     }
     else

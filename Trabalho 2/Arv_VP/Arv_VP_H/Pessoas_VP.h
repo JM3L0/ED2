@@ -7,13 +7,13 @@ PESSOAS *aloca_pessoa(char* nome_pessoa, char *CPF, char *cep_natal, char *cep_a
 PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual);
 
 // rotacao de pessoas
-static void rotacao_esquerda(PESSOAS **raiz);
-static void rotacao_direita(PESSOAS **raiz);
+void rotacao_esquerda_pessoa(PESSOAS **raiz);
+void rotacao_direita_pessoa(PESSOAS **raiz);
 
 // propriedades de pessoas
-static int Cor(PESSOAS *pessoa);
-static void trocar_cor(PESSOAS *raiz);
-static void balancear_RB(PESSOAS **raiz);
+int Cor_pessoa(PESSOAS *pessoa);
+void trocar_cor_pessoa(PESSOAS *raiz);
+void balancear_RB_pessoa(PESSOAS **raiz);
 
 // busca e impressao de pessoas
 PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF);
@@ -31,8 +31,8 @@ int consulta_pessoa(PESSOAS *raiz, char *CPF);
 // removal de pessoas
 PESSOAS *encontrar_menor_pessoa(PESSOAS *raiz);
 void trocar_informacoes_pessoas(PESSOAS *pessoa1, PESSOAS *pessoa2);
-static void mover2_esquerda(PESSOAS **raiz);
-static void mover2_direita(PESSOAS **raiz);
+void mover2_esquerda_pessoa(PESSOAS **raiz);
+void mover2_direita_pessoa(PESSOAS **raiz);
 void remover_menor_pessoa_arv(PESSOAS **raiz);
 int remover_pessoa_no(PESSOAS **raiz, char *CPF);
 int remover_pessoa_arvore(PESSOAS **raiz, char *CPF);

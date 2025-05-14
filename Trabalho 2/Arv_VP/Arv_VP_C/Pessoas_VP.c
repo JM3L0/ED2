@@ -26,7 +26,7 @@ int inserir_no_pessoa(PESSOAS **raiz, PESSOAS *novapessoa)
         inseriu = inserir_no_pessoa(&((*raiz)->dir), novapessoa);
 
     if (inseriu)
-        balancear_RB(raiz);
+        balancear_RB_pessoa(raiz);
     return inseriu;
 }
 
@@ -97,7 +97,7 @@ PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual)
 // ROTAÇÃO
 // =================================
 
-void rotacao_esquerda(PESSOAS **raiz)
+void rotacao_esquerda_pessoa(PESSOAS **raiz)
 {
     PESSOAS *aux;
 
@@ -110,7 +110,7 @@ void rotacao_esquerda(PESSOAS **raiz)
     (*raiz)->esq->cor = RED;
 }
 
-void rotacao_direita(PESSOAS **raiz)
+void rotacao_direita_pessoa(PESSOAS **raiz)
 {
     PESSOAS *aux;
 
@@ -127,12 +127,12 @@ void rotacao_direita(PESSOAS **raiz)
 // PROPRIEDADES
 // =================================
 
-static int Cor(PESSOAS *pessoa)
+int Cor_pessoa(PESSOAS *pessoa)
 {
     return pessoa == NULL ? BLACK : pessoa->cor;
 }
 
-static void trocar_cor(PESSOAS *raiz)
+void trocar_cor_pessoa(PESSOAS *raiz)
 {
     raiz->cor = !(raiz->cor);
 
@@ -143,18 +143,18 @@ static void trocar_cor(PESSOAS *raiz)
         raiz->dir->cor = !(raiz->dir->cor);
 }
 
-static void balancear_RB(PESSOAS **raiz)
+void balancear_RB_pessoa(PESSOAS **raiz)
 {
     if (*raiz != NULL)
     {
-        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->dir) == RED)
-            rotacao_esquerda(raiz);
+        if (Cor_pessoa((*raiz)->esq) == BLACK && Cor_pessoa((*raiz)->dir) == RED)
+            rotacao_esquerda_pessoa(raiz);
 
-        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->esq->esq) == RED)
-            rotacao_direita(raiz);
+        if (Cor_pessoa((*raiz)->esq) == RED && Cor_pessoa((*raiz)->esq->esq) == RED)
+            rotacao_direita_pessoa(raiz);
 
-        if (Cor((*raiz)->esq) == RED && Cor((*raiz)->dir) == RED)
-            trocar_cor(*raiz);
+        if (Cor_pessoa((*raiz)->esq) == RED && Cor_pessoa((*raiz)->dir) == RED)
+            trocar_cor_pessoa(*raiz);
     }
 }
 
@@ -321,27 +321,27 @@ void trocar_informacoes_pessoas(PESSOAS *pessoa1, PESSOAS *pessoa2)
 }
 
 // Função para mover um nó vermelho para a esquerda durante a remoção
-void mover2_esquerda(PESSOAS **raiz)
+void mover2_esquerda_pessoa(PESSOAS **raiz)
 {
-    trocar_cor(*raiz);
+    trocar_cor_pessoa(*raiz);
 
-    if ((*raiz)->dir != NULL && Cor((*raiz)->dir->esq) == RED)
+    if ((*raiz)->dir != NULL && Cor_pessoa((*raiz)->dir->esq) == RED)
     {
-        rotacao_direita(&((*raiz)->dir));
-        rotacao_esquerda(raiz);
-        trocar_cor(*raiz);
+        rotacao_direita_pessoa(&((*raiz)->dir));
+        rotacao_esquerda_pessoa(raiz);
+        trocar_cor_pessoa(*raiz);
     }
 }
 
 // Função para mover um nó vermelho para a direita durante a remoção
-void mover2_direita(PESSOAS **raiz)
+void mover2_direita_pessoa(PESSOAS **raiz)
 {
-    trocar_cor(*raiz);
+    trocar_cor_pessoa(*raiz);
 
-    if ((*raiz)->esq != NULL && Cor((*raiz)->esq->esq) == RED)
+    if ((*raiz)->esq != NULL && Cor_pessoa((*raiz)->esq->esq) == RED)
     {
-        rotacao_direita(raiz);
-        trocar_cor(*raiz);
+        rotacao_direita_pessoa(raiz);
+        trocar_cor_pessoa(*raiz);
     }
 }
 
@@ -352,11 +352,11 @@ void remover_menor_pessoa_arv(PESSOAS **raiz)
         liberar_no_pessoa(raiz);
     else
     {
-        if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
-            mover2_esquerda(raiz);
+        if (Cor_pessoa((*raiz)->esq) == BLACK && Cor_pessoa((*raiz)->esq->esq) == BLACK)
+            mover2_esquerda_pessoa(raiz);
 
         remover_menor_pessoa_arv(&((*raiz)->esq));
-        balancear_RB(raiz);
+        balancear_RB_pessoa(raiz);
     }
 }
 
@@ -373,16 +373,16 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
         {
             if ((*raiz)->esq != NULL)
             {
-                if (Cor((*raiz)->esq) == BLACK && Cor((*raiz)->esq->esq) == BLACK)
-                    mover2_esquerda(raiz);
+                if (Cor_pessoa((*raiz)->esq) == BLACK && Cor_pessoa((*raiz)->esq->esq) == BLACK)
+                    mover2_esquerda_pessoa(raiz);
             }
 
             removeu = remover_pessoa_no(&((*raiz)->esq), CPF);
         }
         else
         {
-            if (Cor((*raiz)->esq) == RED)
-                rotacao_direita(raiz);
+            if (Cor_pessoa((*raiz)->esq) == RED)
+                rotacao_direita_pessoa(raiz);
 
             if (resultado == 0 && (*raiz)->dir == NULL)
             {
@@ -392,8 +392,8 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
             {
                 if ((*raiz)->dir != NULL)
                 {
-                    if (Cor((*raiz)->dir) == BLACK && Cor((*raiz)->dir->esq) == BLACK)
-                        mover2_direita(raiz);
+                    if (Cor_pessoa((*raiz)->dir) == BLACK && Cor_pessoa((*raiz)->dir->esq) == BLACK)
+                        mover2_direita_pessoa(raiz);
                 }
 
                 if (resultado == 0)
@@ -411,7 +411,7 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
         // Rebalanceia a árvore se o nó atual ainda existe
         if (*raiz != NULL)
         {
-            balancear_RB(raiz);
+            balancear_RB_pessoa(raiz);
         }
     }
     else

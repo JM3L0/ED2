@@ -5,6 +5,7 @@
 #include "../Arv_VP_H/Estados_VP.h"
 #include "../Arv_VP_H/utilitarios_VP.h"
 #include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/Cidades_VP.h"
 
 ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado){
     ESTADOS *resultado = NULL;
@@ -48,8 +49,9 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado)
     }
     else if (strcasecmp((*cabeca)->nome_estado, novo_estado->nome_estado) == 0)
     {
-        limpar_estado(novo_estado);
-        free(novo_estado);
+        // limpar_estado(novo_estado);
+        // free(novo_estado);
+        desalocar_estado(&novo_estado);
         resultado = 0; // Estado já existe
     }
     else if (strcasecmp((*cabeca)->nome_estado, novo_estado->nome_estado) > 0)
@@ -79,25 +81,12 @@ ESTADOS *cadastro_estado()
         erro = 1;
         free(nome_estado);
     }
-
-    // if (!erro)
-    // {
-    //     printf("Digite o nome da Capital: ");
-    //     nome_capital = ler_string();
-    //     if (nome_capital == NULL)
-    //     {
-    //         free(nome_estado);
-    //         erro = 1;
-    //     }
-    // }
-
+    // a capital sera add na interface 
     if (!erro)
     {
         estado = aloca_estado(nome_estado, nome_capital);
-        // if (estado == NULL)
-        //     erro = 1;
-        // else if (!inserir_estado_rec(cabeca, estado))
-        //     erro = 1;
+        if (estado)
+            erro = inserir_estado_rec(&estado, estado);
     }
     //o resto do código deve ser feito na interface.c
     return estado;
@@ -115,7 +104,7 @@ void desalocar_estado(ESTADOS **estado)
         if ((*estado)->cidade != NULL)
         {
             // Desalocar a árvore de cidades associada ao estado
-            desalocar_arvore_cidades(&((*estado)->cidade));
+            limpa_arvore_cidades(&((*estado)->cidade));
         }
         free(*estado);
     }
@@ -138,9 +127,10 @@ int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
                 (*cabeca)->ant = temp->ant; // Atualiza o ponteiro anterior do próximo nó
             if (temp->ant != NULL)
                 temp->ant->prox = *cabeca; // Atualiza o ponteiro próximo do nó anterior
-
-            limpar_estado(temp);
-            free(temp);
+            
+            desalocar_estado(&temp);
+            // limpar_estado(temp);
+            // free(temp);
 
             resultado = 1; // Estado removido com sucesso
         }
