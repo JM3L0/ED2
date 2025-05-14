@@ -238,8 +238,20 @@ void menu_geral()
                     printf("Nenhum estado cadastrado.\n");
                 break;
             } 
-            case 8:
+            case 8:{
+                ESTADOS* estado;
+                estado = NULL;
+                char nome_estado[100];
+                
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+
+                estado = existe_estado(cabeca_estado, nome_estado);
+                if(estado)
+                    printf("A populacao da capital do estado %s eh: %d\n", estado->nome_estado, estado->cidade->populacao_city);
+                else
+                    printf("Estado nao encontrado.\n");
                 break;
+            }
             case 9:
                 break;
             case 10:
