@@ -34,6 +34,7 @@ typedef struct ESTADOS// lista duplamente encadeada
     char *nome_estado;
     char *nome_capital;
     int quant_city;
+    int populacao_estado;
     struct CIDADES *cidade;
     struct ESTADOS *prox, *ant;
 

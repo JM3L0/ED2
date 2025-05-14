@@ -435,3 +435,36 @@ int remover_CEP_arvore(CEP **raiz, char *str_cep)
 // =================================
 // ESPECÍFICAS DO TRABALHO
 // =================================
+
+int percorre_estado_procurando_CEP(ESTADOS *cabeca, char *cep){
+    ESTADOS *atual = cabeca;
+    int encontrado = 0;
+
+    do {
+        encontrado |= percorre_cidade_procurando_CEP(atual->cidade, cep);
+        if (encontrado == 0){
+            atual = atual->prox;
+        }
+
+    }while (atual != NULL && encontrado == 0);
+
+    return encontrado;
+}
+
+int percorre_cidade_procurando_CEP(CIDADES *raiz, char *cep){
+    CIDADES *atual = raiz;
+    int encontrado = 0;
+
+    if (raiz != NULL ){
+        if (raiz->cep != NULL){
+            encontrado |= consulta_CEP(raiz->cep, cep);
+        }
+        if (encontrado == 0){
+            encontrado |= percorre_cidade_procurando_CEP(raiz->esq, cep);
+        }
+        if (encontrado == 0){
+            encontrado |= percorre_cidade_procurando_CEP(raiz->dir, cep);
+        }
+    }
+    return encontrado;
+}

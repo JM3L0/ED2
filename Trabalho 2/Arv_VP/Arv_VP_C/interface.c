@@ -70,6 +70,7 @@ void menu_geral()
                         {
                             retorno = inserir_Cidade(&novo_estado->cidade, capital);
                             novo_estado->quant_city = 1;
+                            novo_estado->populacao_estado += capital->populacao_city;
                         }
                         else
                         {
@@ -105,6 +106,7 @@ void menu_geral()
                         if (retorno){
 
                             estado->quant_city++;
+                            estado->populacao_estado += novaCidade->populacao_city;
 
                             printf("Cadastre o CEP da cidade: ");
 

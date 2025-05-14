@@ -33,6 +33,7 @@ ESTADOS *criar_estado(char *nome_estado, char *nome_capital)
         novo_estado->nome_estado = nome_estado;
         novo_estado->nome_capital = nome_capital;
         novo_estado->quant_city = 0;
+        novo_estado->populacao_estado = 0;
         novo_estado->cidade = NULL;
         novo_estado->prox = NULL;
         novo_estado->ant = NULL;
