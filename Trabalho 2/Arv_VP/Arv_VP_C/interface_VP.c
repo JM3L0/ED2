@@ -50,64 +50,52 @@ void menu_geral()
         {
             switch (opcao1)
             {
-            case 1:
-            {
-                ESTADOS *novo_estado = NULL;
+            case 1: {
+                ESTADOS *novo_estado = cadastro_estado();
                 CIDADES *capital = NULL;
-                int cadastro_completo = 0;
 
-                novo_estado = cadastro_estado();
-                if (novo_estado != NULL) {
-                    retorno = inserir_estado_rec(&cabeca_estado, novo_estado);
-                    if (retorno) {
-                        printf("== Cadastro de Capital ==\n");
-                        capital = cadastrarCidade();
-                        if (capital != NULL) {
-                            retorno = inserir_Cidade(&novo_estado->cidade, capital);
-                            if (retorno) {
-                                cadastro_completo = 1;
-                                
-                                // Cadastro dos CEPs
-                                do {
-                                    CEP *novoCEP = cadastrarCEP();
-                                    if (novoCEP) {
-                                        retorno = percorre_estados_procurando_CEP(cabeca_estado, novoCEP->cep);
-                                        if (!retorno) {
-                                            retorno = inserir_CEP(&capital->cep, novoCEP);
-                                            printf(retorno ? "CEP cadastrado com sucesso.\n" : "Erro ao inserir o CEP.\n");
-                                        } else {
-                                            printf("Erro: CEP já existe no sistema.\n");
-                                        }
-                                    } else {
-                                        printf("Erro ao cadastrar o CEP.\n");
-                                    }
-                                    
-                                    printf("\nDeseja cadastrar outro CEP? [1] - SIM [0] - NAO: ");
-                                    opcao2 = digitar_int();
-                                } while (opcao2 == 1);
-                                
-                                // Atualiza informações do estado
-                                novo_estado->quant_city = 1;
-                                novo_estado->populacao_estado += capital->populacao_city;
-                            } else {
-                                printf("Erro ao inserir a capital no estado.\n");
-                            }
-                        } else {
-                            printf("Erro ao cadastrar a capital.\n");
-                        }
-                    } else {
-                        printf("Erro ao cadastrar o estado.\n");
-                    }
-                } else {
+                if (!novo_estado) {
                     printf("Erro ao criar estado.\n");
+                } else if (!inserir_estado_rec(&cabeca_estado, novo_estado)) {
+                    printf("Erro ao cadastrar o estado.\n");
+                } else {
+                    printf("== Cadastro de Capital ==\n");
+                    capital = cadastrarCidade();
+                    if (!capital) {
+                        printf("Erro ao cadastrar a capital.\n");
+                    } else if (!inserir_Cidade(&novo_estado->cidade, capital)) {
+                        printf("Erro ao inserir a capital no estado.\n");
+                    } else {
+                        // Cadastro dos CEPs
+                        do {
+                            CEP *novoCEP = cadastrarCEP();
+                            if (novoCEP) {
+                                if (percorre_estados_procurando_CEP(cabeca_estado, novoCEP->cep)) {
+                                    printf("Erro: CEP já existe no sistema.\n");
+                                } else if (!inserir_CEP(&capital->cep, novoCEP)) {
+                                    printf("Erro ao inserir o CEP.\n");
+                                } else {
+                                    printf("CEP cadastrado com sucesso.\n");
+                                    novoCEP = NULL; // evita desalocar se tiver sido inserido
+                                }
+                                if (novoCEP) limpa_no_cep(&novoCEP);
+                            } else {
+                                printf("Erro ao cadastrar o CEP.\n");
+                            }
+                            printf("\nDeseja cadastrar outro CEP? [1] - SIM [0] - NAO: ");
+                            opcao2 = digitar_int();
+                        } while (opcao2 == 1);
+
+                        // Atualiza informações do estado
+                        novo_estado->quant_city = 1;
+                        novo_estado->populacao_estado += capital->populacao_city;
+                    }
                 }
 
-                // Limpeza em caso de falha
-                if (!cadastro_completo) {
-                    if (capital) limpa_no_cidade(&capital);
-                    if (novo_estado) desalocar_estado(&novo_estado);
-                }
-                
+                // Desalocações consolidadas para estado e capital
+                if (capital && !novo_estado->cidade) limpa_no_cidade(&capital);
+                if (novo_estado && !novo_estado->quant_city) desalocar_estado(&novo_estado);
+
                 break;
             }
             case 2:{
