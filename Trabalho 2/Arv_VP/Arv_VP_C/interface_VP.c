@@ -78,7 +78,7 @@ void menu_geral()
                                     printf("CEP cadastrado com sucesso.\n");
                                     novoCEP = NULL; // evita desalocar se tiver sido inserido
                                 }
-                                if (novoCEP) limpa_no_cep(&novoCEP);
+                                if (novoCEP) libera_no_CEP(&novoCEP);
                             } else {
                                 printf("Erro ao cadastrar o CEP.\n");
                             }
