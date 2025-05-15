@@ -40,8 +40,6 @@ int inserir_Cidade(CIDADES **raiz, CIDADES *novaCidade)
     if (*raiz != NULL)
         (*raiz)->cor = BLACK;
 
-    print_debug(&(*raiz));
-    printf("Saiu debug\n");
     return inseriu;
 }
 
@@ -84,8 +82,6 @@ CIDADES *cadastrarCidade()
 
     if (erro == 0){
         novaCidade = aloca_Cidade(nome_cidade, populacao);
-        printf("\n\nDentro do cadastrarCidade\n");
-        print_debug(&novaCidade);
     }
     else
     {

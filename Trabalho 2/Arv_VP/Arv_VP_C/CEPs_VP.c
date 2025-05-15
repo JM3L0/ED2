@@ -73,7 +73,6 @@ CEP *cadastrarCEP()
     char str_cep[10];
     int sucesso = 0;
 
-    printf("Digite o CEP: ");
     sucesso = capturar_cep(str_cep);
 
     if (sucesso)
