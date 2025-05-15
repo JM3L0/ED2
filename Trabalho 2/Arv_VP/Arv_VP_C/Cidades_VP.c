@@ -7,6 +7,22 @@
 
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
+void print_debug(CIDADES **raiz)
+{
+    printf("Esquerda nulo? %d \n", (*raiz)->esq == NULL);
+    printf("Cor Raiz = %d \n", Cor_cidade(*raiz));
+    printf("Nome = %s \n", (*raiz)->nome_cidade);
+    printf("Cor Esquerda = %d \n", Cor_cidade((*raiz)->esq));
+    printf("Cor Direita = %d \n", Cor_cidade((*raiz)->dir));
+
+    printf("\nPonteiro gambiarra = %p \n", (*raiz)->gambiarra);
+
+    printf("Ponteiro Raiz = %p \n", (*raiz));
+    printf("Ponteiro Esquerda = %p \n", (*raiz)->esq);
+    printf("Ponteiro Direita = %p \n", (*raiz)->dir);
+   
+}
+
 // =================================
 // INSERCAO
 // =================================
@@ -15,18 +31,53 @@ int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
 {
     int inseriu = 0;
 
+    printf("\n\nDentro do inserir no cidade, nova cidade antes de qualquer movimentacao\n");
+    print_debug(&novaCidade);
+
     if (*raiz == NULL)
     {
-        *raiz = novaCidade;
+        printf("\n\n(nova cidade) dentro do if raiz nula antes de raiz = nova cidade\n");
+        print_debug(&novaCidade);
+
+        // printf("\n\n(RAIZ) dentro do if raiz nula antes de raiz = nova cidade\n");
+        // printf("RAIZ nulo? %d \n", (*raiz) == NULL);
+        // print_debug(raiz);
+        
+        (*raiz) = novaCidade;
+
+        printf("\n\n(raiz) dentro do if raiz nula depois de raiz = nova cidade\n");
+        print_debug(raiz);
+
+        printf("\n\n(nova cidade) dentro do if raiz nula depois de raiz = nova cidade\n");
+        print_debug(&novaCidade);
+
+        printf("RAIZ nulo? %d \n", (*raiz) == NULL);
+        //novaCidade->esq = NULL;
+        printf("RAIZ nulo? %d \n", (*raiz) == NULL);
+
+        printf("\n\n(nova cidade) dentro do if raiz nula depois de raiz = nova cidade e NC-> esq = NULL marra\n");
+        print_debug(&novaCidade);
         inseriu = 1;
     }
-    else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
+    else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0){
+        printf("\n\nentrou no if menor antes do retorno\n");
+        print_debug(raiz);
         inseriu = inserir_no_Cidade(&((*raiz)->esq), novaCidade);
+        printf("\n\nentrou no if menor depois do retorno\n");
+        print_debug(raiz);
+    }
     else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
         inseriu = inserir_no_Cidade(&((*raiz)->dir), novaCidade);
 
-    if (inseriu)
+    if (inseriu){
+        printf("\n\n(nova cidade) entrou no if inseriu antes do balancear\n");
+        print_debug(&novaCidade);
+        printf("\n\ndentro de inserir logo antes de balancear\n");
+        printf("RAIZ nulo? %d \n", (*raiz) == NULL);
+        print_debug(raiz);
         balancear_RB_cidade(raiz);
+        printf("Saiu balancear\n");
+    }
     return inseriu;
 }
 
@@ -37,6 +88,9 @@ int inserir_Cidade(CIDADES **raiz, CIDADES *novaCidade)
 
     if (*raiz != NULL)
         (*raiz)->cor = BLACK;
+
+    print_debug(&(*raiz));
+    printf("Saiu debug\n");
     return inseriu;
 }
 
@@ -49,8 +103,12 @@ CIDADES *aloca_Cidade(char *nome_cidade, int populacao_city)
     cidade->populacao_city = populacao_city;
     cidade->cor = RED;
     cidade->cep = NULL;
+    cidade->gambiarra = NULL;
     cidade->esq = NULL;
     cidade->dir = NULL;
+
+    // printf("\n\nDentro do aloca_Cidade\n");
+    // print_debug(&cidade);
 
     return cidade;
 }
@@ -74,8 +132,11 @@ CIDADES *cadastrarCidade()
         populacao = digitar_int();
     }
 
-    if (erro == 0)
+    if (erro == 0){
         novaCidade = aloca_Cidade(nome_cidade, populacao);
+        printf("\n\nDentro do cadastrarCidade\n");
+        print_debug(&novaCidade);
+    }
     else
     {
         if (nome_cidade != NULL)
@@ -103,13 +164,15 @@ void rotacao_esquerda_cidade(CIDADES **raiz)
 
 void rotacao_direita_cidade(CIDADES **raiz)
 {
+    printf("entrou rotacao dir\n");
     CIDADES *aux;
 
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = (*raiz);
     (*raiz) = aux;
-
+    printf("entrou rotacao dir 2\n");
+    
     (*raiz)->cor = (*raiz)->dir->cor;
     (*raiz)->dir->cor = RED;
 }
@@ -120,7 +183,8 @@ void rotacao_direita_cidade(CIDADES **raiz)
 
 int Cor_cidade(CIDADES *cidade)
 {
-    return cidade == NULL ? BLACK : cidade->cor;
+    printf("entrou cor\n");
+    return (cidade == NULL) ? BLACK : cidade->cor;
 }
 
 void trocar_cor_cidade(CIDADES *raiz)
@@ -136,16 +200,28 @@ void trocar_cor_cidade(CIDADES *raiz)
 
 void balancear_RB_cidade(CIDADES **raiz)
 {
+    printf("\n\nantes de fazer qualquer coisa no balancear\n");
+    print_debug(raiz);
+    printf("entrou balancear\n");
     if (*raiz != NULL)
     {
-        if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->dir) == RED)
+        printf("\n\nantes do primeiro if de balanceamento\n");
+        print_debug(raiz);
+        
+        if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->dir) == RED){
+            printf("passou rot esq\n");
             rotacao_esquerda_cidade(raiz);
-
-        if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->esq->esq) == RED)
+        }
+       
+        if ((Cor_cidade((*raiz)->esq) == RED) && Cor_cidade((*raiz)->esq->esq) == RED){
+            printf("entrou rot dir\n");
             rotacao_direita_cidade(raiz);
-
-        if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->dir) == RED)
+            printf("saiu rot dir\n");
+        }
+        if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->dir) == RED){
+            printf("passou trocar cor\n");
             trocar_cor_cidade(*raiz);
+        }
     }
 }
 

@@ -25,7 +25,9 @@ typedef struct CIDADES
     int populacao_city;
     int cor;
     struct CEP *cep;
-    struct CIDADES *esq, *dir;
+    struct CIDADES *gambiarra;
+    struct CIDADES *esq;
+    struct CIDADES *dir;
 
 } CIDADES;
 

@@ -42,5 +42,5 @@ int remover_CEP_no(CEP **raiz, char *str_cep);
 int remover_CEP_arvore(CEP **raiz, char *str_cep);
 
 // especificas do trabalho
-int percorre_estado_procurando_CEP(ESTADOS *cabeca, char *cep);
-int percorre_cidade_procurando_CEP(CIDADES *raiz, char *cep);
+int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep);
+int percorre_cidades_procurando_CEP(CIDADES *raiz, char *cep);

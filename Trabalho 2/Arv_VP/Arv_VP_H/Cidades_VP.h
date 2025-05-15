@@ -41,3 +41,5 @@ int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade);
 
 // especificas do trabalho
 CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_capital);
+
+void print_debug(CIDADES **raiz);

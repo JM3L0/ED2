@@ -179,10 +179,11 @@ int validar_cep(const char *cep)
 //     return sucesso;
 // }
 
-int capturar_cep(char *cep) // já captura, valida e autocorrige o CEP
+int capturar_cep(char *cep)
 {
-    int sucesso = 0;
-    char entrada[11]; // 9 caracteres (XXXXX-XXX) + \n + \0
+    int sucesso;
+    char entrada[20];
+    char cep_corrigido[20]; // Buffer separado para a correção
 
     do
     {
@@ -194,16 +195,18 @@ int capturar_cep(char *cep) // já captura, valida e autocorrige o CEP
             if (validar_cep(entrada))
             {
                 strcpy(cep, entrada);
-                sucesso = 1;
+                sucesso = 1; // Indica que a captura foi bem-sucedida
             }
-            else if (autocorrigir_cep(entrada, entrada) && validar_cep(entrada))
+            else if (autocorrigir_cep(entrada, cep_corrigido) && validar_cep(cep_corrigido))
             {
-                strcpy(cep, entrada);
-                sucesso = 1;
+                strcpy(cep, cep_corrigido);
                 printf("Aviso: CEP autocorrigido para %s\n", cep);
+                sucesso = 1; // Indica que a captura foi bem-sucedida
             }
-            else
-                printf("Erro: CEP inválido! Digite novamente\n");
+            else{
+                printf("Erro: CEP invalido! Digite novamente\n");
+                sucesso = 0; // Indica que a captura falhou
+            }
         }
         else
             printf("Erro: falha na leitura!\n");

@@ -71,12 +71,12 @@ CEP *cadastrarCEP()
     CEP *novoCEP;
     novoCEP = NULL;
     char str_cep[10];
-    int erro = 0;
+    int sucesso = 0;
 
     printf("Digite o CEP: ");
-    erro = capturar_cep(str_cep);
+    sucesso = capturar_cep(str_cep);
 
-    if (erro == 0)
+    if (sucesso)
     {
         novoCEP = alocaCEP(str_cep);
     }
@@ -206,7 +206,7 @@ void imprimir_todos_CEP(CEP *raiz)
 {
     if (raiz == NULL)
     {
-        printf("Não há CEPs cadastrados.\n");
+        printf("Não ha CEPs cadastrados.\n");
     }
     else
     {
@@ -424,12 +424,12 @@ int remover_CEP_arvore(CEP **raiz, char *str_cep)
 // ESPECÍFICAS DO TRABALHO
 // =================================
 
-int percorre_estado_procurando_CEP(ESTADOS *cabeca, char *cep){
+int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep){
     ESTADOS *atual = cabeca;
     int encontrado = 0;
 
     do {
-        encontrado |= percorre_cidade_procurando_CEP(atual->cidade, cep);
+        encontrado |= percorre_cidades_procurando_CEP(atual->cidade, cep);
         if (encontrado == 0){
             atual = atual->prox;
         }
@@ -439,7 +439,7 @@ int percorre_estado_procurando_CEP(ESTADOS *cabeca, char *cep){
     return encontrado;
 }
 
-int percorre_cidade_procurando_CEP(CIDADES *raiz, char *cep){
+int percorre_cidades_procurando_CEP(CIDADES *raiz, char *cep){
     CIDADES *atual = raiz;
     int encontrado = 0;
 
@@ -447,9 +447,9 @@ int percorre_cidade_procurando_CEP(CIDADES *raiz, char *cep){
         if (raiz->cep != NULL)
             encontrado |= consulta_CEP(raiz->cep, cep);
         if (encontrado == 0)
-            encontrado |= percorre_cidade_procurando_CEP(raiz->esq, cep);
+            encontrado |= percorre_cidades_procurando_CEP(raiz->esq, cep);
         if (encontrado == 0)
-            encontrado |= percorre_cidade_procurando_CEP(raiz->dir, cep);
+            encontrado |= percorre_cidades_procurando_CEP(raiz->dir, cep);
     }
     return encontrado;
 }
