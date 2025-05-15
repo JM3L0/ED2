@@ -85,8 +85,8 @@ ESTADOS *cadastro_estado()
     if (!erro)
     {
         estado = aloca_estado(nome_estado, nome_capital);
-        if (estado)
-            erro = inserir_estado_rec(&estado, estado);
+        // if (estado)
+        //     erro = inserir_estado_rec(&estado, estado);
     }
     //o resto do código deve ser feito na interface.c
     return estado;

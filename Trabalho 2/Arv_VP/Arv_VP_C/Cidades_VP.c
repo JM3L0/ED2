@@ -15,7 +15,7 @@ void print_debug(CIDADES **raiz)
     printf("Cor Esquerda = %d \n", Cor_cidade((*raiz)->esq));
     printf("Cor Direita = %d \n", Cor_cidade((*raiz)->dir));
 
-    printf("\nPonteiro gambiarra = %p \n", (*raiz)->gambiarra);
+    //printf("\nPonteiro gambiarra = %p \n", (*raiz)->gambiarra);
 
     printf("Ponteiro Raiz = %p \n", (*raiz));
     printf("Ponteiro Esquerda = %p \n", (*raiz)->esq);
@@ -42,8 +42,9 @@ int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
         // printf("\n\n(RAIZ) dentro do if raiz nula antes de raiz = nova cidade\n");
         // printf("RAIZ nulo? %d \n", (*raiz) == NULL);
         // print_debug(raiz);
-        
-        (*raiz) = novaCidade;
+
+        (*raiz) = novaCidade;//todo o mal esta aqui
+
 
         printf("\n\n(raiz) dentro do if raiz nula depois de raiz = nova cidade\n");
         print_debug(raiz);
@@ -103,7 +104,6 @@ CIDADES *aloca_Cidade(char *nome_cidade, int populacao_city)
     cidade->populacao_city = populacao_city;
     cidade->cor = RED;
     cidade->cep = NULL;
-    cidade->gambiarra = NULL;
     cidade->esq = NULL;
     cidade->dir = NULL;
 
