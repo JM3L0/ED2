@@ -67,8 +67,8 @@ int inserir_musica(MUSICAS **raiz, MUSICAS *no)
     }
     
     if (inseriu ){
-        balanceamento_musica(raiz); // Chama a função de balanceamento após a inserção
         atualizar_altura_musica(*raiz); // Atualiza a altura do nó após a inserção
+        balanceamento_musica(raiz); // Chama a função de balanceamento após a inserção
     }
     return (inseriu);
 }
@@ -282,8 +282,8 @@ int remove_musica(MUSICAS **raiz, char *titulo_musica)
             removeu = remove_musica(&(*raiz)->esq, titulo_musica);
         else
             removeu = remove_musica(&(*raiz)->dir, titulo_musica);
-        balanceamento_musica(raiz); // Chama a função de balanceamento após a remoção
         atualizar_altura_musica(*raiz); // Atualiza a altura do nó após a remoção
+        balanceamento_musica(raiz); // Chama a função de balanceamento após a remoção
     }
     else
         removeu = 0;

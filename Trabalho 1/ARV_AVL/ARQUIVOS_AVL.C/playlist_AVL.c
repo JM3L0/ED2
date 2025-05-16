@@ -85,8 +85,8 @@ int inserir_playlist(PLAYLIST **raiz, PLAYLIST *no)
 
     if (inseriu)
     {
-        balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
         atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a inserção
+        balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
     }
     return (inseriu);
 }
@@ -253,8 +253,8 @@ int remove_playlist(PLAYLIST **raiz, char *titulo_playlist)
         }
         if (removeu)
         {
-            balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
             atualizar_altura_playlist(*raiz); // Atualiza a altura do nó após a remoção
+            balanceamento_playlist(raiz);     // Realiza o balanceamento da árvore
         }
     }
     return (removeu);
