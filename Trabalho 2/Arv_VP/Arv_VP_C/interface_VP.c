@@ -150,6 +150,7 @@ void menu_geral()
             case 3:{
                 ESTADOS *estado;
                 char nome_estado[100];
+                printf("\n=== Cadastro de CEP ===\n");
 
                 printf("Digite o nome do estado para qual o CEP sera inserido: ");
                 ler_string_simples(nome_estado, sizeof(nome_estado));
@@ -167,6 +168,13 @@ void menu_geral()
                         if (novoCEP)
                         {
                             retorno = inserir_CEP(&cidade->cep, novoCEP);
+                            if (retorno){
+                                printf("CEP cadastrado com sucesso.\n");
+                            }
+                            else
+                            {
+                                printf("Erro ao inserir o CEP.\n");
+                            }
                         }
                         else
                         {
@@ -185,42 +193,44 @@ void menu_geral()
                 break;
             }
             case 4:{
-                ESTADOS *estado;
-                char nome_estado[100];
-
-                printf("Digite o nome do estado de onde o CEP sera removido: ");
+                char nome_estado[100], nome_cidade[100], str_cep[10];
+                ESTADOS *estado = NULL;
+                CIDADES *cidade = NULL;
+                int sucesso = 0;
+                
+                printf("\n=== Remocao de CEP ===\n");
+                
+                printf("Digite o nome do estado: ");
                 ler_string_simples(nome_estado, sizeof(nome_estado));
                 estado = existe_estado(cabeca_estado, nome_estado);
-                if (estado){
-
-                    CIDADES *cidade;
-                    char nome_cidade[100];
-                    printf("Digite o nome da cidade de onde o CEP sera removido: ");
+                
+                if (estado) {
+                    printf("Digite o nome da cidade: ");
                     ler_string_simples(nome_cidade, sizeof(nome_cidade));
                     cidade = buscar_cidade(estado->cidade, nome_cidade);
-                    if (cidade)
-                    {
-                        char str_cep[10];
+                    
+                    if (cidade) {
                         printf("Digite o CEP a ser removido: ");
                         ler_string_simples(str_cep, sizeof(str_cep));
-                        retorno = remover_CEP_arvore(&cidade->cep, str_cep);
-                        if (retorno)
-                        {
-                            printf("CEP removido com sucesso.\n");
+                        
+                        if (remover_CEP_arvore(&cidade->cep, str_cep)) {
+                            printf("\n+----------------------------------------+\n");
+                            printf("| CEP removido com sucesso                |\n");
+                            printf("+----------------------------------------+\n");
+                            sucesso = 1;
+                        } else {
+                            printf("\n+----------------------------------------+\n");
+                            printf("| Erro: CEP nao encontrado                |\n");
+                            printf("+----------------------------------------+\n");
                         }
-                        else
-                        {
-                            printf("Erro ao remover o CEP.\n");
-                        }
+                    } else {
+                        printf("\nCidade nao encontrada.\n");
                     }
-                    else
-                    {
-                        printf("Cidade nao encontrada.\n");
-                    }
-                }else
-                {
-                    printf("Estado nao encontrado.\n");
+                } else {
+                    printf("\nEstado nao encontrado.\n");
                 }
+                
+                pausar();
                 break;
             }
             case 5:
@@ -229,44 +239,62 @@ void menu_geral()
                 break;
             case 7:{
                 ESTADOS *estado;
+                
+                printf("\n=== Estado Mais Populoso ===\n");
+                
                 estado = verifica_estado_mais_populoso(cabeca_estado);
 
-                if (estado)
-                {
-                    printf("Estado mais populoso: %s\n", estado->nome_estado);
-                    printf("Populacao: %d\n", estado->populacao_estado);
-                }else
-                    printf("Nenhum estado cadastrado.\n");
+                if (estado) {
+                    printf("\n+----------------------------------------+\n");
+                    printf("| Estado: %-30s |\n", estado->nome_estado);
+                    printf("+----------------------------------------+\n");
+                    printf("| Populacao: %-28d |\n", estado->populacao_estado);
+                    printf("| Quantidade de cidades: %-16d |\n", estado->quant_city);
+                    printf("| Capital: %-30s |\n", estado->nome_capital);
+                    printf("+----------------------------------------+\n");
+                } else {
+                    printf("\nNenhum estado cadastrado.\n");
+                }
                 pausar();
                 break;
             } 
             case 8:{
-                ESTADOS *estado;
-                estado = NULL;
+                ESTADOS *estado = NULL;
                 char nome_estado[100];
                 
+                printf("\n=== Populacao da Capital ===\n");
+                printf("Digite o nome do estado: ");
                 ler_string_simples(nome_estado, sizeof(nome_estado));
                 estado = existe_estado(cabeca_estado, nome_estado);
 
                 if(estado){
-                    CIDADES *capital;
-                    capital = NULL;
-
+                    CIDADES *capital = NULL;
                     capital = buscar_cidade(estado->cidade, estado->nome_capital);
-                    if(capital)
-                        printf("A populacao da capital do estado %s eh: %d\n", estado->nome_estado, capital->populacao_city);
-                    else
-                        printf("ERRO: Capital nao encontrada\n");
+                    
+                    if(capital) {
+                        printf("\n+----------------------------------------+\n");
+                        printf("| Estado: %-30s |\n", estado->nome_estado);
+                        printf("+----------------------------------------+\n");
+                        printf("| Capital: %-30s |\n", estado->nome_capital);
+                        printf("| Populacao: %-28d |\n", capital->populacao_city);
+                        printf("| Percentual do estado: %-17.1f%% |\n", 
+                            (float)capital->populacao_city / estado->populacao_estado * 100);
+                        printf("+----------------------------------------+\n");
+                    } else {
+                        printf("\nERRO: Capital nao encontrada\n");
+                    }
+                } else {
+                    printf("\nEstado nao encontrado.\n");
                 }
-                else
-                    printf("Estado nao encontrado.\n");
+                
+                pausar();
                 break;
             }
             case 9:{
                 char nome_estado[100];
-                ESTADOS *estado;
-                estado = NULL;
+                ESTADOS *estado = NULL;
 
+                printf("\n=== Cidade mais populosa (exceto a capital) ===\n");
                 printf("Digite o nome do estado: ");
                 ler_string_simples(nome_estado, sizeof(nome_estado));
                 estado = existe_estado(cabeca_estado, nome_estado);
@@ -275,12 +303,23 @@ void menu_geral()
                     CIDADES *cidade_mais_populosa;
                     cidade_mais_populosa = verifica_cidade_mais_populosa_nao_capital(estado->cidade, estado->nome_capital);
 
-                    if(cidade_mais_populosa)
-                        printf("A cidade mais populosa do estado %s sem ser a capital eh: %s\n", estado->nome_estado, cidade_mais_populosa->nome_cidade);
-                    else
-                        printf("Nenhuma cidade encontrada.\n");
-                    pausar();
+                    if(cidade_mais_populosa) {
+                        printf("\n+----------------------------------------+\n");
+                        printf("| Estado: %-30s |\n", estado->nome_estado);
+                        printf("+----------------------------------------+\n");
+                        printf("| Cidade mais populosa: %-16s |\n", cidade_mais_populosa->nome_cidade);
+                        printf("| Populacao: %-28d |\n", cidade_mais_populosa->populacao_city);
+                        printf("| Percentual do estado: %-17.1f%% |\n", 
+                            (float)cidade_mais_populosa->populacao_city / estado->populacao_estado * 100);
+                        printf("+----------------------------------------+\n");
+                    } else {
+                        printf("\nNao existem outras cidades alem da capital neste estado.\n");
+                    }
+                } else {
+                    printf("\nEstado nao encontrado.\n");
                 }
+                
+                pausar();
                 break;
             }
             case 10:
@@ -292,10 +331,11 @@ void menu_geral()
             case 13:
                 break;
             case 0:
-                printf("Saindo do programa...\n");
+                printf("\nSaindo do programa...\n");
+                printf("Sistema finalizado com sucesso!\n");
                 break;
             default:
-                printf("Opção inválida! Tente novamente.\n");
+                printf("Opcao invalida! Tente novamente.\n");
                 break;
             }
         }

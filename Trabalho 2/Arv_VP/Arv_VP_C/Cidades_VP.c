@@ -110,14 +110,12 @@ void rotacao_esquerda_cidade(CIDADES **raiz)
 
 void rotacao_direita_cidade(CIDADES **raiz)
 {
-    printf("entrou rotacao dir\n");
     CIDADES *aux;
 
     aux = (*raiz)->esq;
     (*raiz)->esq = aux->dir;
     aux->dir = (*raiz);
     (*raiz) = aux;
-    printf("entrou rotacao dir 2\n");
     
     (*raiz)->cor = (*raiz)->dir->cor;
     (*raiz)->dir->cor = RED;
@@ -129,7 +127,6 @@ void rotacao_direita_cidade(CIDADES **raiz)
 
 int Cor_cidade(CIDADES *cidade)
 {
-    printf("entrou cor\n");
     return (cidade == NULL) ? BLACK : cidade->cor;
 }
 
