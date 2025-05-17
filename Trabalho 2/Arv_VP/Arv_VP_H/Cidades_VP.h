@@ -41,3 +41,6 @@ int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade);
 
 // especificas do trabalho
 CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_capital);
+int cep_pertence_a_cidade(CEP *raiz, char *cep);
+CIDADES *cidade_natal_dado_cep(CIDADES *raiz, char *cep);
+int quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(CIDADES *cidade, PESSOAS *raiz_pessoa);

@@ -4,6 +4,7 @@
 #include "../Arv_VP_H/utilitarios_VP.h"
 #include "../Arv_VP_H/STRUCTS_VP.h"
 #include "../Arv_VP_H/Pessoas_VP.h"
+#include "../Arv_VP_H/Cidades_VP.h"
 
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
@@ -439,3 +440,125 @@ int remover_pessoa_arvore(PESSOAS **raiz, char *CPF)
 // =================================
 // ESPECÍFICAS DO TRABALHO
 // =================================
+
+int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *raiz_CEP){//retorna 1 se a pessoa nasceu ou mora na cidade, 0 caso contrario
+    int resultado = 0;
+
+    if (raiz_pessoa != NULL)
+    {
+        if (raiz_CEP != NULL)
+        {
+            if (strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_natal) == 0 || strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_atual) == 0)
+            {
+                resultado = 1;
+            }
+            else
+            {
+                resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa, raiz_CEP->esq);
+                resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa, raiz_CEP->dir);
+            }
+        }
+    }
+
+    return resultado;
+}
+
+///////////////////////////
+
+int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, PESSOAS *raiz_pessoa){// camada de estados
+    int resultado = 0;
+    ESTADOS *atual = cabeca_estado;
+
+    while (atual != NULL)
+    {
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(atual->cidade, raiz_pessoa);
+        atual = atual->prox;
+    }
+
+    return resultado;
+}
+
+int quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(CIDADES *raiz_cidade, PESSOAS *raiz_pessoa){// camada de cidades
+    int resultado = 0;
+
+    if (raiz_cidade != NULL)
+    {
+        if (raiz_cidade->cep != NULL){
+            resultado += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa, raiz_cidade->cep);
+        }
+
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(raiz_cidade->esq, raiz_pessoa);
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(raiz_cidade->dir, raiz_pessoa);
+    }
+    
+    return resultado;
+}
+
+int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CEP *raiz_cep){// integra a camada de pessoas
+    int soma = 0;
+    
+    if (raiz_pessoa != NULL)
+    {
+        if (raiz_cep != NULL)
+        {
+            int resultado = 0;
+            resultado = quantas_pessoas_nao_moram_na_cidade_natal_CEP(raiz_cep, raiz_pessoa->cep_city_natal);
+            if (resultado == 0){
+                soma += 1;
+            }
+        }
+
+        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->esq, raiz_cep);
+        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->dir, raiz_cep);
+
+    }
+
+    return soma;
+}
+
+int quantas_pessoas_nao_moram_na_cidade_natal_CEP(CEP *raiz_CEP, char *pessoa_cep_natal){// camada de CEPs
+    int resultado = 0;
+
+    if (raiz_CEP != NULL)
+    {
+        if (strcasecmp(raiz_CEP->cep, pessoa_cep_natal) == 0)
+        {
+            resultado = 1;
+        }
+
+        resultado |= quantas_pessoas_nao_moram_na_cidade_natal_CEP(raiz_CEP->esq, pessoa_cep_natal);
+        resultado |= quantas_pessoas_nao_moram_na_cidade_natal_CEP(raiz_CEP->dir, pessoa_cep_natal);
+    }
+
+    return resultado;
+}
+
+int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *raiz_pessoa){
+    int resultado = 0;
+
+    if (cidade != NULL && raiz_pessoa != NULL)
+    {
+        // Percorre todas as pessoas na árvore
+        if (raiz_pessoa != NULL)
+        {
+            // Verifica se a pessoa mora na cidade especificada
+            CIDADES *cidade_atual = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_atual);
+            if (cidade_atual == cidade) // A pessoa mora nesta cidade
+            {
+                // Verifica se a pessoa NÃO nasceu na cidade onde mora atualmente
+                CIDADES *cidade_natal = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_natal);
+                if (cidade_natal != cidade) // A pessoa não nasceu na cidade onde mora
+                {
+                    resultado += 1;
+                }
+            }
+            
+            // Verifica recursivamente para as demais pessoas na árvore
+            resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->esq);
+            resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->dir);
+        }
+    }
+    return resultado;
+}
+
+

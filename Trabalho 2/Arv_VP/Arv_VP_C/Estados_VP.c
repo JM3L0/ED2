@@ -21,14 +21,14 @@ ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado){
     return resultado;
 }
 
-ESTADOS *aloca_estado(char *nome_estado, char *nome_capital)
+ESTADOS *aloca_estado(char *nome_estado)
 {
     ESTADOS *novo_estado = (ESTADOS *)malloc(sizeof(ESTADOS));
     if (novo_estado != NULL)
     {
 
         novo_estado->nome_estado = nome_estado;
-        novo_estado->nome_capital = nome_capital;
+        novo_estado->nome_capital = NULL;
         novo_estado->quant_city = 0;
         novo_estado->populacao_estado = 0;
         novo_estado->cidade = NULL;
@@ -71,7 +71,6 @@ ESTADOS *cadastro_estado()
 {
     int erro = 0;
     char *nome_estado;
-    char *nome_capital;
     ESTADOS *estado;
     estado = NULL;
 
@@ -84,9 +83,7 @@ ESTADOS *cadastro_estado()
     // a capital sera add na interface 
     if (!erro)
     {
-        estado = aloca_estado(nome_estado, nome_capital);
-        // if (estado)
-        //     erro = inserir_estado_rec(&estado, estado);
+        estado = aloca_estado(nome_estado);
     }
     //o resto do código deve ser feito na interface.c
     return estado;

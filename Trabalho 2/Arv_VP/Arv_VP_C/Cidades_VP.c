@@ -468,3 +468,65 @@ CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_cap
 
     return mais_populosa;
 }
+
+
+int cep_pertence_a_cidade(CEP *raiz, char *cep)
+{
+    int resultado = 0;
+    
+    if (raiz != NULL)
+    {
+        if (strcasecmp(raiz->cep, cep) == 0)
+        resultado = 1;
+        else
+        {
+            resultado |= cep_pertence_a_cidade(raiz->esq, cep);
+            resultado |= cep_pertence_a_cidade(raiz->dir, cep);
+        }
+    }
+    return resultado;
+}
+
+CIDADES *cidade_natal_dado_cep(CIDADES *raiz, char *cep){
+    CIDADES *resultado = NULL;
+
+    if (raiz != NULL){
+        if (cep_pertence_a_cidade(raiz->cep, cep) == 1){
+            resultado = raiz;
+        }
+        else{
+            resultado = cidade_natal_dado_cep(raiz->esq, cep);
+            if (resultado == NULL)
+                resultado = cidade_natal_dado_cep(raiz->dir, cep);
+        }
+    }
+    return resultado;
+}
+
+int quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(CIDADES *cidade, PESSOAS *raiz_pessoa){
+    int resultado = 0;
+
+    if (cidade != NULL && raiz_pessoa != NULL)
+    {
+        // Percorre todas as pessoas na árvore
+        if (raiz_pessoa != NULL)
+        {
+            // Verifica se a pessoa nasceu na cidade especificada
+            CIDADES *cidade_natal = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_natal);
+            if (cidade_natal == cidade) // A pessoa nasceu nesta cidade
+            {
+                // Verifica se a pessoa NÃO mora mais na cidade onde nasceu
+                CIDADES *cidade_atual = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_atual);
+                if (cidade_atual != cidade) // A pessoa não mora mais na cidade natal
+                {
+                    resultado += 1;
+                }
+            }
+            
+            // Verifica recursivamente para as demais pessoas na árvore
+            resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa->esq);
+            resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa->dir);
+        }
+    }
+    return resultado;
+}

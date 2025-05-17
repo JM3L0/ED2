@@ -439,7 +439,7 @@ int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep){
 }
 
 int percorre_cidades_procurando_CEP(CIDADES *raiz, char *cep){
-    CIDADES *atual = raiz;
+    // CIDADES *atual = raiz;
     int encontrado = 0;
 
     if (raiz != NULL ){
