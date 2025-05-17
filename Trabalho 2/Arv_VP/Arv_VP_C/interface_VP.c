@@ -38,6 +38,7 @@ void menu_geral()
     cabeca_estado = NULL;
 
     PESSOAS *raiz_pessoa;
+    raiz_pessoa = NULL;
 
     int opcao1, opcao2, retorno = 0;
 
@@ -259,9 +260,12 @@ void menu_geral()
                         if (retorno)
                         {
                             novaPessoa = cadastra_pessoa(cep_natal, cep_atual);
+                            imprimir_pessoa(novaPessoa);
                             if (novaPessoa)
                             {
+                                printf("\naaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
                                 retorno = inserir_pessoa(&raiz_pessoa, novaPessoa);
+                                printf("\nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n");
                                 if (retorno)
                                 {
                                     printf("Pessoa cadastrada com sucesso.\n");
@@ -271,6 +275,7 @@ void menu_geral()
                                     printf("Erro ao inserir a pessoa.\n");
                                     liberar_no_pessoa(&novaPessoa);
                                 }
+                                printf("\ncccccccccccccccccccccccccccccccccccccccccccc\n");
                             }
                             else
                             {
