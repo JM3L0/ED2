@@ -52,8 +52,8 @@ int inserir_musica_playlist(MUSICA_PLAYLIST **raiz, MUSICA_PLAYLIST *no)
 
     if (inseriu)
     {
-        atualizar_altura_musica_playlist(*raiz);
         balanceamento_musica_playlist(raiz);
+        atualizar_altura_musica_playlist(*raiz);
     }
     return (inseriu);
 }
@@ -209,8 +209,8 @@ int remove_musica_playlist(MUSICA_PLAYLIST **raiz, char *titulo_musica, char *ti
                 removeu = remove_musica_playlist(&(*raiz)->esq, titulo_musica, titulo_album, nome_artista);
             else
                 removeu = remove_musica_playlist(&(*raiz)->dir, titulo_musica, titulo_album, nome_artista);
-            atualizar_altura_musica_playlist(*raiz);
             balanceamento_musica_playlist(raiz);
+            atualizar_altura_musica_playlist(*raiz);
         }
     }
     return (removeu);

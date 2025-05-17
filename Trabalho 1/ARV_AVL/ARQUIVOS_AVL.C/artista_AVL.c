@@ -99,8 +99,8 @@ int inserir_artista(ARTISTAS **raiz, ARTISTAS *no)
     }
     if (inseriu)
     {
-        atualizar_altura_artista(*raiz);
         balanceamento_artista(raiz);
+        atualizar_altura_artista(*raiz);
     }
     return (inseriu);
 }

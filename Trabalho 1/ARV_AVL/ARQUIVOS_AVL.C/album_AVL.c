@@ -86,8 +86,8 @@ int inserir_album(ALBUNS **raiz, ALBUNS *no)
     }
     if (inseriu)
     {
-        atualizar_altura_album(*raiz); // Atualiza a altura do nó raiz
         balanceamento_album(raiz);     // Balanceia a árvore após a inserção
+        atualizar_altura_album(*raiz); // Atualiza a altura do nó raiz
     }
     return (inseriu);
 }
