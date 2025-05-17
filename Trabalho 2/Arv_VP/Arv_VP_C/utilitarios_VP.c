@@ -8,84 +8,73 @@
 
 ////////////////////////////////////////////// DATA //////////////////////////////////////////////
 
-void obter_data_atual(DATA *data_atual)
+// Valida a data no formato DD/MM/AAAA como string
+int validar_data(const char *data)
 {
-    time_t agora = time(NULL);
-    struct tm *tm = localtime(&agora);
-    data_atual->dia = tm->tm_mday;
-    data_atual->mes = tm->tm_mon + 1;     // tm_mon é 0-11, ajustamos para 1-12
-    data_atual->ano = tm->tm_year + 1900; // tm_year é anos desde 1900
-}
-// Verifica se um ano é bissexto
-int eh_bissexto(int ano)
-{
-    int resultado = (ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0);
-    return resultado;
-}
+    if (!data || strlen(data) != 10 || data[2] != '/' || data[5] != '/')
+        return 0;
 
-// Retorna o número de dias em um mês, considerando ano bissexto
-int dias_no_mes(int mes, int ano)
-{
-    int dias;
-    if (mes == 2)
-        dias = eh_bissexto(ano) ? 29 : 28;
-    else if (mes == 4 || mes == 6 || mes == 9 || mes == 11)
-        dias = 30;
-    else
-        dias = 31;
-    return dias;
+    int dia, mes, ano;
+    if (sscanf(data, "%2d/%2d/%4d", &dia, &mes, &ano) != 3)
+        return 0;
+
+    // Verifica limites básicos
+    if (ano < 1900 || ano > 2025) // Ajuste o ano máximo conforme necessário
+        return 0;
+    if (mes < 1 || mes > 12)
+        return 0;
+
+    // Verifica o número de dias no mês
+    int dias_por_mes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0)) // Ano bissexto
+        dias_por_mes[1] = 29;
+    if (dia < 1 || dia > dias_por_mes[mes - 1])
+        return 0;
+
+    return 1;
 }
 
-int validar_data(DATA *data)
+// Captura e valida a data de nascimento como string
+int capturar_data(char *data)
 {
-    DATA data_atual;
-    obter_data_atual(&data_atual);
-
-    int valida = 1;
-    if (data->ano < 1900 || data->ano > data_atual.ano)
-        valida = 0;
-    else if (data->mes < 1 || data->mes > 12)
-        valida = 0;
-    else if (data->dia < 1 || data->dia > dias_no_mes(data->mes, data->ano))
-        valida = 0;
-    else if (data->ano == data_atual.ano)
-    {
-        if (data->mes > data_atual.mes)
-            valida = 0;
-        else if (data->mes == data_atual.mes && data->dia > data_atual.dia)
-            valida = 0;
+    if (!data) {
+        printf("Erro: ponteiro data nulo\n");
+        return 0;
     }
-    return valida;
-}
 
-// Captura e valida a data de nascimento do usuário
-int capturar_data(DATA *data)
-{
     int sucesso = 0;
-    char entrada[11];
+    char entrada[15];
 
     do {
         printf("Digite a data de nascimento (DD/MM/AAAA): ");
-        if (fgets(entrada, sizeof(entrada), stdin))
-        {
-            entrada[strcspn(entrada, "\n")] = '\0';
-            if (sscanf(entrada, "%2d/%2d/%4d", &data->dia, &data->mes, &data->ano) == 3)
-            {
-                if (validar_data(data))
-                    sucesso = 1;
-                else
-                    printf("Erro: data invalida!\n");
-            }
-            else
-                printf("Erro: formato invalida!\n");
+        if (!fgets(entrada, sizeof(entrada), stdin)) {
+            printf("Erro: falha na leitura\n");
+            continue;
         }
-    }while (sucesso == 0);
+
+        entrada[strcspn(entrada, "\n")] = '\0';
+
+        // Verifica formato básico
+        if (strlen(entrada) != 10 || entrada[2] != '/' || entrada[5] != '/') {
+            printf("Erro: formato invalido! Use DD/MM/AAAA.\n");
+            continue;
+        }
+
+        if (validar_data(entrada)) {
+            strcpy(data, entrada);
+            sucesso = 1;
+        } else {
+            printf("Erro: data invalida!\n");
+        }
+    } while (!sucesso);
+
     return sucesso;
 }
 
-void imprimir_data(DATA data)
+// Imprime a data como string
+void imprimir_data(const char *data)
 {
-    printf("%02d/%02d/%04d\n", data.dia, data.mes, data.ano);
+    printf("%s\n", data);
 }
 
 ////////////////////////////////////////////// CPF //////////////////////////////////////////////
@@ -115,7 +104,7 @@ int capturar_cpf(char *cpf)
 
     do {
 
-        printf("Digite o CPF (11 digitos, sem pontos ou traços): ");
+        printf("Digite o CPF (11 digitos, sem pontos ou tracos): ");
         if (fgets(entrada, sizeof(entrada), stdin))
         {
             entrada[strcspn(entrada, "\n")] = '\0';

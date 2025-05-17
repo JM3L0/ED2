@@ -4,7 +4,7 @@
 int main()
 {
     // Comando de compilação usando caminhos relativos
-    const char *comando = "gcc -o arvore_VP ../Arv_VP_C/main_VP.c ../Arv_VP_C/CEPs_VP.c ../Arv_VP_C/Cidades_VP.c ../Arv_VP_C/interface_VP.c ../Arv_VP_C/Estados_VP.c ../Arv_VP_C/utilitarios_VP.c ../Arv_VP_C/Pessoas_VP.c -I Arv_VP_H";
+    const char *comando = "gcc -o arvore_VP ../Arv_VP_C/CEPs_VP.c ../Arv_VP_C/Cidades_VP.c ../Arv_VP_C/interface_VP.c ../Arv_VP_C/Estados_VP.c ../Arv_VP_C/utilitarios_VP.c ../Arv_VP_C/Pessoas_VP.c -I Arv_VP_H";
     //../Arv_VP_C/main_VP.c
     //../Arv_VP_C/TESTES_VP.c
 

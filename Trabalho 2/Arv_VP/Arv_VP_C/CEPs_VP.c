@@ -183,8 +183,8 @@ void imprimir_CEP(CEP *Cep)
 {
     if (Cep != NULL)
     {
-        printf("Cidade: %s\n", Cep->cep);
-        printf("Cor: %s\n", Cep->cor == RED ? "Vermelho" : "Preto");
+        printf("CEP: %s\n", Cep->cep);
+        // printf("Cor: %s\n", Cep->cor == RED ? "Vermelho" : "Preto");
         printf("------------------------\n");
     }
 }
@@ -427,13 +427,13 @@ int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep){
     ESTADOS *atual = cabeca;
     int encontrado = 0;
 
-    do {
+    while (atual != NULL && encontrado == 0){
         encontrado |= percorre_cidades_procurando_CEP(atual->cidade, cep);
         if (encontrado == 0){
             atual = atual->prox;
         }
 
-    }while (atual != NULL && encontrado == 0);
+    }
 
     return encontrado;
 }

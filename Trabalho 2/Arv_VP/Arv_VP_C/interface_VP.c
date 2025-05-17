@@ -245,16 +245,15 @@ void menu_geral()
 
                 do
                 {
-
-                    printf("Digite o CEP natal: ");
-                    ler_string_simples(cep_natal, sizeof(cep_natal));
+                    printf("== Digite o CEP natal ==\n");
+                    retorno = capturar_cep(cep_natal);
                     retorno = percorre_estados_procurando_CEP(cabeca_estado, cep_natal);
 
                     if (retorno)
                     {
 
-                        printf("Digite o CEP atual: ");
-                        ler_string_simples(cep_atual, sizeof(cep_atual));
+                        printf("== Digite o CEP atual ==\n");
+                        retorno = capturar_cep(cep_atual);
                         retorno = percorre_estados_procurando_CEP(cabeca_estado, cep_atual);
 
                         if (retorno)
@@ -288,7 +287,7 @@ void menu_geral()
                         printf("CEP natal nao encontrado.\n");
                     }
 
-                    printf("Deseja cadastrar outra pessoa? [1] - SIM [0] - NAO: ");
+                    printf("\nDeseja cadastrar outra pessoa? [1] - SIM [0] - NAO: ");
                     opcao2 = digitar_int();
                 } while (opcao2 == 1);
 
@@ -409,12 +408,13 @@ void menu_geral()
 
                     if (capital)
                     {
-                        printf("\n+----------------------------------------+\n");
+                        printf("\n----------------------------------------\n");
                         printf("| Estado: %-30s |\n", estado->nome_estado);
-                        printf("+----------------------------------------+\n");
-                        printf("| Capital: %-30s |\n", estado->nome_capital);
-                        printf("| Populacao: %-28d |\n", capital->populacao_city);
-                        printf("| Percentual do estado: %-17.1f%% |\n",
+                        printf("----------------------------------------\n");
+                        printf("Capital: %-30s \n", estado->nome_capital);
+                        printf("Populacao: %-28d \n", capital->populacao_city);
+                        imprimir_CEP_em_ordem(capital->cep);
+                        printf("Percentual do estado: %-17.1f%% \n",
                                (float)capital->populacao_city / estado->populacao_estado * 100);
                         printf("+----------------------------------------+\n");
                     }
@@ -559,4 +559,9 @@ void menu_geral()
             }
         }
     } while (opcao1 != 0);
+}
+
+int main(){
+    menu_geral();
+    return 0;
 }
