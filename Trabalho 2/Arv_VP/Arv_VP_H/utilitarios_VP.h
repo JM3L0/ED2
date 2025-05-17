@@ -1,8 +1,9 @@
 #pragma once
-
+#include <stdbool.h>
 #include "../Arv_VP_H/STRUCTS_VP.h"
 
 // int ehBissexto(int ano);
+bool eh_bissexto(int ano);
 int validar_data(const char *data);
 int capturar_data(char *data);
 void imprimir_data(const char *data);

@@ -3,80 +3,112 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <stdbool.h>
 #include "../Arv_VP_H/STRUCTS_VP.h"
 #include "../Arv_VP_H/utilitarios_VP.h"
 
 ////////////////////////////////////////////// DATA //////////////////////////////////////////////
 
-// Valida a data no formato DD/MM/AAAA como string
-int validar_data(const char *data)
-{
-    if (!data || strlen(data) != 10 || data[2] != '/' || data[5] != '/')
-        return 0;
+/**
+ * Verifica se o ano é bissexto
+ * @param ano O ano a ser verificado
+ * @return true se for bissexto, false caso contrário
+ */
 
-    int dia, mes, ano;
-    if (sscanf(data, "%2d/%2d/%4d", &dia, &mes, &ano) != 3)
-        return 0;
-
-    // Verifica limites básicos
-    if (ano < 1900 || ano > 2025) // Ajuste o ano máximo conforme necessário
-        return 0;
-    if (mes < 1 || mes > 12)
-        return 0;
-
-    // Verifica o número de dias no mês
-    int dias_por_mes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if (ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0)) // Ano bissexto
-        dias_por_mes[1] = 29;
-    if (dia < 1 || dia > dias_por_mes[mes - 1])
-        return 0;
-
-    return 1;
+bool eh_bissexto(int ano) {
+    bool resultado = false;
+    
+    if ((ano % 4 == 0 && ano % 100 != 0) || ano % 400 == 0) {
+        resultado = true;
+    }
+    
+    return resultado;
 }
 
-// Captura e valida a data de nascimento como string
-int capturar_data(char *data)
-{
-    if (!data) {
-        printf("Erro: ponteiro data nulo\n");
-        return 0;
+/**
+ * Valida uma data no formato "DD/MM/AAAA"
+ * @param data String contendo a data a ser validada
+ * @return 1 se a data for válida, 0 caso contrário
+ */
+int validar_data(const char *data) {
+    int valido = 0;
+    
+    // Verifica se o ponteiro é válido e se o formato básico está correto
+    if (data && strlen(data) == 10 && data[2] == '/' && data[5] == '/') {
+        int dia, mes, ano;
+        
+        // Extrai dia, mês e ano da string
+        if (sscanf(data, "%2d/%2d/%4d", &dia, &mes, &ano) == 3) {
+            // Verifica limites básicos
+            if (ano >= 1900 && ano <= 2025 && mes >= 1 && mes <= 12) {
+                // Determina o número de dias no mês
+                int dias_por_mes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+                
+                // Ajusta fevereiro para anos bissextos
+                if (mes == 2 && eh_bissexto(ano)) {
+                    dias_por_mes[2] = 29;
+                }
+                
+                // Verifica se o dia é válido para o mês
+                if (dia >= 1 && dia <= dias_por_mes[mes]) {
+                    valido = 1;
+                }
+            }
+        }
     }
+    
+    return valido;
+}
 
+/**
+ * Captura e valida a data de nascimento como string
+ * @param data Buffer para armazenar a data válida
+ * @return 1 se a operação foi bem-sucedida, 0 caso contrário
+ */
+int capturar_data(char *data) {
     int sucesso = 0;
-    char entrada[15];
-
-    do {
-        printf("Digite a data de nascimento (DD/MM/AAAA): ");
-        if (!fgets(entrada, sizeof(entrada), stdin)) {
-            printf("Erro: falha na leitura\n");
-            continue;
-        }
-
-        entrada[strcspn(entrada, "\n")] = '\0';
-
-        // Verifica formato básico
-        if (strlen(entrada) != 10 || entrada[2] != '/' || entrada[5] != '/') {
-            printf("Erro: formato invalido! Use DD/MM/AAAA.\n");
-            continue;
-        }
-
-        if (validar_data(entrada)) {
-            strcpy(data, entrada);
-            sucesso = 1;
-        } else {
-            printf("Erro: data invalida!\n");
-        }
-    } while (!sucesso);
-
+    
+    if (data) {
+        char entrada[15];
+        
+        do {
+            printf("Digite a data de nascimento (DD/MM/AAAA): ");
+            
+            if (fgets(entrada, sizeof(entrada), stdin)) {
+                // Remove o caractere de nova linha
+                entrada[strcspn(entrada, "\n")] = '\0';
+                
+                // Verifica formato básico
+                if (strlen(entrada) != 10 || entrada[2] != '/' || entrada[5] != '/') {
+                    printf("Erro: formato invalido! Use DD/MM/AAAA.\n");
+                } else if (validar_data(entrada)) {
+                    strcpy(data, entrada);
+                    sucesso = 1;
+                } else {
+                    printf("Erro: data invalida!\n");
+                }
+            } else {
+                printf("Erro: falha na leitura\n");
+            }
+        } while (!sucesso);
+    } else {
+        printf("Erro: ponteiro data nulo\n");
+    }
+    
     return sucesso;
 }
 
-// Imprime a data como string
-void imprimir_data(const char *data)
-{
-    printf("%s\n", data);
+/**
+ * Imprime a data no formato "DD/MM/AAAA"
+ * @param data String contendo a data a ser impressa
+ */
+void imprimir_data(const char *data) {
+    if (data) {
+        printf("Data: %s\n", data);
+    } else {
+        printf("Erro: ponteiro data nulo\n");
+    }
 }
-
 ////////////////////////////////////////////// CPF //////////////////////////////////////////////
 
 // Valida o formato do CPF (11 dígitos numéricos)
