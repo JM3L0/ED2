@@ -29,6 +29,10 @@ void menu_print()
     printf("[11] - Imprimir qual cidade natal de uma pessoa dado o CEP da cidade\n");
     printf("[12] - Imprimir quantas pessoas nascidas em uma determinada cidade nao mora na cidade natal\n");
     printf("[13] - Imprimir quantas pessoas que moram em uma determinada cidade nao nasceram na cidade\n");
+    printf("[14] - Imprimir todos os estados cadastrados\n");
+    printf("[15] - Imprimir todas as cidades cadastradas\n");
+    printf("[16] - Imprimir todos os CEPs cadastrados\n");
+    printf("[17] - Imprimir todas as pessoas cadastradas\n");
     printf("[0] - Sair\n");
 }
 
@@ -592,6 +596,55 @@ void menu_geral()
                 {
                     printf("\nERRO: Cidade nao encontrada.\n");
                 }
+                pausar();
+                break;
+            }
+            case 14:{
+                printf("\n=== IMPRIMIR TODOS OS ESTADOS ===\n");
+                mostrar_todos_estados(cabeca_estado);
+                pausar();
+                break;
+            }
+            case 15:{
+                char nome_estado[100];
+                printf("\nDigite o nome do estado\n");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+                ESTADOS *cabeca_estado = existe_estado(cabeca_estado, nome_estado);
+                if (cabeca_estado != NULL)
+                {
+                    printf("\n=== IMPRIMIR TODAS AS CIDADES ===\n");
+                    imprimir_todas_cidades(cabeca_estado->cidade);
+                }else{
+                    printf("\nERRO: Estado nao encontrado.\n");
+                }
+                pausar();
+                break;
+            }
+            case 16:{
+                char nome_cidade[100];
+                char nome_estado[100];
+                printf("\nDigite o nome do estado\n");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+                ESTADOS *estado = existe_estado(cabeca_estado, nome_estado);
+                if (estado != NULL)
+                {
+                    printf("\nDigite o nome da cidade\n");
+                    ler_string_simples(nome_cidade, sizeof(nome_cidade));
+                    CIDADES *cidade = buscar_cidade(estado->cidade, nome_cidade);
+                    if (cidade != NULL)
+                    {
+                        printf("\n=== IMPRIMIR TODOS OS CEPs ===\n");
+                        imprimir_todos_CEP(cidade->cep);
+                    }else{
+                        printf("\nERRO: Cidade nao encontrada.\n");
+                    }
+                }
+                pausar();
+                break;
+            }
+            case 17:{
+                printf("\n=== IMPRIMIR TODAS AS PESSOAS ===\n");
+                imprimir_todas_pessoas(raiz_pessoa);
                 pausar();
                 break;
             }
