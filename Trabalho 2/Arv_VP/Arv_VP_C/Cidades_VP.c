@@ -4,6 +4,7 @@
 #include "../Arv_VP_H/Cidades_VP.h"
 #include "../Arv_VP_H/utilitarios_VP.h"
 #include "../Arv_VP_H/STRUCTS_VP.h"
+#include "../Arv_VP_H/CEPs_VP.h"
 
 /*---------------------------- Funções Arv Red Black ----------------------------*/
 
@@ -246,8 +247,7 @@ void limpa_no_cidade(CIDADES **raiz)
 
         if ((*raiz)->cep != NULL)
         {
-            free((*raiz)->cep);
-            (*raiz)->cep = NULL;
+            desalocar_arvore_CEP(&((*raiz)->cep));
         }
 
         free(*raiz);
@@ -260,12 +260,8 @@ void limpa_arvore_cidades(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
-        if ((*raiz)->esq != NULL)
-            limpa_arvore_cidades(&((*raiz)->esq));
-
-        if ((*raiz)->dir != NULL)
-            limpa_arvore_cidades(&((*raiz)->dir));
-
+        limpa_arvore_cidades(&((*raiz)->esq));
+        limpa_arvore_cidades(&((*raiz)->dir));
         limpa_no_cidade(raiz);
     }
 }

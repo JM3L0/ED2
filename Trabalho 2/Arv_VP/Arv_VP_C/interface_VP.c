@@ -155,22 +155,35 @@ void menu_geral()
                             // Cadastro de CEPs
                             do
                             {
-                                CEP *novoCEP = cadastrarCEP();
-                                if (novoCEP)
-                                {
-                                    if (inserir_CEP(&(novaCidade->cep), novoCEP))
-                                        printf("\nCEP cadastrado com sucesso.\n");
-                                    else
+                                do {
+
+                                    CEP *novoCEP = cadastrarCEP();
+                                    retorno = percorre_estados_procurando_CEP(cabeca_estado, novoCEP->cep);
+    
+                                    if (retorno)
                                     {
-                                        printf("\nERRO: Erro ao inserir o CEP.\n");
+                                        printf("\nErro: CEP ja existe no sistema.\n");
                                         libera_no_CEP(&novoCEP);
                                     }
-                                }
-                                else
-                                {
-                                    printf("\nERRO: Erro ao cadastrar o CEP.\n");
-                                }
-
+                                    else
+                                    {
+                                        if (novoCEP)
+                                        {
+                                            if (inserir_CEP(&(novaCidade->cep), novoCEP))
+                                                printf("\nCEP cadastrado com sucesso.\n");
+                                            else
+                                            {
+                                                printf("\nERRO: Erro ao inserir o CEP.\n");
+                                                libera_no_CEP(&novoCEP);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            printf("\nERRO: Erro ao cadastrar o CEP.\n");
+                                        }
+                                    }
+                                }while (novaCidade->cep == NULL);
+                                
                                 printf("\nDeseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", novaCidade->nome_cidade);
                                 opcao2 = digitar_int();
                             } while (opcao2 == 1);
@@ -216,21 +229,30 @@ void menu_geral()
                             do{
 
                                 CEP *novoCEP = cadastrarCEP();
-                                if (novoCEP)
-                                {
-                                    retorno = inserir_CEP(&cidade->cep, novoCEP);
-                                    if (retorno)
+                                retorno = percorre_estados_procurando_CEP(cabeca_estado, novoCEP->cep);
+
+                                if (retorno){
+                                    printf("\nERRO: CEP ja existe no sistema.\n");
+                                    libera_no_CEP(&novoCEP);
+                                }else{
+
+                                    if (novoCEP)
                                     {
-                                        printf("\nCEP cadastrado com sucesso.\n");
+                                        retorno = inserir_CEP(&cidade->cep, novoCEP);
+                                        if (retorno)
+                                        {
+                                            printf("\nCEP cadastrado com sucesso.\n");
+                                        }
+                                        else
+                                        {
+                                            printf("\nERRO: Erro ao inserir o CEP.\n");
+                                        }
                                     }
                                     else
                                     {
-                                        printf("\nERRO: Erro ao inserir o CEP.\n");
+                                        printf("\nERRO: Erro ao cadastrar o CEP.\n");
                                     }
-                                }
-                                else
-                                {
-                                    printf("\nERRO: Erro ao cadastrar o CEP.\n");
+                                    if (!retorno) libera_no_CEP(&novoCEP);
                                 }
                                 printf("\nDeseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", cidade->nome_cidade);
                                 opcao2 = digitar_int();
@@ -575,6 +597,10 @@ void menu_geral()
             }
             case 0:
                 printf("\nSaindo do programa...\n");
+                printf("Liberando memoria...\n");
+                liberar_arvore_pessoas(&raiz_pessoa);
+                liberar_todos_estados(&cabeca_estado);
+                printf("Liberando memoria concluido.\n");
                 printf("Sistema finalizado com sucesso!\n");
                 break;
             default:

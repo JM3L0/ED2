@@ -89,6 +89,24 @@ ESTADOS *cadastro_estado()
     return estado;
 }
 
+// Função para liberar todos os estados
+
+void liberar_todos_estados(ESTADOS **cabeca)
+{
+    ESTADOS *atual = *cabeca;
+    ESTADOS *proximo;
+
+    while (atual != NULL)
+    {
+        proximo = atual->prox;
+        desalocar_estado(&atual);
+        atual = proximo;
+    }
+    *cabeca = NULL;
+}
+
+// Função para desalocar um estado
+
 void desalocar_estado(ESTADOS **estado)
 {
     if (estado != NULL)

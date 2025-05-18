@@ -233,12 +233,8 @@ void desalocar_arvore_CEP(CEP **raiz)
 {
     if (*raiz != NULL)
     {
-        if ((*raiz)->esq != NULL)
-            desalocar_arvore_CEP(&((*raiz)->esq));
-
-        if ((*raiz)->dir != NULL)
-            desalocar_arvore_CEP(&((*raiz)->dir));
-
+        desalocar_arvore_CEP(&((*raiz)->esq));
+        desalocar_arvore_CEP(&((*raiz)->dir));
         libera_no_CEP(raiz);
     }
 }

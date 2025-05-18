@@ -248,12 +248,8 @@ void liberar_arvore_pessoas(PESSOAS **raiz)
 {
     if (*raiz != NULL)
     {
-        if ((*raiz)->esq != NULL)
-            liberar_arvore_pessoas(&((*raiz)->esq));
-
-        if ((*raiz)->dir != NULL)
-            liberar_arvore_pessoas(&((*raiz)->dir));
-
+        liberar_arvore_pessoas(&((*raiz)->esq));
+        liberar_arvore_pessoas(&((*raiz)->dir));
         liberar_no_pessoa(raiz);
     }
 }
@@ -472,67 +468,35 @@ int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, PES
 
     while (atual != NULL)
     {
-        resultado += quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(atual->cidade, raiz_pessoa);
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa, atual->cidade);
         atual = atual->prox;
     }
 
     return resultado;
 }
 
-int quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(CIDADES *raiz_cidade, PESSOAS *raiz_pessoa){// camada de cidades
-    int resultado = 0;
-
-    if (raiz_cidade != NULL)
-    {
-        if (raiz_cidade->cep != NULL){
-            resultado += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa, raiz_cidade->cep);
-        }
-
-        resultado += quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(raiz_cidade->esq, raiz_pessoa);
-        resultado += quantas_pessoas_nao_moram_na_cidade_natal_CIDADE(raiz_cidade->dir, raiz_pessoa);
-    }
-    
-    return resultado;
-}
-
-int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CEP *raiz_cep){// integra a camada de pessoas
-    int soma = 0;
+int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CIDADES *raiz_cidade){// integra a camada de pessoas
+    int retorno, soma = 0;
     
     if (raiz_pessoa != NULL)
     {
-        if (raiz_cep != NULL)
-        {
-            int resultado = 0;
-            resultado = quantas_pessoas_nao_moram_na_cidade_natal_CEP(raiz_cep, raiz_pessoa->cep_city_natal);
-            if (resultado == 0){
-                printf("Nome: %s\n", raiz_pessoa->nome_pessoa);
+        CIDADES *cidade_natal = cidade_natal_dado_cep(raiz_cidade, raiz_pessoa->cep_city_natal);
+
+        if (cidade_natal){
+            retorno = cep_pertence_a_cidade(cidade_natal->cep, raiz_pessoa->cep_city_atual);
+            if (retorno == 0)
+            {
+                imprimir_pessoa(raiz_pessoa);
                 soma += 1;
             }
         }
 
-        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->esq, raiz_cep);
-        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->dir, raiz_cep);
+        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->esq, raiz_cidade);
+        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->dir, raiz_cidade);
 
     }
 
     return soma;
-}
-
-int quantas_pessoas_nao_moram_na_cidade_natal_CEP(CEP *raiz_CEP, char *pessoa_cep_natal){// camada de CEPs
-    int resultado = 0;
-
-    if (raiz_CEP != NULL)
-    {
-        if (strcasecmp(raiz_CEP->cep, pessoa_cep_natal) == 0)
-        {
-            resultado = 1;
-        }
-
-        resultado |= quantas_pessoas_nao_moram_na_cidade_natal_CEP(raiz_CEP->esq, pessoa_cep_natal);
-        resultado |= quantas_pessoas_nao_moram_na_cidade_natal_CEP(raiz_CEP->dir, pessoa_cep_natal);
-    }
-
-    return resultado;
 }
 
 int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *raiz_pessoa){
