@@ -188,7 +188,7 @@ void imprimir_cidade(CIDADES *cidade)
     if (cidade != NULL)
     {
         printf("Cidade: %s\n", cidade->nome_cidade);
-        printf("População: %d\n", cidade->populacao_city);
+        printf("Populacao: %d\n", cidade->populacao_city);
         printf("Cor: %s\n", cidade->cor == RED ? "Vermelho" : "Preto");
         // if(cidade->cep != NULL) {
         //     printf("CEP: %s\n", cidade->cep); // pode imprimir a arvore de CEP (pensar nisso posteriormente)
@@ -212,7 +212,7 @@ void imprimir_cidades_em_ordem(CIDADES *raiz)
 void imprimir_todas_cidades(CIDADES *raiz)
 {
     if (raiz == NULL)
-        printf("Não há cidades cadastradas.\n");
+        printf("Não ha cidades cadastradas.\n");
     else
     {
         printf("=== Lista de Cidades ===\n");

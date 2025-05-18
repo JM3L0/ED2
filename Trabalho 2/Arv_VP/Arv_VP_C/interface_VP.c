@@ -30,8 +30,8 @@ void menu_print()
     printf("[12] - Imprimir quantas pessoas nascidas em uma determinada cidade nao mora na cidade natal\n");
     printf("[13] - Imprimir quantas pessoas que moram em uma determinada cidade nao nasceram na cidade\n");
     printf("[14] - Imprimir todos os estados cadastrados\n");
-    printf("[15] - Imprimir todas as cidades cadastradas\n");
-    printf("[16] - Imprimir todos os CEPs cadastrados\n");
+    printf("[15] - Imprimir todas as cidades de um estado\n");
+    printf("[16] - Imprimir todos os CEPs de uma cidade\n");
     printf("[17] - Imprimir todas as pessoas cadastradas\n");
     printf("[0] - Sair\n");
 }
@@ -398,16 +398,20 @@ void menu_geral()
                 char CPF[12];
                 printf("\n=== Remocao de Pessoa ===\n");
                 printf("Digite o CPF da pessoa a ser removida: ");
-                ler_string_simples(CPF, sizeof(CPF));
+                retorno = capturar_cpf(CPF);
+                if (retorno){
 
-                retorno = remover_pessoa_arvore(&raiz_pessoa, CPF);
-                if (retorno)
-                {
-                    printf("\nPessoa removida com sucesso.\n");
-                }
-                else
-                {
-                    printf("\nERRO: Pessoa nao encontrada.\n");
+                    retorno = remover_pessoa_arvore(&raiz_pessoa, CPF);
+                    if (retorno)
+                    {
+                        printf("\nPessoa removida com sucesso.\n");
+                    }
+                    else
+                    {
+                        printf("\nERRO: Pessoa nao encontrada.\n");
+                    }
+                }else{
+                    printf("\nERRO: problema ao capturar CPF\n");
                 }
                 pausar();
                 break;
@@ -609,11 +613,11 @@ void menu_geral()
                 char nome_estado[100];
                 printf("\nDigite o nome do estado\n");
                 ler_string_simples(nome_estado, sizeof(nome_estado));
-                ESTADOS *cabeca_estado = existe_estado(cabeca_estado, nome_estado);
-                if (cabeca_estado != NULL)
+                ESTADOS *estado = existe_estado(cabeca_estado, nome_estado);
+                if (estado != NULL)
                 {
                     printf("\n=== IMPRIMIR TODAS AS CIDADES ===\n");
-                    imprimir_todas_cidades(cabeca_estado->cidade);
+                    imprimir_todas_cidades(estado->cidade);
                 }else{
                     printf("\nERRO: Estado nao encontrado.\n");
                 }

@@ -128,10 +128,10 @@ int capturar_cpf(char *cpf)
                 sucesso = 1;
             }
             else
-                printf("Erro: CPF deve ter 11 digitos numericos!\n");
+                printf("\nErro: CPF deve ter 11 digitos numericos!\n");
         }
         else
-            printf("Erro: falha na leitura!\n");
+            printf("\nErro: falha na leitura!\n");
     }while (sucesso == 0);
 
     return sucesso;
