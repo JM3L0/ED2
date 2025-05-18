@@ -505,6 +505,7 @@ int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CEP 
             int resultado = 0;
             resultado = quantas_pessoas_nao_moram_na_cidade_natal_CEP(raiz_cep, raiz_pessoa->cep_city_natal);
             if (resultado == 0){
+                printf("Nome: %s\n", raiz_pessoa->nome_pessoa);
                 soma += 1;
             }
         }
