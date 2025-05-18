@@ -3,7 +3,7 @@
 // insercao de pessoas
 int inserir_no_pessoa(PESSOAS **raiz, PESSOAS *novaPessoa);
 int inserir_pessoa(PESSOAS **raiz, PESSOAS *novaPessoa);
-PESSOAS *aloca_pessoa(char* nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, char *data_nasc);
+PESSOAS *aloca_pessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc);
 PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual);
 
 // rotacao de pessoas

@@ -3,10 +3,13 @@
 #include "../Arv_VP_H/STRUCTS_VP.h"
 
 // int ehBissexto(int ano);
-bool eh_bissexto(int ano);
-int validar_data(const char *data);
-int capturar_data(char *data);
-void imprimir_data(const char *data);
+void obter_data_atual(DATA *data_atual);
+int eh_bissexto(int ano);
+int dias_no_mes(int mes, int ano);
+int validar_data(DATA *data);
+int capturar_data(DATA *data);
+void imprimir_data(DATA data);
+
 int validar_cpf(const char *cpf);
 int capturar_cpf(char *cpf);
 int validar_cep(const char *cep);

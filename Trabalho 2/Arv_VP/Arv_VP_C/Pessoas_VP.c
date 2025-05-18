@@ -42,7 +42,7 @@ int inserir_pessoa(PESSOAS **raiz, PESSOAS *novapessoa)
     return inseriu;
 }
 
-PESSOAS *aloca_pessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, char *data_nasc)
+PESSOAS *aloca_pessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_atual, DATA data_nasc)
 {
     PESSOAS *pessoa;
     pessoa = (PESSOAS *)malloc(sizeof(PESSOAS));
@@ -51,7 +51,7 @@ PESSOAS *aloca_pessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_a
     strcpy(pessoa->CPF, CPF);
     strcpy(pessoa->cep_city_natal, cep_natal);
     strcpy(pessoa->cep_city_atual, cep_atual);
-    strcpy(pessoa->data_nasc, data_nasc);
+    pessoa->data_nasc = data_nasc;
 
     pessoa->cor = RED;
     pessoa->esq = NULL;
@@ -63,9 +63,8 @@ PESSOAS *aloca_pessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_a
 PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual)
 {
     PESSOAS *pessoa = NULL;
-
+    DATA data_nasc;
     char CPF[12];
-    char data_nasc[11];
     char *nome_pessoa = NULL;
     int retorno = 0;
 
@@ -79,14 +78,14 @@ PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual)
         if (retorno)
         {
             // Alocação de memória para a data de nascimento
-            retorno = capturar_data(data_nasc);
-            if(retorno){
-                pessoa = aloca_pessoa(nome_pessoa, CPF, cep_natal, cep_atual, data_nasc);
-            }
+
+            retorno = capturar_data(&data_nasc);
+
+            pessoa = aloca_pessoa(nome_pessoa, CPF, cep_natal, cep_atual, data_nasc);
         }
     }
     // Limpeza em caso de falha
-    if (pessoa == NULL)
+    if (!retorno)
     {
         if (nome_pessoa != NULL)
             free(nome_pessoa);
@@ -319,7 +318,7 @@ void trocar_informacoes_pessoas(PESSOAS *pessoa1, PESSOAS *pessoa2)
 
         // Troca as datas de nascimento
         // pessoa1->data_nasc = pessoa2->data_nasc;
-        strcpy(pessoa2->data_nasc, pessoa1->data_nasc);
+        pessoa1->data_nasc = pessoa2->data_nasc;
     }
 }
 

@@ -3,6 +3,14 @@
 #define BLACK 0
 #define RED 1
 
+typedef struct DATA// DATA DE NASCIMENTO
+{
+    int dia;
+    int mes;
+    int ano;
+
+} DATA;
+
 typedef struct CEP
 {
     char cep[10];
@@ -42,7 +50,7 @@ typedef struct PESSOAS
     char cep_city_natal[10];
     char cep_city_atual[10];
     int cor;
-    char data_nasc[11];
+    DATA data_nasc;
 
     struct PESSOAS *esq, *dir;
 

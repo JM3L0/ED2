@@ -260,22 +260,22 @@ void menu_geral()
                         if (retorno)
                         {
                             novaPessoa = cadastra_pessoa(cep_natal, cep_atual);
-                            imprimir_pessoa(novaPessoa);
                             if (novaPessoa)
                             {
-                                printf("\naaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+                                
                                 retorno = inserir_pessoa(&raiz_pessoa, novaPessoa);
-                                printf("\nbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\n");
+                                
                                 if (retorno)
                                 {
-                                    printf("Pessoa cadastrada com sucesso.\n");
+                                    printf("\nessoa cadastrada com sucesso.\n");
+                                    imprimir_pessoa(novaPessoa);
                                 }
                                 else
                                 {
                                     printf("Erro ao inserir a pessoa.\n");
                                     liberar_no_pessoa(&novaPessoa);
                                 }
-                                printf("\ncccccccccccccccccccccccccccccccccccccccccccc\n");
+                                
                             }
                             else
                             {
@@ -492,7 +492,7 @@ void menu_geral()
                 char cep[10];
                 printf("\n=== Cidade natal de uma pessoa dado o CEP ===\n");
                 printf("Digite o CEP: ");
-                ler_string_simples(cep, sizeof(cep));
+                retorno = capturar_cep(cep);
 
                 CIDADES *cidade = cidade_natal_dado_cep(cabeca_estado->cidade, cep);
                 if (cidade)
@@ -503,6 +503,7 @@ void menu_geral()
                 {
                     printf("ciade natal nao encontrada\n");
                 }
+                pausar();
                 break;
             }
             case 12:{
