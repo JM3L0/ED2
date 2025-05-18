@@ -17,15 +17,15 @@ void trocar_cor_cidade(CIDADES *raiz);
 void balancear_RB_cidade(CIDADES **raiz);
 
 // Busca e impressão
-CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade);
+CIDADES *existe_cidade(CIDADES *raiz, char *nome_cidade);
 void imprimir_cidade(CIDADES *cidade);
 void imprimir_cidades_em_ordem(CIDADES *raiz);
 void imprimir_todas_cidades(CIDADES *raiz);
 void limpar_info_no_cidade(CIDADES *cidade);
 
 // Desalocação
-void limpa_no_cidade(CIDADES **raiz);
-void limpa_arvore_cidades(CIDADES **raiz);
+void limpar_no_cidade(CIDADES **raiz);
+void limpar_arvore_cidades(CIDADES **raiz);
 
 //consulta
 int consulta_cidade(CIDADES *raiz, char *nome_cidade);

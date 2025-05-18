@@ -18,16 +18,18 @@ int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
 
     if (*raiz == NULL)
     {
-        *raiz = novaCidade;//todo o mal esta aqui
+        *raiz = novaCidade; // todo o mal esta aqui
         inseriu = 1;
     }
-    else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0){
+    else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
+    {
         inseriu = inserir_no_Cidade(&((*raiz)->esq), novaCidade);
     }
     else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
         inseriu = inserir_no_Cidade(&((*raiz)->dir), novaCidade);
 
-    if (inseriu){
+    if (inseriu)
+    {
         balancear_RB_cidade(raiz);
     }
     return inseriu;
@@ -81,7 +83,8 @@ CIDADES *cadastrarCidade()
         populacao = digitar_int();
     }
 
-    if (erro == 0){
+    if (erro == 0)
+    {
         novaCidade = aloca_Cidade(nome_cidade, populacao);
     }
     else
@@ -117,7 +120,7 @@ void rotacao_direita_cidade(CIDADES **raiz)
     (*raiz)->esq = aux->dir;
     aux->dir = (*raiz);
     (*raiz) = aux;
-    
+
     (*raiz)->cor = (*raiz)->dir->cor;
     (*raiz)->dir->cor = RED;
 }
@@ -146,13 +149,16 @@ void balancear_RB_cidade(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
-        if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->dir) == RED){
+        if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->dir) == RED)
+        {
             rotacao_esquerda_cidade(raiz);
         }
-        if ((Cor_cidade((*raiz)->esq) == RED) && Cor_cidade((*raiz)->esq->esq) == RED){
+        if ((Cor_cidade((*raiz)->esq) == RED) && Cor_cidade((*raiz)->esq->esq) == RED)
+        {
             rotacao_direita_cidade(raiz);
         }
-        if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->dir) == RED){
+        if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->dir) == RED)
+        {
             trocar_cor_cidade(*raiz);
         }
     }
@@ -163,7 +169,7 @@ void balancear_RB_cidade(CIDADES **raiz)
 // =================================
 
 // Função para buscar uma cidade na árvore pelo nome
-CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade)
+CIDADES *existe_cidade(CIDADES *raiz, char *nome_cidade)
 {
     CIDADES *resultado = NULL;
 
@@ -174,9 +180,9 @@ CIDADES *buscar_cidade(CIDADES *raiz, char *nome_cidade)
         if (comparacao == 0)
             resultado = raiz;
         else if (comparacao < 0)
-            resultado = buscar_cidade(raiz->esq, nome_cidade);
+            resultado = existe_cidade(raiz->esq, nome_cidade);
         else
-            resultado = buscar_cidade(raiz->dir, nome_cidade);
+            resultado = existe_cidade(raiz->dir, nome_cidade);
     }
 
     return resultado;
@@ -212,7 +218,7 @@ void imprimir_cidades_em_ordem(CIDADES *raiz)
 void imprimir_todas_cidades(CIDADES *raiz)
 {
     if (raiz == NULL)
-        printf("Não ha cidades cadastradas.\n");
+        printf("Nao ha cidades cadastradas.\n");
     else
     {
         printf("=== Lista de Cidades ===\n");
@@ -235,7 +241,7 @@ void limpar_info_no_cidade(CIDADES *cidade)
 // =================================
 
 // Função para desalocar completamente uma cidade
-void limpa_no_cidade(CIDADES **raiz)
+void limpar_no_cidade(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
@@ -256,13 +262,13 @@ void limpa_no_cidade(CIDADES **raiz)
 }
 
 // Função para desalocar toda a árvore de cidades
-void limpa_arvore_cidades(CIDADES **raiz)
+void limpar_arvore_cidades(CIDADES **raiz)
 {
     if (*raiz != NULL)
     {
-        limpa_arvore_cidades(&((*raiz)->esq));
-        limpa_arvore_cidades(&((*raiz)->dir));
-        limpa_no_cidade(raiz);
+        limpar_arvore_cidades(&((*raiz)->esq));
+        limpar_arvore_cidades(&((*raiz)->dir));
+        limpar_no_cidade(raiz);
     }
 }
 
@@ -357,7 +363,7 @@ void mover2_direita_cidade(CIDADES **raiz)
 void remover_menor_cidade_arv(CIDADES **raiz)
 {
     if ((*raiz)->esq == NULL)
-        limpa_no_cidade(raiz);
+        limpar_no_cidade(raiz);
     else
     {
         if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->esq->esq) == BLACK)
@@ -394,7 +400,7 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
 
             if (resultado == 0 && (*raiz)->dir == NULL)
             {
-                limpa_no_cidade(raiz);
+                limpar_no_cidade(raiz);
             }
             else
             {
@@ -465,15 +471,14 @@ CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_cap
     return mais_populosa;
 }
 
-
 int cep_pertence_a_cidade(CEP *raiz, char *cep)
 {
     int resultado = 0;
-    
+
     if (raiz != NULL)
     {
         if (strcasecmp(raiz->cep, cep) == 0)
-        resultado = 1;
+            resultado = 1;
         else
         {
             resultado |= cep_pertence_a_cidade(raiz->esq, cep);
@@ -483,14 +488,18 @@ int cep_pertence_a_cidade(CEP *raiz, char *cep)
     return resultado;
 }
 
-CIDADES *cidade_natal_dado_cep(CIDADES *raiz, char *cep){
+CIDADES *cidade_natal_dado_cep(CIDADES *raiz, char *cep)
+{
     CIDADES *resultado = NULL;
 
-    if (raiz != NULL){
-        if (cep_pertence_a_cidade(raiz->cep, cep) == 1){
+    if (raiz != NULL)
+    {
+        if (cep_pertence_a_cidade(raiz->cep, cep) == 1)
+        {
             resultado = raiz;
         }
-        else{
+        else
+        {
             resultado = cidade_natal_dado_cep(raiz->esq, cep);
             if (resultado == NULL)
                 resultado = cidade_natal_dado_cep(raiz->dir, cep);
@@ -499,7 +508,8 @@ CIDADES *cidade_natal_dado_cep(CIDADES *raiz, char *cep){
     return resultado;
 }
 
-int quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(CIDADES *cidade, PESSOAS *raiz_pessoa){
+int quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(CIDADES *cidade, PESSOAS *raiz_pessoa)
+{
     int resultado = 0;
 
     if (cidade != NULL && raiz_pessoa != NULL)
@@ -518,7 +528,7 @@ int quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(CIDADES *cidade, PESS
                     resultado += 1;
                 }
             }
-            
+
             // Verifica recursivamente para as demais pessoas na árvore
             resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa->esq);
             resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa->dir);

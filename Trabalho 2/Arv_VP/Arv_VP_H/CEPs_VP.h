@@ -20,7 +20,7 @@ void trocar_cor_CEP(CEP *raiz);
 void balancear_RB_CEP(CEP **raiz);
 
 // busca e impressao
-CEP *buscar_CEP(CEP *raiz, char *str_cep);
+CEP *existe_CEP(CEP *raiz, char *str_cep);
 void imprimir_CEP(CEP *cep);
 void imprimir_CEP_em_ordem(CEP *raiz);
 void imprimir_todos_CEP(CEP *raiz);

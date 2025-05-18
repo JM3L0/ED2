@@ -153,7 +153,7 @@ void balancear_RB_CEP(CEP **raiz)
 // =================================
 
 // Função para buscar uma cep na árvore pelo nome
-CEP *buscar_CEP(CEP *raiz, char *str_cep)
+CEP *existe_CEP(CEP *raiz, char *str_cep)
 {
     CEP *resultado = NULL;
 
@@ -167,11 +167,11 @@ CEP *buscar_CEP(CEP *raiz, char *str_cep)
         }
         else if (comparacao < 0)
         {
-            resultado = buscar_CEP(raiz->esq, str_cep);
+            resultado = existe_CEP(raiz->esq, str_cep);
         }
         else
         {
-            resultado = buscar_CEP(raiz->dir, str_cep);
+            resultado = existe_CEP(raiz->dir, str_cep);
         }
     }
 
@@ -419,26 +419,29 @@ int remover_CEP_arvore(CEP **raiz, char *str_cep)
 // ESPECÍFICAS DO TRABALHO
 // =================================
 
-int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep){
+int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep)
+{
     ESTADOS *atual = cabeca;
     int encontrado = 0;
 
-    while (atual != NULL && encontrado == 0){
+    while (atual != NULL && encontrado == 0)
+    {
         encontrado |= percorre_cidades_procurando_CEP(atual->cidade, cep);
-        if (encontrado == 0){
+        if (encontrado == 0)
+        {
             atual = atual->prox;
         }
-
     }
 
     return encontrado;
 }
 
-int percorre_cidades_procurando_CEP(CIDADES *raiz, char *cep){
-    // CIDADES *atual = raiz;
+int percorre_cidades_procurando_CEP(CIDADES *raiz, char *cep)
+{
     int encontrado = 0;
 
-    if (raiz != NULL ){
+    if (raiz != NULL)
+    {
         if (raiz->cep != NULL)
             encontrado |= consulta_CEP(raiz->cep, cep);
         if (encontrado == 0)

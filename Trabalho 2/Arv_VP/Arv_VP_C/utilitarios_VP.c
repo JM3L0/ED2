@@ -65,7 +65,8 @@ int capturar_data(DATA *data)
     int sucesso = 0;
     char entrada[11];
 
-    do {
+    do
+    {
         printf("Digite a data de nascimento (DD/MM/AAAA): ");
         if (fgets(entrada, sizeof(entrada), stdin))
         {
@@ -74,7 +75,8 @@ int capturar_data(DATA *data)
             {
                 if (validar_data(data))
                     sucesso = 1;
-                else{
+                else
+                {
 
                     limpar_buffer();
                     printf("Erro: data invalida!\n");
@@ -83,7 +85,7 @@ int capturar_data(DATA *data)
             else
                 printf("Erro: formato invalida!\n");
         }
-    }while (sucesso == 0);
+    } while (sucesso == 0);
     return sucesso;
 }
 
@@ -116,7 +118,8 @@ int capturar_cpf(char *cpf)
     int sucesso = 0;
     char entrada[13]; // 11 dígitos + \n + \0
 
-    do {
+    do
+    {
 
         printf("Digite o CPF (11 digitos, sem pontos ou tracos): ");
         if (fgets(entrada, sizeof(entrada), stdin))
@@ -132,7 +135,7 @@ int capturar_cpf(char *cpf)
         }
         else
             printf("\nErro: falha na leitura!\n");
-    }while (sucesso == 0);
+    } while (sucesso == 0);
 
     return sucesso;
 }
@@ -180,7 +183,8 @@ int capturar_cep(char *cep)
                 printf("Aviso: CEP autocorrigido para %s\n", cep);
                 sucesso = 1; // Indica que a captura foi bem-sucedida
             }
-            else{
+            else
+            {
                 printf("Erro: CEP invalido! Digite novamente\n");
                 sucesso = 0; // Indica que a captura falhou
             }
@@ -282,7 +286,8 @@ int digitar_int() // muito bom
 
 void limpar_buffer()
 {
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+        ;
 }
 
 void pausar()

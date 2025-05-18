@@ -7,7 +7,8 @@
 #include "../Arv_VP_H/STRUCTS_VP.h"
 #include "../Arv_VP_H/Cidades_VP.h"
 
-ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado){
+ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado)
+{
     ESTADOS *resultado = NULL;
     ESTADOS *atual = cabeca;
 
@@ -51,7 +52,7 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado)
     {
         // limpar_estado(novo_estado);
         // free(novo_estado);
-        desalocar_estado(&novo_estado);
+        liberar_no_estado(&novo_estado);
         resultado = 0; // Estado já existe
     }
     else if (strcasecmp((*cabeca)->nome_estado, novo_estado->nome_estado) > 0)
@@ -76,16 +77,17 @@ ESTADOS *cadastro_estado()
 
     printf("Digite o nome do Estado: ");
     nome_estado = ler_string();
-    if (nome_estado == NULL){
+    if (nome_estado == NULL)
+    {
         erro = 1;
         free(nome_estado);
     }
-    // a capital sera add na interface 
+    // a capital sera add na interface
     if (!erro)
     {
         estado = aloca_estado(nome_estado);
     }
-    //o resto do código deve ser feito na interface.c
+    // o resto do código deve ser feito na interface.c
     return estado;
 }
 
@@ -99,7 +101,7 @@ void liberar_todos_estados(ESTADOS **cabeca)
     while (atual != NULL)
     {
         proximo = atual->prox;
-        desalocar_estado(&atual);
+        liberar_no_estado(&atual);
         atual = proximo;
     }
     *cabeca = NULL;
@@ -107,7 +109,7 @@ void liberar_todos_estados(ESTADOS **cabeca)
 
 // Função para desalocar um estado
 
-void desalocar_estado(ESTADOS **estado)
+void liberar_no_estado(ESTADOS **estado)
 {
     if (estado != NULL)
     {
@@ -119,7 +121,7 @@ void desalocar_estado(ESTADOS **estado)
         if ((*estado)->cidade != NULL)
         {
             // Desalocar a árvore de cidades associada ao estado
-            limpa_arvore_cidades(&((*estado)->cidade));
+            limpar_arvore_cidades(&((*estado)->cidade));
         }
         free(*estado);
     }
@@ -142,8 +144,8 @@ int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
                 (*cabeca)->ant = temp->ant; // Atualiza o ponteiro anterior do próximo nó
             if (temp->ant != NULL)
                 temp->ant->prox = *cabeca; // Atualiza o ponteiro próximo do nó anterior
-            
-            desalocar_estado(&temp);
+
+            liberar_no_estado(&temp);
             // limpar_estado(temp);
             // free(temp);
 

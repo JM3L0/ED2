@@ -438,7 +438,8 @@ int remover_pessoa_arvore(PESSOAS **raiz, char *CPF)
 // ESPECÍFICAS DO TRABALHO
 // =================================
 
-int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *raiz_CEP){//retorna 1 se a pessoa nasceu ou mora na cidade, 0 caso contrario
+int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *raiz_CEP)
+{ // retorna 1 se a pessoa nasceu ou mora na cidade, 0 caso contrario
     int resultado = 0;
 
     if (raiz_pessoa != NULL)
@@ -462,7 +463,8 @@ int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *rai
 
 ///////////////////////////
 
-int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, PESSOAS *raiz_pessoa){// camada de estados
+int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, PESSOAS *raiz_pessoa)
+{ // camada de estados
     int resultado = 0;
     ESTADOS *atual = cabeca_estado;
 
@@ -475,14 +477,16 @@ int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, PES
     return resultado;
 }
 
-int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CIDADES *raiz_cidade){// integra a camada de pessoas
+int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CIDADES *raiz_cidade)
+{ // integra a camada de pessoas
     int retorno, soma = 0;
-    
+
     if (raiz_pessoa != NULL)
     {
         CIDADES *cidade_natal = cidade_natal_dado_cep(raiz_cidade, raiz_pessoa->cep_city_natal);
 
-        if (cidade_natal){
+        if (cidade_natal)
+        {
             retorno = cep_pertence_a_cidade(cidade_natal->cep, raiz_pessoa->cep_city_atual);
             if (retorno == 0)
             {
@@ -493,13 +497,13 @@ int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CIDA
 
         soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->esq, raiz_cidade);
         soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->dir, raiz_cidade);
-
     }
 
     return soma;
 }
 
-int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *raiz_pessoa){
+int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *raiz_pessoa)
+{
     int resultado = 0;
 
     if (cidade != NULL && raiz_pessoa != NULL)
@@ -518,7 +522,7 @@ int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *
                     resultado += 1;
                 }
             }
-            
+
             // Verifica recursivamente para as demais pessoas na árvore
             resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->esq);
             resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->dir);
@@ -526,5 +530,3 @@ int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *
     }
     return resultado;
 }
-
-
