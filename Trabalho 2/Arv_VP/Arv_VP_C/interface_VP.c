@@ -167,7 +167,7 @@ void menu_geral()
                                     printf("Erro ao cadastrar o CEP.\n");
                                 }
 
-                                printf("Deseja cadastrar outro CEP? [1] - SIM [0] - NAO: ");
+                                printf("\nDeseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", novaCidade->nome_cidade);
                                 opcao2 = digitar_int();
                             } while (opcao2 == 1);
                         }
@@ -177,7 +177,7 @@ void menu_geral()
                             if (novaCidade)
                                 limpa_no_cidade(&novaCidade);
                         }
-                        printf("Deseja cadastrar outra cidade? [1] - SIM [0] - NAO: ");
+                        printf("\nDeseja cadastrar outra cidade para %s? [1] - SIM [0] - NAO: ", estado->nome_estado);
                         opcao2 = digitar_int();
                     } while (opcao2 == 1);
                 }
@@ -194,46 +194,57 @@ void menu_geral()
                 char nome_estado[100];
                 printf("\n=== Cadastro de CEP ===\n");
 
-                printf("Digite o nome do estado para qual o CEP sera inserido: ");
-                ler_string_simples(nome_estado, sizeof(nome_estado));
-                estado = existe_estado(cabeca_estado, nome_estado);
-                if (estado)
-                {
+                do {
 
-                    CIDADES *cidade;
-                    char nome_cidade[100];
-                    printf("Digite o nome da cidade para qual o CEP sera inserido: ");
-                    ler_string_simples(nome_cidade, sizeof(nome_cidade));
-                    cidade = buscar_cidade(estado->cidade, nome_cidade);
-                    if (cidade)
+                    printf("Digite o nome do estado para qual o CEP sera inserido: ");
+                    ler_string_simples(nome_estado, sizeof(nome_estado));
+                    estado = existe_estado(cabeca_estado, nome_estado);
+                    if (estado)
                     {
-                        CEP *novoCEP = cadastrarCEP();
-                        if (novoCEP)
+                        CIDADES *cidade;
+    
+                        char nome_cidade[100];
+                        printf("Digite o nome da cidade para qual o CEP sera inserido: ");
+                        ler_string_simples(nome_cidade, sizeof(nome_cidade));
+                        cidade = buscar_cidade(estado->cidade, nome_cidade);
+                        if (cidade)
                         {
-                            retorno = inserir_CEP(&cidade->cep, novoCEP);
-                            if (retorno)
-                            {
-                                printf("CEP cadastrado com sucesso.\n");
-                            }
-                            else
-                            {
-                                printf("Erro ao inserir o CEP.\n");
-                            }
+                            do{
+
+                                CEP *novoCEP = cadastrarCEP();
+                                if (novoCEP)
+                                {
+                                    retorno = inserir_CEP(&cidade->cep, novoCEP);
+                                    if (retorno)
+                                    {
+                                        printf("CEP cadastrado com sucesso.\n");
+                                    }
+                                    else
+                                    {
+                                        printf("Erro ao inserir o CEP.\n");
+                                    }
+                                }
+                                else
+                                {
+                                    printf("Erro ao cadastrar o CEP.\n");
+                                }
+                                printf("\nDeseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", cidade->nome_cidade);
+                                opcao2 = digitar_int();
+                            }while (opcao2 == 1);
                         }
                         else
                         {
-                            printf("Erro ao cadastrar o CEP.\n");
+                            printf("Cidade nao encontrada.\n");
                         }
                     }
                     else
                     {
-                        printf("Cidade nao encontrada.\n");
+                        printf("Estado nao encontrado.\n");
                     }
-                }
-                else
-                {
-                    printf("Estado nao encontrado.\n");
-                }
+
+                    printf("\nDeseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", nome_estado);
+                    opcao2 = digitar_int();
+                }while (opcao2 == 1);
 
                 break;
             }
