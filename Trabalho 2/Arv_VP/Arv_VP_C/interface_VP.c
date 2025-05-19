@@ -60,45 +60,37 @@ void menu_geral()
             case 1:
             {
                 printf("\n== Cadastro de Estado ==\n");
-                ESTADOS *novo_estado = cadastro_estado();
-                CIDADES *capital = NULL;
+                ESTADOS *novo_estado;
+                CIDADES *capital;
+                capital = NULL;
+                novo_estado = cadastro_estado();
 
                 if (!novo_estado)
-                {
                     printf("\nERRO: Erro ao criar estado.\n");
-                }
                 else if (!inserir_estado_rec(&cabeca_estado, novo_estado))
-                {
                     printf("\nERRO: Erro ao cadastrar o estado.\n");
-                }
                 else
                 {
                     printf("\n== Cadastro de Capital ==\n");
                     capital = cadastrarCidade();
                     if (!capital)
-                    {
                         printf("\nERRO: Erro ao cadastrar a capital.\n");
-                    }
                     else if (!inserir_Cidade(&novo_estado->cidade, capital))
-                    {
                         printf("\nERRO: Erro ao inserir a capital no estado.\n");
-                    }
                     else
                     {
                         // Cadastro dos CEPs
                         do
                         {
-                            CEP *novoCEP = cadastrarCEP();
+                            CEP *novoCEP;
+                            novoCEP = cadastrarCEP();
+
                             if (novoCEP)
                             {
                                 if (percorre_estados_procurando_CEP(cabeca_estado, novoCEP->cep))
-                                {
                                     printf("\nErro: CEP ja existe no sistema.\n");
-                                }
                                 else if (!inserir_CEP(&capital->cep, novoCEP))
-                                {
                                     printf("\nERRO: Erro ao inserir o CEP.\n");
-                                }
                                 else
                                 {
                                     printf("\nCEP cadastrado com sucesso.\n");
@@ -108,9 +100,7 @@ void menu_geral()
                                     libera_no_CEP(&novoCEP);
                             }
                             else
-                            {
                                 printf("\nERRO: Erro ao cadastrar o CEP.\n");
-                            }
                             printf("\nDeseja cadastrar outro CEP? [1] - SIM [0] - NAO: ");
                             opcao2 = digitar_int();
                         } while (opcao2 == 1);
@@ -161,8 +151,8 @@ void menu_geral()
                             {
                                 do
                                 {
-
-                                    CEP *novoCEP = cadastrarCEP();
+                                    CEP *novoCEP;
+                                    novoCEP = cadastrarCEP();
                                     retorno = percorre_estados_procurando_CEP(cabeca_estado, novoCEP->cep);
 
                                     if (retorno)
@@ -183,9 +173,7 @@ void menu_geral()
                                             }
                                         }
                                         else
-                                        {
                                             printf("\nERRO: Erro ao cadastrar o CEP.\n");
-                                        }
                                     }
                                 } while (novaCidade->cep == NULL);
 
@@ -203,10 +191,8 @@ void menu_geral()
                         opcao2 = digitar_int();
                     } while (opcao2 == 1);
                 }
-                else
-                {
-                    printf("\nERRO: Estado nao encontrado.\n");
-                }
+                else                
+                    printf("\nERRO: Estado nao encontrado.\n");                
                 pausar();
                 break;
             }
@@ -218,15 +204,14 @@ void menu_geral()
 
                 do
                 {
-
                     printf("Digite o nome do estado para qual o CEP sera inserido: ");
                     ler_string_simples(nome_estado, sizeof(nome_estado));
                     estado = existe_estado(cabeca_estado, nome_estado);
                     if (estado)
                     {
                         CIDADES *cidade;
-
                         char nome_cidade[100];
+
                         printf("Digite o nome da cidade para qual o CEP sera inserido: ");
                         ler_string_simples(nome_cidade, sizeof(nome_cidade));
                         cidade = existe_cidade(estado->cidade, nome_cidade);
@@ -234,8 +219,8 @@ void menu_geral()
                         {
                             do
                             {
-
-                                CEP *novoCEP = cadastrarCEP();
+                                CEP *novoCEP;
+                                novoCEP = cadastrarCEP();
                                 retorno = percorre_estados_procurando_CEP(cabeca_estado, novoCEP->cep);
 
                                 if (retorno)
@@ -249,19 +234,13 @@ void menu_geral()
                                     if (novoCEP)
                                     {
                                         retorno = inserir_CEP(&cidade->cep, novoCEP);
-                                        if (retorno)
-                                        {
-                                            printf("\nCEP cadastrado com sucesso.\n");
-                                        }
-                                        else
-                                        {
-                                            printf("\nERRO: Erro ao inserir o CEP.\n");
-                                        }
+                                        if (retorno)                                        
+                                            printf("\nCEP cadastrado com sucesso.\n");                                        
+                                        else                                        
+                                            printf("\nERRO: Erro ao inserir o CEP.\n");                                        
                                     }
-                                    else
-                                    {
-                                        printf("\nERRO: Erro ao cadastrar o CEP.\n");
-                                    }
+                                    else                                    
+                                        printf("\nERRO: Erro ao cadastrar o CEP.\n");                                    
                                     if (!retorno)
                                         libera_no_CEP(&novoCEP);
                                 }
@@ -269,15 +248,11 @@ void menu_geral()
                                 opcao2 = digitar_int();
                             } while (opcao2 == 1);
                         }
-                        else
-                        {
-                            printf("\nERRO: Cidade nao encontrada.\n");
-                        }
+                        else                        
+                            printf("\nERRO: Cidade nao encontrada.\n");                        
                     }
-                    else
-                    {
-                        printf("\nERRO: Estado nao encontrado.\n");
-                    }
+                    else                    
+                        printf("\nERRO: Estado nao encontrado.\n");                    
 
                     printf("\nDeseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", nome_estado);
                     opcao2 = digitar_int();
@@ -288,8 +263,10 @@ void menu_geral()
             case 4:
             {
 
-                PESSOAS *novaPessoa = NULL;
+                PESSOAS *novaPessoa;
+                novaPessoa = NULL;
                 char cep_natal[10], cep_atual[10];
+
                 printf("\n=== Cadastro de Pessoa ===\n");
 
                 do
@@ -310,7 +287,6 @@ void menu_geral()
                             novaPessoa = cadastra_pessoa(cep_natal, cep_atual);
                             if (novaPessoa)
                             {
-
                                 retorno = inserir_pessoa(&raiz_pessoa, novaPessoa);
 
                                 if (retorno)
@@ -324,20 +300,14 @@ void menu_geral()
                                     liberar_no_pessoa(&novaPessoa);
                                 }
                             }
-                            else
-                            {
-                                printf("\nERRO: Erro ao cadastrar a pessoa.\n");
-                            }
+                            else                        
+                                printf("\nERRO: Erro ao cadastrar a pessoa.\n");                            
                         }
-                        else
-                        {
-                            printf("\nERRO: CEP atual nao encontrado.\n");
-                        }
+                        else                        
+                            printf("\nERRO: CEP atual nao encontrado.\n");                        
                     }
-                    else
-                    {
-                        printf("\nERRO: CEP natal nao encontrado.\n");
-                    }
+                    else                    
+                        printf("\nERRO: CEP natal nao encontrado.\n");                    
 
                     printf("\nDeseja cadastrar outra pessoa? [1] - SIM [0] - NAO: ");
                     opcao2 = digitar_int();
@@ -348,8 +318,10 @@ void menu_geral()
             case 5:
             {
                 char nome_estado[100], nome_cidade[100], str_cep[10];
-                ESTADOS *estado = NULL;
-                CIDADES *cidade = NULL;
+                ESTADOS *estado;
+                CIDADES *cidade;
+                cidade = NULL;
+                estado = NULL;
 
                 printf("\n=== Remocao de CEP ===\n");
 
@@ -373,56 +345,39 @@ void menu_geral()
                         if (!retorno)
                         {
 
-                            if (remover_CEP_arvore(&cidade->cep, str_cep))
-                            {
-                                printf("\nCEP removido com sucesso\n");
-                            }
-                            else
-                            {
-                                printf("\nERRO: CEP nao encontrado\n");
-                            }
+                            if (remover_CEP_arvore(&cidade->cep, str_cep))                            
+                                printf("\nCEP removido com sucesso\n");                            
+                            else                            
+                                printf("\nERRO: CEP nao encontrado\n");                            
                         }
-                        else
-                        {
-                            printf("\nERRO: CEP nao pode ser removido\n");
-                        }
+                        else                        
+                            printf("\nERRO: CEP nao pode ser removido\n");                        
                     }
-                    else
-                    {
-                        printf("\nERRO: Cidade nao encontrada.\n");
-                    }
+                    else                    
+                        printf("\nERRO: Cidade nao encontrada.\n");                    
                 }
-                else
-                {
-                    printf("\nERRO: Estado nao encontrado.\n");
-                }
-
+                else                
+                    printf("\nERRO: Estado nao encontrado.\n");                
                 pausar();
                 break;
             }
             case 6:
             {
                 char CPF[12];
+
                 printf("\n=== Remocao de Pessoa ===\n");
                 printf("Digite o CPF da pessoa a ser removida: ");
                 retorno = capturar_cpf(CPF);
                 if (retorno)
                 {
-
                     retorno = remover_pessoa_arvore(&raiz_pessoa, CPF);
-                    if (retorno)
-                    {
-                        printf("\nPessoa removida com sucesso.\n");
-                    }
-                    else
-                    {
-                        printf("\nERRO: Pessoa nao encontrada.\n");
-                    }
+                    if (retorno)                    
+                        printf("\nPessoa removida com sucesso.\n");                    
+                    else                    
+                        printf("\nERRO: Pessoa nao encontrada.\n");                    
                 }
-                else
-                {
-                    printf("\nERRO: problema ao capturar CPF\n");
-                }
+                else                
+                    printf("\nERRO: problema ao capturar CPF\n");                
                 pausar();
                 break;
             }
@@ -431,7 +386,6 @@ void menu_geral()
                 ESTADOS *estado;
 
                 printf("\n=== Estado Mais Populoso ===\n");
-
                 estado = verifica_estado_mais_populoso(cabeca_estado);
 
                 if (estado)
@@ -444,17 +398,16 @@ void menu_geral()
                     printf("| Capital: %-30s |\n", estado->nome_capital);
                     printf("+----------------------------------------+\n");
                 }
-                else
-                {
-                    printf("\nERRO: Nenhum estado cadastrado.\n");
-                }
+                else                
+                    printf("\nERRO: Nenhum estado cadastrado.\n");                
                 pausar();
                 break;
             }
             case 8:
             {
-                ESTADOS *estado = NULL;
+                ESTADOS *estado;
                 char nome_estado[100];
+                estado = NULL;
 
                 printf("\n=== Populacao da Capital ===\n");
                 printf("Digite o nome do estado: ");
@@ -463,7 +416,8 @@ void menu_geral()
 
                 if (estado)
                 {
-                    CIDADES *capital = NULL;
+                    CIDADES *capital;
+                    capital = NULL;
                     capital = existe_cidade(estado->cidade, estado->nome_capital);
 
                     if (capital)
@@ -478,23 +432,19 @@ void menu_geral()
                                (float)capital->populacao_city / estado->populacao_estado * 100);
                         printf("+----------------------------------------+\n");
                     }
-                    else
-                    {
-                        printf("\nERRO: Capital nao encontrada\n");
-                    }
+                    else                    
+                        printf("\nERRO: Capital nao encontrada\n");                    
                 }
-                else
-                {
+                else                
                     printf("\nERRO: Estado nao encontrado.\n");
-                }
-
                 pausar();
                 break;
             }
             case 9:
             {
                 char nome_estado[100];
-                ESTADOS *estado = NULL;
+                ESTADOS *estado;
+                estado = NULL;
 
                 printf("\n=== Cidade mais populosa (exceto a capital) ===\n");
                 printf("Digite o nome do estado: ");
@@ -518,14 +468,10 @@ void menu_geral()
                         printf("+----------------------------------------+\n");
                     }
                     else
-                    {
-                        printf("\nNao existem outras cidades alem da capital neste estado.\n");
-                    }
+                        printf("\nNao existem outras cidades alem da capital neste estado.\n");                    
                 }
-                else
-                {
-                    printf("\nERRO: Estado nao encontrado.\n");
-                }
+                else                
+                    printf("\nERRO: Estado nao encontrado.\n");                
                 pausar();
                 break;
             }
@@ -535,13 +481,9 @@ void menu_geral()
                 printf("\n=== Quantas pessoas nao moram na cidade natal ===\n");
                 retorno = quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(cabeca_estado, raiz_pessoa);
                 if (retorno > 0)
-                {
-                    printf("\nTotal de pessoas que nao moram na cidade natal: %d\n", retorno);
-                }
-                else
-                {
-                    printf("\nNenhuma pessoa.\n");
-                }
+                    printf("\nTotal de pessoas que nao moram na cidade natal: %d\n", retorno);            
+                else                
+                    printf("\nNenhuma pessoa.\n");                
                 pausar();
                 break;
             }
@@ -552,68 +494,59 @@ void menu_geral()
                 printf("Digite o CEP: ");
                 retorno = capturar_cep(cep);
 
-                CIDADES *cidade = cidade_natal_dado_cep(cabeca_estado->cidade, cep);
-                if (cidade)
-                {
-                    printf("\nCidade natal: %s\n", cidade->nome_cidade);
-                }
-                else
-                {
-                    printf("\nciade natal nao encontrada\n");
-                }
+                CIDADES *cidade;
+                cidade = cidade_natal_dado_cep(cabeca_estado->cidade, cep);
+
+                if (cidade)                
+                    printf("\nCidade natal: %s\n", cidade->nome_cidade); 
+                else                
+                    printf("\nciade natal nao encontrada\n");                
                 pausar();
                 break;
             }
             case 12:
             {
-
                 printf("\n=== Quantas pessoas nascidas em uma cidade nao moram na cidade natal ===\n");
                 char nome_cidade[100];
                 printf("Digite o nome da cidade: ");
                 ler_string_simples(nome_cidade, sizeof(nome_cidade));
-                CIDADES *cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+        
+                CIDADES *cidade;
+                cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+
                 if (cidade)
                 {
                     retorno = quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa);
-                    if (retorno > 0)
-                    {
-                        printf("\nTotal de pessoas que nasceram na cidade %s e nao moram na cidade natal: %d\n", cidade->nome_cidade, retorno);
-                    }
-                    else
-                    {
-                        printf("\nNenhuma pessoa cadastrada.\n");
-                    }
+                    if (retorno > 0)                    
+                        printf("\nTotal de pessoas que nasceram na cidade %s e nao moram na cidade natal: %d\n", cidade->nome_cidade, retorno);                    
+                    else                    
+                        printf("\nNenhuma pessoa cadastrada.\n");                    
                 }
                 else
-                {
-                    printf("\nERRO: Cidade nao encontrada.\n");
-                }
+                    printf("\nERRO: Cidade nao encontrada.\n");                
                 pausar();
                 break;
             }
             case 13:
             {
-                printf("\n=== Quantas pessoas que moram em uma cidade nao nasceram na cidade ===\n");
                 char nome_cidade[100];
+                printf("\n=== Quantas pessoas que moram em uma cidade nao nasceram na cidade ===\n");
                 printf("Digite o nome da cidade: ");
                 ler_string_simples(nome_cidade, sizeof(nome_cidade));
-                CIDADES *cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+
+                CIDADES *cidade;
+                cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+
                 if (cidade)
                 {
                     retorno = quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa);
-                    if (retorno > 0)
-                    {
-                        printf("\nTotal de pessoas que moram na cidade %s e nao nasceram na cidade: %d\n", cidade->nome_cidade, retorno);
-                    }
-                    else
-                    {
-                        printf("\nNenhuma pessoa cadastrada.\n");
-                    }
+                    if (retorno > 0)                    
+                        printf("\nTotal de pessoas que moram na cidade %s e nao nasceram na cidade: %d\n", cidade->nome_cidade, retorno);                    
+                    else                    
+                        printf("\nNenhuma pessoa cadastrada.\n");                    
                 }
-                else
-                {
-                    printf("\nERRO: Cidade nao encontrada.\n");
-                }
+                else                
+                    printf("\nERRO: Cidade nao encontrada.\n");                
                 pausar();
                 break;
             }
@@ -629,16 +562,17 @@ void menu_geral()
                 char nome_estado[100];
                 printf("\nDigite o nome do estado\n");
                 ler_string_simples(nome_estado, sizeof(nome_estado));
-                ESTADOS *estado = existe_estado(cabeca_estado, nome_estado);
+
+                ESTADOS *estado;
+                estado = existe_estado(cabeca_estado, nome_estado);
+
                 if (estado != NULL)
                 {
                     printf("\n=== IMPRIMIR TODAS AS CIDADES ===\n");
                     imprimir_todas_cidades(estado->cidade);
                 }
-                else
-                {
-                    printf("\nERRO: Estado nao encontrado.\n");
-                }
+                else                
+                    printf("\nERRO: Estado nao encontrado.\n");                
                 pausar();
                 break;
             }
@@ -648,21 +582,25 @@ void menu_geral()
                 char nome_estado[100];
                 printf("\nDigite o nome do estado\n");
                 ler_string_simples(nome_estado, sizeof(nome_estado));
-                ESTADOS *estado = existe_estado(cabeca_estado, nome_estado);
+
+                ESTADOS *estado;
+                estado = existe_estado(cabeca_estado, nome_estado);
+
                 if (estado != NULL)
                 {
                     printf("\nDigite o nome da cidade\n");
                     ler_string_simples(nome_cidade, sizeof(nome_cidade));
-                    CIDADES *cidade = existe_cidade(estado->cidade, nome_cidade);
+
+                    CIDADES *cidade;
+                    cidade = existe_cidade(estado->cidade, nome_cidade);
+
                     if (cidade != NULL)
                     {
                         printf("\n=== IMPRIMIR TODOS OS CEPs ===\n");
                         imprimir_todos_CEP(cidade->cep);
                     }
-                    else
-                    {
-                        printf("\nERRO: Cidade nao encontrada.\n");
-                    }
+                    else                    
+                        printf("\nERRO: Cidade nao encontrada.\n"); 
                 }
                 pausar();
                 break;

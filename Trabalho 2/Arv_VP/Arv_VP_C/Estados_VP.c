@@ -9,8 +9,10 @@
 
 ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado)
 {
-    ESTADOS *resultado = NULL;
-    ESTADOS *atual = cabeca;
+    ESTADOS *resultado;
+    ESTADOS *atual;
+    atual = cabeca;
+    resultado = NULL;
 
     while (atual != NULL && resultado == NULL)
     {
@@ -24,7 +26,9 @@ ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado)
 
 ESTADOS *aloca_estado(char *nome_estado)
 {
-    ESTADOS *novo_estado = (ESTADOS *)malloc(sizeof(ESTADOS));
+    ESTADOS *novo_estado;
+    novo_estado = (ESTADOS *)malloc(sizeof(ESTADOS));
+    
     if (novo_estado != NULL)
     {
 
@@ -50,8 +54,6 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado)
     }
     else if (strcasecmp((*cabeca)->nome_estado, novo_estado->nome_estado) == 0)
     {
-        // limpar_estado(novo_estado);
-        // free(novo_estado);
         liberar_no_estado(&novo_estado);
         resultado = 0; // Estado já existe
     }
@@ -84,19 +86,17 @@ ESTADOS *cadastro_estado()
     }
     // a capital sera add na interface
     if (!erro)
-    {
         estado = aloca_estado(nome_estado);
-    }
-    // o resto do código deve ser feito na interface.c
+
     return estado;
 }
 
 // Função para liberar todos os estados
-
 void liberar_todos_estados(ESTADOS **cabeca)
 {
-    ESTADOS *atual = *cabeca;
+    ESTADOS *atual;
     ESTADOS *proximo;
+    atual = *cabeca;
 
     while (atual != NULL)
     {
@@ -108,7 +108,6 @@ void liberar_todos_estados(ESTADOS **cabeca)
 }
 
 // Função para desalocar um estado
-
 void liberar_no_estado(ESTADOS **estado)
 {
     if (estado != NULL)
@@ -119,10 +118,8 @@ void liberar_no_estado(ESTADOS **estado)
         (*estado)->nome_capital = NULL;
 
         if ((*estado)->cidade != NULL)
-        {
             // Desalocar a árvore de cidades associada ao estado
             limpar_arvore_cidades(&((*estado)->cidade));
-        }
         free(*estado);
     }
 }
@@ -146,8 +143,6 @@ int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
                 temp->ant->prox = *cabeca; // Atualiza o ponteiro próximo do nó anterior
 
             liberar_no_estado(&temp);
-            // limpar_estado(temp);
-            // free(temp);
 
             resultado = 1; // Estado removido com sucesso
         }
@@ -161,6 +156,7 @@ int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
 int mostrar_estado(ESTADOS *estado)
 {
     int impresso = 0;
+    
     if (estado != NULL)
     {
         printf("Estado: %s, Capital: %s\n", estado->nome_estado, estado->nome_capital);

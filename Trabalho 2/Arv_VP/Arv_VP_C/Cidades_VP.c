@@ -18,20 +18,16 @@ int inserir_no_Cidade(CIDADES **raiz, CIDADES *novaCidade)
 
     if (*raiz == NULL)
     {
-        *raiz = novaCidade; // todo o mal esta aqui
+        *raiz = novaCidade;
         inseriu = 1;
     }
     else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) < 0)
-    {
         inseriu = inserir_no_Cidade(&((*raiz)->esq), novaCidade);
-    }
     else if (strcasecmp(novaCidade->nome_cidade, (*raiz)->nome_cidade) > 0)
         inseriu = inserir_no_Cidade(&((*raiz)->dir), novaCidade);
 
     if (inseriu)
-    {
         balancear_RB_cidade(raiz);
-    }
     return inseriu;
 }
 
@@ -58,9 +54,6 @@ CIDADES *aloca_Cidade(char *nome_cidade, int populacao_city)
     cidade->esq = NULL;
     cidade->dir = NULL;
 
-    // printf("\n\nDentro do aloca_Cidade\n");
-    // print_debug(&cidade);
-
     return cidade;
 }
 
@@ -84,9 +77,7 @@ CIDADES *cadastrarCidade()
     }
 
     if (erro == 0)
-    {
         novaCidade = aloca_Cidade(nome_cidade, populacao);
-    }
     else
     {
         if (nome_cidade != NULL)
@@ -150,17 +141,11 @@ void balancear_RB_cidade(CIDADES **raiz)
     if (*raiz != NULL)
     {
         if (Cor_cidade((*raiz)->esq) == BLACK && Cor_cidade((*raiz)->dir) == RED)
-        {
             rotacao_esquerda_cidade(raiz);
-        }
         if ((Cor_cidade((*raiz)->esq) == RED) && Cor_cidade((*raiz)->esq->esq) == RED)
-        {
             rotacao_direita_cidade(raiz);
-        }
         if (Cor_cidade((*raiz)->esq) == RED && Cor_cidade((*raiz)->dir) == RED)
-        {
             trocar_cor_cidade(*raiz);
-        }
     }
 }
 
@@ -171,7 +156,8 @@ void balancear_RB_cidade(CIDADES **raiz)
 // Função para buscar uma cidade na árvore pelo nome
 CIDADES *existe_cidade(CIDADES *raiz, char *nome_cidade)
 {
-    CIDADES *resultado = NULL;
+    CIDADES *resultado;
+    resultado = NULL;
 
     if (raiz != NULL)
     {
@@ -196,9 +182,9 @@ void imprimir_cidade(CIDADES *cidade)
         printf("Cidade: %s\n", cidade->nome_cidade);
         printf("Populacao: %d\n", cidade->populacao_city);
         printf("Cor: %s\n", cidade->cor == RED ? "Vermelho" : "Preto");
-        // if(cidade->cep != NULL) {
-        //     printf("CEP: %s\n", cidade->cep); // pode imprimir a arvore de CEP (pensar nisso posteriormente)
-        // }
+        if(cidade->cep != NULL) {
+            imprimir_todos_CEP(cidade->cep); // imprime a árvore de cep da cidade
+        }
         printf("------------------------\n");
     }
 }
@@ -252,9 +238,7 @@ void limpar_no_cidade(CIDADES **raiz)
         }
 
         if ((*raiz)->cep != NULL)
-        {
             desalocar_arvore_CEP(&((*raiz)->cep));
-        }
 
         free(*raiz);
         *raiz = NULL;
@@ -302,7 +286,8 @@ int consulta_cidade(CIDADES *raiz, char *nome_cidade)
 // Funções auxiliares para remoção
 CIDADES *encontrar_menor_cidade(CIDADES *raiz)
 {
-    CIDADES *menor = raiz;
+    CIDADES *menor;
+    menor = raiz;
 
     if (raiz != NULL)
     {
@@ -399,9 +384,7 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
                 rotacao_direita_cidade(raiz);
 
             if (resultado == 0 && (*raiz)->dir == NULL)
-            {
                 limpar_no_cidade(raiz);
-            }
             else
             {
                 if ((*raiz)->dir != NULL)
@@ -412,7 +395,9 @@ int remover_cidade_no(CIDADES **raiz, char *nome_cidade)
 
                 if (resultado == 0)
                 {
-                    CIDADES *menor = encontrar_menor_cidade((*raiz)->dir);
+                    CIDADES *menor;
+                    menor = encontrar_menor_cidade((*raiz)->dir);
+
                     trocar_informacoes_cidades(*raiz, menor);
                     // Remove o menor (que agora contém os dados do nó que queríamos remover)
                     remover_menor_cidade_arv(&((*raiz)->dir));
@@ -454,12 +439,14 @@ int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade)
 
 CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_capital)
 {
-    CIDADES *mais_populosa = NULL;
+    CIDADES *mais_populosa;
+    mais_populosa = NULL;
 
     if (raiz)
     {
         mais_populosa = verifica_cidade_mais_populosa_nao_capital(raiz->esq, nome_capital);
-        CIDADES *dir = verifica_cidade_mais_populosa_nao_capital(raiz->dir, nome_capital);
+        CIDADES *dir;
+        dir = verifica_cidade_mais_populosa_nao_capital(raiz->dir, nome_capital);
 
         if (strcasecmp(nome_capital, raiz->nome_cidade) != 0 && (!mais_populosa || raiz->populacao_city > mais_populosa->populacao_city))
             mais_populosa = raiz;
@@ -490,14 +477,13 @@ int cep_pertence_a_cidade(CEP *raiz, char *cep)
 
 CIDADES *cidade_natal_dado_cep(CIDADES *raiz, char *cep)
 {
-    CIDADES *resultado = NULL;
+    CIDADES *resultado;
+    resultado = NULL;
 
     if (raiz != NULL)
     {
         if (cep_pertence_a_cidade(raiz->cep, cep) == 1)
-        {
             resultado = raiz;
-        }
         else
         {
             resultado = cidade_natal_dado_cep(raiz->esq, cep);
@@ -518,15 +504,17 @@ int quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(CIDADES *cidade, PESS
         if (raiz_pessoa != NULL)
         {
             // Verifica se a pessoa nasceu na cidade especificada
-            CIDADES *cidade_natal = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_natal);
+            CIDADES *cidade_natal;
+            cidade_natal = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_natal);
+
             if (cidade_natal == cidade) // A pessoa nasceu nesta cidade
             {
                 // Verifica se a pessoa NÃO mora mais na cidade onde nasceu
-                CIDADES *cidade_atual = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_atual);
+                CIDADES *cidade_atual;
+                cidade_atual = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_atual);
+                
                 if (cidade_atual != cidade) // A pessoa não mora mais na cidade natal
-                {
                     resultado += 1;
-                }
             }
 
             // Verifica recursivamente para as demais pessoas na árvore

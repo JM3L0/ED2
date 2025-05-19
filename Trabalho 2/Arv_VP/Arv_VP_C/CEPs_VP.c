@@ -21,18 +21,12 @@ int inserir_no_CEP(CEP **raiz, CEP *novoCEP)
         inseriu = 1;
     }
     else if (strcasecmp(novoCEP->cep, (*raiz)->cep) < 0)
-    {
         inseriu = inserir_no_CEP(&((*raiz)->esq), novoCEP);
-    }
     else if (strcasecmp(novoCEP->cep, (*raiz)->cep) > 0)
-    {
         inseriu = inserir_no_CEP(&((*raiz)->dir), novoCEP);
-    }
 
     if (inseriu)
-    {
         balancear_RB_CEP(raiz);
-    }
 
     return inseriu;
 }
@@ -67,7 +61,6 @@ CEP *alocaCEP(char *str_cep)
 
 CEP *cadastrarCEP()
 {
-
     CEP *novoCEP;
     novoCEP = NULL;
     char str_cep[10];
@@ -76,9 +69,7 @@ CEP *cadastrarCEP()
     sucesso = capturar_cep(str_cep);
 
     if (sucesso)
-    {
         novoCEP = alocaCEP(str_cep);
-    }
 
     return novoCEP;
 }
@@ -162,17 +153,11 @@ CEP *existe_CEP(CEP *raiz, char *str_cep)
         int comparacao = strcasecmp(str_cep, raiz->cep);
 
         if (comparacao == 0)
-        {
             resultado = raiz;
-        }
         else if (comparacao < 0)
-        {
             resultado = existe_CEP(raiz->esq, str_cep);
-        }
         else
-        {
             resultado = existe_CEP(raiz->dir, str_cep);
-        }
     }
 
     return resultado;
@@ -204,9 +189,7 @@ void imprimir_CEP_em_ordem(CEP *raiz)
 void imprimir_todos_CEP(CEP *raiz)
 {
     if (raiz == NULL)
-    {
         printf("Não ha CEPs cadastrados.\n");
-    }
     else
     {
         printf("=== Lista de CEPs ===\n");
@@ -252,17 +235,11 @@ int consulta_CEP(CEP *raiz, char *str_cep)
         int comparacao = strcasecmp(str_cep, raiz->cep);
 
         if (comparacao == 0)
-        {
             resultado = 1;
-        }
         else if (comparacao < 0)
-        {
             resultado = consulta_CEP(raiz->esq, str_cep);
-        }
         else
-        {
             resultado = consulta_CEP(raiz->dir, str_cep);
-        }
     }
 
     return resultado;
@@ -280,9 +257,7 @@ CEP *encontrar_menor_CEP(CEP *raiz)
     if (raiz != NULL)
     {
         while (menor->esq != NULL)
-        {
             menor = menor->esq;
-        }
     }
 
     return menor;
@@ -326,9 +301,7 @@ void mover2_direita_CEP(CEP **raiz)
 void remover_menor_CEP_arv(CEP **raiz)
 {
     if ((*raiz)->esq == NULL)
-    {
         libera_no_CEP(raiz);
-    }
     else
     {
         if (Cor_CEP((*raiz)->esq) == BLACK && Cor_CEP((*raiz)->esq->esq) == BLACK)
@@ -364,9 +337,7 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
                 rotacao_direita(raiz);
 
             if (resultado == 0 && (*raiz)->dir == NULL)
-            {
                 libera_no_CEP(raiz);
-            }
             else
             {
                 if ((*raiz)->dir != NULL)
@@ -377,7 +348,9 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
 
                 if (resultado == 0)
                 {
-                    CEP *menor = encontrar_menor_CEP((*raiz)->dir);
+                    CEP *menor;
+                    menor = encontrar_menor_CEP((*raiz)->dir);
+
                     trocar_informacoes_CEP(*raiz, menor);
                     // Remove o menor (que agora contém os dados do nó que queríamos remover)
                     remover_menor_CEP_arv(&((*raiz)->dir));
@@ -389,9 +362,7 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
 
         // Rebalanceia a árvore se o nó atual ainda existe
         if (*raiz != NULL)
-        {
             balancear_RB_CEP(raiz);
-        }
     }
     else
         removeu = 0;
@@ -405,9 +376,7 @@ int remover_CEP_arvore(CEP **raiz, char *str_cep)
     int removeu = consulta_CEP(*raiz, str_cep);
 
     if (removeu)
-    {
         removeu = remover_CEP_no(raiz, str_cep);
-    }
 
     if (*raiz != NULL)
         (*raiz)->cor = BLACK;
@@ -421,16 +390,15 @@ int remover_CEP_arvore(CEP **raiz, char *str_cep)
 
 int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep)
 {
-    ESTADOS *atual = cabeca;
+    ESTADOS *atual;
+    atual = cabeca;
     int encontrado = 0;
 
     while (atual != NULL && encontrado == 0)
     {
         encontrado |= percorre_cidades_procurando_CEP(atual->cidade, cep);
         if (encontrado == 0)
-        {
             atual = atual->prox;
-        }
     }
 
     return encontrado;

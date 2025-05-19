@@ -62,11 +62,13 @@ PESSOAS *aloca_pessoa(char *nome_pessoa, char *CPF, char *cep_natal, char *cep_a
 
 PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual)
 {
-    PESSOAS *pessoa = NULL;
+    PESSOAS *pessoa;
     DATA data_nasc;
     char CPF[12];
-    char *nome_pessoa = NULL;
+    char *nome_pessoa;
     int retorno = 0;
+    pessoa = NULL;
+    nome_pessoa = NULL;
 
     printf("Digite o nome da pessoa: ");
     nome_pessoa = ler_string();
@@ -74,13 +76,10 @@ PESSOAS *cadastra_pessoa(char *cep_natal, char *cep_atual)
     if (nome_pessoa != NULL)
     {
         retorno = capturar_cpf(CPF);
-
         if (retorno)
         {
             // Alocação de memória para a data de nascimento
-
             retorno = capturar_data(&data_nasc);
-
             pessoa = aloca_pessoa(nome_pessoa, CPF, cep_natal, cep_atual, data_nasc);
         }
     }
@@ -166,7 +165,8 @@ void balancear_RB_pessoa(PESSOAS **raiz)
 // Função para buscar uma pessoa na árvore pelo nome
 PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF)
 {
-    PESSOAS *resultado = NULL;
+    PESSOAS *resultado;
+    resultado = NULL;
 
     if (raiz != NULL)
     {
@@ -283,7 +283,8 @@ int consulta_pessoa(PESSOAS *raiz, char *CPF)
 // Funções auxiliares para remoção
 PESSOAS *encontrar_menor_pessoa(PESSOAS *raiz)
 {
-    PESSOAS *menor = raiz;
+    PESSOAS *menor;
+    menor = raiz;
 
     if (raiz != NULL)
     {
@@ -382,10 +383,8 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
             if (Cor_pessoa((*raiz)->esq) == RED)
                 rotacao_direita_pessoa(raiz);
 
-            if (resultado == 0 && (*raiz)->dir == NULL)
-            {
-                liberar_no_pessoa(raiz);
-            }
+            if (resultado == 0 && (*raiz)->dir == NULL)            
+                liberar_no_pessoa(raiz);            
             else
             {
                 if ((*raiz)->dir != NULL)
@@ -396,7 +395,9 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
 
                 if (resultado == 0)
                 {
-                    PESSOAS *menor = encontrar_menor_pessoa((*raiz)->dir);
+                    PESSOAS *menor;
+                    menor = encontrar_menor_pessoa((*raiz)->dir);
+
                     trocar_informacoes_pessoas(*raiz, menor);
                     // Remove o menor (que agora contém os dados do nó que queríamos remover)
                     remover_menor_pessoa_arv(&((*raiz)->dir));
@@ -407,10 +408,8 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF)
         }
 
         // Rebalanceia a árvore se o nó atual ainda existe
-        if (*raiz != NULL)
-        {
-            balancear_RB_pessoa(raiz);
-        }
+        if (*raiz != NULL)        
+            balancear_RB_pessoa(raiz);        
     }
     else
         removeu = 0;
@@ -424,9 +423,7 @@ int remover_pessoa_arvore(PESSOAS **raiz, char *CPF)
     int removeu = consulta_pessoa(*raiz, CPF);
 
     if (removeu)
-    {
         removeu = remover_pessoa_no(raiz, CPF);
-    }
 
     if (*raiz != NULL)
         (*raiz)->cor = BLACK;
@@ -446,10 +443,8 @@ int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *rai
     {
         if (raiz_CEP != NULL)
         {
-            if (strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_natal) == 0 || strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_atual) == 0)
-            {
-                resultado = 1;
-            }
+            if (strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_natal) == 0 || strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_atual) == 0)            
+                resultado = 1;            
             else
             {
                 resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa, raiz_CEP->esq);
@@ -466,7 +461,8 @@ int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *rai
 int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, PESSOAS *raiz_pessoa)
 { // camada de estados
     int resultado = 0;
-    ESTADOS *atual = cabeca_estado;
+    ESTADOS *atual;
+    atual = cabeca_estado;
 
     while (atual != NULL)
     {
@@ -483,7 +479,8 @@ int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CIDA
 
     if (raiz_pessoa != NULL)
     {
-        CIDADES *cidade_natal = cidade_natal_dado_cep(raiz_cidade, raiz_pessoa->cep_city_natal);
+        CIDADES *cidade_natal;
+        cidade_natal = cidade_natal_dado_cep(raiz_cidade, raiz_pessoa->cep_city_natal);
 
         if (cidade_natal)
         {
@@ -512,15 +509,17 @@ int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *
         if (raiz_pessoa != NULL)
         {
             // Verifica se a pessoa mora na cidade especificada
-            CIDADES *cidade_atual = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_atual);
+            CIDADES *cidade_atual;
+            cidade_atual = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_atual);
+
             if (cidade_atual == cidade) // A pessoa mora nesta cidade
             {
                 // Verifica se a pessoa NÃO nasceu na cidade onde mora atualmente
-                CIDADES *cidade_natal = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_natal);
+                CIDADES *cidade_natal;
+                cidade_natal = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_natal);
+
                 if (cidade_natal != cidade) // A pessoa não nasceu na cidade onde mora
-                {
-                    resultado += 1;
-                }
+                    resultado += 1;              
             }
 
             // Verifica recursivamente para as demais pessoas na árvore

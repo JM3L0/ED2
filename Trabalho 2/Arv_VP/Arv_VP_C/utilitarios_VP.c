@@ -286,8 +286,7 @@ int digitar_int() // muito bom
 
 void limpar_buffer()
 {
-    while (getchar() != '\n')
-        ;
+    while (getchar() != '\n');
 }
 
 void pausar()
