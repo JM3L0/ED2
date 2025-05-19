@@ -124,35 +124,6 @@ void liberar_no_estado(ESTADOS **estado)
     }
 }
 
-int remover_estado_rec(ESTADOS **cabeca, char *nome_estado)
-{
-    int resultado = 0;
-
-    if (*cabeca != NULL)
-    {
-        if (strcasecmp((*cabeca)->nome_estado, nome_estado) == 0)
-        {
-            ESTADOS *temp;
-            temp = *cabeca;
-
-            *cabeca = temp->prox; // Atualiza o ponteiro da cabeça
-
-            if (*cabeca != NULL)
-                (*cabeca)->ant = temp->ant; // Atualiza o ponteiro anterior do próximo nó
-            if (temp->ant != NULL)
-                temp->ant->prox = *cabeca; // Atualiza o ponteiro próximo do nó anterior
-
-            liberar_no_estado(&temp);
-
-            resultado = 1; // Estado removido com sucesso
-        }
-        else
-            resultado = remover_estado_rec(&((*cabeca)->prox), nome_estado);
-    }
-
-    return resultado;
-}
-
 int mostrar_estado(ESTADOS *estado)
 {
     int impresso = 0;

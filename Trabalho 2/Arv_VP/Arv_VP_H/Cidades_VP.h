@@ -27,18 +27,6 @@ void limpar_info_no_cidade(CIDADES *cidade);
 void limpar_no_cidade(CIDADES **raiz);
 void limpar_arvore_cidades(CIDADES **raiz);
 
-//consulta
-int consulta_cidade(CIDADES *raiz, char *nome_cidade);
- 
-// Remoção
-CIDADES *encontrar_menor_cidade(CIDADES *raiz);
-void trocar_informacoes_cidades(CIDADES *cidade1, CIDADES *cidade2);
-void mover2_esquerda_cidade(CIDADES **raiz);
-void mover2_direita_cidade(CIDADES **raiz);
-void remover_menor_cidade_arv(CIDADES **raiz);
-int remover_cidade_no(CIDADES **raiz, char *nome_cidade);
-int remover_cidade_arvore(CIDADES **raiz, char *nome_cidade); 
-
 // especificas do trabalho
 CIDADES *verifica_cidade_mais_populosa_nao_capital(CIDADES *raiz, char *nome_capital);
 int cep_pertence_a_cidade(CEP *raiz, char *cep);

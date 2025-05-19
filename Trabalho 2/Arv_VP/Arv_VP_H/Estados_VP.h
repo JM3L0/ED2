@@ -7,7 +7,6 @@ int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado);
 ESTADOS *cadastro_estado();
 void liberar_todos_estados(ESTADOS **cabeca);
 void liberar_no_estado(ESTADOS **estado);
-int remover_estado_rec(ESTADOS **cabeca, char *nome_estado);
 int mostrar_estado(ESTADOS *estado);
 int mostrar_todos_estados(ESTADOS *cabeca);
 ESTADOS *verifica_estado_mais_populoso(ESTADOS* cabeca);
