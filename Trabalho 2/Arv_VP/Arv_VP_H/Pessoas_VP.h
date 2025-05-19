@@ -16,7 +16,7 @@ void trocar_cor_pessoa(PESSOAS *raiz);
 void balancear_RB_pessoa(PESSOAS **raiz);
 
 // busca e impressao de pessoas
-PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF);
+PESSOAS *existe_pessoa(PESSOAS *raiz, char *CPF);
 void imprimir_pessoa(PESSOAS *pessoa);
 void imprimir_pessoas_em_ordem(PESSOAS *raiz);
 void imprimir_todas_pessoas(PESSOAS *raiz);

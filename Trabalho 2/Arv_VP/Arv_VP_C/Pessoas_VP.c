@@ -163,7 +163,7 @@ void balancear_RB_pessoa(PESSOAS **raiz)
 // =================================
 
 // Função para buscar uma pessoa na árvore pelo nome
-PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF)
+PESSOAS *existe_pessoa(PESSOAS *raiz, char *CPF)
 {
     PESSOAS *resultado;
     resultado = NULL;
@@ -175,9 +175,9 @@ PESSOAS *buscar_pessoa(PESSOAS *raiz, char *CPF)
         if (comparacao == 0)
             resultado = raiz;
         else if (comparacao < 0)
-            resultado = buscar_pessoa(raiz->esq, CPF);
+            resultado = existe_pessoa(raiz->esq, CPF);
         else
-            resultado = buscar_pessoa(raiz->dir, CPF);
+            resultado = existe_pessoa(raiz->dir, CPF);
     }
 
     return resultado;

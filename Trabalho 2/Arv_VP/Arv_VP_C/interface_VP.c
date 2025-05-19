@@ -489,18 +489,27 @@ void menu_geral()
             }
             case 11:
             {
-                char cep[10];
-                printf("\n=== Cidade natal de uma pessoa dado o CEP ===\n");
-                printf("Digite o CEP: ");
-                retorno = capturar_cep(cep);
+                PESSOAS *pessoa;
+                char cpf[12];
 
-                CIDADES *cidade;
-                cidade = cidade_natal_dado_cep(cabeca_estado->cidade, cep);
+                printf("\n=== Cidade natal de uma pessoa ===\n\n");
+                printf("Digite o CPF da pessoa: ");
+                retorno = capturar_cpf(cpf);
+                if (retorno){
+                    pessoa = existe_pessoa(raiz_pessoa, cpf);
+                    if (pessoa){
 
-                if (cidade)                
-                    printf("\nCidade natal: %s\n", cidade->nome_cidade); 
-                else                
-                    printf("\nciade natal nao encontrada\n");                
+                        CIDADES *cidade;
+                        cidade = cidade_natal_dado_cep(cabeca_estado->cidade, pessoa->cep_city_natal);
+        
+                        if (cidade)                
+                            printf("\nCidade natal de %s eh: %s\n", pessoa->nome_pessoa, cidade->nome_cidade); 
+                        else                
+                            printf("\nciade natal nao encontrada\n");                
+                    }else
+                        printf("\nERRO: Pessoa nao encontrada.\n");
+                }else
+                    printf("\nERRO: problema ao capturar CPF\n");
                 pausar();
                 break;
             }
