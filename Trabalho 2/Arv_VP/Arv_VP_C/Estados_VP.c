@@ -7,6 +7,10 @@
 #include "../Arv_VP_H/STRUCTS_VP.h"
 #include "../Arv_VP_H/Cidades_VP.h"
 
+// =================================
+// PESQUISA E INSERÇÃO
+// =================================
+
 ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado)
 {
     ESTADOS *resultado;
@@ -91,6 +95,10 @@ ESTADOS *cadastro_estado()
     return estado;
 }
 
+// =================================
+// LIBERAÇÃO
+// =================================
+
 // Função para liberar todos os estados
 void liberar_todos_estados(ESTADOS **cabeca)
 {
@@ -123,6 +131,10 @@ void liberar_no_estado(ESTADOS **estado)
         free(*estado);
     }
 }
+
+// =================================
+// IMPRESSÃO
+// =================================
 
 int mostrar_estado(ESTADOS *estado)
 {

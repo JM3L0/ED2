@@ -22,6 +22,7 @@ int inserir_no_CEP(CEP **raiz, CEP *novoCEP)
     }
     else if (strcasecmp(novoCEP->cep, (*raiz)->cep) < 0)
         inseriu = inserir_no_CEP(&((*raiz)->esq), novoCEP);
+
     else if (strcasecmp(novoCEP->cep, (*raiz)->cep) > 0)
         inseriu = inserir_no_CEP(&((*raiz)->dir), novoCEP);
 
@@ -78,7 +79,7 @@ CEP *cadastrarCEP()
 // ROTAÇÃO
 // =================================
 
-void rotacao_esquerda(CEP **raiz)
+void rotacao_esquerda_CEP(CEP **raiz)
 {
     CEP *aux;
 
@@ -91,7 +92,7 @@ void rotacao_esquerda(CEP **raiz)
     (*raiz)->esq->cor = RED;
 }
 
-void rotacao_direita(CEP **raiz)
+void rotacao_direita_CEP(CEP **raiz)
 {
     CEP *aux;
 
@@ -129,10 +130,10 @@ void balancear_RB_CEP(CEP **raiz)
     if (*raiz != NULL)
     {
         if (Cor_CEP((*raiz)->esq) == BLACK && Cor_CEP((*raiz)->dir) == RED)
-            rotacao_esquerda(raiz);
+            rotacao_esquerda_CEP(raiz);
 
         if (Cor_CEP((*raiz)->esq) == RED && Cor_CEP((*raiz)->esq->esq) == RED)
-            rotacao_direita(raiz);
+            rotacao_direita_CEP(raiz);
 
         if (Cor_CEP((*raiz)->esq) == RED && Cor_CEP((*raiz)->dir) == RED)
             trocar_cor_CEP(*raiz);
@@ -169,7 +170,7 @@ void imprimir_CEP(CEP *Cep)
     if (Cep != NULL)
     {
         printf("CEP: %s\n", Cep->cep);
-        printf("Cor: %s\n", Cep->cor == RED ? "Vermelho" : "Preto");
+        // printf("Cor: %s\n", Cep->cor == RED ? "Vermelho" : "Preto");
         printf("------------------------\n");
     }
 }
@@ -189,7 +190,7 @@ void imprimir_CEP_em_ordem(CEP *raiz)
 void imprimir_todos_CEP(CEP *raiz)
 {
     if (raiz == NULL)
-        printf("Não ha CEPs cadastrados.\n");
+        printf("Nao ha CEPs cadastrados.\n");
     else
     {
         printf("=== Lista de CEPs ===\n");
@@ -279,8 +280,8 @@ void mover2_esquerda_CEP(CEP **raiz)
 
     if ((*raiz)->dir != NULL && Cor_CEP((*raiz)->dir->esq) == RED)
     {
-        rotacao_direita(&((*raiz)->dir));
-        rotacao_esquerda(raiz);
+        rotacao_direita_CEP(&((*raiz)->dir));
+        rotacao_esquerda_CEP(raiz);
         trocar_cor_CEP(*raiz);
     }
 }
@@ -292,7 +293,7 @@ void mover2_direita_CEP(CEP **raiz)
 
     if ((*raiz)->esq != NULL && Cor_CEP((*raiz)->esq->esq) == RED)
     {
-        rotacao_direita(raiz);
+        rotacao_direita_CEP(raiz);
         trocar_cor_CEP(*raiz);
     }
 }
@@ -334,7 +335,7 @@ int remover_CEP_no(CEP **raiz, char *str_cep)
         else
         {
             if (Cor_CEP((*raiz)->esq) == RED)
-                rotacao_direita(raiz);
+                rotacao_direita_CEP(raiz);
 
             if (resultado == 0 && (*raiz)->dir == NULL)
                 libera_no_CEP(raiz);

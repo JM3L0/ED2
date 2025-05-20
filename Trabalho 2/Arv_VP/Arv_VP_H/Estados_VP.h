@@ -1,12 +1,19 @@
 #pragma once
 #include "../Arv_VP_H/STRUCTS_VP.h"
 
+//PESQUISA E INSERÇÃO
 ESTADOS *existe_estado(ESTADOS *cabeca, char *nome_estado);
 ESTADOS *aloca_estado(char *nome_estado);
 int inserir_estado_rec(ESTADOS **cabeca, ESTADOS *novo_estado);
 ESTADOS *cadastro_estado();
+
+//LIBERAÇÃO
 void liberar_todos_estados(ESTADOS **cabeca);
 void liberar_no_estado(ESTADOS **estado);
+
+//IMPRESSÃO
 int mostrar_estado(ESTADOS *estado);
 int mostrar_todos_estados(ESTADOS *cabeca);
+
+//ESPECIFICAS DO TRABALHO
 ESTADOS *verifica_estado_mais_populoso(ESTADOS* cabeca);

@@ -3,10 +3,20 @@
 
 int main()
 {
-    // Comando de compilação usando caminhos relativos
-    const char *comando = "gcc -o arvore_binaria ../ARQUIVOS_BIN.C/playlist_BIN.c ../ARQUIVOS_BIN.C/musica_playlist_BIN.c ../ARQUIVOS_BIN.C/main_BIN.c ../ARQUIVOS_BIN.C/interface_BIN.c ../ARQUIVOS_BIN.C/artista_BIN.c ../ARQUIVOS_BIN.C/utilitarios_BIN.c ../ARQUIVOS_BIN.C/album_BIN.c ../ARQUIVOS_BIN.C/musica_BIN.c -I ARQUIVOS_.H";
-    //../ARQUIVOS_BIN.C/TESTES_BIN.c 
-
+    const char *comando;
+    const char *executavel;
+    
+    // Detectando o sistema operacional
+    #ifdef _WIN32
+        // Windows
+        comando = "gcc -o arvore_binaria ../ARQUIVOS_BIN.C/playlist_BIN.c ../ARQUIVOS_BIN.C/musica_playlist_BIN.c ../ARQUIVOS_BIN.C/main_BIN.c ../ARQUIVOS_BIN.C/interface_BIN.c ../ARQUIVOS_BIN.C/artista_BIN.c ../ARQUIVOS_BIN.C/utilitarios_BIN.c ../ARQUIVOS_BIN.C/album_BIN.c ../ARQUIVOS_BIN.C/musica_BIN.c -I ARQUIVOS_.H";
+        executavel = "arvore_binaria.exe";
+    #else
+        // Linux, macOS ou outros sistemas Unix-like
+        comando = "gcc -o arvore_binaria ../ARQUIVOS_BIN.C/playlist_BIN.c ../ARQUIVOS_BIN.C/musica_playlist_BIN.c ../ARQUIVOS_BIN.C/main_BIN.c ../ARQUIVOS_BIN.C/interface_BIN.c ../ARQUIVOS_BIN.C/artista_BIN.c ../ARQUIVOS_BIN.C/utilitarios_BIN.c ../ARQUIVOS_BIN.C/album_BIN.c ../ARQUIVOS_BIN.C/musica_BIN.c -I ARQUIVOS_.H";
+        executavel = "./arvore_binaria";
+    #endif
+    
     printf("Compilando o projeto...\n");
 
     // Executa o comando de compilação
@@ -16,7 +26,7 @@ int main()
     if (retorno == 0)
     {
         printf("Compilacao concluida com sucesso!\n");
-        system("arvore_binaria.exe");
+        system(executavel);
     }
     else
     {
