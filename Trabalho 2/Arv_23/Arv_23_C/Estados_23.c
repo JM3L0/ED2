@@ -35,9 +35,7 @@ ESTADOS *aloca_estado(char *nome_estado)
     
     if (novo_estado != NULL)
     {
-
         novo_estado->nome_estado = nome_estado;
-        novo_estado->nome_capital = NULL;
         novo_estado->quant_city = 0;
         novo_estado->populacao_estado = 0;
         novo_estado->arv_cidades = NULL;
@@ -122,9 +120,7 @@ void liberar_no_estado(ESTADOS **estado)
     {
         free((*estado)->nome_estado);
         (*estado)->nome_estado = NULL;
-        free((*estado)->nome_capital);
-        (*estado)->nome_capital = NULL;
-
+        
         if ((*estado)->arv_cidades != NULL)
             // Desalocar a árvore de cidades associada ao estado
             limpar_arvore_cidades(&((*estado)->arv_cidades));

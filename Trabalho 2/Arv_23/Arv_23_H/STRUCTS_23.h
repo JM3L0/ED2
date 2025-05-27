@@ -43,7 +43,7 @@ typedef struct CIDADES
 typedef struct ESTADOS// lista duplamente encadeada
 {
     char *nome_estado;
-    char *nome_capital;
+    char nome_capital[100];
     int quant_city;
     int populacao_estado;
     struct Arv23_CIDADES *arv_cidades;

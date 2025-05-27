@@ -7,14 +7,14 @@
 #include "../Arv_23_H/utilitarios_23.h"
 
 // Prototipos das funcoes
-int cadastra_cidade(Arv23_CIDADES **raiz);
+CIDADES cadastra_cidade(int *sucesso);
 Arv23_CIDADES *cria_no_cidade(CIDADES info, Arv23_CIDADES *F_esq, Arv23_CIDADES *F_cen);
 void adiciona_infos_cidade(Arv23_CIDADES **no, CIDADES info, Arv23_CIDADES *Sub_Arv_Info);
 Arv23_CIDADES *quebra_no_cidade(Arv23_CIDADES **no, CIDADES info, CIDADES *sobe, Arv23_CIDADES *F_dir);
 int insere_23_cidade(Arv23_CIDADES **raiz, CIDADES valor);
 int insere_23_recursivo_cidade(Arv23_CIDADES **raiz, CIDADES valor, Arv23_CIDADES *pai, CIDADES *info_sobe, Arv23_CIDADES **filho_dir);
 void libera_arvore_cidade(Arv23_CIDADES **raiz);
-void libera_arvore_cep(Arv23_CEP **raiz);
+// void libera_arvore_cep(Arv23_CEP **raiz);//implementar posteriormente
 int eh_folha_cidade(Arv23_CIDADES *no);
 Arv23_CIDADES *buscar_menor_elemento_cidade(Arv23_CIDADES *no);
 StatusRemocao tratar_underflow_cidade(Arv23_CIDADES **ponteiro_filho_no_pai, Arv23_CIDADES *pai);
@@ -23,36 +23,31 @@ StatusRemocao redistribuir_com_irmao_direito(Arv23_CIDADES **ponteiro_filho_no_p
 StatusRemocao fundir_com_irmao_esquerdo(Arv23_CIDADES **ponteiro_filho_no_pai, Arv23_CIDADES *pai, Arv23_CIDADES *irmao_esq, int pos_filho);
 StatusRemocao fundir_com_irmao_direito(Arv23_CIDADES **ponteiro_filho_no_pai, Arv23_CIDADES *pai, Arv23_CIDADES *irmao_dir, int pos_filho);
 StatusRemocao remover_23_recursivo_cidade(Arv23_CIDADES **ponteiro_no_atual, CIDADES valor);
-int remover_23(Arv23_CIDADES **raiz, CIDADES valor);
+int remover_23_cidade(Arv23_CIDADES **raiz, CIDADES valor);
 
 // Funçao para cadastrar cidade (sem alocaçao dinâmica para CIDADES)
-int cadastra_cidade(Arv23_CIDADES **raiz)
+CIDADES cadastra_cidade(int *sucesso)
 {
     CIDADES novaCidade;
     char nome_cidade[100];
-    int populacao_city, retorno;
+
+    *sucesso = 0; // Inicializa como falha
+    memset(&novaCidade, 0, sizeof(CIDADES)); // Inicializa a estrutura
 
     printf("Digite o nome da cidade: ");
     ler_string_simples(nome_cidade, sizeof(nome_cidade));
+
     printf("Digite a populacao da cidade: ");
-    populacao_city = digitar_int();
+    int populacao_city = digitar_int();
 
-    if (nome_cidade[0] == '\0') {
-        printf("Erro: Nome da cidade nao pode ser vazio.\n");
-        return 0;
+    if (nome_cidade[0] != '\0' && populacao_city >= 0) {
+        strcpy(novaCidade.nome_cidade, nome_cidade);
+        novaCidade.populacao_city = populacao_city;
+        novaCidade.arv_cep = NULL; // CEPs serão cadastrados no menu
+        *sucesso = 1; // Marca como sucesso
     }
 
-    strcpy(novaCidade.nome_cidade, nome_cidade);
-    novaCidade.populacao_city = populacao_city;
-    novaCidade.arv_cep = NULL;
-
-    if (insere_23_cidade(raiz, novaCidade)) {
-        printf("Cidade %s cadastrada com sucesso.\n", novaCidade.nome_cidade);
-        return 1;
-    } else {
-        printf("Falha ao cadastrar a cidade %s.\n", novaCidade.nome_cidade);
-        return 0;
-    }
+    return novaCidade;
 }
 
 // Cria nó (sem alocaçao para info1/info2)
@@ -757,7 +752,7 @@ StatusRemocao remover_23_recursivo_cidade(Arv23_CIDADES **ponteiro_no_atual, CID
 
 //================ REMOCAO (Principal - CORRIGIDO) ==================
 
-int remover_23(Arv23_CIDADES **raiz, CIDADES valor)
+int remover_23_cidade(Arv23_CIDADES **raiz, CIDADES valor)
 {
     int sucesso = 0; // 0 para falha, 1 para sucesso
 
