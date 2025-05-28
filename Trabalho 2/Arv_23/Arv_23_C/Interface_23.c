@@ -51,7 +51,7 @@ void menu_geral(){
 
                 ESTADOS *novo_estado = cadastro_estado();
                 CIDADES cidade_capital;
-                CEP *cep_capital = NULL;
+                CEP cep_capital;
 
                 if (novo_estado == NULL){
                     printf("Erro ao cadastrar estado!\n");
@@ -61,7 +61,7 @@ void menu_geral(){
                         cidade_capital = cadastra_cidade(&sucesso);
                         if (sucesso){
                             if(insere_23_cidade(&(novo_estado->arv_cidades), cidade_capital)){
-                                cep_capital = cadastra_cep(&sucesso);
+                                sucesso = capturar_cep(cep_capital.cep);
                                 if (sucesso){
                                     if (insere_23_cep(&(cidade_capital.arv_cep), cep_capital)){
                                         printf("Estado e cidade cadastrados com sucesso!\n");
@@ -72,16 +72,20 @@ void menu_geral(){
                                         printf("Erro ao cadastrar CEP!\n");
                                         sucesso = 0;
                                     }
-                                
+                                }
                             }
                         }
                     }
+                }
                     
-                    
-                if (novo_estado && sucesso && ){
+                if (novo_estado && sucesso){
                     novo_estado->quant_city ++;
                     novo_estado->populacao_estado += cidade_capital.populacao_city;
                     strcpy(novo_estado->nome_capital, cidade_capital.nome_cidade);
+                }else{
+                    free(novo_estado->nome_estado);
+                    free(novo_estado);
+                    printf("Erro ao cadastrar estado!\n");
                 }
                 break;
             }

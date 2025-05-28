@@ -13,7 +13,10 @@ typedef struct Arv23_PESSOAS Arv23_PESSOAS;
 // ===== enum de status de remoção =====
 typedef enum {
     OK,
-    UNDERFLOW
+    UNDERFLOW,
+    INFO_NAO_ENCONTRADA,
+    SUCESSOR_NAO_ENCONTRADO,
+    ARVORE_VAZIA
 } StatusRemocao;
 
 
