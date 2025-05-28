@@ -297,3 +297,29 @@ void pausar()
         c = getchar();
     while (c != '\n' && c != EOF); // Consome tudo até o Enter
 }
+
+//mensagem de remoção
+void mensagens_do_remover(StatusRemocao status)
+{
+    switch (status)
+    {
+    case OK:
+        printf("Operacao realizada com sucesso.\n");
+        break;
+    case INFO_NAO_ENCONTRADA:
+        printf("Informacao nao encontrada.\n");
+        break;
+    case SUCESSOR_NAO_ENCONTRADO:
+        printf("Sucessor nao encontrado.\n");
+        break;
+    case UNDERFLOW:
+        printf("Underflow na arvore.\n");
+        break;
+    case ARVORE_VAZIA:
+        printf("A arvore esta vazia.\n");
+        break;
+    default:
+        printf("Erro desconhecido.\n");
+        break;
+    }
+}

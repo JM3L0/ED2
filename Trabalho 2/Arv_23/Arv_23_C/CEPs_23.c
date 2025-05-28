@@ -180,7 +180,6 @@ int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
 
         if (maiorNo != NULL)
         {
-            printf("Raiz original quebrou. Criando nova raiz com CEP %s.\n", sobe.cep);
             Arv23_CEP *nova_raiz = cria_no_CEP(sobe, *raiz, maiorNo);
             if (nova_raiz != NULL)
             {
@@ -188,9 +187,9 @@ int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
             }
             else
             {
-                fprintf(stderr, "Erro ao criar nova raiz!\n");
                 sucesso = 0;
-                if (maiorNo) free(maiorNo);
+                if (maiorNo) 
+                    free(maiorNo);
             }
         }
     }
@@ -200,7 +199,6 @@ int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
 // Redistribuição com irmão esquerdo
 StatusRemocao redistribuir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_esq, int pos_filho)
 {
-    printf("Redistribuindo com irmao esquerdo...\n");
     Arv23_CEP *filho = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
     Arv23_CEP *filho_transferido = irmao_esq->dir;
@@ -233,7 +231,6 @@ StatusRemocao redistribuir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_
 // Redistribuição com irmão direito
 StatusRemocao redistribuir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_dir, int pos_filho)
 {
-    printf("Redistribuindo com irmao direito...\n");
     Arv23_CEP *filho = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
     Arv23_CEP *filho_transferido = irmao_dir->esq;
@@ -269,7 +266,6 @@ StatusRemocao redistribuir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_p
 // Fusão com irmão esquerdo
 StatusRemocao fundir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_esq, int pos_filho)
 {
-    printf("Fundindo filho (%p) com irmao esquerdo [%s] (%p)...\n", (void *)*ponteiro_filho_no_pai, irmao_esq->info1.cep, (void *)irmao_esq);
     Arv23_CEP *filho_underflow = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
     StatusRemocao status_pai = OK;
@@ -284,7 +280,6 @@ StatusRemocao fundir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, A
         pai->nInfo = 0;
         pai->info1.cep[0] = '\0';
         status_pai = UNDERFLOW;
-        printf("Pai [2-no] entra em underflow. Chave descendo: %s\n", chave_pai_desce.cep);
     }
     else
     {
@@ -329,7 +324,6 @@ StatusRemocao fundir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, A
 // Fusão com irmão direito
 StatusRemocao fundir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_dir, int pos_filho)
 {
-    printf("Fundindo filho (%p) com irmao direito [%s] (%p)...\n", (void *)*ponteiro_filho_no_pai, irmao_dir->info1.cep, (void *)irmao_dir);
     Arv23_CEP *filho_underflow = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
     StatusRemocao status_pai = OK;
@@ -450,7 +444,6 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
 
     if (no_atual == NULL)
     {
-        printf("CEP %s nao encontrado na subarvore.\n", valor.cep);// para tirar esse printf, tem que colocar mais um caso no enumerate
         status_final = INFO_NAO_ENCONTRADA;
     }
     else
@@ -478,9 +471,6 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
 
         if (valor_encontrado_neste_no)
         {
-            printf("CEP %s encontrado no no [%s%s%s]\n", valor.cep, no_atual->info1.cep,
-                   no_atual->nInfo == 2 ? ", " : " ", no_atual->nInfo == 2 ? no_atual->info2.cep : "");
-
             if (eh_folha_CEP(no_atual))
             {
                 if (no_atual->nInfo == 2)
@@ -517,7 +507,6 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
 
                 if (sucessor_node == NULL)
                 {
-                    fprintf(stderr, "Erro critico: Sucessor nao encontrado!\n");
                     status_final = SUCESSOR_NAO_ENCONTRADO;
                 }
                 else
@@ -551,15 +540,14 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
 // Remoção principal
 StatusRemocao remover_23_CEP(Arv23_CEP **raiz, CEP valor)
 {
-    int sucesso = 0;
+    int OPERACAO = 0;
     if (raiz == NULL || *raiz == NULL)
     {
-        printf("Arvore vazia. Nao e possivel remover %s.\n", valor.cep);
-        sucesso = 0;
+        // printf("Arvore vazia. Nao e possivel remover %s.\n", valor.cep);
+        OPERACAO = ARVORE_VAZIA;
     }
     else
     {
-        printf("\n--- Iniciando remocao de %s ---\n", valor.cep);
         StatusRemocao status_geral = remover_23_CEP_recursivo_CEP(raiz, valor);
 
         if (*raiz != NULL && (*raiz)->nInfo == 0)
@@ -571,18 +559,9 @@ StatusRemocao remover_23_CEP(Arv23_CEP **raiz, CEP valor)
             status_geral = OK;
         }
 
-        // if (status_geral == OK)
-        // {
-        //     printf("--- Remocao de %s concluida com sucesso ---\n", valor.cep);
-        //     sucesso = 1;
-        // }
-        // else
-        // {
-        //     fprintf(stderr, "--- Erro: Remocao de %s falhou ---\n", valor.cep);
-        //     sucesso = 0;
-        // }
+        OPERACAO = status_geral;
     }
-    return sucesso;
+    return OPERACAO;
 }
 
 // Impressão em ordem
@@ -650,31 +629,6 @@ void libera_arvore_CEP(Arv23_CEP **raiz)
     }
 }
 
-void mensagens_de_erro(StatusRemocao status)
-{
-    switch (status)
-    {
-    case OK:
-        printf("Operacao realizada com sucesso.\n");
-        break;
-    case INFO_NAO_ENCONTRADA:
-        printf("Informacao nao encontrada.\n");
-        break;
-    case SUCESSOR_NAO_ENCONTRADO:
-        printf("Sucessor nao encontrado.\n");
-        break;
-    case UNDERFLOW:
-        printf("Underflow na arvore.\n");
-        break;
-    case ARVORE_VAZIA:
-        printf("A arvore esta vazia.\n");
-        break;
-    default:
-        printf("Erro desconhecido.\n");
-        break;
-    }
-}
-
 // Menu interativo
 void menu(Arv23_CEP **raiz)
 {
@@ -729,8 +683,9 @@ void menu(Arv23_CEP **raiz)
             else
             {
                 strcpy(cep.cep, cep_input);
-                if (!remover_23_CEP(raiz, cep))
-                    printf("Falha ao remover CEP %s.\n", cep.cep);
+                StatusRemocao status = remover_23_CEP(raiz, cep);
+                mensagens_do_remover(status);
+
             }
             break;
 

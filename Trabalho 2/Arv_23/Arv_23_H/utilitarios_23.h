@@ -25,3 +25,4 @@ void ler_string_simples(char *buffer, size_t tamanho);
 int digitar_int();
 void limpar_buffer();
 void pausar();
+void mensagens_do_remover(StatusRemocao status);
