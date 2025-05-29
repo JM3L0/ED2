@@ -4,13 +4,13 @@
 
 // ================ CRIAÇÃO E INICIALIZAÇÃO ================
 Arv23_CEP *cria_no_CEP(CEP info, Arv23_CEP *F_esq, Arv23_CEP *F_cen);
-int eh_folha_CEP(Arv23_CEP *no);
 
 // ================ OPERAÇÕES DE INSERÇÃO ================
 void adiciona_infos_CEP(Arv23_CEP **no, CEP info, Arv23_CEP *Sub_Arv_Info);
 Arv23_CEP *quebra_no_CEP(Arv23_CEP **no, CEP info, CEP *sobe, Arv23_CEP *F_dir);
 int insere_23_recursivo_CEP(Arv23_CEP **raiz, CEP valor, CEP *sobe, Arv23_CEP **maiorNo);
 int insere_23_CEP(Arv23_CEP **raiz, CEP valor);
+int eh_folha_CEP(Arv23_CEP *no);
 
 // ================ OPERAÇÕES DE TRAVESSIA E VISUALIZAÇÃO ================
 void imprime_23_em_ordem_CEP(Arv23_CEP *raiz);

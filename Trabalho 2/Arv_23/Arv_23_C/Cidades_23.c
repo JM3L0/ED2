@@ -7,7 +7,7 @@
 #include "../Arv_23_H/CEPs_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
-// Funçao para cadastrar cidade (sem alocaçao dinâmica para CIDADES)
+// ======================= OPERAÇÕES BASICAS =======================
 CIDADES cadastra_cidade(int *sucesso)
 {
     CIDADES novaCidade;
@@ -32,6 +32,17 @@ CIDADES cadastra_cidade(int *sucesso)
     return novaCidade;
 }
 
+int eh_folha_cidade(Arv23_CIDADES *no)
+{
+    int resultado = 0;
+    if (no != NULL)
+    {
+        resultado = (no->esq == NULL && no->cen == NULL && no->dir == NULL);
+    }
+    return resultado;
+}
+
+// ======================= FUNÇÕES AUX DE INSERÇÃO =======================
 // Cria nó (sem alocaçao para info1/info2)
 Arv23_CIDADES *cria_no_cidade(CIDADES info, Arv23_CIDADES *F_esq, Arv23_CIDADES *F_cen)
 {
@@ -97,7 +108,7 @@ Arv23_CIDADES *quebra_no_cidade(Arv23_CIDADES **no, CIDADES info, CIDADES *sobe,
     return maior;
 }
 
-// Inserçao ajustada
+// ======================= OPERAÇÃO DE INSERÇÃO =======================
 int insere_23_cidade(Arv23_CIDADES **raiz, CIDADES valor)
 {
     CIDADES sobe;
@@ -208,7 +219,8 @@ int insere_23_recursivo_cidade(Arv23_CIDADES **raiz, CIDADES valor, CIDADES *sob
     return sucesso;
 }
 
-// Libera árvore (sem liberar info1/info2 separadamente)
+////================= FUNÇÃO DE LIBERAÇÃO DA ÁRVORE ==================
+// Libera árvore (juntamente com a árvore de CEPs)
 void libera_arvore_cidade(Arv23_CIDADES **raiz)
 {
     if (raiz != NULL && *raiz != NULL)
@@ -216,25 +228,18 @@ void libera_arvore_cidade(Arv23_CIDADES **raiz)
         libera_arvore_cidade(&(*raiz)->esq);
         libera_arvore_cidade(&(*raiz)->cen);
         libera_arvore_cidade(&(*raiz)->dir);
+
         libera_arvore_CEP(&(*raiz)->info1.arv_cep);
+        
         if ((*raiz)->nInfo == 2) libera_arvore_CEP(&(*raiz)->info2.arv_cep);
         free(*raiz);
         *raiz = NULL;
     }
 }
 
-//================ VERIFICA FOLHA ==================
-int eh_folha_cidade(Arv23_CIDADES *no)
-{
-    int resultado = 0;
-    if (no != NULL)
-    {
-        resultado = (no->esq == NULL && no->cen == NULL && no->dir == NULL);
-    }
-    return resultado;
-}
 
-//================ BUSCAS ==================
+
+// ======================= FUNÇÕES DE BUSCA =======================
 Arv23_CIDADES *buscar_menor_elemento_cidade(Arv23_CIDADES *no)
 {
     Arv23_CIDADES *resultado = NULL;
@@ -280,3 +285,32 @@ CIDADES *buscar_info_cidade(Arv23_CIDADES*raiz, char *info)
 
     return retorno;
 }
+
+//================= FUNÇÕES DE PRINTAR ==================
+
+void printar_informacoes_cidade(CIDADES *cidade)
+{
+    if (cidade != NULL)
+    {
+        printf("Cidade: %s\n", cidade->nome_cidade);
+        printf("População: %d\n", cidade->populacao_city);
+        printf("CEP(s):\n");
+        // printar_arvore_CEP(cidade->arv_cep);//talvez seja necessário implementar essa função
+    }
+}
+
+void imprime_23_em_ordem_cidade(Arv23_CIDADES *raiz)
+{
+    if (raiz != NULL)
+    {
+        imprime_23_em_ordem_cidade(raiz->esq);
+        printf("%s ", raiz->info1.nome_cidade);
+        imprime_23_em_ordem_cidade(raiz->cen);
+        if (raiz->nInfo == 2)
+        {
+            printf("%s ", raiz->info2.nome_cidade);
+            imprime_23_em_ordem_cidade(raiz->dir);
+        }
+    }
+}
+
