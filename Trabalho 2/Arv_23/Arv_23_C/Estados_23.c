@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "../Arv_23_H/Estados_23.h"
+#include "../Arv_23_H/Cidades_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 #include "../Arv_23_H/STRUCTS_23.h"
 // #include "../Arv_23_H/Cidades_23.h"
@@ -123,7 +124,7 @@ void liberar_no_estado(ESTADOS **estado)
         
         if ((*estado)->arv_cidades != NULL)
             // Desalocar a árvore de cidades associada ao estado
-            limpar_arvore_cidades(&((*estado)->arv_cidades));
+            libera_arvore_cidade(&((*estado)->arv_cidades));
         free(*estado);
     }
 }

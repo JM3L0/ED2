@@ -158,8 +158,7 @@ int insere_23_recursivo_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor, PESSOAS *so
         memset(sobe, 0, sizeof(PESSOAS));
         sucesso = (*raiz != NULL);
     }
-    else if (strcmp(valor.CPF, no_atual->info1->CPF) == 0 ||
-             (no_atual->nInfo == 2 && strcmp(valor.CPF, no_atual->info2->CPF) == 0))
+    else if (strcmp(valor.CPF, no_atual->info1->CPF) == 0 ||(no_atual->nInfo == 2 && strcmp(valor.CPF, no_atual->info2->CPF) == 0))
     {
         printf("CPF %s ja existe na arvore!\n", valor.CPF);
         *maiorNo = NULL;
@@ -699,88 +698,100 @@ void libera_arvore_PESSOAS(Arv23_PESSOAS **raiz)
     }
 }
 
-// Menu interativo
-void menu(Arv23_PESSOAS **raiz)
-{
-    int opcao = 0;
-    char prefixo_inicial[10] = "";
-    PESSOAS pessoa;
+// // Menu interativo
+// void menu(Arv23_PESSOAS **raiz)
+// {
+//     int opcao = 0;
+//     char prefixo_inicial[10] = "";
+//     PESSOAS pessoa;
 
-    do
-    {
-        printf("\n=========================\n");
-        printf("Arvore 2-3 de Pessoas Atual:\n");
-        imprime_arvore_visual_PESSOAS(*raiz, prefixo_inicial, 1, 1);
-        printf("\nEm ordem: ");
-        imprime_23_em_ordem_PESSOAS(*raiz);
-        printf("\n------------------------\n");
-        printf("1. Adicionar Pessoa\n");
-        printf("2. Remover Pessoa\n");
-        printf("3. Sair\n");
-        printf("Escolha uma opcao: ");
+//     do
+//     {
+//         printf("\n=========================\n");
+//         printf("Arvore 2-3 de Pessoas Atual:\n");
+//         imprime_arvore_visual_PESSOAS(*raiz, prefixo_inicial, 1, 1);
+//         printf("\nEm ordem: ");
+//         imprime_23_em_ordem_PESSOAS(*raiz);
+//         printf("\n------------------------\n");
+//         printf("1. Adicionar Pessoa\n");
+//         printf("2. Remover Pessoa\n");
+//         printf("3. Sair\n");
+//         printf("Escolha uma opcao: ");
 
-        if (scanf("%d", &opcao) != 1)
-        {
-            printf("Entrada invalida. Insira um numero.\n");
-            while (getchar() != '\n');
-            continue;
-        }
-        while (getchar() != '\n');
+//         if (scanf("%d", &opcao) != 1)
+//         {
+//             printf("Entrada invalida. Insira um numero.\n");
+//             while (getchar() != '\n');
+//             continue;
+//         }
+//         while (getchar() != '\n');
 
-        switch (opcao)
-        {
-        case 1:
-            if (!capturar_pessoa(&pessoa))
-            {
-                printf("Dados invalidos. Tente novamente.\n");
-            }
-            else
-            {
-                if (insere_23_PESSOAS(raiz, pessoa))
-                    printf("Pessoa com CPF %s inserida com sucesso.\n", pessoa.CPF);
-            }
-            break;
+//         switch (opcao)
+//         case 1:
+//             {
+//             char cep_natal[9] = "12345678";  // Example CEP, replace with actual input
+//             char cep_atual[9] = "87654321";  // Example CEP, replace with actual input
+            
+//             printf("Digite o CEP natal (8 digitos): ");
+//             capturar_cep(cep_natal);
+            
+//             printf("Digite o CEP atual (8 digitos): ");
+//             capturar_cep(cep_atual);
+            
+//             pessoa = cadastra_pessoa(cep_natal, cep_atual);
+            
+//             if (pessoa.CPF[0] == '\0')
+//             {
+//                 printf("Dados invalidos. Tente novamente.\n");
+//             }
+//             else
+//             {
+//                 if (insere_23_PESSOAS(raiz, pessoa))
+//                 printf("Pessoa com CPF %s inserida com sucesso.\n", pessoa.CPF);
+//             }
+            
+//             break;
 
-        case 2:
-            printf("Digite o CPF da pessoa a ser removida (11 digitos): ");
-            char cpf_input[12];
-            if (!fgets(cpf_input, sizeof(cpf_input), stdin))
-            {
-                printf("Entrada invalida.\n");
-                continue;
-            }
-            cpf_input[strcspn(cpf_input, "\n")] = '\0';
-            if (strlen(cpf_input) != 11)
-            {
-                printf("CPF invalido. Deve ter 11 digitos.\n");
-            }
-            else
-            {
-                strcpy(pessoa.CPF, cpf_input);
-                StatusRemocao status = remover_23_PESSOAS(raiz, pessoa);
-                mensagens_de_erro(status);
-            }
-            break;
+//         case 2:
+//             printf("Digite o CPF da pessoa a ser removida (11 digitos): ");
+//             char cpf_input[12];
+//             if (!fgets(cpf_input, sizeof(cpf_input), stdin))
+//             {
+//                 printf("Entrada invalida.\n");
+//                 continue;
+//             }
+//             cpf_input[strcspn(cpf_input, "\n")] = '\0';
+//             if (strlen(cpf_input) != 11)
+//             {
+//                 printf("CPF invalido. Deve ter 11 digitos.\n");
+//             }
+//             else
+//             {
+//                 strcpy(pessoa.CPF, cpf_input);
+//                 StatusRemocao status = remover_23_PESSOAS(raiz, pessoa);
+//                 mensagens_do_remover(status);
+//             }
+//             break;
 
-        case 3:
-            printf("Saindo...\n");
-            break;
+//         case 3:
+//             printf("Saindo...\n");
+//             break;
 
-        default:
-            printf("Opcao invalida. Tente novamente.\n");
-            break;
-        }
-    } while (opcao != 3);
+//         default:
+//             printf("Opcao invalida. Tente novamente.\n");
+//             break;
+//         }
+//     } while (opcao != 3);
 
-    libera_arvore_PESSOAS(raiz);
-}
+//     libera_arvore_PESSOAS(raiz);
+// }
 
-// Main
-int main()
-{
-    Arv23_PESSOAS *raiz = NULL;
-    menu(&raiz);
-    printf("\nPrograma encerrado. Memoria liberada.\n");
-    imprime_23_em_ordem_PESSOAS(raiz);
-    return 0;
-}
+// // Main
+// int main()
+// {
+//     Arv23_PESSOAS *raiz = NULL;
+//     menu(&raiz);
+//     printf("\nPrograma encerrado. Memoria liberada.\n");
+//     imprime_23_em_ordem_PESSOAS(raiz);
+//     return 0;
+// }

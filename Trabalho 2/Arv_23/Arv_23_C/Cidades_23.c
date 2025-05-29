@@ -4,6 +4,7 @@
 
 #include "../Arv_23_H/STRUCTS_23.h"
 #include "../Arv_23_H/Cidades_23.h"
+#include "../Arv_23_H/CEPs_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
 // Funçao para cadastrar cidade (sem alocaçao dinâmica para CIDADES)
@@ -215,15 +216,15 @@ void libera_arvore_cidade(Arv23_CIDADES **raiz)
         libera_arvore_cidade(&(*raiz)->esq);
         libera_arvore_cidade(&(*raiz)->cen);
         libera_arvore_cidade(&(*raiz)->dir);
-        libera_arvore_cep(&(*raiz)->info1.arv_cep);
-        if ((*raiz)->nInfo == 2) libera_arvore_cep(&(*raiz)->info2.arv_cep);
+        libera_arvore_CEP(&(*raiz)->info1.arv_cep);
+        if ((*raiz)->nInfo == 2) libera_arvore_CEP(&(*raiz)->info2.arv_cep);
         free(*raiz);
         *raiz = NULL;
     }
 }
 
 //================ VERIFICA FOLHA ==================
-int eh_folha_cidade_cidade(Arv23_CIDADES *no)
+int eh_folha_cidade(Arv23_CIDADES *no)
 {
     int resultado = 0;
     if (no != NULL)
@@ -233,7 +234,7 @@ int eh_folha_cidade_cidade(Arv23_CIDADES *no)
     return resultado;
 }
 
-//================ BUSCAR MENOR ==================
+//================ BUSCAS ==================
 Arv23_CIDADES *buscar_menor_elemento_cidade(Arv23_CIDADES *no)
 {
     Arv23_CIDADES *resultado = NULL;
@@ -249,3 +250,33 @@ Arv23_CIDADES *buscar_menor_elemento_cidade(Arv23_CIDADES *no)
     return resultado;
 }
 
+CIDADES *buscar_info_cidade(Arv23_CIDADES*raiz, char *info)
+{
+    CIDADES *retorno = NULL; 
+
+    if (raiz != NULL)
+    {
+        if (strcasecmp(info, raiz->info1.nome_cidade) == 0)
+        {
+            retorno = &(raiz->info1);
+        }
+        else if (raiz->nInfo == 2 && strcasecmp(info, raiz->info2.nome_cidade) == 0)
+        {
+            retorno = &(raiz->info2);
+        }
+        else if (strcasecmp(info, raiz->info1.nome_cidade) < 0)
+        {
+            retorno = buscar_info_cidade(raiz->esq, info);
+        }
+        else if (raiz->nInfo == 1 || strcasecmp(info, raiz->info2.nome_cidade) < 0)
+        {
+            retorno = buscar_info_cidade(raiz->cen, info);
+        }
+        else
+        {
+            retorno = buscar_info_cidade(raiz->dir, info);
+        }
+    }
+
+    return retorno;
+}

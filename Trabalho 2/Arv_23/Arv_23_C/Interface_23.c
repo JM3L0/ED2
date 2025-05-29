@@ -32,12 +32,13 @@ void menu_print()
     printf("[0] - Sair\n");
 }
 
-void menu_geral(){
+void menu_geral()
+{
 
     int opcao1, opcao2, sucesso;
 
     ESTADOS *cabeca_estados = NULL;
-    PESSOAS *raiz_pessoas = NULL;
+    Arv23_PESSOAS *raiz_pessoas = NULL;
 
     do
     {
@@ -47,110 +48,260 @@ void menu_geral(){
 
         switch (opcao1)
         {
-            case 1:{
+        case 1:
+        {
 
-                ESTADOS *novo_estado = cadastro_estado();
-                CIDADES cidade_capital;
-                CEP cep_capital;
+            ESTADOS *novo_estado = cadastro_estado();
+            CIDADES cidade_capital;
+            CEP cep_capital;
 
-                if (novo_estado == NULL){
-                    printf("Erro ao cadastrar estado!\n");
-                }else{
-                    if (inserir_estado_rec(&cabeca_estados, novo_estado)){// Inserindo o estado na lista
-                        
-                        cidade_capital = cadastra_cidade(&sucesso);// aqui pego só as informações da cidade
-                        if (sucesso){
-                            
-                            sucesso = capturar_cep(cep_capital.cep);// Capturando o CEP da capital
-                            if (sucesso){
-                                if (insere_23_cep(&(cidade_capital.arv_cep), cep_capital)){
-                                    printf("CEP %s cadastrado com sucesso!\n", cep_capital.cep);
-                                    novo_estado->populacao_estado += cidade_capital.populacao_city;
-                                    novo_estado->quant_city ++;
-                                    strcpy(novo_estado->nome_capital, cidade_capital.nome_cidade);
-                                }else{
-                                    printf("Erro ao cadastrar CEP!\n");
-                                    sucesso = 0;
-                                }
+            if (novo_estado == NULL)
+            {
+                printf("Erro ao cadastrar estado!\n");
+            }
+            else
+            {
+                if (inserir_estado_rec(&cabeca_estados, novo_estado))
+                { // Inserindo o estado na lista
+
+                    cidade_capital = cadastra_cidade(&sucesso); // aqui pego só as informações da cidade
+                    if (sucesso)
+                    {
+
+                        sucesso = capturar_cep(cep_capital.cep); // Capturando o CEP da capital
+                        if (sucesso)
+                        {
+                            if (insere_23_CEP(&(cidade_capital.arv_cep), cep_capital))
+                            {
+                                printf("CEP %s cadastrado com sucesso!\n", cep_capital.cep);
+                                novo_estado->populacao_estado += cidade_capital.populacao_city;
+                                novo_estado->quant_city++;
+                                strcpy(novo_estado->nome_capital, cidade_capital.nome_cidade);
                             }
-
-                            if (sucesso){
-                                if (insere_23_cidade(&(novo_estado->arv_cidades), cidade_capital)){// tenho que inserir somente apos o CEP por que é uma varivel comum e não mais um ponteiro
-                                    printf("Cidade %s cadastrada com sucesso!\n", cidade_capital.nome_cidade);
-                                }else{
-                                    printf("Erro ao inserir cidade!\n");
-                                    sucesso = 0;
-                                }
+                            else
+                            {
+                                printf("Erro ao cadastrar CEP!\n");
+                                sucesso = 0;
                             }
-                            
+                        }
+
+                        if (sucesso)
+                        {
+                            if (insere_23_cidade(&(novo_estado->arv_cidades), cidade_capital))
+                            { // tenho que inserir somente apos o CEP por que é uma varivel comum e não mais um ponteiro
+                                printf("Cidade %s cadastrada com sucesso!\n", cidade_capital.nome_cidade);
+                            }
+                            else
+                            {
+                                printf("Erro ao inserir cidade!\n");
+                                sucesso = 0;
+                            }
                         }
                     }
                 }
-                    
-                if (novo_estado && sucesso){
-                    printf("Estado %s cadastrado com sucesso!\n", novo_estado->nome_estado);
-                    novo_estado->quant_city ++;
-                    novo_estado->populacao_estado += cidade_capital.populacao_city;
-                    strcpy(novo_estado->nome_capital, cidade_capital.nome_cidade);
-                }else{
-                    free(novo_estado->nome_estado);
-                    free(novo_estado);
-                    printf("Erro ao cadastrar estado!\n");
-                }
-                break;
             }
-            case 2:{
 
-                char nome_estado[100];
-                printf("Digite o nome do estado para cadastrar a cidade: ");
-                ler_string_simples(nome_estado, sizeof(nome_estado));
-                ESTADOS *estado = existe_estado(cabeca_estados, nome_estado);
+            if (novo_estado && sucesso)
+            {
+                printf("Estado %s cadastrado com sucesso!\n", novo_estado->nome_estado);
+                novo_estado->quant_city++;
+                novo_estado->populacao_estado += cidade_capital.populacao_city;
+                strcpy(novo_estado->nome_capital, cidade_capital.nome_cidade);
+            }
+            else
+            {
+                free(novo_estado->nome_estado);
+                free(novo_estado);
+                printf("Erro ao cadastrar estado!\n");
+            }
+            break;
+        }
+        case 2:
+        {
 
-                if (estado){
-                    do {
+            char nome_estado[100];
+            printf("Digite o nome do estado para cadastrar a cidade: ");
+            ler_string_simples(nome_estado, sizeof(nome_estado));
+            ESTADOS *estado = existe_estado(cabeca_estados, nome_estado);
 
-                        CIDADES novaCidade = cadastra_cidade(&sucesso);
-                        if (sucesso){
-                            // Cadastro de CEPs
-                            do {
-                                CEP novoCEP;
-                                sucesso = capturar_cep(novoCEP.cep);
-                                if (sucesso){
-                                    if (insere_23_cep(&(novaCidade.arv_cep), novoCEP)){
-                                        printf("CEP %s cadastrado com sucesso!\n", novoCEP.cep);
-                                    } else {
-                                        printf("Erro ao cadastrar CEP!\n");
-                                    }
+            if (estado)
+            {
+                do
+                {
+
+                    CIDADES novaCidade = cadastra_cidade(&sucesso);
+                    if (sucesso)
+                    {
+                        // Cadastro de CEPs
+                        do
+                        {
+                            CEP novoCEP;
+                            sucesso = capturar_cep(novoCEP.cep);
+                            if (sucesso)
+                            {
+                                if (insere_23_CEP(&(novaCidade.arv_cep), novoCEP))
+                                {
+                                    printf("CEP %s cadastrado com sucesso!\n", novoCEP.cep);
                                 }
-                                printf("Deseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", novaCidade.nome_cidade);
-                                opcao2 = digitar_int();
-                            } while (opcao2 == 1 || !sucesso);
-
-                            if (insere_23_cidade(&(estado->arv_cidades), novaCidade)){
-                                estado->quant_city++;
-                                estado->populacao_estado += novaCidade.populacao_city;
-                                printf("Cidade %s cadastrada com sucesso!\n", novaCidade.nome_cidade);
-                                
-                            } else {
-                                printf("Erro ao inserir cidade!\n");
+                                else
+                                {
+                                    printf("Erro ao cadastrar CEP!\n");
+                                }
                             }
-                        } else {
-                            printf("Erro ao cadastrar cidade!\n");
+                            printf("Deseja cadastrar outro CEP para %s? [1] - SIM [0] - NAO: ", novaCidade.nome_cidade);
+                            opcao2 = digitar_int();
+                        } while (opcao2 == 1 || !sucesso);
+
+                        if (insere_23_cidade(&(estado->arv_cidades), novaCidade))
+                        {
+                            estado->quant_city++;
+                            estado->populacao_estado += novaCidade.populacao_city;
+                            printf("Cidade %s cadastrada com sucesso!\n", novaCidade.nome_cidade);
                         }
-                        printf("Deseja cadastrar outra cidade para o estado %s? [1] - SIM [0] - NAO: ", nome_estado);
-                        opcao2 = digitar_int();
-                    }while (opcao2 == 1);
-                } else {
+                        else
+                        {
+                            printf("Erro ao inserir cidade!\n");
+                        }
+                    }
+                    else
+                    {
+                        printf("Erro ao cadastrar cidade!\n");
+                    }
+                    printf("Deseja cadastrar outra cidade para o estado %s? [1] - SIM [0] - NAO: ", nome_estado);
+                    opcao2 = digitar_int();
+                } while (opcao2 == 1);
+            }
+            else
+            {
+                printf("Estado %s nao encontrado!\n", nome_estado);
+            }
+
+            break;
+        }
+        case 3:
+        {
+            ESTADOS *estado = NULL;
+            char nome_estado[100];
+            char nome_cidade[100];
+            char cep_natal[10];
+            char cep_atual[10];
+            PESSOAS nova_pessoa;
+
+            do
+            {
+
+                printf("Digite o nome do estado para qual a pessoa ira: ");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+
+                estado = existe_estado(cabeca_estados, nome_estado);
+                if (estado)
+                {
+
+                    printf("Digite o nome da cidade para cadastrar o CEP: ");
+                    ler_string_simples(nome_cidade, sizeof(nome_cidade));
+
+                    CIDADES *cidade = buscar_info_cidade(estado->arv_cidades, nome_cidade);
+                    if (cidade)
+                    {
+                        printf("Digite o CEP da cidade %s: ", nome_cidade);
+                        sucesso = capturar_cep(cep_natal);
+                        if (sucesso)
+                        {
+                            sucesso = percorre_estados_procurando_CEP(cabeca_estados, cep_natal);
+
+                            do
+                            {
+
+                                if (!sucesso)
+                                {
+                                    printf("CEP %s nao encontrado em nenhum estado!\n", cep_natal);
+                                }
+                                else
+                                {
+
+                                    do
+                                    {
+
+                                        printf("Digite o CEP atual da pessoa: ");
+                                        sucesso = capturar_cep(cep_atual);
+                                        if (sucesso)
+                                        {
+                                            sucesso = percorre_estados_procurando_CEP(cabeca_estados, cep_atual);
+                                            if (!sucesso)
+                                            {
+                                                printf("CEP %s nao encontrado em nenhum estado!\n", cep_atual);
+                                            }
+                                            else
+                                            {
+                                                nova_pessoa = cadastra_pessoa(cep_natal, cep_atual);
+                                                if (nova_pessoa.CPF[0] != '\0')
+                                                {
+                                                    if (insere_23_PESSOAS(&raiz_pessoas, nova_pessoa))
+                                                    {
+                                                        printf("Pessoa [%s] cadastrada com sucesso!\n", nova_pessoa.nome_pessoa);
+                                                    }
+                                                    else
+                                                    {
+                                                        printf("Erro ao cadastrar pessoa!\n");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    printf("Dados invalidos para cadastro de pessoa!\n");
+                                                }
+                                            }
+                                        }
+
+                                        if (!sucesso)
+                                        {
+                                            printf("Deseja tentar novamente? [1] - SIM [0] - NAO: ");
+                                            opcao2 = digitar_int();
+                                        }
+                                    } while (!sucesso && opcao2 == 1);
+                                }
+                                if (!sucesso)
+                                {
+                                    printf("Deseja tentar novamente? [1] - SIM [0] - NAO: ");
+                                    opcao2 = digitar_int();
+                                }
+                            } while (!sucesso && opcao2 == 1);
+                        }
+                    }
+                    else
+                    {
+                        printf("Cidade %s nao encontrada no estado %s!\n", nome_cidade, nome_estado);
+                    }
+                }
+                else
+                {
                     printf("Estado %s nao encontrado!\n", nome_estado);
                 }
-                
-                break;
-            }
-            case 0:
-                printf("Saindo...\n");
-                break;
-            default:
-                printf("Opcao invalida! Tente novamente.\n");
+
+                if (sucesso)
+                {
+                    printf("Deseja cadastrar outra pessoa? [1] - SIM [0] - NAO: ");
+                    opcao2 = digitar_int();
+                }
+                else
+                {
+                    printf("A operacao falhou!\n");
+                    printf("Deseja tentar novamente? [1] - SIM [0] - NAO: ");
+                    opcao2 = digitar_int();
+                }
+            } while (opcao2 == 1);
+            break;
+        }
+        case 0:
+            printf("Saindo...\n");
+            break;
+        default:
+            printf("Opcao invalida! Tente novamente.\n");
         }
     } while (opcao1 != 0);
+}
+
+int main()
+{
+    menu_geral();
+    return 0;
 }
