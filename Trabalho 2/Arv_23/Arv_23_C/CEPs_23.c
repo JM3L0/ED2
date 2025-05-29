@@ -629,85 +629,83 @@ void libera_arvore_CEP(Arv23_CEP **raiz)
     }
 }
 
-// Menu interativo
-void menu(Arv23_CEP **raiz)
-{
-    int opcao = 0;
-    char cep_input[10];
-    char prefixo_inicial[10] = "";
-    CEP cep;
+int consulta_CEP(Arv23_CEP *raiz, char *str_cep){
 
-    do
-    {
-        printf("\n=========================\n");
-        printf("Arvore 2-3 de CEPs Atual:\n");
-        imprime_arvore_visual_CEP(*raiz, prefixo_inicial, 1, 1);
-        printf("\nEm ordem: ");
-        imprime_23_em_ordem_CEP(*raiz);
-        printf("\n------------------------\n");
-        printf("1. Adicionar CEP\n");
-        printf("2. Remover CEP\n");
-        printf("3. Sair\n");
-        printf("Escolha uma opcao: ");
+    int resultado = 0;
 
-        if (scanf("%d", &opcao) != 1)
-        {
-            printf("Entrada invalida. Insira um numero.\n");
-            while (getchar() != '\n');
-            continue;
+    if (raiz != NULL && raiz->nInfo > 0){
+        int comparacao1 = strcasecmp(str_cep, raiz->info1.cep);
+        int comparacao2;
+
+        if (comparacao1 == 0){
+            resultado = 1; // CEP encontrado em info1
+        } else if (raiz->nInfo == 2){
+            comparacao2 = strcasecmp(str_cep, raiz->info2.cep);
+            if (comparacao2 == 0){
+                resultado = 1; // CEP encontrado em info2
+            } else if (comparacao2 < 0){
+                // str_cep < info2.cep, busca em cen
+                resultado = consulta_CEP(raiz->cen, str_cep);
+            } else {
+                // str_cep > info2.cep, busca em dir
+                resultado = consulta_CEP(raiz->dir, str_cep);
+            }
+        } else if (comparacao1 < 0){
+            // str_cep < info1.cep, busca em esq
+            resultado = consulta_CEP(raiz->esq, str_cep);
+        } else {
+            // str_cep > info1.cep e nInfo == 1, busca em cen
+            resultado = consulta_CEP(raiz->cen, str_cep);
         }
-        while (getchar() != '\n');
+    }
 
-        switch (opcao)
-        {
-        case 1:
-            printf("Digite o CEP (max 9 caracteres): ");
-            if (!capturar_cep(cep_input))
-            {
-                printf("CEP invalido. Deve ter entre 1 e 9 caracteres.\n");
-            }
-            else
-            {
-                strcpy(cep.cep, cep_input);
-                if (insere_23_CEP(raiz, cep))
-                    printf("CEP %s inserido com sucesso.\n", cep.cep);
-            }
-            break;
-
-        case 2:
-            printf("Digite o CEP a ser removido: ");
-            if (!capturar_cep(cep_input))
-            {
-                printf("CEP invalido. Deve ter entre 1 e 9 caracteres.\n");
-            }
-            else
-            {
-                strcpy(cep.cep, cep_input);
-                StatusRemocao status = remover_23_CEP(raiz, cep);
-                mensagens_do_remover(status);
-
-            }
-            break;
-
-        case 3:
-            printf("Saindo...\n");
-            break;
-
-        default:
-            printf("Opcao invalida. Tente novamente.\n");
-            break;
-        }
-    } while (opcao != 3);
-
-    libera_arvore_CEP(raiz);
 }
 
-// Main
-int main()
+// percorre estados procurando CEP para validar o cadastro de pessoas
+
+int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep)
 {
-    Arv23_CEP *raiz = NULL;
-    menu(&raiz);
-    printf("\nPrograma encerrado. Memoria liberada.\n");
-    imprime_23_em_ordem_CEP(raiz);
-    return 0;
+    ESTADOS *atual;
+    atual = cabeca;
+    int encontrado = 0;
+
+    while (atual != NULL && encontrado == 0)
+    {
+        encontrado |= percorre_cidades_procurando_CEP(atual->arv_cidades, cep);
+        if (encontrado == 0)
+            atual = atual->prox;
+    }
+
+    return encontrado;
+}
+
+int percorre_cidades_procurando_CEP(Arv23_CIDADES *raiz, char *cep)
+{
+    int encontrado = 0;
+
+    if (raiz != NULL && raiz->nInfo > 0)
+    {
+        // Verifica a árvore de CEPs da primeira cidade (info1)
+        if (raiz->info1.arv_cep != NULL)
+            encontrado |= consulta_CEP(raiz->info1.arv_cep, cep);
+
+        // Se ainda não encontrado e o nó tem duas cidades, verifica info2
+        if (encontrado == 0 && raiz->nInfo == 2)
+        {
+            if (raiz->info2.arv_cep != NULL)
+                encontrado |= consulta_CEP(raiz->info2.arv_cep, cep);
+        }
+
+        // Se ainda não encontrado, percorre as subárvores
+        if (encontrado == 0)
+            encontrado |= percorre_cidades_procurando_CEP(raiz->esq, cep);
+
+        if (encontrado == 0)
+            encontrado |= percorre_cidades_procurando_CEP(raiz->cen, cep);
+
+        if (encontrado == 0 && raiz->nInfo == 2)
+            encontrado |= percorre_cidades_procurando_CEP(raiz->dir, cep);
+    }
+
+    return encontrado;
 }

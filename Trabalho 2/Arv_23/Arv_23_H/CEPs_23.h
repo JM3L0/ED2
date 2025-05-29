@@ -31,4 +31,7 @@ StatusRemocao fundir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_pai, Ar
 // ================ GERENCIAMENTO DE MEMÓRIA ================
 void libera_arvore_CEP(Arv23_CEP **raiz);
 
-// Protótipos
+// ================ CONSELTA DE CEP ================
+int consulta_CEP(Arv23_CEP *raiz, char *str_cep);
+int percorre_estados_procurando_CEP(ESTADOS *cabeca, char *cep);
+int percorre_cidades_procurando_CEP(Arv23_CIDADES *raiz, char *cep);
