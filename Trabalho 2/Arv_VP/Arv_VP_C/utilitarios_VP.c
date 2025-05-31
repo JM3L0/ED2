@@ -116,7 +116,7 @@ int validar_cpf(const char *cpf)
 int capturar_cpf(char *cpf)
 {
     int sucesso = 0;
-    char entrada[13]; // 11 dígitos + \n + \0
+    char entrada[30]; // 11 dígitos + \n + \0
 
     do
     {

@@ -676,14 +676,14 @@ void imprimir_dados_PESSOAS(PESSOAS *pessoa)
 {
     if (pessoa != NULL)
     {
-        printf("\n==========================");
+        printf("\n==========================\n");
         printf("CPF: %s\n", pessoa->CPF);
         printf("Nome: %s\n", pessoa->nome_pessoa);
         printf("CEP Cidade Natal: %s\n", pessoa->cep_city_natal);
         printf("CEP Cidade Atual: %s\n", pessoa->cep_city_atual);
-        printf("Data de Nascimento: %02d/%02d/%04d\n",
+        printf("Data de Nascimento: %02d/%02d/%04d",
                pessoa->data_nasc.dia, pessoa->data_nasc.mes, pessoa->data_nasc.ano);
-        printf("==========================\n");
+        printf("\n==========================\n");
     }
 }
 
@@ -735,38 +735,38 @@ void imprime_arvore_visual_PESSOAS(Arv23_PESSOAS *raiz, char *prefixo, int eh_ul
     }
 }
 
-int verifica_pessoa_nascida_ou_que_mora_na_cidade_23(PESSOAS *pessoa, Arv23_CEP *raiz_CEP)
+int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, char *CEP)
 {
-    int resultado = 0;
+    int retorno = 0;
 
-    if (pessoa != NULL && raiz_CEP != NULL)
+    if (raiz_pessoas != NULL && CEP != NULL)
     {
-        // Verifica se a pessoa nasceu ou mora em algum dos CEPs no nó atual
-        // Check info1 directly using dot operator instead of arrow
-        if ((strcasecmp(raiz_CEP->info1.cep, pessoa->cep_city_natal) == 0 || 
-             strcasecmp(raiz_CEP->info1.cep, pessoa->cep_city_atual) == 0))
+        short int valor_comparacao;
+
+        if (strcasecmp(raiz_pessoas->info1->cep_city_natal, CEP) == 0)
+            retorno = 1; // Pessoa encontrada
+
+        else if (strcasecmp(raiz_pessoas->info1->cep_city_atual, CEP) == 0)
+            retorno = 1; // Pessoa encontrada
+
+        if (retorno == 0 && raiz_pessoas->nInfo == 2)//tem info2
         {
-            return 1;
+            if (strcasecmp(raiz_pessoas->info2->cep_city_natal, CEP) == 0)
+                retorno = 1; // Pessoa encontrada
+                
+            else if (strcasecmp(raiz_pessoas->info2->cep_city_atual, CEP) == 0)
+                retorno = 1; // Pessoa encontrada
         }
-        
-        // Check info2 if it exists (nInfo == 2)
-        if (raiz_CEP->nInfo == 2 && 
-            (strcasecmp(raiz_CEP->info2.cep, pessoa->cep_city_natal) == 0 || 
-             strcasecmp(raiz_CEP->info2.cep, pessoa->cep_city_atual) == 0))
-        {
-            return 1;
-        }
-        
-        // Se não encontrou, verifica nos filhos
-        if (raiz_CEP->esq != NULL)
-            resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade_23(pessoa, raiz_CEP->esq);
-        
-        if (raiz_CEP->cen != NULL)
-            resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade_23(pessoa, raiz_CEP->cen);
-        
-        if (raiz_CEP->nInfo == 2 && raiz_CEP->dir != NULL)
-            resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade_23(pessoa, raiz_CEP->dir);
+
+        if (retorno == 0)
+            retorno = verificar_se_existe_pessoa_associada_a_um_CEP(raiz_pessoas->esq, CEP);
+
+        if (retorno == 0)
+            retorno = verificar_se_existe_pessoa_associada_a_um_CEP(raiz_pessoas->cen, CEP);
+
+        if (retorno == 0 && raiz_pessoas->nInfo == 2)
+            retorno = verificar_se_existe_pessoa_associada_a_um_CEP(raiz_pessoas->dir, CEP);
     }
 
-    return resultado;
+    return retorno;
 }

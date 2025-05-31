@@ -435,7 +435,7 @@ int remover_pessoa_arvore(PESSOAS **raiz, char *CPF)
 // ESPECÍFICAS DO TRABALHO
 // =================================
 
-int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, char *cep)
+int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, char *cep)//ajustada
 { // camada de pessoas
     int resultado = 0;
 
@@ -446,9 +446,8 @@ int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, char *ce
             resultado = 1;
         else
         {
-            // Verifica a pessoa atual com os CEPs filhos
-            resultado = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->esq, cep) || 
-                        verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->dir, cep);
+            // Verifica recursivamente nas subárvores
+            resultado = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->esq, cep) || verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->dir, cep);
         }
     }
     

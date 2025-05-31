@@ -85,6 +85,7 @@ int capturar_data(DATA *data)
             else
                 printf("Erro: formato invalida!\n");
         }
+        // limpar_buffer();
     } while (sucesso == 0);
     return sucesso;
 }
@@ -116,7 +117,7 @@ int validar_cpf(const char *cpf)
 int capturar_cpf(char *cpf)
 {
     int sucesso = 0;
-    char entrada[13]; // 11 dígitos + \n + \0
+    char entrada[30]; // 11 dígitos + \n + \0
 
     do
     {
@@ -130,8 +131,9 @@ int capturar_cpf(char *cpf)
                 strcpy(cpf, entrada);
                 sucesso = 1;
             }
-            else
+            else{
                 printf("\nErro: CPF deve ter 11 digitos numericos!\n");
+            }
         }
         else
             printf("\nErro: falha na leitura!\n");
