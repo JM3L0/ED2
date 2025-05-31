@@ -340,7 +340,7 @@ void menu_geral()
                         printf("Digite o CEP a ser removido: ");
                         retorno = capturar_cep(str_cep);
 
-                        retorno = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa, cidade->cep);
+                        retorno = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa, str_cep);
 
                         if (!retorno)
                         {

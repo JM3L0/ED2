@@ -38,7 +38,7 @@ int remover_pessoa_no(PESSOAS **raiz, char *CPF);
 int remover_pessoa_arvore(PESSOAS **raiz, char *CPF);
 
 // especificas do trabalho
-int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *raiz_CEP);
+int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, char *cep);
 int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, PESSOAS *raiz_pessoa);
 int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(PESSOAS *raiz_pessoa, CIDADES *raiz_cidade);
 int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, PESSOAS *raiz_pessoa);

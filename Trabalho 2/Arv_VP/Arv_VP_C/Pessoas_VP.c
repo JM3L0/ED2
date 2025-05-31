@@ -435,27 +435,20 @@ int remover_pessoa_arvore(PESSOAS **raiz, char *CPF)
 // ESPECÍFICAS DO TRABALHO
 // =================================
 
-int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, CEP *raiz_CEP)
-{ // retorna 1 se alguma pessoa nasceu ou mora na cidade, 0 caso contrario
+int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, char *cep)
+{ // camada de pessoas
     int resultado = 0;
 
-    if (raiz_pessoa != NULL && raiz_CEP != NULL)
+    if (raiz_pessoa != NULL && cep != NULL)
     {
         // Verifica se a pessoa atual tem relação com o CEP atual
-        if (strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_natal) == 0 || strcasecmp(raiz_CEP->cep, raiz_pessoa->cep_city_atual) == 0)
+        if (strcasecmp(raiz_pessoa->cep_city_natal, cep) == 0 || strcasecmp(raiz_pessoa->cep_city_atual, cep) == 0)
             resultado = 1;
         else
         {
             // Verifica a pessoa atual com os CEPs filhos
-            resultado = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa, raiz_CEP->esq) || 
-                        verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa, raiz_CEP->dir);
-            
-            if (!resultado)
-            {
-                // Se não encontrou com a pessoa atual e CEPs, verifica com as pessoas filhas
-                resultado = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->esq, raiz_CEP) || 
-                            verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->dir, raiz_CEP);
-            }
+            resultado = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->esq, cep) || 
+                        verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->dir, cep);
         }
     }
     
