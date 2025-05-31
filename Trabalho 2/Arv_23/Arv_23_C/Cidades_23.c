@@ -303,7 +303,7 @@ void printar_informacoes_cidade(CIDADES *cidade)
         printf("\n==========================\n");
         printf("Cidade: %s\n", cidade->nome_cidade);
         printf("Populacao: %d\n", cidade->populacao_city);
-        printf("CEP(s): \n");
+        printf("CEP(s): ");
         imprime_arvore_visual_CEP(cidade->arv_cep, "  ", 1, 1);// depois retirar isso daqui
 
         printf("\n==========================\n");
@@ -336,7 +336,7 @@ void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ult
         }
         else
         {
-            printf(" Raiz--> ");
+            printf(" \nRaiz--> ");
         }
 
         if (raiz->nInfo == 1)

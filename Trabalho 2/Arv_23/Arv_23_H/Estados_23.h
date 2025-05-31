@@ -13,7 +13,7 @@ void liberar_todos_estados(ESTADOS **cabeca);
 void liberar_no_estado(ESTADOS **estado);
 
 //IMPRESSÃO
-int mostrar_estado(ESTADOS *estado);
+int mostrar_estado(ESTADOS *estado, int i);
 int mostrar_todos_estados(ESTADOS *cabeca);
 
 //ESPECIFICAS DO TRABALHO

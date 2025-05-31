@@ -317,6 +317,52 @@ void menu_geral()
                 printf("Deseja cadastrar outra pessoa? [1] - SIM [0] - NAO: ");
             }while (opcao2 == 1);
         }
+        case 5:{
+            char estado_nome[100];
+            char cidade_nome[100];
+            CEP Cep;
+
+            printf("Digite o nome do estado: ");
+            ler_string_simples(estado_nome, sizeof(estado_nome));
+            ESTADOS *estado = existe_estado(cabeca_estados, estado_nome);
+
+            if (estado)
+            {
+                printf("Digite o nome da cidade: ");
+                ler_string_simples(cidade_nome, sizeof(cidade_nome));
+                CIDADES *cidade = buscar_info_cidade(estado->arv_cidades, cidade_nome);
+                if (cidade)
+                {
+                    printf("=== Remover CEP (da cidade %s) ===\n", cidade->nome_cidade);
+                    sucesso = capturar_cep(Cep.cep);
+
+                    StatusRemocao status = remover_23_CEP(&(cidade->arv_cep), Cep);
+                    mensagens_do_remover(status);
+                }
+                else
+                {
+                    printf("Cidade %s nao encontrada no estado %s!\n", cidade_nome, estado_nome);
+                }
+            }
+            else
+            {
+                printf("Estado %s nao encontrado!\n", estado_nome);
+            }
+            break;
+        }
+        case 6:{
+            imprime_arvore_visual_PESSOAS(raiz_pessoas, "", 1, 1);
+            PESSOAS pessoa_remover;
+            printf("=== Remover Pessoa (pelo CPF) ===\n");
+            sucesso = capturar_cpf(pessoa_remover.CPF);
+
+            StatusRemocao status = remover_23_PESSOAS(&raiz_pessoas, pessoa_remover);
+            mensagens_do_remover(status);
+
+            imprime_arvore_visual_PESSOAS(raiz_pessoas, "", 1, 1);
+           
+            break;
+        }
         case 14:{
             if (mostrar_todos_estados(cabeca_estados))
             {
@@ -510,8 +556,8 @@ void povoar_sistema(ESTADOS **cabeca_estados, Arv23_PESSOAS **raiz_pessoas) {
         PESSOAS pessoa;
         strcpy(pessoa.nome_pessoa, nomes[i]);
         
-        // Gerar CPF único
-        sprintf(pessoa.CPF, "%03d.%03d.%03d-%02d", i+100, i+200, i+300, i+10);
+        // Gerar CPF único (formato: xxxxxxxxxxx, 11 dígitos sem separadores)
+        sprintf(pessoa.CPF, "%03d%03d%03d%02d", i+100, i+200, i+300, i+10);
         
         // Data de nascimento variada
         pessoa.data_nasc.dia = (i % 28) + 1;

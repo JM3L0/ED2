@@ -133,13 +133,18 @@ void liberar_no_estado(ESTADOS **estado)
 // IMPRESSÃO
 // =================================
 
-int mostrar_estado(ESTADOS *estado)
+int mostrar_estado(ESTADOS *estado, int i)
 {
     int impresso = 0;
     
     if (estado != NULL)
     {
-        printf("Estado: %s, Capital: %s\n\n", estado->nome_estado, estado->nome_capital);
+        printf("========================================\n");
+        printf("[%d]\n", i);
+        printf("\tEstado: %s, Capital: %s\n", estado->nome_estado, estado->nome_capital);
+        printf("\tQuantidade de cidades: %d\n", estado->quant_city);
+        printf("\tPopulacao do estado: %d\n", estado->populacao_estado);
+        printf("=========================================\n\n");
         impresso = 1;
     }
     return impresso;
@@ -147,15 +152,15 @@ int mostrar_estado(ESTADOS *estado)
 
 int mostrar_todos_estados(ESTADOS *cabeca)
 {
-    int impresso = 0, i = 0;
+    int impresso = 0, i = 1;
     ESTADOS *atual;
     atual = cabeca;
 
     while (atual != NULL)
     {
-        printf("%d. ", ++i);
-        if (mostrar_estado(atual))
+        if (mostrar_estado(atual, i))
             impresso = 1;
+        i++;
         atual = atual->prox;
     }
     return impresso;

@@ -601,11 +601,6 @@ void imprime_23_em_ordem_CEP(Arv23_CEP *raiz)
 {
     if (raiz != NULL)
     {
-        if (raiz->nInfo <= 0)
-        {
-            fprintf(stderr, "Erro: Tentando imprimir no com nInfo=%d\n", raiz->nInfo);
-            return;
-        }
         imprime_23_em_ordem_CEP(raiz->esq);
         printf("%s ", raiz->info1.cep);
         imprime_23_em_ordem_CEP(raiz->cen);
@@ -623,7 +618,7 @@ void imprime_arvore_visual_CEP(Arv23_CEP *raiz, char *prefixo, int eh_ultimo, in
     if (raiz != NULL)
     {
         printf("%s", prefixo);
-        printf("%s", eh_raiz ? " Raiz--> " : (eh_ultimo ? "`------ " : "+------ "));
+        printf("%s", eh_raiz ? " \nRaiz--> " : (eh_ultimo ? "`------ " : "+------ "));
 
         if (raiz->nInfo == 1)
             printf("[%s]\n", raiz->info1.cep);
