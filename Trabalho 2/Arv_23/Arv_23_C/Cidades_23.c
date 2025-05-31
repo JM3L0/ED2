@@ -300,10 +300,13 @@ void printar_informacoes_cidade(CIDADES *cidade)
 {
     if (cidade != NULL)
     {
+        printf("\n==========================\n");
         printf("Cidade: %s\n", cidade->nome_cidade);
-        printf("População: %d\n", cidade->populacao_city);
-        printf("CEP(s):\n");
-        // printar_arvore_CEP(cidade->arv_cep);//talvez seja necessário implementar essa função
+        printf("Populacao: %d\n", cidade->populacao_city);
+        printf("CEP(s): \n");
+        imprime_arvore_visual_CEP(cidade->arv_cep, "  ", 1, 1);// depois retirar isso daqui
+
+        printf("\n==========================\n");
     }
 }
 
@@ -312,13 +315,65 @@ void imprime_23_em_ordem_cidade(Arv23_CIDADES *raiz)
     if (raiz != NULL)
     {
         imprime_23_em_ordem_cidade(raiz->esq);
-        printf("%s ", raiz->info1.nome_cidade);
+        printar_informacoes_cidade(&raiz->info1);
         imprime_23_em_ordem_cidade(raiz->cen);
         if (raiz->nInfo == 2)
         {
-            printf("%s ", raiz->info2.nome_cidade);
+            printar_informacoes_cidade(&raiz->info2);
             imprime_23_em_ordem_cidade(raiz->dir);
         }
     }
 }
 
+void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ultimo, int eh_raiz)
+{
+    if (raiz != NULL)
+    {
+        printf("%s", prefixo);
+        if (!eh_raiz)
+        {
+            printf("%s", eh_ultimo ? "`------ " : "+------ ");
+        }
+        else
+        {
+            printf(" Raiz--> ");
+        }
+
+        if (raiz->nInfo == 1)
+        {
+            printf("[%s]\n", raiz->info1.nome_cidade);
+        }
+        else if (raiz->nInfo == 2)
+        {
+            printf("[%s, %s]\n", raiz->info1.nome_cidade, raiz->info2.nome_cidade);
+        }
+
+        char novo_prefixo[1024];
+        sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
+
+        int num_filhos = 0;
+        if (raiz->esq)
+            num_filhos++;
+        if (raiz->cen)
+            num_filhos++;
+        if (raiz->dir)
+            num_filhos++;
+
+        int filhos_impressos = 0;
+        if (raiz->esq != NULL)
+        {
+            filhos_impressos++;
+            imprime_arvore_visual_cidade(raiz->esq, novo_prefixo, filhos_impressos == num_filhos, 0);
+        }
+        if (raiz->cen != NULL)
+        {
+            filhos_impressos++;
+            imprime_arvore_visual_cidade(raiz->cen, novo_prefixo, filhos_impressos == num_filhos, 0);
+        }
+        if (raiz->dir != NULL)
+        {
+            filhos_impressos++;
+            imprime_arvore_visual_cidade(raiz->dir, novo_prefixo, filhos_impressos == num_filhos, 0);
+        }
+    }
+}

@@ -684,7 +684,7 @@ int consulta_CEP(Arv23_CEP *raiz, char *str_cep){
             resultado = consulta_CEP(raiz->cen, str_cep);
         }
     }
-
+    return resultado;
 }
 
 // percorre estados procurando CEP para validar o cadastro de pessoas

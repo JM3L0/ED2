@@ -139,7 +139,7 @@ int mostrar_estado(ESTADOS *estado)
     
     if (estado != NULL)
     {
-        printf("Estado: %s, Capital: %s\n", estado->nome_estado, estado->nome_capital);
+        printf("Estado: %s, Capital: %s\n\n", estado->nome_estado, estado->nome_capital);
         impresso = 1;
     }
     return impresso;

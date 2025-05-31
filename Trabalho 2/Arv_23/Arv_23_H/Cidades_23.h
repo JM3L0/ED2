@@ -34,3 +34,4 @@ void libera_arvore_cidade(Arv23_CIDADES **raiz);
 //==============================================================================
 void printar_informacoes_cidade(CIDADES *cidade);
 void imprime_23_em_ordem_cidade(Arv23_CIDADES *raiz);
+void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ultimo, int eh_raiz);
