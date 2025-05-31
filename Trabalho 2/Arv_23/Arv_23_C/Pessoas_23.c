@@ -734,3 +734,39 @@ void imprime_arvore_visual_PESSOAS(Arv23_PESSOAS *raiz, char *prefixo, int eh_ul
             imprime_arvore_visual_PESSOAS(raiz->dir, novo_prefixo, ++filhos_impressos == num_filhos, 0);
     }
 }
+
+int verifica_pessoa_nascida_ou_que_mora_na_cidade_23(PESSOAS *pessoa, Arv23_CEP *raiz_CEP)
+{
+    int resultado = 0;
+
+    if (pessoa != NULL && raiz_CEP != NULL)
+    {
+        // Verifica se a pessoa nasceu ou mora em algum dos CEPs no nó atual
+        // Check info1 directly using dot operator instead of arrow
+        if ((strcasecmp(raiz_CEP->info1.cep, pessoa->cep_city_natal) == 0 || 
+             strcasecmp(raiz_CEP->info1.cep, pessoa->cep_city_atual) == 0))
+        {
+            return 1;
+        }
+        
+        // Check info2 if it exists (nInfo == 2)
+        if (raiz_CEP->nInfo == 2 && 
+            (strcasecmp(raiz_CEP->info2.cep, pessoa->cep_city_natal) == 0 || 
+             strcasecmp(raiz_CEP->info2.cep, pessoa->cep_city_atual) == 0))
+        {
+            return 1;
+        }
+        
+        // Se não encontrou, verifica nos filhos
+        if (raiz_CEP->esq != NULL)
+            resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade_23(pessoa, raiz_CEP->esq);
+        
+        if (raiz_CEP->cen != NULL)
+            resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade_23(pessoa, raiz_CEP->cen);
+        
+        if (raiz_CEP->nInfo == 2 && raiz_CEP->dir != NULL)
+            resultado |= verifica_pessoa_nascida_ou_que_mora_na_cidade_23(pessoa, raiz_CEP->dir);
+    }
+
+    return resultado;
+}
