@@ -7,7 +7,9 @@
 #include "../Arv_23_H/CEPs_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
-// ======================= OPERAÇÕES BASICAS =======================
+//==============================================================================
+// FUNÇÕES DE MANIPULAÇÃO DE DADOS
+//==============================================================================
 CIDADES cadastra_cidade(int *sucesso)
 {
     CIDADES novaCidade;
@@ -32,18 +34,10 @@ CIDADES cadastra_cidade(int *sucesso)
     return novaCidade;
 }
 
-int eh_folha_cidade(Arv23_CIDADES *no)
-{
-    int resultado = 0;
-    if (no != NULL)
-    {
-        resultado = (no->esq == NULL && no->cen == NULL && no->dir == NULL);
-    }
-    return resultado;
-}
+//==============================================================================
+// FUNÇÕES BÁSICAS DA ÁRVORE 2-3
+//==============================================================================
 
-// ======================= FUNÇÕES AUX DE INSERÇÃO =======================
-// Cria nó (sem alocaçao para info1/info2)
 Arv23_CIDADES *cria_no_cidade(CIDADES info, Arv23_CIDADES *F_esq, Arv23_CIDADES *F_cen)
 {
     Arv23_CIDADES *no = (Arv23_CIDADES *)malloc(sizeof(Arv23_CIDADES));
@@ -58,7 +52,50 @@ Arv23_CIDADES *cria_no_cidade(CIDADES info, Arv23_CIDADES *F_esq, Arv23_CIDADES 
     return no;
 }
 
-// Adiciona infos (copia estruturas CIDADES)
+int eh_folha_cidade(Arv23_CIDADES *no)
+{
+    int resultado = 0;
+    if (no != NULL)
+    {
+        resultado = (no->esq == NULL && no->cen == NULL && no->dir == NULL);
+    }
+    return resultado;
+}
+
+CIDADES *buscar_info_cidade(Arv23_CIDADES*raiz, char *info)
+{
+    CIDADES *retorno = NULL; 
+
+    if (raiz != NULL)
+    {
+        if (strcasecmp(info, raiz->info1.nome_cidade) == 0)
+        {
+            retorno = &(raiz->info1);
+        }
+        else if (raiz->nInfo == 2 && strcasecmp(info, raiz->info2.nome_cidade) == 0)
+        {
+            retorno = &(raiz->info2);
+        }
+        else if (strcasecmp(info, raiz->info1.nome_cidade) < 0)
+        {
+            retorno = buscar_info_cidade(raiz->esq, info);
+        }
+        else if (raiz->nInfo == 1 || strcasecmp(info, raiz->info2.nome_cidade) < 0)
+        {
+            retorno = buscar_info_cidade(raiz->cen, info);
+        }
+        else
+        {
+            retorno = buscar_info_cidade(raiz->dir, info);
+        }
+    }
+
+    return retorno;
+}
+
+//==============================================================================
+// FUNÇÕES DE INSERÇÃO NA ÁRVORE 2-3
+//==============================================================================
 void adiciona_infos_cidade(Arv23_CIDADES **no, CIDADES info, Arv23_CIDADES *Sub_Arv_Info)
 {
     Arv23_CIDADES *no_atual = *no;
@@ -108,7 +145,6 @@ Arv23_CIDADES *quebra_no_cidade(Arv23_CIDADES **no, CIDADES info, CIDADES *sobe,
     return maior;
 }
 
-// ======================= OPERAÇÃO DE INSERÇÃO =======================
 int insere_23_cidade(Arv23_CIDADES **raiz, CIDADES valor)
 {
     CIDADES sobe;
@@ -219,8 +255,10 @@ int insere_23_recursivo_cidade(Arv23_CIDADES **raiz, CIDADES valor, CIDADES *sob
     return sucesso;
 }
 
-////================= FUNÇÃO DE LIBERAÇÃO DA ÁRVORE ==================
-// Libera árvore (juntamente com a árvore de CEPs)
+//==============================================================================
+// FUNÇÕES DE GERENCIAMENTO DE MEMÓRIA
+//==============================================================================
+
 void libera_arvore_cidade(Arv23_CIDADES **raiz)
 {
     if (raiz != NULL && *raiz != NULL)
@@ -229,7 +267,7 @@ void libera_arvore_cidade(Arv23_CIDADES **raiz)
         libera_arvore_cidade(&(*raiz)->cen);
         libera_arvore_cidade(&(*raiz)->dir);
 
-        libera_arvore_CEP(&(*raiz)->info1.arv_cep);
+        libera_arvore_CEP(&(*raiz)->info1.arv_cep);// Libera árvore (juntamente com a árvore de CEPs)
         
         if ((*raiz)->nInfo == 2) libera_arvore_CEP(&(*raiz)->info2.arv_cep);
         free(*raiz);
@@ -239,55 +277,25 @@ void libera_arvore_cidade(Arv23_CIDADES **raiz)
 
 
 
-// ======================= FUNÇÕES DE BUSCA =======================
-Arv23_CIDADES *buscar_menor_elemento_cidade(Arv23_CIDADES *no)
-{
-    Arv23_CIDADES *resultado = NULL;
-    if (no != NULL)
-    {
-        Arv23_CIDADES *atual = no;
-        while (atual != NULL && atual->esq != NULL)
-        {
-            atual = atual->esq;
-        }
-        resultado = atual;
-    }
-    return resultado;
-}
+// Arv23_CIDADES *buscar_menor_elemento_cidade(Arv23_CIDADES *no)
+// {
+//     Arv23_CIDADES *resultado = NULL;
+//     if (no != NULL)
+//     {
+//         Arv23_CIDADES *atual = no;
+//         while (atual != NULL && atual->esq != NULL)
+//         {
+//             atual = atual->esq;
+//         }
+//         resultado = atual;
+//     }
+//     return resultado;
+// }
 
-CIDADES *buscar_info_cidade(Arv23_CIDADES*raiz, char *info)
-{
-    CIDADES *retorno = NULL; 
 
-    if (raiz != NULL)
-    {
-        if (strcasecmp(info, raiz->info1.nome_cidade) == 0)
-        {
-            retorno = &(raiz->info1);
-        }
-        else if (raiz->nInfo == 2 && strcasecmp(info, raiz->info2.nome_cidade) == 0)
-        {
-            retorno = &(raiz->info2);
-        }
-        else if (strcasecmp(info, raiz->info1.nome_cidade) < 0)
-        {
-            retorno = buscar_info_cidade(raiz->esq, info);
-        }
-        else if (raiz->nInfo == 1 || strcasecmp(info, raiz->info2.nome_cidade) < 0)
-        {
-            retorno = buscar_info_cidade(raiz->cen, info);
-        }
-        else
-        {
-            retorno = buscar_info_cidade(raiz->dir, info);
-        }
-    }
-
-    return retorno;
-}
-
-//================= FUNÇÕES DE PRINTAR ==================
-
+//==============================================================================
+// FUNÇÕES DE EXIBIÇÃO E PERCURSO DA ÁRVORE 2-3
+//==============================================================================
 void printar_informacoes_cidade(CIDADES *cidade)
 {
     if (cidade != NULL)

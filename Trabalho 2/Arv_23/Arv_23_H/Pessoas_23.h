@@ -38,12 +38,12 @@ StatusRemocao remover_23_PESSOAS_recursivo(Arv23_PESSOAS **ponteiro_no_atual, PE
 StatusRemocao remover_23_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor);
 
 //==============================================================================
+// FUNÇÕES DE GERENCIAMENTO DE MEMÓRIA
+//==============================================================================
+void libera_arvore_PESSOAS(Arv23_PESSOAS **raiz);
+
+//==============================================================================
 // FUNÇÕES DE EXIBIÇÃO E PERCURSO DA ÁRVORE 2-3
 //==============================================================================
 void imprime_23_em_ordem_PESSOAS(Arv23_PESSOAS *raiz);
 void imprime_arvore_visual_PESSOAS(Arv23_PESSOAS *raiz, char *prefixo, int eh_ultimo, int eh_raiz);
-
-//==============================================================================
-// FUNÇÕES DE GERENCIAMENTO DE MEMÓRIA
-//==============================================================================
-void libera_arvore_PESSOAS(Arv23_PESSOAS **raiz);
