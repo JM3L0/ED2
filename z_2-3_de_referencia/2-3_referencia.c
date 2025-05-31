@@ -22,7 +22,7 @@ Arv23 *cria_no(int info, Arv23 *F_esq, Arv23 *F_cen);
 int eh_folha(Arv23 *no);
 void adiciona_infos(Arv23 **no, int info, Arv23 *Sub_Arv_Info);
 Arv23 *quebra_no(Arv23 **no, int info, int *sobe, Arv23 *F_dir);
-int insere_23_recursivo(Arv23 **raiz, int valor, Arv23 *pai, int *sobe, Arv23 **maiorNo);
+int insere_23_recursivo(Arv23 **raiz, int valor, int *sobe, Arv23 **maiorNo);
 int insere_23(Arv23 **raiz, int valor);
 void imprime_23_em_ordem(Arv23 *raiz);
 void imprime_arvore_visual(Arv23 *raiz, char *prefixo, int eh_ultimo, int eh_raiz);
@@ -683,9 +683,9 @@ Arv23 *quebra_no(Arv23 **no, int info, int *sobe, Arv23 *F_dir)
     return maior;
 }
 
-int insere_23_recursivo(Arv23 **raiz, int valor, Arv23 *pai, int *sobe, Arv23 **maiorNo)
+int insere_23_recursivo(Arv23 **raiz, int valor, int *sobe, Arv23 **maiorNo)
 {
-    (void)pai; // Silencia warning
+
     int sucesso = 0;
     Arv23 *no_atual = *raiz;
 
@@ -735,7 +735,7 @@ int insere_23_recursivo(Arv23 **raiz, int valor, Arv23 *pai, int *sobe, Arv23 **
             {
                 proximo_filho = &(no_atual->dir);
             }
-            int sucesso_rec = insere_23_recursivo(proximo_filho, valor, no_atual, sobe, maiorNo);
+            int sucesso_rec = insere_23_recursivo(proximo_filho, valor, sobe, maiorNo);
 
             if (*maiorNo != NULL)
             {
@@ -772,7 +772,7 @@ int insere_23(Arv23 **raiz, int valor)
 
     if (raiz != NULL)
     {
-        sucesso = insere_23_recursivo(raiz, valor, NULL, &sobe, &maiorNo);
+        sucesso = insere_23_recursivo(raiz, valor, &sobe, &maiorNo);
 
         if (maiorNo != NULL)
         {
