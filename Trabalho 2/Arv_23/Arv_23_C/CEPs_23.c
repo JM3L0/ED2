@@ -6,7 +6,10 @@
 #include "../Arv_23_H/CEPs_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
-// Cria um novo nó
+//==============================================================================
+// FUNÇÕES BÁSICAS DA ÁRVORE 2-3
+//==============================================================================
+// Cria um nó da árvore 2-3 para CEP
 Arv23_CEP *cria_no_CEP(CEP info, Arv23_CEP *F_esq, Arv23_CEP *F_cen)
 {
     Arv23_CEP *no = (Arv23_CEP *)malloc(sizeof(Arv23_CEP));
@@ -37,7 +40,9 @@ Arv23_CEP *buscar_menor_elemento_CEP(Arv23_CEP *no)
     return atual;
 }
 
-// Adiciona uma nova informação ao nó
+//==============================================================================
+// FUNÇÕES DE INSERÇÃO NA ÁRVORE 2-3
+//==============================================================================
 void adiciona_infos_CEP(Arv23_CEP **no, CEP info, Arv23_CEP *Sub_Arv_Info)
 {
     Arv23_CEP *no_atual = *no;
@@ -88,6 +93,35 @@ Arv23_CEP *quebra_no_CEP(Arv23_CEP **no, CEP info, CEP *sobe, Arv23_CEP *F_dir)
         no_atual->dir = NULL;
     }
     return maior;
+}
+
+// Inserção principal
+int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
+{
+    CEP sobe = {{0}};
+    Arv23_CEP *maiorNo = NULL;
+    int sucesso = 0;
+
+    if (raiz != NULL)
+    {
+        sucesso = insere_23_recursivo_CEP(raiz, valor, &sobe, &maiorNo);
+
+        if (maiorNo != NULL)
+        {
+            Arv23_CEP *nova_raiz = cria_no_CEP(sobe, *raiz, maiorNo);
+            if (nova_raiz != NULL)
+            {
+                *raiz = nova_raiz;
+            }
+            else
+            {
+                sucesso = 0;
+                if (maiorNo) 
+                    free(maiorNo);
+            }
+        }
+    }
+    return sucesso;
 }
 
 // Inserção recursiva
@@ -167,34 +201,139 @@ int insere_23_recursivo_CEP(Arv23_CEP **raiz, CEP valor, CEP *sobe, Arv23_CEP **
     return sucesso;
 }
 
-// Inserção principal
-int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
+//==============================================================================
+// FUNÇÕES DE REMOÇÃO NA ÁRVORE 2-3
+//==============================================================================
+StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP valor)
 {
-    CEP sobe = {{0}};
-    Arv23_CEP *maiorNo = NULL;
-    int sucesso = 0;
+    StatusRemocao status_final = OK;
+    Arv23_CEP *no_atual = *ponteiro_no_atual;
 
-    if (raiz != NULL)
+    if (no_atual == NULL)
     {
-        sucesso = insere_23_recursivo_CEP(raiz, valor, &sobe, &maiorNo);
+        status_final = INFO_NAO_ENCONTRADA;
+    }
+    else
+    {
+        Arv23_CEP **proximo_ponteiro_recursao = NULL;
+        int valor_encontrado_neste_no = 0;
+        int indice_valor_removido = -1;
 
-        if (maiorNo != NULL)
+        if (strcmp(valor.cep, no_atual->info1.cep) == 0)
         {
-            Arv23_CEP *nova_raiz = cria_no_CEP(sobe, *raiz, maiorNo);
-            if (nova_raiz != NULL)
+            valor_encontrado_neste_no = 1;
+            indice_valor_removido = 0;
+        }
+        else if (no_atual->nInfo == 2 && strcmp(valor.cep, no_atual->info2.cep) == 0)
+        {
+            valor_encontrado_neste_no = 1;
+            indice_valor_removido = 1;
+        }
+        else if (strcmp(valor.cep, no_atual->info1.cep) < 0)
+            proximo_ponteiro_recursao = &(no_atual->esq);
+        else if (no_atual->nInfo == 1 || strcmp(valor.cep, no_atual->info2.cep) < 0)
+            proximo_ponteiro_recursao = &(no_atual->cen);
+        else
+            proximo_ponteiro_recursao = &(no_atual->dir);
+
+        if (valor_encontrado_neste_no)
+        {
+            if (eh_folha_CEP(no_atual))
             {
-                *raiz = nova_raiz;
+                if (no_atual->nInfo == 2)
+                {
+                    if (indice_valor_removido == 0)
+                        strcpy(no_atual->info1.cep, no_atual->info2.cep);
+                    no_atual->info2.cep[0] = '\0';
+                    no_atual->nInfo = 1;
+                    status_final = OK;
+                }
+                else
+                {
+                    no_atual->nInfo = 0;
+                    no_atual->info1.cep[0] = '\0';
+                    status_final = UNDERFLOW;
+                }
             }
             else
             {
-                sucesso = 0;
-                if (maiorNo) 
-                    free(maiorNo);
+                Arv23_CEP *sucessor_node = NULL;
+                CEP valor_sucessor;
+                Arv23_CEP **ponteiro_subarvore_sucessor;
+
+                if (indice_valor_removido == 0)
+                {
+                    sucessor_node = buscar_menor_elemento_CEP(no_atual->cen);
+                    ponteiro_subarvore_sucessor = &(no_atual->cen);
+                }
+                else
+                {
+                    sucessor_node = buscar_menor_elemento_CEP(no_atual->dir);
+                    ponteiro_subarvore_sucessor = &(no_atual->dir);
+                }
+
+                if (sucessor_node == NULL)
+                {
+                    status_final = SUCESSOR_NAO_ENCONTRADO;
+                }
+                else
+                {
+                    strcpy(valor_sucessor.cep, sucessor_node->info1.cep);
+                    if (indice_valor_removido == 0)
+                        strcpy(no_atual->info1.cep, valor_sucessor.cep);
+                    else
+                        strcpy(no_atual->info2.cep, valor_sucessor.cep);
+
+                    StatusRemocao status_remocao_sucessor = remover_23_CEP_recursivo_CEP(ponteiro_subarvore_sucessor, valor_sucessor);
+                    if (status_remocao_sucessor == UNDERFLOW)
+                        status_final = tratar_underflow_CEP(ponteiro_subarvore_sucessor, no_atual);
+                    else
+                        status_final = status_remocao_sucessor;
+                }
             }
         }
+        else
+        {
+            StatusRemocao status_recursao = remover_23_CEP_recursivo_CEP(proximo_ponteiro_recursao, valor);
+            if (status_recursao == UNDERFLOW)
+                status_final = tratar_underflow_CEP(proximo_ponteiro_recursao, no_atual);
+            else
+                status_final = status_recursao;
+        }
     }
-    return sucesso;
+    return status_final;
 }
+
+// Remoção principal
+StatusRemocao remover_23_CEP(Arv23_CEP **raiz, CEP valor)
+{
+    int OPERACAO = 0;
+    if (raiz == NULL || *raiz == NULL)
+    {
+        // printf("Arvore vazia. Nao e possivel remover %s.\n", valor.cep);
+        OPERACAO = ARVORE_VAZIA;
+    }
+    else
+    {
+        StatusRemocao status_geral = remover_23_CEP_recursivo_CEP(raiz, valor);
+
+        if (*raiz != NULL && (*raiz)->nInfo == 0)
+        {
+            Arv23_CEP *raiz_antiga = *raiz;
+            Arv23_CEP *nova_raiz = raiz_antiga->esq ? raiz_antiga->esq : raiz_antiga->cen;
+            *raiz = nova_raiz;
+            free(raiz_antiga);
+            status_geral = OK;
+        }
+
+        OPERACAO = status_geral;
+    }
+    return OPERACAO;
+}
+
+//==============================================================================
+// FUNÇÕES DE REBALANCEAMENTO DA ÁRVORE 2-3
+//==============================================================================
 
 // Redistribuição com irmão esquerdo
 StatusRemocao redistribuir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_esq, int pos_filho)
@@ -426,7 +565,7 @@ StatusRemocao tratar_underflow_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP 
         else if (irmao_dir != NULL && irmao_dir->nInfo == 1)
             status_final = fundir_com_irmao_direito_CEP(ponteiro_filho_no_pai, pai, irmao_dir, pos_filho);
         else if (irmao_esq != NULL && irmao_esq->nInfo == 1)
-            status_final = fundir_com_irmao_esquerdo_CEP(ponteiro_filho_no_pai, pai, irmao_esq, pos_filho);
+        status_final = fundir_com_irmao_esquerdo_CEP(ponteiro_filho_no_pai, pai, irmao_esq, pos_filho);
         else
         {
             fprintf(stderr, "Erro critico: Nao foi possivel tratar underflow.\n");
@@ -436,133 +575,26 @@ StatusRemocao tratar_underflow_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP 
     return status_final;
 }
 
-// Remoção recursiva
-StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP valor)
+//==============================================================================
+// FUNÇÕES DE GERENCIAMENTO DE MEMÓRIA
+//==============================================================================
+
+// Liberação de memória
+void libera_arvore_CEP(Arv23_CEP **raiz)
 {
-    StatusRemocao status_final = OK;
-    Arv23_CEP *no_atual = *ponteiro_no_atual;
-
-    if (no_atual == NULL)
+    if (raiz != NULL && *raiz != NULL)
     {
-        status_final = INFO_NAO_ENCONTRADA;
+        libera_arvore_CEP(&(*raiz)->esq);
+        libera_arvore_CEP(&(*raiz)->cen);
+        libera_arvore_CEP(&(*raiz)->dir);
+        free(*raiz);
+        *raiz = NULL;
     }
-    else
-    {
-        Arv23_CEP **proximo_ponteiro_recursao = NULL;
-        int valor_encontrado_neste_no = 0;
-        int indice_valor_removido = -1;
-
-        if (strcmp(valor.cep, no_atual->info1.cep) == 0)
-        {
-            valor_encontrado_neste_no = 1;
-            indice_valor_removido = 0;
-        }
-        else if (no_atual->nInfo == 2 && strcmp(valor.cep, no_atual->info2.cep) == 0)
-        {
-            valor_encontrado_neste_no = 1;
-            indice_valor_removido = 1;
-        }
-        else if (strcmp(valor.cep, no_atual->info1.cep) < 0)
-            proximo_ponteiro_recursao = &(no_atual->esq);
-        else if (no_atual->nInfo == 1 || strcmp(valor.cep, no_atual->info2.cep) < 0)
-            proximo_ponteiro_recursao = &(no_atual->cen);
-        else
-            proximo_ponteiro_recursao = &(no_atual->dir);
-
-        if (valor_encontrado_neste_no)
-        {
-            if (eh_folha_CEP(no_atual))
-            {
-                if (no_atual->nInfo == 2)
-                {
-                    if (indice_valor_removido == 0)
-                        strcpy(no_atual->info1.cep, no_atual->info2.cep);
-                    no_atual->info2.cep[0] = '\0';
-                    no_atual->nInfo = 1;
-                    status_final = OK;
-                }
-                else
-                {
-                    no_atual->nInfo = 0;
-                    no_atual->info1.cep[0] = '\0';
-                    status_final = UNDERFLOW;
-                }
-            }
-            else
-            {
-                Arv23_CEP *sucessor_node = NULL;
-                CEP valor_sucessor;
-                Arv23_CEP **ponteiro_subarvore_sucessor;
-
-                if (indice_valor_removido == 0)
-                {
-                    sucessor_node = buscar_menor_elemento_CEP(no_atual->cen);
-                    ponteiro_subarvore_sucessor = &(no_atual->cen);
-                }
-                else
-                {
-                    sucessor_node = buscar_menor_elemento_CEP(no_atual->dir);
-                    ponteiro_subarvore_sucessor = &(no_atual->dir);
-                }
-
-                if (sucessor_node == NULL)
-                {
-                    status_final = SUCESSOR_NAO_ENCONTRADO;
-                }
-                else
-                {
-                    strcpy(valor_sucessor.cep, sucessor_node->info1.cep);
-                    if (indice_valor_removido == 0)
-                        strcpy(no_atual->info1.cep, valor_sucessor.cep);
-                    else
-                        strcpy(no_atual->info2.cep, valor_sucessor.cep);
-
-                    StatusRemocao status_remocao_sucessor = remover_23_CEP_recursivo_CEP(ponteiro_subarvore_sucessor, valor_sucessor);
-                    if (status_remocao_sucessor == UNDERFLOW)
-                        status_final = tratar_underflow_CEP(ponteiro_subarvore_sucessor, no_atual);
-                    else
-                        status_final = status_remocao_sucessor;
-                }
-            }
-        }
-        else
-        {
-            StatusRemocao status_recursao = remover_23_CEP_recursivo_CEP(proximo_ponteiro_recursao, valor);
-            if (status_recursao == UNDERFLOW)
-                status_final = tratar_underflow_CEP(proximo_ponteiro_recursao, no_atual);
-            else
-                status_final = status_recursao;
-        }
-    }
-    return status_final;
 }
 
-// Remoção principal
-StatusRemocao remover_23_CEP(Arv23_CEP **raiz, CEP valor)
-{
-    int OPERACAO = 0;
-    if (raiz == NULL || *raiz == NULL)
-    {
-        // printf("Arvore vazia. Nao e possivel remover %s.\n", valor.cep);
-        OPERACAO = ARVORE_VAZIA;
-    }
-    else
-    {
-        StatusRemocao status_geral = remover_23_CEP_recursivo_CEP(raiz, valor);
-
-        if (*raiz != NULL && (*raiz)->nInfo == 0)
-        {
-            Arv23_CEP *raiz_antiga = *raiz;
-            Arv23_CEP *nova_raiz = raiz_antiga->esq ? raiz_antiga->esq : raiz_antiga->cen;
-            *raiz = nova_raiz;
-            free(raiz_antiga);
-            status_geral = OK;
-        }
-
-        OPERACAO = status_geral;
-    }
-    return OPERACAO;
-}
+//==============================================================================
+// FUNÇÕES DE EXIBIÇÃO E PERCURSO DA ÁRVORE 2-3
+//==============================================================================
 
 // Impressão em ordem
 void imprime_23_em_ordem_CEP(Arv23_CEP *raiz)
@@ -616,19 +648,13 @@ void imprime_arvore_visual_CEP(Arv23_CEP *raiz, char *prefixo, int eh_ultimo, in
     }
 }
 
-// Liberação de memória
-void libera_arvore_CEP(Arv23_CEP **raiz)
-{
-    if (raiz != NULL && *raiz != NULL)
-    {
-        libera_arvore_CEP(&(*raiz)->esq);
-        libera_arvore_CEP(&(*raiz)->cen);
-        libera_arvore_CEP(&(*raiz)->dir);
-        free(*raiz);
-        *raiz = NULL;
-    }
-}
+//==============================================================================
+// ESPECIFICAS DO TRABALHO
+//==============================================================================
 
+//====== para percorrer estados e cidades procurando CEPs ======
+
+// Consulta CEP na árvore 2-3
 int consulta_CEP(Arv23_CEP *raiz, char *str_cep){
 
     int resultado = 0;
