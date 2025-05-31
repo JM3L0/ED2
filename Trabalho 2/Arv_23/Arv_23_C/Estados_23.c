@@ -147,12 +147,13 @@ int mostrar_estado(ESTADOS *estado)
 
 int mostrar_todos_estados(ESTADOS *cabeca)
 {
-    int impresso = 0;
+    int impresso = 0, i = 0;
     ESTADOS *atual;
     atual = cabeca;
 
     while (atual != NULL)
     {
+        printf("%d. ", ++i);
         if (mostrar_estado(atual))
             impresso = 1;
         atual = atual->prox;

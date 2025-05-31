@@ -5,7 +5,7 @@
 //==============================================================================
 // FUNÇÕES DE MANIPULAÇÃO DE DADOS
 //==============================================================================
-PESSOAS cadastra_pessoa(char *cep_natal, char *cep_atual);
+PESSOAS cadastra_pessoa(char *cep_natal, char *cep_atual, int *sucesso);
 
 //==============================================================================
 // FUNÇÕES BÁSICAS DA ÁRVORE 2-3

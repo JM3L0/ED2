@@ -10,7 +10,7 @@
 // FUNÇÕES DE MANIPULAÇÃO DE DADOS
 //==============================================================================
 
-PESSOAS cadastra_pessoa(char *cep_natal, char *cep_atual)
+PESSOAS cadastra_pessoa(char *cep_natal, char *cep_atual, int *sucesso)
 {
     PESSOAS pessoa = {0}; // Inicializa com zeros
     DATA data_nasc = {0};
@@ -676,12 +676,14 @@ void imprimir_dados_PESSOAS(PESSOAS *pessoa)
 {
     if (pessoa != NULL)
     {
+        printf("\n==========================");
         printf("CPF: %s\n", pessoa->CPF);
         printf("Nome: %s\n", pessoa->nome_pessoa);
         printf("CEP Cidade Natal: %s\n", pessoa->cep_city_natal);
         printf("CEP Cidade Atual: %s\n", pessoa->cep_city_atual);
         printf("Data de Nascimento: %02d/%02d/%04d\n",
                pessoa->data_nasc.dia, pessoa->data_nasc.mes, pessoa->data_nasc.ano);
+        printf("==========================\n");
     }
 }
 
