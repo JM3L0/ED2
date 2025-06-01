@@ -12,8 +12,10 @@
 
 // gcc -o a Arv_23_C/Interface_23.c Arv_23_C/Estados_23.c Arv_23_C/Cidades_23.c Arv_23_C/CEPs_23.c Arv_23_C/Pessoas_23.c Arv_23_C/utilitarios_23.c -IArv_23_H
 
+// ================================= somente para povoar o sistema
 #include <time.h>
 void povoar_sistema(ESTADOS **cabeca_estados, Arv23_PESSOAS **raiz_pessoas) ;
+// =================================
 
 void menu_print()
 {
@@ -47,7 +49,7 @@ void menu_geral()
     printf("Deseja povoar o sistema? [1] - SIM [0] - NAO: ");
     opcao1 = digitar_int();
     if (opcao1) povoar_sistema(&cabeca_estados, &raiz_pessoas); // Povoando o sistema com estados e pessoas iniciais
-    
+
     do
     {
         menu_print();
@@ -399,6 +401,59 @@ void menu_geral()
             }
             break;
         }
+        case 8:
+        {
+            char nome_estado[100];
+            printf("Digite o nome do estado: ");
+            ler_string_simples(nome_estado, sizeof(nome_estado));
+            ESTADOS *estado = existe_estado(cabeca_estados, nome_estado);
+            if (estado)
+            {
+                CIDADES *capital = buscar_info_cidade(estado->arv_cidades, estado->nome_capital);
+                if (capital)
+                {
+                    printf("Populacao da capital do Estado [%s]: Capital [%s]: Populacao %d\n", estado->nome_estado, capital->nome_cidade, capital->populacao_city);
+                }
+                else
+                {
+                    printf("Capital %s nao encontrada no estado %s!\n", estado->nome_capital, nome_estado);
+                }
+            }
+            else
+            {
+                printf("Estado %s nao encontrado!\n", nome_estado);
+            }
+            break;
+        }
+        case 9:
+        {
+            char nome_estado[100];
+            printf("Digite o nome do estado: ");
+            ler_string_simples(nome_estado, sizeof(nome_estado));
+            ESTADOS *estado = existe_estado(cabeca_estados, nome_estado);
+            if (estado)
+            {
+                CIDADES *cidade_mais_populosa = verifica_cidade_mais_populosa_nao_capital_23(estado->arv_cidades, estado->nome_capital);
+                if (cidade_mais_populosa)
+                {
+                    printf("Cidade mais populosa (exceto a capital) no Estado [%s]: Cidade [%s] com populacao de %d\n",
+                           estado->nome_estado, cidade_mais_populosa->nome_cidade, cidade_mais_populosa->populacao_city);
+                }
+                else
+                {
+                    printf("Nenhuma cidade encontrada no estado %s que nao seja a capital!\n", nome_estado);
+                }
+            }
+            else
+            {
+                printf("Estado %s nao encontrado!\n", nome_estado);
+            }
+            break;
+        }
+        case 10:
+        {
+            
+        }
         case 14:
         {
             if (mostrar_todos_estados(cabeca_estados))
@@ -491,7 +546,7 @@ void povoar_sistema(ESTADOS **cabeca_estados, Arv23_PESSOAS **raiz_pessoas) {
     int num_ceps_por_cidade_a_gerar;
     int num_pessoas_a_gerar;
 
-    printf("\n--- Configurando Povoamento Automático do Sistema ---\n");
+    printf("\n--- Configurando Povoamento Automatico do Sistema ---\n");
     printf("Digite o numero de Estados a gerar (ex: Estado001): ");
     num_estados_a_gerar = digitar_int();
 

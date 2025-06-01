@@ -735,6 +735,10 @@ void imprime_arvore_visual_PESSOAS(Arv23_PESSOAS *raiz, char *prefixo, int eh_ul
     }
 }
 
+//==============================================================================
+// FUNÇÕES ESPECIFÍCAS DO TRABALHO
+//==============================================================================
+
 int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, char *CEP)
 {
     int retorno = 0;
@@ -770,3 +774,5 @@ int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, c
 
     return retorno;
 }
+
+/////////////
