@@ -10,8 +10,6 @@
 #include "../Arv_23_H/STRUCTS_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
-// gcc -o a Arv_23_C/Interface_23.c Arv_23_C/Estados_23.c Arv_23_C/Cidades_23.c Arv_23_C/CEPs_23.c Arv_23_C/Pessoas_23.c Arv_23_C/utilitarios_23.c -IArv_23_H
-
 // ================================= somente para povoar o sistema
 #include <time.h>
 void povoar_sistema(ESTADOS **cabeca_estados, Arv23_PESSOAS **raiz_pessoas) ;
