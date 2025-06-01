@@ -40,3 +40,5 @@ void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ult
 // FUNÇÕES ESPECÍFICAS DO TRABALHO
 //==============================================================================
 CIDADES *verifica_cidade_mais_populosa_nao_capital_23(Arv23_CIDADES *raiz, char *nome_capital);
+int cep_pertence_a_cidade(Arv23_CEP *raiz, char *cep);
+CIDADES *cidade_dado_cep(Arv23_CIDADES *raiz, char *cep);

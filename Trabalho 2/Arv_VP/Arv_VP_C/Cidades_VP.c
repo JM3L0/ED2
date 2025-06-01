@@ -327,17 +327,13 @@ int quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(CIDADES *cidade, PESS
         if (raiz_pessoa != NULL)
         {
             // Verifica se a pessoa nasceu na cidade especificada
-            CIDADES *cidade_natal;
-            cidade_natal = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_natal);
-
-            if (cidade_natal == cidade) // A pessoa nasceu nesta cidade
+            if (cep_pertence_a_cidade(cidade->cep, raiz_pessoa->cep_city_natal))
             {
-                // Verifica se a pessoa NÃO mora mais na cidade onde nasceu
-                CIDADES *cidade_atual;
-                cidade_atual = cidade_natal_dado_cep(cidade, raiz_pessoa->cep_city_atual);
-                
-                if (cidade_atual != cidade) // A pessoa não mora mais na cidade natal
-                    resultado += 1;
+                // Verifica se a pessoa não mora mais na cidade
+                if (!cep_pertence_a_cidade(cidade->cep, raiz_pessoa->cep_city_atual))
+                {
+                    resultado += 1; // Conta a pessoa que nasceu na cidade mas não mora lá
+                }
             }
 
             // Verifica recursivamente para as demais pessoas na árvore

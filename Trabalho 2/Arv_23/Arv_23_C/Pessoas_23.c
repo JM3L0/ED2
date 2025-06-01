@@ -4,6 +4,7 @@
 
 #include "../Arv_23_H/STRUCTS_23.h"
 #include "../Arv_23_H/PESSOAS_23.h"
+#include "../Arv_23_H/Cidades_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
 //==============================================================================
@@ -44,6 +45,7 @@ PESSOAS cadastra_pessoa(char *cep_natal, char *cep_atual, int *sucesso)
                 pessoa.cep_city_atual[sizeof(pessoa.cep_city_atual) - 1] = '\0';
                 
                 pessoa.data_nasc = data_nasc;
+                *sucesso = 1; // Indica sucesso na captura
             }
         }
     }
@@ -91,6 +93,37 @@ Arv23_PESSOAS *buscar_menor_elemento_PESSOAS(Arv23_PESSOAS *no)
     while (atual != NULL && atual->esq != NULL)
     atual = atual->esq;
     return atual;
+}
+
+PESSOAS *buscar_info_pessoa(Arv23_PESSOAS *raiz, char *info)
+{
+    PESSOAS *retorno = NULL;
+
+    if (raiz != NULL)
+    {
+        if (strcasecmp(info, raiz->info1->CPF) == 0)
+        {
+            retorno = raiz->info1;
+        }
+        else if (raiz->nInfo == 2 && strcasecmp(info, raiz->info2->CPF) == 0)
+        {
+            retorno = raiz->info2;
+        }
+        else if (strcasecmp(info, raiz->info1->CPF) < 0)
+        {
+            retorno = buscar_info_pessoa(raiz->esq, info);
+        }
+        else if (raiz->nInfo == 1 || strcasecmp(info, raiz->info2->CPF) < 0)
+        {
+            retorno = buscar_info_pessoa(raiz->cen, info);
+        }
+        else
+        {
+            retorno = buscar_info_pessoa(raiz->dir, info);
+        }
+    }
+
+    return retorno;
 }
 
 //==============================================================================
@@ -745,8 +778,6 @@ int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, c
 
     if (raiz_pessoas != NULL && CEP != NULL)
     {
-        short int valor_comparacao;
-
         if (strcasecmp(raiz_pessoas->info1->cep_city_natal, CEP) == 0)
             retorno = 1; // Pessoa encontrada
 
@@ -776,3 +807,92 @@ int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, c
 }
 
 /////////////
+int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, Arv23_PESSOAS *raiz_pessoa)
+{
+    int resultado = 0;
+    ESTADOS *atual;
+    atual = cabeca_estado;
+
+    while (atual != NULL)
+    {
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa, atual->arv_cidades);
+        atual = atual->prox;
+    }
+
+    return resultado;
+}
+
+int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(Arv23_PESSOAS *raiz_pessoa, Arv23_CIDADES *raiz_cidade)
+{
+    int retorno, soma = 0;
+
+    if (raiz_pessoa != NULL)
+    {
+        CIDADES *cidade_natal;
+        cidade_natal = cidade_dado_cep(raiz_cidade, raiz_pessoa->info1->cep_city_natal);
+
+        if (cidade_natal)
+        {
+            retorno = cep_pertence_a_cidade(cidade_natal->arv_cep, raiz_pessoa->info1->cep_city_atual);
+            if (retorno == 0)
+            {
+                imprimir_dados_PESSOAS(raiz_pessoa->info1);
+                soma += 1;
+            }
+            if (raiz_pessoa->nInfo == 2)
+            {
+                retorno = cep_pertence_a_cidade(cidade_natal->arv_cep, raiz_pessoa->info2->cep_city_atual);
+                if (retorno == 0)
+                {
+                    imprimir_dados_PESSOAS(raiz_pessoa->info2);
+                    soma += 1;
+                }
+            }
+        }
+
+        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->esq, raiz_cidade);
+        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->cen, raiz_cidade);
+        if (raiz_pessoa->nInfo == 2)
+            soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->dir, raiz_cidade);
+    }
+
+    return soma;
+}
+
+//////////////////////////////////////
+int quantas_pessoas_nascidas_na_cidade_nao_moram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa)
+{
+    int resultado = 0;
+
+    if (raiz_pessoa != NULL)
+    {
+        // Verificação do primeiro registro (sempre presente)
+        if (cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info1->cep_city_natal)) {
+            // A pessoa nasceu na cidade
+            if (!cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info1->cep_city_atual)) {
+                // A pessoa não mora mais na cidade natal
+                resultado += 1;
+            }
+        }
+
+        // Verificação do segundo registro (se existir)
+        if (raiz_pessoa->nInfo == 2) {
+            if (cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info2->cep_city_natal)) {
+                // A pessoa nasceu na cidade
+                if (!cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info2->cep_city_atual)) {
+                    // A pessoa não mora mais na cidade natal
+                    resultado += 1;
+                }
+            }
+        }
+
+        // Percorre a árvore recursivamente
+        resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoa->esq);
+        resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoa->cen);
+        if (raiz_pessoa->nInfo == 2)
+            resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoa->dir);
+    }
+
+    return resultado;
+}
+

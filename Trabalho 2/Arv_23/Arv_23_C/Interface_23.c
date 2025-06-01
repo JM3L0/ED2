@@ -44,7 +44,7 @@ void menu_geral()
     
     ESTADOS *cabeca_estados = NULL;
     Arv23_PESSOAS *raiz_pessoas = NULL;
-    int opcao1, opcao2, sucesso, cep_usado;
+    int opcao1, opcao2, sucesso, cep_usado, retorno;
 
     printf("Deseja povoar o sistema? [1] - SIM [0] - NAO: ");
     opcao1 = digitar_int();
@@ -452,7 +452,76 @@ void menu_geral()
         }
         case 10:
         {
-            
+            printf("=== Imprimir quantas pessoas nao moram na cidade natal ===\n");
+            retorno = quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(cabeca_estados, raiz_pessoas);
+            if (retorno > 0)
+            {
+                printf("Total de pessoas que nao moram na cidade natal: %d\n", retorno);
+            }
+            break;
+        }
+        case 11:
+        {
+            char cpf_pessoa[12];
+            printf("Digite o CPF da pessoa: ");
+            capturar_cpf(cpf_pessoa);
+
+            PESSOAS *pessoa = buscar_info_pessoa(raiz_pessoas, cpf_pessoa);
+            if (pessoa){
+                CIDADES *cidade_natal = cidade_dado_cep(cabeca_estados->arv_cidades, pessoa->cep_city_natal);
+                if (cidade_natal)
+                {
+                    printf("Cidade natal da pessoa %s: %s\n", pessoa->nome_pessoa, cidade_natal->nome_cidade);
+                }
+                else
+                {
+                    printf("Cidade natal nao encontrada para o CEP %s!\n", pessoa->cep_city_natal);
+                }
+            }
+            break;
+        }
+        case 12:
+        {
+            char nome_estado[100];
+            char nome_cidade[100];
+            printf("Digite o nome do estado: ");
+            ler_string_simples(nome_estado, sizeof(nome_estado));
+            ESTADOS *estado = existe_estado(cabeca_estados, nome_estado);
+            if (estado)
+            {
+                printf("Digite o nome da cidade: ");
+                ler_string_simples(nome_cidade, sizeof(nome_cidade));
+                CIDADES *cidade = buscar_info_cidade(estado->arv_cidades, nome_cidade);
+                if (cidade)
+                {
+                    retorno = quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoas);
+                    printf("Total de pessoas que nasceram na cidade %s e nao moram na cidade natal: %d\n", cidade->nome_cidade, retorno);
+                }
+                else
+                {
+                    printf("Cidade %s nao encontrada no estado %s!\n", nome_cidade, nome_estado);
+                }
+            }
+            else
+            {
+                printf("Estado %s nao encontrado!\n", nome_estado);
+            }
+            break;
+        }
+        case 13:
+        {
+            printf("=== Imprimir quantas pessoas nao moram em suas cidades nateis ===\n");
+            retorno = quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(cabeca_estados, raiz_pessoas);
+
+            if (retorno > 0)
+            {
+                printf("Total de pessoas que nao moram em suas cidades natais: %d\n", retorno);
+            }
+            else
+            {
+                printf("Nenhuma pessoa cadastrada ou todas moram na cidade natal!\n");
+            }
+            break;
         }
         case 14:
         {
@@ -524,9 +593,16 @@ void menu_geral()
             }
             break;
         }
-        case 0:
+        case 0:{
+
             printf("Saindo...\n");
+            // Libera a memória alocada para os estados e pessoas
+            if (cabeca_estados) liberar_todos_estados(&cabeca_estados);
+              
+            if (raiz_pessoas) libera_arvore_PESSOAS(&raiz_pessoas);
+            printf("Memoria liberada com sucesso!\n");
             break;
+        }
         default:
             printf("Opcao invalida! Tente novamente.\n");
         }

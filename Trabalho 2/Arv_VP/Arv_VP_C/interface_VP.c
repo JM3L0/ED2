@@ -516,46 +516,67 @@ void menu_geral()
             case 12:
             {
                 printf("\n=== Quantas pessoas nascidas em uma cidade nao moram na cidade natal ===\n");
+                ESTADOS *estado;
+                char nome_estado[100];
                 char nome_cidade[100];
-                printf("Digite o nome da cidade: ");
-                ler_string_simples(nome_cidade, sizeof(nome_cidade));
-        
-                CIDADES *cidade;
-                cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+                
+                printf("Digite o nome do estado: ");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+                estado = existe_estado(cabeca_estado, nome_estado);
+                if (estado){
 
-                if (cidade)
-                {
-                    retorno = quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa);
-                    if (retorno > 0)                    
-                        printf("\nTotal de pessoas que nasceram na cidade %s e nao moram na cidade natal: %d\n", cidade->nome_cidade, retorno);                    
-                    else                    
-                        printf("\nNenhuma pessoa cadastrada.\n");                    
-                }
-                else
-                    printf("\nERRO: Cidade nao encontrada.\n");                
+                    printf("Digite o nome da cidade: ");
+                    ler_string_simples(nome_cidade, sizeof(nome_cidade));
+            
+                    CIDADES *cidade;
+                    cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+    
+                    if (cidade)
+                    {
+                        retorno = quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa);
+                        if (retorno > 0)                    
+                            printf("\nTotal de pessoas que nasceram na cidade %s e nao moram na cidade natal: %d\n", cidade->nome_cidade, retorno);                    
+                        else                    
+                            printf("\nNenhuma pessoa cadastrada.\n");                    
+                    }
+                    else
+                        printf("\nERRO: Cidade nao encontrada.\n");                
+                }else
+                    printf("\nERRO: Estado nao encontrado.\n");
                 pausar();
                 break;
             }
             case 13:
             {
-                char nome_cidade[100];
                 printf("\n=== Quantas pessoas que moram em uma cidade nao nasceram na cidade ===\n");
-                printf("Digite o nome da cidade: ");
-                ler_string_simples(nome_cidade, sizeof(nome_cidade));
+                ESTADOS *estado = NULL;
+                char nome_cidade[100];
+                char nome_estado[100];
 
-                CIDADES *cidade;
-                cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+                printf("Digite o nome do estado: ");
+                ler_string_simples(nome_estado, sizeof(nome_estado));
+                estado = existe_estado(cabeca_estado, nome_estado);
 
-                if (cidade)
-                {
-                    retorno = quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa);
-                    if (retorno > 0)                    
-                        printf("\nTotal de pessoas que moram na cidade %s e nao nasceram na cidade: %d\n", cidade->nome_cidade, retorno);                    
-                    else                    
-                        printf("\nNenhuma pessoa cadastrada.\n");                    
-                }
-                else                
-                    printf("\nERRO: Cidade nao encontrada.\n");                
+                if (estado){
+
+                    printf("Digite o nome da cidade: ");
+                    ler_string_simples(nome_cidade, sizeof(nome_cidade));
+    
+                    CIDADES *cidade;
+                    cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+    
+                    if (cidade)
+                    {
+                        retorno = quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa);
+                        if (retorno > 0)                    
+                            printf("\nTotal de pessoas que moram na cidade %s e nao nasceram na cidade: %d\n", cidade->nome_cidade, retorno);                    
+                        else                    
+                            printf("\nNenhuma pessoa cadastrada.\n");                    
+                    }
+                    else                
+                        printf("\nERRO: Cidade nao encontrada.\n");                
+                }else                
+                    printf("\nERRO: Estado nao encontrado.\n");
                 pausar();
                 break;
             }

@@ -15,7 +15,7 @@ CIDADES cadastra_cidade(int *sucesso)
     CIDADES novaCidade;
     char nome_cidade[100];
 
-    *sucesso = 0; // Inicializa como falha
+    *sucesso = 0;                            // Inicializa como falha
     memset(&novaCidade, 0, sizeof(CIDADES)); // Inicializa a estrutura
 
     printf("Digite o nome da cidade: ");
@@ -24,11 +24,12 @@ CIDADES cadastra_cidade(int *sucesso)
     printf("Digite a populacao da cidade: ");
     int populacao_city = digitar_int();
 
-    if (nome_cidade[0] != '\0' && populacao_city >= 0) {
+    if (nome_cidade[0] != '\0' && populacao_city >= 0)
+    {
         strcpy(novaCidade.nome_cidade, nome_cidade);
         novaCidade.populacao_city = populacao_city;
         novaCidade.arv_cep = NULL; // CEPs serão cadastrados no menu
-        *sucesso = 1; // Marca como sucesso
+        *sucesso = 1;              // Marca como sucesso
     }
 
     return novaCidade;
@@ -62,9 +63,9 @@ int eh_folha_cidade(Arv23_CIDADES *no)
     return resultado;
 }
 
-CIDADES *buscar_info_cidade(Arv23_CIDADES*raiz, char *info)
+CIDADES *buscar_info_cidade(Arv23_CIDADES *raiz, char *info)
 {
-    CIDADES *retorno = NULL; 
+    CIDADES *retorno = NULL;
 
     if (raiz != NULL)
     {
@@ -167,7 +168,8 @@ int insere_23_cidade(Arv23_CIDADES **raiz, CIDADES valor)
             {
                 fprintf(stderr, "Erro ao criar nova raiz!\n");
                 sucesso = 0;
-                if (maiorNo) free(maiorNo);
+                if (maiorNo)
+                    free(maiorNo);
             }
         }
     }
@@ -265,17 +267,17 @@ void libera_arvore_cidade(Arv23_CIDADES **raiz)
     {
         libera_arvore_cidade(&(*raiz)->esq);
         libera_arvore_cidade(&(*raiz)->cen);
-        libera_arvore_cidade(&(*raiz)->dir);
-
-        libera_arvore_CEP(&(*raiz)->info1.arv_cep);// Libera árvore (juntamente com a árvore de CEPs)
         
-        if ((*raiz)->nInfo == 2) libera_arvore_CEP(&(*raiz)->info2.arv_cep);
+        libera_arvore_CEP(&(*raiz)->info1.arv_cep); // Libera árvore (juntamente com a árvore de CEPs)
+        
+        if ((*raiz)->nInfo == 2){
+            libera_arvore_CEP(&(*raiz)->info2.arv_cep);
+            libera_arvore_cidade(&(*raiz)->dir);
+        }
         free(*raiz);
         *raiz = NULL;
     }
 }
-
-
 
 // Arv23_CIDADES *buscar_menor_elemento_cidade(Arv23_CIDADES *no)
 // {
@@ -292,7 +294,6 @@ void libera_arvore_cidade(Arv23_CIDADES **raiz)
 //     return resultado;
 // }
 
-
 //==============================================================================
 // FUNÇÕES DE EXIBIÇÃO E PERCURSO DA ÁRVORE 2-3
 //==============================================================================
@@ -304,8 +305,8 @@ void printar_informacoes_cidade(CIDADES *cidade)
         printf("Cidade: %s\n", cidade->nome_cidade);
         printf("Populacao: %d\n", cidade->populacao_city);
         printf("CEP(s): ");
-        imprime_arvore_visual_CEP(cidade->arv_cep, "  ", 1, 1);// depois retirar isso daqui
-        
+        imprime_arvore_visual_CEP(cidade->arv_cep, "  ", 1, 1); // depois retirar isso daqui
+
         printf("\n==========================\n");
     }
 }
@@ -338,7 +339,7 @@ void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ult
         {
             printf(" \nRaiz--> ");
         }
-        
+
         if (raiz->nInfo == 1)
         {
             printf("[%s]\n", raiz->info1.nome_cidade);
@@ -347,18 +348,18 @@ void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ult
         {
             printf("[%s, %s]\n", raiz->info1.nome_cidade, raiz->info2.nome_cidade);
         }
-        
+
         char novo_prefixo[1024];
         sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
-        
+
         int num_filhos = 0;
         if (raiz->esq)
-        num_filhos++;
+            num_filhos++;
         if (raiz->cen)
-        num_filhos++;
+            num_filhos++;
         if (raiz->dir)
-        num_filhos++;
-        
+            num_filhos++;
+
         int filhos_impressos = 0;
         if (raiz->esq != NULL)
         {
@@ -424,50 +425,54 @@ void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ult
 //             cidade_mais_populosa = cidade_direita;
 //         }
 //     }
-    
+
 //     return cidade_mais_populosa;
 // }
 
 CIDADES *verifica_cidade_mais_populosa_nao_capital_23(Arv23_CIDADES *raiz, char *nome_capital)
 {
     CIDADES *cidade_mais_populosa = NULL;
-    
+
     if (raiz != NULL)
     {
         // Verifica as cidades no nó atual
-        if (strcasecmp(raiz->info1.nome_cidade, nome_capital) != 0) {
+        if (strcasecmp(raiz->info1.nome_cidade, nome_capital) != 0)
+        {
             cidade_mais_populosa = &raiz->info1;
         }
-        
-        if (raiz->nInfo == 2 && strcasecmp(raiz->info2.nome_cidade, nome_capital) != 0) {
-            if (cidade_mais_populosa == NULL || raiz->info2.populacao_city > cidade_mais_populosa->populacao_city) {
+
+        if (raiz->nInfo == 2 && strcasecmp(raiz->info2.nome_cidade, nome_capital) != 0)
+        {
+            if (cidade_mais_populosa == NULL || raiz->info2.populacao_city > cidade_mais_populosa->populacao_city)
+            {
                 cidade_mais_populosa = &raiz->info2;
             }
         }
-        
+
         // Processa recursivamente os filhos
         CIDADES *filhos[3] = {
             raiz->esq ? verifica_cidade_mais_populosa_nao_capital_23(raiz->esq, nome_capital) : NULL,
             raiz->cen ? verifica_cidade_mais_populosa_nao_capital_23(raiz->cen, nome_capital) : NULL,
-            raiz->dir ? verifica_cidade_mais_populosa_nao_capital_23(raiz->dir, nome_capital) : NULL
-        };
-        
+            raiz->dir ? verifica_cidade_mais_populosa_nao_capital_23(raiz->dir, nome_capital) : NULL};
+
         // Compara com os resultados dos filhos
-        for (int i = 0; i < 3; i++) {
-            if (filhos[i] && (cidade_mais_populosa == NULL || 
-                filhos[i]->populacao_city > cidade_mais_populosa->populacao_city)) {
+        for (int i = 0; i < 3; i++)
+        {
+            if (filhos[i] && (cidade_mais_populosa == NULL ||
+                              filhos[i]->populacao_city > cidade_mais_populosa->populacao_city))
+            {
                 cidade_mais_populosa = filhos[i];
             }
         }
     }
-    
+
     return cidade_mais_populosa;
 }
 
 int cep_pertence_a_cidade(Arv23_CEP *raiz, char *cep)
 {
     int resultado = 0;
-    
+
     if (raiz != NULL)
     {
         // Verifica se o CEP está no nó atual
@@ -481,19 +486,22 @@ int cep_pertence_a_cidade(Arv23_CEP *raiz, char *cep)
         }
         else
         {
-            
-            if (strcasecmp(cep, raiz->info1.cep) < 0){
+
+            if (strcasecmp(cep, raiz->info1.cep) < 0)
+            {
                 resultado = cep_pertence_a_cidade(raiz->esq, cep);
             }
-            else if (raiz->nInfo == 1 || strcasecmp(cep, raiz->info2.cep) < 0){
+            else if (raiz->nInfo == 1 || strcasecmp(cep, raiz->info2.cep) < 0)
+            {
                 resultado = cep_pertence_a_cidade(raiz->cen, cep);
             }
-            else {
+            else
+            {
                 resultado = cep_pertence_a_cidade(raiz->dir, cep);
             }
         }
     }
-    
+
     return resultado;
 }
 
@@ -521,84 +529,3 @@ CIDADES *cidade_dado_cep(Arv23_CIDADES *raiz, char *cep)
     return resultado;
 }
 
-// daqui para baixo vai para pessoas 23.h
-int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, Arv23_PESSOAS *raiz_pessoa)
-{
-    int resultado = 0;
-    ESTADOS *atual;
-    atual = cabeca_estado;
-
-    while (atual != NULL)
-    {
-        resultado += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa, atual->arv_cidades);
-        atual = atual->prox;
-    }
-
-    return resultado;
-}
-
-int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(Arv23_PESSOAS *raiz_pessoa, Arv23_CIDADES *raiz_cidade)
-{
-    int retorno, soma = 0;
-
-    if (raiz_pessoa != NULL)
-    {
-        CIDADES *cidade_natal;
-        cidade_natal = cidade_dado_cep(raiz_cidade, raiz_pessoa->info1->cep_city_natal);
-
-        if (cidade_natal)
-        {
-            retorno = cep_pertence_a_cidade(cidade_natal->arv_cep, raiz_pessoa->info1->cep_city_atual);
-            if (retorno == 0)
-            {
-                imprimir_pessoa(raiz_pessoa);
-                soma += 1;
-            }
-        }
-
-        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->esq, raiz_cidade);
-        soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->cen, raiz_cidade);
-        if (raiz_pessoa->nInfo == 2)
-            soma += quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(raiz_pessoa->dir, raiz_cidade);
-    }
-
-    return soma;
-}
-
-//////////////////////////////////////
-int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa)
-{
-    int resultado = 0;
-
-    if (cidade != NULL && raiz_pessoa != NULL)
-    {
-        // Percorre todas as pessoas na árvore
-        if (raiz_pessoa != NULL)
-        {
-            // Verifica se a pessoa nasceu na cidade especificada
-            CIDADES *cidade_natal;
-            cidade_natal = cidade_dado_cep(cidade, raiz_pessoa->info1->cep_city_natal);
-
-            if (cidade_natal == cidade) // A pessoa nasceu nesta cidade
-            {
-                // Verifica se a pessoa NÃO mora mais na cidade onde nasceu
-                CIDADES *cidade_atual;
-                cidade_atual = cidade_dado_cep(cidade, raiz_pessoa->info1->cep_city_atual);
-                
-                if (!cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info1->cep_city_natal)) // A pessoa não mora mais na cidade natal
-                    resultado += 1;
-                if (raiz_pessoa->nInfo == 2){
-                    if (!cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info2->cep_city_natal)) // A pessoa não mora mais na cidade natal
-                        resultado += 1;
-                }
-            }
-        }
-
-        resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->esq);
-        resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->cen);
-        if (raiz_pessoa->nInfo == 2)
-            resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->dir);
-    }
-    
-    return resultado;
-}
