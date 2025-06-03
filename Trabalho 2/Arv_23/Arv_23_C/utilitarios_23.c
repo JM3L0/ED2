@@ -320,6 +320,9 @@ void mensagens_do_remover(StatusRemocao status)
     case ARVORE_VAZIA:
         printf("A arvore esta vazia.\n");
         break;
+    case NAO_FOI_POSSIVEL_T_UNDERFLOW:
+        printf("Nao foi possivel tratar o underflow.\n");
+        break;
     default:
         printf("Erro desconhecido.\n");
         break;

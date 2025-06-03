@@ -28,7 +28,7 @@ Arv23_CEP *cria_no_CEP(CEP info, Arv23_CEP *F_esq, Arv23_CEP *F_cen)
 // Verifica se é folha
 int eh_folha_CEP(Arv23_CEP *no)
 {
-    return no != NULL && no->esq == NULL && no->cen == NULL && no->dir == NULL;
+    return no != NULL && no->esq == NULL;
 }
 
 // Busca o menor elemento
@@ -110,13 +110,11 @@ int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
         {
             Arv23_CEP *nova_raiz = cria_no_CEP(sobe, *raiz, maiorNo);
             if (nova_raiz != NULL)
-            {
                 *raiz = nova_raiz;
-            }
             else
             {
                 sucesso = 0;
-                if (maiorNo) 
+                if (maiorNo)
                     free(maiorNo);
             }
         }
@@ -137,10 +135,8 @@ int insere_23_recursivo_CEP(Arv23_CEP **raiz, CEP valor, CEP *sobe, Arv23_CEP **
         sobe->cep[0] = '\0';
         sucesso = (*raiz != NULL);
     }
-    else if (strcmp(valor.cep, no_atual->info1.cep) == 0 ||
-             (no_atual->nInfo == 2 && strcmp(valor.cep, no_atual->info2.cep) == 0))
+    else if (strcmp(valor.cep, no_atual->info1.cep) == 0 || (no_atual->nInfo == 2 && strcmp(valor.cep, no_atual->info2.cep) == 0))
     {
-        printf("CEP %s ja existe na arvore!\n", valor.cep);
         *maiorNo = NULL;
         sobe->cep[0] = '\0';
         sucesso = 0;
@@ -193,9 +189,7 @@ int insere_23_recursivo_CEP(Arv23_CEP **raiz, CEP valor, CEP *sobe, Arv23_CEP **
                 }
             }
             else
-            {
                 sucesso = sucesso_rec;
-            }
         }
     }
     return sucesso;
@@ -210,12 +204,10 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
     Arv23_CEP *no_atual = *ponteiro_no_atual;
 
     if (no_atual == NULL)
-    {
         status_final = INFO_NAO_ENCONTRADA;
-    }
     else
     {
-        Arv23_CEP **proximo_ponteiro_recursao = NULL;
+        Arv23_CEP **proximo_ponteiro_recursao = NULL;// ponteiro para o próximo nó a ser visitado
         int valor_encontrado_neste_no = 0;
         int indice_valor_removido = -1;
 
@@ -244,6 +236,7 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
                 {
                     if (indice_valor_removido == 0)
                         strcpy(no_atual->info1.cep, no_atual->info2.cep);
+
                     no_atual->info2.cep[0] = '\0';
                     no_atual->nInfo = 1;
                     status_final = OK;
@@ -279,8 +272,10 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
                 else
                 {
                     strcpy(valor_sucessor.cep, sucessor_node->info1.cep);
+
                     if (indice_valor_removido == 0)
                         strcpy(no_atual->info1.cep, valor_sucessor.cep);
+
                     else
                         strcpy(no_atual->info2.cep, valor_sucessor.cep);
 
@@ -486,9 +481,8 @@ StatusRemocao fundir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_pai, Ar
             strcpy(pai->info1.cep, pai->info2.cep);
         }
         else
-        {
             strcpy(chave_pai_desce.cep, pai->info2.cep);
-        }
+
         pai->info2.cep[0] = '\0';
         pai->nInfo = 1;
     }
@@ -528,13 +522,9 @@ StatusRemocao tratar_underflow_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP 
     Arv23_CEP *filho_com_underflow = *ponteiro_filho_no_pai;
 
     if (filho_com_underflow == NULL || filho_com_underflow->nInfo > 0)
-    {
         status_final = OK;
-    }
     else if (pai == NULL)
-    {
         status_final = UNDERFLOW;
-    }
     else
     {
         Arv23_CEP *irmao_esq = NULL;
@@ -550,7 +540,8 @@ StatusRemocao tratar_underflow_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP 
         {
             pos_filho = 1;
             irmao_esq = pai->esq;
-            if (pai->nInfo == 2) irmao_dir = pai->dir;
+            if (pai->nInfo == 2)
+                irmao_dir = pai->dir;
         }
         else if (pai->nInfo == 2 && pai->dir == filho_com_underflow)
         {
@@ -560,17 +551,18 @@ StatusRemocao tratar_underflow_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP 
 
         if (irmao_dir != NULL && irmao_dir->nInfo == 2)
             status_final = redistribuir_com_irmao_direito_CEP(ponteiro_filho_no_pai, pai, irmao_dir, pos_filho);
+
         else if (irmao_esq != NULL && irmao_esq->nInfo == 2)
             status_final = redistribuir_com_irmao_esquerdo_CEP(ponteiro_filho_no_pai, pai, irmao_esq, pos_filho);
+
         else if (irmao_dir != NULL && irmao_dir->nInfo == 1)
             status_final = fundir_com_irmao_direito_CEP(ponteiro_filho_no_pai, pai, irmao_dir, pos_filho);
+
         else if (irmao_esq != NULL && irmao_esq->nInfo == 1)
-        status_final = fundir_com_irmao_esquerdo_CEP(ponteiro_filho_no_pai, pai, irmao_esq, pos_filho);
+            status_final = fundir_com_irmao_esquerdo_CEP(ponteiro_filho_no_pai, pai, irmao_esq, pos_filho);
+
         else
-        {
-            fprintf(stderr, "Erro critico: Nao foi possivel tratar underflow.\n");
-            status_final = OK;
-        }
+            status_final = NAO_FOI_POSSIVEL_T_UNDERFLOW;
     }
     return status_final;
 }
@@ -629,9 +621,12 @@ void imprime_arvore_visual_CEP(Arv23_CEP *raiz, char *prefixo, int eh_ultimo, in
         sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
 
         int num_filhos = 0;
-        if (raiz->esq) num_filhos++;
-        if (raiz->cen) num_filhos++;
-        if (raiz->dir) num_filhos++;
+        if (raiz->esq)
+            num_filhos++;
+        if (raiz->cen)
+            num_filhos++;
+        if (raiz->dir)
+            num_filhos++;
 
         int filhos_impressos = 0;
         if (raiz->esq)
@@ -650,34 +645,39 @@ void imprime_arvore_visual_CEP(Arv23_CEP *raiz, char *prefixo, int eh_ultimo, in
 //====== para percorrer estados e cidades procurando CEPs ======
 
 // Consulta CEP na árvore 2-3
-int consulta_CEP(Arv23_CEP *raiz, char *str_cep){
+int consulta_CEP(Arv23_CEP *raiz, char *str_cep)
+{
 
     int resultado = 0;
 
-    if (raiz != NULL && raiz->nInfo > 0){
+    if (raiz != NULL && raiz->nInfo > 0)
+    {
         int comparacao1 = strcasecmp(str_cep, raiz->info1.cep);
         int comparacao2;
 
-        if (comparacao1 == 0){
+        if (comparacao1 == 0)
             resultado = 1; // CEP encontrado em info1
-        } else if (raiz->nInfo == 2){
+        else if (raiz->nInfo == 2)
+        {
             comparacao2 = strcasecmp(str_cep, raiz->info2.cep);
-            if (comparacao2 == 0){
+            if (comparacao2 == 0)
                 resultado = 1; // CEP encontrado em info2
-            } else if (comparacao2 < 0){
+            
+            else if (comparacao2 < 0)
                 // str_cep < info2.cep, busca em cen
                 resultado = consulta_CEP(raiz->cen, str_cep);
-            } else {
+            
+            else
                 // str_cep > info2.cep, busca em dir
                 resultado = consulta_CEP(raiz->dir, str_cep);
-            }
-        } else if (comparacao1 < 0){
+        }
+        else if (comparacao1 < 0)
             // str_cep < info1.cep, busca em esq
             resultado = consulta_CEP(raiz->esq, str_cep);
-        } else {
+        
+        else
             // str_cep > info1.cep e nInfo == 1, busca em cen
             resultado = consulta_CEP(raiz->cen, str_cep);
-        }
     }
     return resultado;
 }
