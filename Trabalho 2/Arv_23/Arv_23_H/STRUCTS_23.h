@@ -86,7 +86,7 @@ typedef struct Arv23_CIDADES{
 
 typedef struct Arv23_PESSOAS{
 
-    struct PESSOAS *info1, *info2;
+    struct PESSOAS info1, info2;
     int nInfo;
 
     struct Arv23_PESSOAS *esq, *cen, *dir;

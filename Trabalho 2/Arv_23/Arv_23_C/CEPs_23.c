@@ -71,7 +71,6 @@ Arv23_CEP *quebra_no_CEP(Arv23_CEP **no, CEP info, CEP *sobe, Arv23_CEP *F_dir)
         strcpy(sobe->cep, no_atual->info2.cep);
         maior = cria_no_CEP(info, no_atual->dir, F_dir);
         no_atual->nInfo = 1;
-        no_atual->info2.cep[0] = '\0';
         no_atual->dir = NULL;
     }
     else if (strcmp(info.cep, no_atual->info1.cep) > 0)
@@ -79,7 +78,6 @@ Arv23_CEP *quebra_no_CEP(Arv23_CEP **no, CEP info, CEP *sobe, Arv23_CEP *F_dir)
         strcpy(sobe->cep, info.cep);
         maior = cria_no_CEP(no_atual->info2, F_dir, no_atual->dir);
         no_atual->nInfo = 1;
-        no_atual->info2.cep[0] = '\0';
         no_atual->dir = NULL;
     }
     else
@@ -223,8 +221,10 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
         }
         else if (strcmp(valor.cep, no_atual->info1.cep) < 0)
             proximo_ponteiro_recursao = &(no_atual->esq);
+
         else if (no_atual->nInfo == 1 || strcmp(valor.cep, no_atual->info2.cep) < 0)
             proximo_ponteiro_recursao = &(no_atual->cen);
+
         else
             proximo_ponteiro_recursao = &(no_atual->dir);
 
@@ -356,7 +356,6 @@ StatusRemocao redistribuir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_
     filho->dir = NULL;
 
     irmao_esq->nInfo = 1;
-    irmao_esq->info2.cep[0] = '\0';
     irmao_esq->dir = NULL;
 
     return OK;
@@ -389,7 +388,6 @@ StatusRemocao redistribuir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_p
 
     strcpy(irmao_dir->info1.cep, irmao_dir->info2.cep);
     irmao_dir->nInfo = 1;
-    irmao_dir->info2.cep[0] = '\0';
     irmao_dir->esq = irmao_dir->cen;
     irmao_dir->cen = irmao_dir->dir;
     irmao_dir->dir = NULL;
@@ -423,10 +421,8 @@ StatusRemocao fundir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, A
             strcpy(pai->info1.cep, pai->info2.cep);
         }
         else
-        {
             strcpy(chave_pai_desce.cep, pai->info2.cep);
-        }
-        pai->info2.cep[0] = '\0';
+        
         pai->nInfo = 1;
     }
 
@@ -578,7 +574,10 @@ void libera_arvore_CEP(Arv23_CEP **raiz)
     {
         libera_arvore_CEP(&(*raiz)->esq);
         libera_arvore_CEP(&(*raiz)->cen);
-        libera_arvore_CEP(&(*raiz)->dir);
+
+        if ((*raiz)->nInfo == 2)
+            libera_arvore_CEP(&(*raiz)->dir);
+
         free(*raiz);
         *raiz = NULL;
     }
