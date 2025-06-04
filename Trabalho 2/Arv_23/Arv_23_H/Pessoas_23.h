@@ -20,8 +20,8 @@ PESSOAS *buscar_info_pessoa(Arv23_PESSOAS *raiz, char *info);
 //==============================================================================
 void adiciona_infos_PESSOAS(Arv23_PESSOAS **no, PESSOAS info, Arv23_PESSOAS *Sub_Arv_Info);
 Arv23_PESSOAS *quebra_no_PESSOAS(Arv23_PESSOAS **no, PESSOAS info, PESSOAS *sobe, Arv23_PESSOAS *F_dir);
-int insere_23_recursivo_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor, PESSOAS *sobe, Arv23_PESSOAS **maiorNo);
 int insere_23_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor);
+int insere_23_recursivo_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor, PESSOAS *sobe, Arv23_PESSOAS **maiorNo);
 
 //==============================================================================
 // FUNÇÕES DE REMOÇÃO NA ÁRVORE 2-3
