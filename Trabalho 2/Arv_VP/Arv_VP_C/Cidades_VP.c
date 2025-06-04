@@ -212,15 +212,6 @@ void imprimir_todas_cidades(CIDADES *raiz)
     }
 }
 
-// Função para limpar o nó da cidade (apenas liberar o nome)
-void limpar_info_no_cidade(CIDADES *cidade)
-{
-    if (cidade != NULL && cidade->nome_cidade != NULL)
-    {
-        free(cidade->nome_cidade);
-        cidade->nome_cidade = NULL;
-    }
-}
 
 // =================================
 // DESALOCAÇÃO
