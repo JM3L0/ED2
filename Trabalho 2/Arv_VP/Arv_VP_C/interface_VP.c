@@ -499,8 +499,13 @@ void menu_geral()
                     pessoa = existe_pessoa(raiz_pessoa, cpf);
                     if (pessoa){
 
+                        ESTADOS *cabeca_aux = cabeca_estado;
                         CIDADES *cidade;
-                        cidade = cidade_natal_dado_cep(cabeca_estado->cidade, pessoa->cep_city_natal);
+                        
+                        do{
+                            cidade = cidade_natal_dado_cep(cabeca_aux->cidade, pessoa->cep_city_natal);
+                            cabeca_aux = cabeca_aux->prox;
+                        }while(cabeca_aux != NULL && cidade == NULL);
         
                         if (cidade)                
                             printf("\nCidade natal de %s eh: %s\n", pessoa->nome_pessoa, cidade->nome_cidade); 
