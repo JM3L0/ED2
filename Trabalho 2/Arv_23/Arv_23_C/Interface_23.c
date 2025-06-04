@@ -467,6 +467,15 @@ void menu_geral()
             PESSOAS *pessoa = buscar_info_pessoa(raiz_pessoas, cpf_pessoa);
             if (pessoa){
                 CIDADES *cidade_natal = cidade_dado_cep(cabeca_estados->arv_cidades, pessoa->cep_city_natal);
+                ESTADOS *aux = cabeca_estados;
+                do
+                {
+                    if (aux != NULL){
+                        cidade_natal = cidade_dado_cep(aux->arv_cidades, pessoa->cep_city_natal);
+                        aux = aux->prox;
+                    }
+                } while (aux != NULL && cidade_natal == NULL);
+
                 if (cidade_natal)
                 {
                     printf("Cidade natal da pessoa %s: %s\n", pessoa->nome_pessoa, cidade_natal->nome_cidade);

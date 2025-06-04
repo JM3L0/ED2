@@ -503,8 +503,11 @@ void menu_geral()
                         CIDADES *cidade;
                         
                         do{
-                            cidade = cidade_natal_dado_cep(cabeca_aux->cidade, pessoa->cep_city_natal);
-                            cabeca_aux = cabeca_aux->prox;
+                            if (cabeca_aux->cidade != NULL){
+
+                                cidade = cidade_natal_dado_cep(cabeca_aux->cidade, pessoa->cep_city_natal);
+                                cabeca_aux = cabeca_aux->prox;
+                            }
                         }while(cabeca_aux != NULL && cidade == NULL);
         
                         if (cidade)                
