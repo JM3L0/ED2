@@ -129,6 +129,7 @@ void liberar_no_estado(ESTADOS **estado)
             // Desalocar a árvore de cidades associada ao estado
             limpar_arvore_cidades(&((*estado)->cidade));
         free(*estado);
+        estado = NULL;
     }
 }
 
