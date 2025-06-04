@@ -539,10 +539,8 @@ void menu_geral()
                     if (cidade)
                     {
                         retorno = quantas_pessoas_nascidas_na_cidade_nao_moram_na_cidade(cidade, raiz_pessoa);
-                        if (retorno > 0)                    
-                            printf("\nTotal de pessoas que nasceram na cidade %s e nao moram na cidade natal: %d\n", cidade->nome_cidade, retorno);                    
-                        else                    
-                            printf("\nNenhuma pessoa cadastrada.\n");                    
+                        printf("\nTotal de pessoas que nasceram na cidade %s e nao moram na cidade natal: %d\n", cidade->nome_cidade, retorno);                    
+                  
                     }
                     else
                         printf("\nERRO: Cidade nao encontrada.\n");                
