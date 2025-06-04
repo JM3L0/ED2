@@ -534,7 +534,7 @@ void menu_geral()
                     ler_string_simples(nome_cidade, sizeof(nome_cidade));
             
                     CIDADES *cidade;
-                    cidade = existe_cidade(cabeca_estado->cidade, nome_cidade);
+                    cidade = existe_cidade(estado->cidade, nome_cidade);
     
                     if (cidade)
                     {
