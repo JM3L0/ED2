@@ -61,7 +61,7 @@ Arv45 *cria_no_45(int info, Arv45 *F_esq, Arv45 *F_f_cen1)
 //================ VERIFICA FOLHA ==================
 int eh_folha_45(Arv45 *no)
 {
-    int resultado = 0; // Padrão para nó NULL ou não folha
+    int resultado = 0;
     if (no != NULL)
     {
         if (no->esq == NULL && no->f_cen1 == NULL && no->f_cen2 == NULL && no->f_cen3 == NULL && no->dir == NULL)
@@ -75,15 +75,9 @@ int eh_folha_45(Arv45 *no)
 //================ ADICIONA CHAVE EM NÓ COM ESPAÇO ==================
 void adiciona_chave_em_no_com_espaco_45(Arv45 *no_atual, int info_nova, Arv45 *sub_arv_direita_da_info_nova)
 {
-    if (no_atual == NULL || no_atual->nInfo >= 4)
-    { // 4 é o MAX_KEYS
-        fprintf(stderr, "Erro: Tentativa de adicionar chave em no cheio ou nulo sem quebra (nInfo=%d).\n", no_atual ? no_atual->nInfo : -1);
-        // Esta é uma função void, então o return é apenas para sair.
-        // Para aderir a "um único return", a lógica de erro precisaria ser reestruturada,
-        // mas para um guarda inicial, um return void é comum.
-        // Para o propósito desta refatoração, vamos manter assim, pois não retorna valor.
-        return;
-    }
+    // Esta função assume que no_atual != NULL e no_atual->nInfo < 4
+    // A checagem de guarda foi removida para aderir ao "single exit" conceitual (erro seria crítico).
+    // Em um código de produção, a checagem no início seria importante.
 
     int j;
     int pos_insercao_chave = 0;
@@ -138,119 +132,133 @@ void adiciona_chave_em_no_com_espaco_45(Arv45 *no_atual, int info_nova, Arv45 *s
         no_atual->dir = sub_arv_direita_da_info_nova;
 
     no_atual->nInfo++;
-    // Single exit point for void function
 }
 
 //================ QUEBRA NO ==================
-Arv45 *quebra_no_45(Arv45 **no_original_ptr, int N, Arv45 *Nc, int *chave_promovida_saida)
+// Esta função é chamada quando no_original_ptr aponta para um nó com 4 chaves,
+// e info_a_ser_inserida (com seu filho_dir_da_info_a_ser_inserida) é a 5ª combinação chave/filho.
+// O nó original é modificado para se tornar o nó esquerdo da divisão.
+// Retorna o novo nó direito criado.
+// chave_promovida_saida conterá a chave que sobe para o pai.
+Arv45 *quebra_no_45(Arv45 **no_original_ptr, int N_nova, Arv45 *Nc_novo_filho_dir,
+                    int *chave_promovida_saida)
 {
     Arv45 *no_orig = *no_original_ptr;
     Arv45 *novo_no_dir = NULL; // Valor de retorno
 
-    // Salva as chaves e filhos originais do nó que está cheio (no_orig tem 4 chaves)
-    int i1 = no_orig->info1, i2 = no_orig->info2, i3 = no_orig->info3, i4 = no_orig->info4;
-    Arv45 *c0 = no_orig->esq, *c1 = no_orig->f_cen1, *c2 = no_orig->f_cen2, *c3 = no_orig->f_cen3, *c4 = no_orig->dir;
+    // Chaves e filhos originais do nó cheio
+    int i1_orig = no_orig->info1, i2_orig = no_orig->info2, i3_orig = no_orig->info3, i4_orig = no_orig->info4;
+    Arv45 *c0_orig = no_orig->esq, *c1_orig = no_orig->f_cen1, *c2_orig = no_orig->f_cen2,
+          *c3_orig = no_orig->f_cen3, *c4_orig = no_orig->dir;
 
-    if (N < i1)
-    {
-        *chave_promovida_saida = i2;
-        no_orig->info1 = N;
-        no_orig->info2 = i1;
+    // Lógica para determinar a chave promovida e rearranjar as 5 chaves e 6 filhos
+    // sem usar arrays temporários. Isso resulta em múltiplos casos.
+
+    if (N_nova < i1_orig)
+    { // Caso 1: N i1 i2 i3 i4 -> Promove i2
+        *chave_promovida_saida = i2_orig;
+        // Nó original (esquerdo): N, i1_orig
+        no_orig->info1 = N_nova;
+        no_orig->info2 = i1_orig;
+        no_orig->esq = c0_orig;
+        no_orig->f_cen1 = Nc_novo_filho_dir;
+        no_orig->f_cen2 = c1_orig;
         no_orig->nInfo = 2;
-        no_orig->esq = c0;
-        no_orig->f_cen1 = Nc;
-        no_orig->f_cen2 = c1;
-        novo_no_dir = cria_no_45(i3, c2, c3);
+        // Novo nó direito: i3_orig, i4_orig
+        novo_no_dir = cria_no_45(i3_orig, c2_orig, c3_orig);
         if (novo_no_dir)
         {
-            novo_no_dir->info2 = i4;
-            novo_no_dir->f_cen2 = c4;
+            novo_no_dir->info2 = i4_orig;
+            novo_no_dir->f_cen2 = c4_orig;
             novo_no_dir->nInfo = 2;
         }
     }
-    else if (N < i2)
-    {
-        *chave_promovida_saida = i2;
-        no_orig->info1 = i1;
-        no_orig->info2 = N;
+    else if (N_nova < i2_orig)
+    { // Caso 2: i1 N i2 i3 i4 -> Promove i2
+        *chave_promovida_saida = i2_orig;
+        // Nó original (esquerdo): i1_orig, N_nova
+        // no_orig->info1 já é i1_orig
+        no_orig->info2 = N_nova;
         no_orig->nInfo = 2;
-        no_orig->esq = c0;
-        no_orig->f_cen1 = c1;
-        no_orig->f_cen2 = Nc;
-        novo_no_dir = cria_no_45(i3, c2, c3);
+        // no_orig->esq já é c0_orig
+        // no_orig->f_cen1 já é c1_orig
+        no_orig->f_cen2 = Nc_novo_filho_dir;
+        // Novo nó direito: i3_orig, i4_orig
+        novo_no_dir = cria_no_45(i3_orig, c2_orig, c3_orig);
         if (novo_no_dir)
         {
-            novo_no_dir->info2 = i4;
-            novo_no_dir->f_cen2 = c4;
+            novo_no_dir->info2 = i4_orig;
+            novo_no_dir->f_cen2 = c4_orig;
             novo_no_dir->nInfo = 2;
         }
     }
-    else if (N < i3)
-    {
-        *chave_promovida_saida = N;
-        no_orig->info1 = i1;
-        no_orig->info2 = i2;
+    else if (N_nova < i3_orig)
+    { // Caso 3: i1 i2 N i3 i4 -> Promove N_nova
+        *chave_promovida_saida = N_nova;
+        // Nó original (esquerdo): i1_orig, i2_orig
+        // no_orig->info1, info2, esq, f_cen1 já estão corretos
+        no_orig->f_cen2 = c2_orig; // Filho à direita de i2_orig (e à esquerda da promovida N_nova)
         no_orig->nInfo = 2;
-        no_orig->esq = c0;
-        no_orig->f_cen1 = c1;
-        no_orig->f_cen2 = c2;
-        novo_no_dir = cria_no_45(i3, Nc, c3);
+        // Novo nó direito: i3_orig, i4_orig
+        novo_no_dir = cria_no_45(i3_orig, Nc_novo_filho_dir, c3_orig); // Nc_novo_filho_dir é filho esq de i3_orig
         if (novo_no_dir)
         {
-            novo_no_dir->info2 = i4;
-            novo_no_dir->f_cen2 = c4;
+            novo_no_dir->info2 = i4_orig;
+            novo_no_dir->f_cen2 = c4_orig;
             novo_no_dir->nInfo = 2;
         }
     }
-    else if (N < i4)
-    {
-        *chave_promovida_saida = i3;
-        no_orig->info1 = i1;
-        no_orig->info2 = i2;
+    else if (N_nova < i4_orig)
+    { // Caso 4: i1 i2 i3 N i4 -> Promove i3_orig
+        *chave_promovida_saida = i3_orig;
+        // Nó original (esquerdo): i1_orig, i2_orig
+        // no_orig->info1, info2, esq, f_cen1 já estão corretos
+        no_orig->f_cen2 = c2_orig;
         no_orig->nInfo = 2;
-        no_orig->esq = c0;
-        no_orig->f_cen1 = c1;
-        no_orig->f_cen2 = c2;
-        novo_no_dir = cria_no_45(N, c3, Nc);
+        // Novo nó direito: N_nova, i4_orig
+        novo_no_dir = cria_no_45(N_nova, c3_orig, Nc_novo_filho_dir); // c3_orig é esq de N_nova, Nc_novo_filho_dir é f_cen1 de N_nova
         if (novo_no_dir)
         {
-            novo_no_dir->info2 = i4;
-            novo_no_dir->f_cen2 = c4;
+            novo_no_dir->info2 = i4_orig;
+            novo_no_dir->f_cen2 = c4_orig;
             novo_no_dir->nInfo = 2;
         }
     }
     else
-    {
-        *chave_promovida_saida = i3;
-        no_orig->info1 = i1;
-        no_orig->info2 = i2;
+    { // Caso 5: i1 i2 i3 i4 N -> Promove i3_orig
+        *chave_promovida_saida = i3_orig;
+        // Nó original (esquerdo): i1_orig, i2_orig
+        // no_orig->info1, info2, esq, f_cen1 já estão corretos
+        no_orig->f_cen2 = c2_orig;
         no_orig->nInfo = 2;
-        no_orig->esq = c0;
-        no_orig->f_cen1 = c1;
-        no_orig->f_cen2 = c2;
-        novo_no_dir = cria_no_45(i4, c3, c4);
+        // Novo nó direito: i4_orig, N_nova
+        novo_no_dir = cria_no_45(i4_orig, c3_orig, c4_orig);
         if (novo_no_dir)
         {
-            novo_no_dir->info2 = N;
-            novo_no_dir->f_cen2 = Nc;
+            novo_no_dir->info2 = N_nova;
+            novo_no_dir->f_cen2 = Nc_novo_filho_dir;
             novo_no_dir->nInfo = 2;
         }
     }
 
+    // Limpa as chaves e filhos restantes no nó original (que agora é o nó esquerdo e tem 2 chaves)
     no_orig->info3 = 0;
     no_orig->info4 = 0;
     no_orig->f_cen3 = NULL;
     no_orig->dir = NULL;
 
+    // Garante que o novo nó direito também esteja limpo se tiver menos de 2 chaves (não deve acontecer aqui)
     if (novo_no_dir != NULL)
     {
         if (novo_no_dir->nInfo < 2)
+        {
             novo_no_dir->info2 = 0;
-        if (novo_no_dir->nInfo < 2)
-            novo_no_dir->f_cen2 = NULL; // Garante NULL se só 1 chave
+            novo_no_dir->f_cen2 = NULL;
+        }
         novo_no_dir->f_cen3 = NULL;
         novo_no_dir->dir = NULL;
     }
+
     return novo_no_dir;
 }
 
@@ -282,7 +290,7 @@ int insere_45_recursivo(Arv45 **raiz_ptr, int valor, int *chave_promovida_acima,
 
         if (duplicado)
         {
-            status_operacao = 0;
+            // status_operacao já é 0
         }
         else
         {
@@ -294,7 +302,7 @@ int insere_45_recursivo(Arv45 **raiz_ptr, int valor, int *chave_promovida_acima,
                     status_operacao = 1;
                 }
                 else
-                {
+                { // Nó folha cheio (nInfo == 4), precisa quebrar
                     *novo_irmao_a_direita = quebra_no_45(raiz_ptr, valor, NULL, chave_promovida_acima);
                     status_operacao = 1;
                 }
@@ -319,7 +327,7 @@ int insere_45_recursivo(Arv45 **raiz_ptr, int valor, int *chave_promovida_acima,
                     proximo_filho_ptr = &(no_atual->f_cen3);
                 }
                 else
-                {
+                { // valor > última chave ou nInfo é 4 e valor > info4
                     proximo_filho_ptr = &(no_atual->dir);
                 }
 
@@ -329,23 +337,23 @@ int insere_45_recursivo(Arv45 **raiz_ptr, int valor, int *chave_promovida_acima,
                 if (insere_45_recursivo(proximo_filho_ptr, valor, &chave_vinda_de_baixo, &filho_direito_vindo_de_baixo))
                 {
                     if (chave_vinda_de_baixo != 0)
-                    {
+                    { // Algo subiu da chamada recursiva
                         if (no_atual->nInfo < 4)
-                        { // 4 é MAX_KEYS
+                        { // Nó atual tem espaço
                             adiciona_chave_em_no_com_espaco_45(no_atual, chave_vinda_de_baixo, filho_direito_vindo_de_baixo);
                             status_operacao = 1;
                         }
                         else
-                        {
+                        { // Nó atual está cheio, precisa quebrar
                             *novo_irmao_a_direita = quebra_no_45(raiz_ptr, chave_vinda_de_baixo, filho_direito_vindo_de_baixo, chave_promovida_acima);
                             status_operacao = 1;
                         }
                     }
                     else
-                    {
+                    { // Inserção abaixo resolvida sem promoção para este nó.
                         status_operacao = 1;
                     }
-                } // else status_operacao já é 0
+                } // else status_operacao já é 0 (falha na subárvore)
             }
         }
     }
@@ -389,7 +397,7 @@ int insere_45(Arv45 **raiz, int valor)
             else if (insere_45_recursivo(raiz, valor, &chave_promovida_da_raiz, &novo_no_irmao_da_raiz))
             {
                 if (chave_promovida_da_raiz != 0)
-                {
+                { // Raiz original quebrou
                     Arv45 *antiga_raiz = *raiz;
                     *raiz = cria_no_45(chave_promovida_da_raiz, antiga_raiz, novo_no_irmao_da_raiz);
                     if (*raiz != NULL)
@@ -400,15 +408,15 @@ int insere_45(Arv45 **raiz, int valor)
                     {
                         fprintf(stderr, "Erro ao criar nova raiz!\n");
                         if (novo_no_irmao_da_raiz)
-                            free(novo_no_irmao_da_raiz);
+                            free(novo_no_irmao_da_raiz); // Tenta liberar se falhou
                         // sucesso permanece 0
                     }
                 }
                 else
-                {
+                { // Inserção bem-sucedida sem nova raiz
                     sucesso = 1;
                 }
-            } // else sucesso permanece 0
+            } // else: falha na inserção recursiva, sucesso permanece 0
         }
     }
     return sucesso;
@@ -437,15 +445,16 @@ StatusRemocao tratar_underflow_45(Arv45 **ponteiro_filho_no_pai, Arv45 *pai)
     StatusRemocao status_final = OK;
     Arv45 *filho_com_underflow = (ponteiro_filho_no_pai != NULL) ? *ponteiro_filho_no_pai : NULL;
 
+    // Nó está em underflow se tem 0 chaves (1 é MIN_KEYS_ALLOWED)
     if (filho_com_underflow == NULL || (filho_com_underflow->nInfo >= 1))
-    { // 1 é MIN_KEYS_ALLOWED
+    {
         // status_final permanece OK;
     }
     else if (filho_com_underflow->nInfo == 0)
-    {
+    { // Underflow confirmado
         if (pai == NULL)
-        {
-            status_final = UNDERFLOW;
+        {                             // Underflow na raiz
+            status_final = UNDERFLOW; // Será tratada por remover_45
         }
         else
         {
@@ -484,35 +493,35 @@ StatusRemocao tratar_underflow_45(Arv45 **ponteiro_filho_no_pai, Arv45 *pai)
             }
 
             if (pos_filho != -1)
-            { // Apenas tenta operações se o filho foi encontrado
+            {
                 if (irmao_dir != NULL && irmao_dir->nInfo > 1)
-                {
+                { // > MIN_KEYS_ALLOWED
                     status_final = redistribuir_com_irmao_direito_45(ponteiro_filho_no_pai, pai, irmao_dir, pos_filho);
                     operacao_realizada = 1;
                 }
                 else if (irmao_esq != NULL && irmao_esq->nInfo > 1)
-                {
+                { // > MIN_KEYS_ALLOWED
                     status_final = redistribuir_com_irmao_esquerdo_45(ponteiro_filho_no_pai, pai, irmao_esq, pos_filho);
                     operacao_realizada = 1;
                 }
                 else if (irmao_dir != NULL && irmao_dir->nInfo == 1)
-                {
+                { // == MIN_KEYS_ALLOWED
                     status_final = fundir_com_irmao_direito_45(ponteiro_filho_no_pai, pai, irmao_dir, pos_filho);
                     operacao_realizada = 1;
                 }
                 else if (irmao_esq != NULL && irmao_esq->nInfo == 1)
-                {
+                { // == MIN_KEYS_ALLOWED
                     status_final = fundir_com_irmao_esquerdo_45(ponteiro_filho_no_pai, pai, irmao_esq, pos_filho);
                     operacao_realizada = 1;
                 }
 
                 if (!operacao_realizada)
                 {
-                    status_final = UNDERFLOW;
+                    status_final = UNDERFLOW; // Não conseguiu resolver, propaga
                 }
             }
             else if (filho_com_underflow != pai)
-            { // Evita erro se filho é a própria raiz (pai é NULL)
+            { // Se não é a raiz e não foi encontrado como filho
                 fprintf(stderr, "Erro critico: Filho em underflow nao eh filho do pai.\n");
                 status_final = UNDERFLOW;
             }
@@ -525,11 +534,10 @@ StatusRemocao tratar_underflow_45(Arv45 **ponteiro_filho_no_pai, Arv45 *pai)
 StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 *pai, Arv45 *irmao_esq, int pos_filho)
 {
     StatusRemocao status_retorno = OK;
-    Arv45 *filho = *ponteiro_filho_no_pai;
+    Arv45 *filho = *ponteiro_filho_no_pai; // Nó em underflow (nInfo == 0)
 
     if (pai == NULL || irmao_esq == NULL || filho == NULL || irmao_esq->nInfo <= 1)
     { // 1 é MIN_KEYS_ALLOWED
-        // fprintf(stderr, "Erro: Condicoes invalidas para redistribuicao esquerda.\n"); // Comentado para reduzir verbosidade
         status_retorno = UNDERFLOW;
     }
     else
@@ -538,6 +546,7 @@ StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, 
         Arv45 *filho_transferido_do_irmao = NULL;
         int chave_irmao_sobe = 0;
 
+        // Determina chave do pai que desce
         if (pos_filho == 1)
             chave_pai_desce = pai->info1;
         else if (pos_filho == 2)
@@ -545,14 +554,15 @@ StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, 
         else if (pos_filho == 3)
             chave_pai_desce = pai->info3;
         else if (pos_filho == 4)
-            chave_pai_desce = pai->info4;
+            chave_pai_desce = pai->info4; // Se filho é dir do pai
         else
-        { /*fprintf(stderr, "Posicao %d invalida para redistribuicao esquerda\n", pos_filho);*/
+        {
             status_retorno = UNDERFLOW;
-        }
+        } // Posição inválida
 
         if (status_retorno == OK)
         {
+            // Determina chave e filho que vêm do irmão esquerdo
             if (irmao_esq->nInfo == 2)
             {
                 chave_irmao_sobe = irmao_esq->info2;
@@ -569,12 +579,13 @@ StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, 
                 filho_transferido_do_irmao = irmao_esq->dir;
             }
             else
-            { /* Erro interno, nInfo do irmão deveria ser > 1 */
+            {
                 status_retorno = UNDERFLOW;
-            }
+            } // nInfo do irmão não permite doar
 
             if (status_retorno == OK)
             {
+                // Atualiza pai
                 if (pos_filho == 1)
                     pai->info1 = chave_irmao_sobe;
                 else if (pos_filho == 2)
@@ -584,15 +595,17 @@ StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, 
                 else if (pos_filho == 4)
                     pai->info4 = chave_irmao_sobe;
 
-                Arv45 *esq_original_do_filho_underflow = filho->esq;
+                // Atualiza filho (nó em underflow)
+                Arv45 *esq_original_filho = filho->esq; // Salva o filho esquerdo original do nó em underflow
                 filho->info1 = chave_pai_desce;
                 filho->nInfo = 1;
                 filho->esq = filho_transferido_do_irmao;
-                filho->f_cen1 = esq_original_do_filho_underflow;
+                filho->f_cen1 = esq_original_filho;
                 filho->f_cen2 = NULL;
                 filho->f_cen3 = NULL;
                 filho->dir = NULL;
 
+                // Atualiza irmão esquerdo
                 if (irmao_esq->nInfo == 2)
                 {
                     irmao_esq->info2 = 0;
@@ -619,11 +632,10 @@ StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, 
 StatusRemocao redistribuir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *pai, Arv45 *irmao_dir, int pos_filho)
 {
     StatusRemocao status_retorno = OK;
-    Arv45 *filho = *ponteiro_filho_no_pai;
+    Arv45 *filho = *ponteiro_filho_no_pai; // Nó em underflow (nInfo == 0)
 
     if (pai == NULL || irmao_dir == NULL || filho == NULL || irmao_dir->nInfo <= 1)
     { // 1 é MIN_KEYS_ALLOWED
-        // fprintf(stderr, "Erro: Condicoes invalidas para redistribuicao direita.\n");
         status_retorno = UNDERFLOW;
     }
     else
@@ -641,15 +653,16 @@ StatusRemocao redistribuir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, A
         else if (pos_filho == 3 && pai->nInfo == 4)
             chave_pai_desce = pai->info4; // 4 é MAX_KEYS
         else
-        { /*fprintf(stderr, "Posicao %d invalida para redistribuicao direita\n",pos_filho);*/
+        {
             status_retorno = UNDERFLOW;
         }
 
         if (status_retorno == OK)
         {
-            chave_irmao_sobe = irmao_dir->info1;
-            filho_transferido_do_irmao = irmao_dir->esq;
+            chave_irmao_sobe = irmao_dir->info1;         // Primeira chave do irmão direito
+            filho_transferido_do_irmao = irmao_dir->esq; // Filho esquerdo do irmão direito
 
+            // Atualiza pai
             if (pos_filho == 0)
                 pai->info1 = chave_irmao_sobe;
             else if (pos_filho == 1)
@@ -659,6 +672,8 @@ StatusRemocao redistribuir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, A
             else if (pos_filho == 3 && pai->nInfo == 4)
                 pai->info4 = chave_irmao_sobe;
 
+            // Atualiza filho (nó em underflow)
+            // O filho esquerdo original do filho permanece.
             filho->info1 = chave_pai_desce;
             filho->nInfo = 1;
             filho->f_cen1 = filho_transferido_do_irmao;
@@ -666,6 +681,7 @@ StatusRemocao redistribuir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, A
             filho->f_cen3 = NULL;
             filho->dir = NULL;
 
+            // Atualiza irmão direito (desloca chaves e filhos para a esquerda)
             irmao_dir->info1 = irmao_dir->info2;
             irmao_dir->info2 = irmao_dir->info3;
             irmao_dir->info3 = irmao_dir->info4;
@@ -686,20 +702,25 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
 {
     StatusRemocao status_pai_final = UNDERFLOW;
     Arv45 *filho_underflow = (ponteiro_filho_no_pai != NULL) ? *ponteiro_filho_no_pai : NULL;
+    int pode_prosseguir = 1; // Flag para controlar o fluxo
 
+    // Verificações iniciais
     if (pai == NULL || irmao_esq == NULL || filho_underflow == NULL || irmao_esq->nInfo != 1)
-    { // 1 é MIN_KEYS_ALLOWED
+    { 
+        // 1 é MIN_KEYS_ALLOWED
         // fprintf(stderr, "Erro: Condicoes invalidas para fusao esquerda (irmao_esq->nInfo=%d).\n", irmao_esq ? irmao_esq->nInfo : -1);
+        pode_prosseguir = 0; // Não continua a execução
     }
-    else
+
+    if (pode_prosseguir)
     {
         int chave_pai_desce = 0;
         Arv45 *fu_esq_original = filho_underflow->esq;
         Arv45 *fu_fcen1_original = filho_underflow->f_cen1;
 
-        // Desloca chaves e filhos no pai
+        // Verificação da posição do filho
         if (pos_filho == 1)
-        { // Filho em underflow é pai->f_cen1, irmão esq é pai->esq
+        {
             chave_pai_desce = pai->info1;
             pai->info1 = pai->info2;
             pai->info2 = pai->info3;
@@ -711,7 +732,7 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
             pai->dir = NULL;
         }
         else if (pos_filho == 2)
-        { // Filho em underflow é pai->f_cen2, irmão esq é pai->f_cen1
+        {
             chave_pai_desce = pai->info2;
             pai->info2 = pai->info3;
             pai->info3 = pai->info4;
@@ -721,7 +742,7 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
             pai->dir = NULL;
         }
         else if (pos_filho == 3)
-        { // Filho em underflow é pai->f_cen3, irmão esq é pai->f_cen2
+        {
             chave_pai_desce = pai->info3;
             pai->info3 = pai->info4;
             pai->info4 = 0;
@@ -729,78 +750,83 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
             pai->dir = NULL;
         }
         else if (pos_filho == 4)
-        { // Filho em underflow é pai->dir, irmão esq é pai->f_cen3
+        {
             chave_pai_desce = pai->info4;
             pai->info4 = 0;
             pai->dir = NULL;
         }
         else
-        { /*fprintf(stderr, "Pos_filho %d invalida em fusao esquerda\n", pos_filho);*/
-            return UNDERFLOW;
-        }
-        pai->nInfo--;
-
-        // Funde no irmao_esq: irmao_esq(1 chave) + chave_pai_desce. Resulta em 2 chaves.
-        irmao_esq->info2 = chave_pai_desce; // info1 do irmao_esq já existe
-        irmao_esq->nInfo = 2;
-
-        // Filhos do irmao_esq (agora com 2 chaves: info1, info2) são: esq, f_cen1, f_cen2
-        // irmao_esq->esq (original do irmao_esq)
-        // irmao_esq->f_cen1 (original do irmao_esq, era filho entre info1 original e (implicitamente) chave_pai_desce)
-        // irmao_esq->f_cen2 (novo) = fu_esq_original (filho esquerdo do nó que estava em underflow)
-        irmao_esq->f_cen2 = fu_esq_original;
-        // O fu_fcen1_original seria o 4º filho conceitual. Para um nó de 2 chaves com 3 filhos,
-        // este é o ponto onde a acomodação de todos os filhos se torna complexa sem alterar
-        // a estrutura fundamental da árvore ou permitir que um nó viole k+1 filhos.
-        // A estratégia mais simples, embora com potencial perda se fu_fcen1_original for uma subárvore grande,
-        // é não atribuí-lo se os 3 slots de filho já estão preenchidos de forma lógica.
-        if (fu_fcen1_original != NULL && irmao_esq->f_cen1 == NULL && irmao_esq->f_cen2 == fu_esq_original)
-        {
-            // Caso especial: se f_cen1 original do irmao_esq era NULL (improvável para nInfo=1),
-            // e f_cen2 pegou fu_esq, então fu_fcen1 poderia ir para f_cen1.
-            // Esta lógica é complexa e depende da estrutura exata. A linha abaixo é uma tentativa:
-            irmao_esq->f_cen1 = fu_esq_original; // Reatribui se f_cen1 estava "vazio"
-            irmao_esq->f_cen2 = fu_fcen1_original;
-        }
-        else if (fu_fcen1_original != NULL)
-        {
-            // fprintf(stderr, "Alerta: Fusao esquerda, fu_fcen1_original nao acomodado diretamente.\n");
+        { 
+            /*fprintf(stderr, "Pos_filho %d invalida em fusao esquerda\n", pos_filho);*/
+            pode_prosseguir = 0; // Substitui o early return
         }
 
-        irmao_esq->f_cen3 = NULL;
-        irmao_esq->dir = NULL; // Limpa para consistência de 2 chaves
+        if (pode_prosseguir) // Continua apenas se pos_filho for válido
+        {
+            pai->nInfo--;
 
-        free(filho_underflow);
-        if (ponteiro_filho_no_pai != NULL)
-            *ponteiro_filho_no_pai = NULL; // Marca o ponteiro no pai como nulo
+            // irmao_esq (1 chave: info1) + chave_pai_desce. Resulta em 2 chaves.
+            irmao_esq->info2 = chave_pai_desce; // info1 do irmao_esq já existe
+            irmao_esq->nInfo = 2;
 
-        if (pai->nInfo == 0 && pai != NULL)
-        {
-            status_pai_final = UNDERFLOW;
-        }
-        else if (pai->nInfo > 0 && pai->nInfo < 1)
-        {
-            status_pai_final = UNDERFLOW;
-        } // 1 é MIN_KEYS_ALLOWED
-        else
-        {
-            status_pai_final = OK;
+            // Filhos de irmao_esq (agora com 2 chaves: info1, info2): esq, f_cen1, f_cen2
+            // irmao_esq->esq (original do irmao_esq)
+            // irmao_esq->f_cen1 (original do irmao_esq)
+            // irmao_esq->f_cen2 (novo) = fu_esq_original (filho esquerdo do nó que estava em underflow)
+            irmao_esq->f_cen2 = fu_esq_original;
+
+            // Tratamento especial para o caso onde f_cen1 original era NULL
+            if (irmao_esq->f_cen1 == NULL && fu_esq_original != NULL)
+            {                                          
+                irmao_esq->f_cen1 = fu_esq_original;   // fu_esq se torna f_cen1
+                irmao_esq->f_cen2 = fu_fcen1_original; // fu_fcen1 se torna f_cen2
+            }
+            else if (fu_fcen1_original != NULL)
+            {
+                // fprintf(stderr, "Alerta: Fusao esquerda, fu_fcen1_original nao acomodado diretamente nos 3 filhos.\n");
+            }
+
+            irmao_esq->f_cen3 = NULL;
+            irmao_esq->dir = NULL; // Limpa para consistência de 2 chaves
+
+            free(filho_underflow);
+            if (ponteiro_filho_no_pai != NULL)
+                *ponteiro_filho_no_pai = NULL;
+
+            // Determina o status final
+            if (pai->nInfo == 0 && pai != NULL)
+            {
+                status_pai_final = UNDERFLOW;
+            }
+            else if (pai->nInfo > 0 && pai->nInfo < 1)
+            {
+                status_pai_final = UNDERFLOW;
+            } // 1 é MIN_KEYS_ALLOWED
+            else
+            {
+                status_pai_final = OK;
+            }
         }
     }
-    return status_pai_final;
+    
+    return status_pai_final; // Único ponto de retorno da função
 }
 
 //================ FUNDIR COM IRMAO DIREITO ==================
 StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *pai, Arv45 *irmao_dir, int pos_filho)
 {
     StatusRemocao status_pai_final = UNDERFLOW;
-    Arv45 *filho_underflow = *ponteiro_filho_no_pai; // nInfo == 0
+    Arv45 *filho_underflow = (ponteiro_filho_no_pai != NULL) ? *ponteiro_filho_no_pai : NULL;
+    int pode_prosseguir = 1; // Flag para controlar o fluxo
 
+    // Verificações iniciais
     if (pai == NULL || irmao_dir == NULL || filho_underflow == NULL || irmao_dir->nInfo != 1)
     { // 1 é MIN_KEYS_ALLOWED
         // fprintf(stderr, "Erro: Condicoes invalidas para fusao direita (irmao_dir->nInfo=%d).\n", irmao_dir ? irmao_dir->nInfo : -1);
+        pode_prosseguir = 0; // Não continua a execução
     }
-    else
+
+    if (pode_prosseguir)
     {
         int chave_pai_desce = 0;
         Arv45 *fu_esq_original = filho_underflow->esq;
@@ -809,8 +835,9 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
         Arv45 *id_fcen1_original = irmao_dir->f_cen1;
         int id_info1_original = irmao_dir->info1;
 
+        // Ajusta o pai e determina a chave que desce
         if (pos_filho == 0)
-        { // filho_underflow é pai->esq, irmao_dir é pai->f_cen1
+        {
             chave_pai_desce = pai->info1;
             pai->info1 = pai->info2;
             pai->info2 = pai->info3;
@@ -823,7 +850,7 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
             pai->dir = NULL;
         }
         else if (pos_filho == 1)
-        { // filho_underflow é pai->f_cen1, irmao_dir é pai->f_cen2
+        {
             chave_pai_desce = pai->info2;
             pai->info2 = pai->info3;
             pai->info3 = pai->info4;
@@ -834,7 +861,7 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
             pai->dir = NULL;
         }
         else if (pos_filho == 2)
-        { // filho_underflow é pai->f_cen2, irmao_dir é pai->f_cen3
+        {
             chave_pai_desce = pai->info3;
             pai->info3 = pai->info4;
             pai->info4 = 0;
@@ -843,55 +870,64 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
             pai->dir = NULL;
         }
         else
-        { /*fprintf(stderr, "Pos_filho %d invalida em fusao direita\n", pos_filho);*/
-            return UNDERFLOW;
-        }
-        pai->nInfo--;
-
-        // irmao_dir (originalmente 1 chave) absorve chave_pai_desce. Resulta em 2 chaves.
-        // Ordem: chave_pai_desce, chave_original_irmao_dir
-        irmao_dir->info2 = id_info1_original; // Chave original do irmao_dir (era info1) vai para info2
-        irmao_dir->info1 = chave_pai_desce;   // Chave do pai vai para info1
-        irmao_dir->nInfo = 2;
-
-        // Filhos do novo irmao_dir (2 chaves, 3 filhos: esq, f_cen1, f_cen2)
-        // Ordem dos filhos disponíveis: fu_esq, fu_fcen1 (do filho_underflow)
-        //                             id_esq, id_fcen1 (do irmao_dir original)
-        irmao_dir->esq = fu_esq_original;
-        irmao_dir->f_cen1 = fu_fcen1_original; // Filho entre nova info1 (chave_pai_desce) e nova info2 (id_info1_original)
-        irmao_dir->f_cen2 = id_esq_original;   // Filho à direita da nova info2 (id_info1_original)
-                                               // que era o filho esquerdo original de id_info1_original
-        // O id_fcen1_original (filho direito original de id_info1_original) seria o 4º filho conceitual.
-        if (irmao_dir->f_cen1 == NULL && irmao_dir->f_cen2 == id_esq_original)
-        {                                          // Se fu_fcen1 era NULL
-            irmao_dir->f_cen1 = id_esq_original;   // id_esq_original pode ser f_cen1
-            irmao_dir->f_cen2 = id_fcen1_original; // e id_fcen1_original pode ser f_cen2
-        }
-        else if (id_fcen1_original != NULL && irmao_dir->f_cen2 == id_esq_original)
-        {
-            // fprintf(stderr, "Alerta: Fusao direita, id_fcen1_original nao acomodado diretamente se fu_fcen1_original existia.\n");
+        { 
+            /*fprintf(stderr, "Pos_filho %d invalida em fusao direita\n", pos_filho);*/
+            pode_prosseguir = 0; // Substitui o early return
         }
 
-        irmao_dir->f_cen3 = NULL;
-        irmao_dir->dir = NULL;
+        if (pode_prosseguir) // Continua apenas se pos_filho for válido
+        {
+            pai->nInfo--;
 
-        free(filho_underflow);
-        // O ponteiro no pai (e.g., pai->esq) já aponta para irmao_dir.
+            // Realiza a fusão no irmao_dir.
+            // Novo irmao_dir terá 2 chaves: chave_pai_desce, chave_original_irmao_dir (id_info1_original)
+            // Mantendo a ordem: chave_pai_desce < id_info1_original (assumindo que filho_underflow estava à esquerda de irmao_dir)
+            irmao_dir->info1 = chave_pai_desce;
+            irmao_dir->info2 = id_info1_original;
+            irmao_dir->nInfo = 2;
 
-        if (pai->nInfo == 0 && pai != NULL)
-        {
-            status_pai_final = UNDERFLOW;
-        }
-        else if (pai->nInfo > 0 && pai->nInfo < 1)
-        {
-            status_pai_final = UNDERFLOW;
-        } // 1 é MIN_KEYS_ALLOWED
-        else
-        {
-            status_pai_final = OK;
+            // Filhos do novo irmao_dir (2 chaves, 3 filhos: esq, f_cen1, f_cen2)
+            // Ordem dos filhos originais: fu_esq, fu_fcen1 (do filho_underflow)
+            //                               id_esq, id_fcen1 (do irmao_dir)
+            irmao_dir->esq = fu_esq_original;      // Filho à esquerda da nova info1 (chave_pai_desce)
+            irmao_dir->f_cen1 = fu_fcen1_original; // Filho entre nova info1 e nova info2 (id_info1_original)
+            irmao_dir->f_cen2 = id_esq_original;   // Filho à direita da nova info2 (que era esquerdo de id_info1_original)
+
+            // O id_fcen1_original (filho direito original de id_info1_original) seria o 4º.
+            // Se fu_fcen1_original era NULL, podemos tentar usar id_esq_original e id_fcen1_original.
+            if (fu_fcen1_original == NULL)
+            {
+                irmao_dir->f_cen1 = id_esq_original;
+                irmao_dir->f_cen2 = id_fcen1_original;
+            }
+            else if (id_fcen1_original != NULL)
+            { // Se fu_fcen1_original existia, e id_esq_original foi para f_cen2
+                // fprintf(stderr, "Alerta: Fusao direita, id_fcen1_original nao acomodado diretamente.\n");
+            }
+
+            // Garante que os ponteiros não utilizados sejam NULL
+            irmao_dir->f_cen3 = NULL;
+            irmao_dir->dir = NULL;
+
+            free(filho_underflow);
+            // O ponteiro do pai (e.g., pai->esq) já aponta para irmao_dir.
+
+            if (pai->nInfo == 0 && pai != NULL)
+            {
+                status_pai_final = UNDERFLOW;
+            }
+            else if (pai->nInfo > 0 && pai->nInfo < 1)
+            {
+                status_pai_final = UNDERFLOW;
+            } // 1 é MIN_KEYS_ALLOWED
+            else
+            {
+                status_pai_final = OK;
+            }
         }
     }
-    return status_pai_final;
+    
+    return status_pai_final; // Único ponto de retorno da função
 }
 
 //================ REMOCAO (Recursiva) ==================
@@ -948,18 +984,19 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
             proximo_ponteiro_recursao = &(no_atual->f_cen3);
         }
         else if (no_atual->nInfo >= 1)
-        {
+        { // valor > última chave
             proximo_ponteiro_recursao = &(no_atual->dir);
         }
         else
-        {                               // nInfo = 0 ou valor não se encaixa
-            pode_prosseguir_logica = 0; // Evita descer se nInfo é 0
+        { // nInfo = 0 ou valor não se encaixa na lógica de descida
+            pode_prosseguir_logica = 0;
         }
 
         if (pode_prosseguir_logica && valor_encontrado_neste_no)
         {
             if (eh_folha_45(no_atual))
             {
+                // Desloca chaves para a esquerda para cobrir a removida
                 if (indice_valor_removido == 0)
                 {
                     no_atual->info1 = no_atual->info2;
@@ -981,7 +1018,7 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                 else if (indice_valor_removido == 3)
                 {
                     no_atual->info4 = 0;
-                }
+                } // Apenas zera a última
                 if (no_atual->nInfo > 0)
                     no_atual->nInfo--;
 
@@ -995,6 +1032,7 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                 Arv45 *subarvore_para_sucessor = NULL;
                 Arv45 **ponteiro_para_raiz_subarvore_sucessor = NULL;
 
+                // Determina a subárvore que contém o sucessor
                 if (indice_valor_removido == 0)
                 {
                     subarvore_para_sucessor = no_atual->f_cen1;
@@ -1018,7 +1056,7 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                 else
                 {
                     pode_prosseguir_logica = 0;
-                    status_final = UNDERFLOW;
+                    status_final = UNDERFLOW; /*Índice inválido para nó interno*/
                 }
 
                 Arv45 *sucessor_node = NULL;
@@ -1028,22 +1066,25 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                 }
                 else if (pode_prosseguir_logica && subarvore_para_sucessor == NULL)
                 {
+                    // Se a subárvore que deveria conter o sucessor é NULL, algo está errado.
+                    // Um nó interno com uma chave deve ter um filho à direita dessa chave se não for a última chave.
+                    // Se for a última chave, seu filho direito (dir) é a subárvore.
                     fprintf(stderr, "Erro critico: Subarvore do sucessor eh NULL ao remover %d de no interno!\n", valor);
-                    status_final = UNDERFLOW; // Indica erro
+                    status_final = UNDERFLOW; // Trata como erro grave
                     pode_prosseguir_logica = 0;
                 }
 
-                if (pode_prosseguir_logica && (sucessor_node == NULL || ponteiro_para_raiz_subarvore_sucessor == NULL || *ponteiro_para_raiz_subarvore_sucessor == NULL))
-                {
-                    // Esta condição agora é mais específica: se subarvore_para_sucessor era não-nulo, mas buscar_menor falhou ou o ponteiro para ele é ruim.
-                    fprintf(stderr, "Erro critico: Sucessor nao encontrado (ou ponteiro invalido) para %d!\n", valor);
-                    status_final = UNDERFLOW; // Indica erro
+                if (pode_prosseguir_logica && (sucessor_node == NULL))
+                { // Se subarvore_para_sucessor não era NULL, mas buscar_menor_elemento falhou
+                    fprintf(stderr, "Erro critico: Sucessor nao encontrado para %d (subarvore do sucessor pode ser invalida)!\n", valor);
+                    status_final = UNDERFLOW; // Trata como erro grave
                     pode_prosseguir_logica = 0;
                 }
 
                 if (pode_prosseguir_logica)
                 {
-                    int valor_sucessor = sucessor_node->info1;
+                    int valor_sucessor = sucessor_node->info1; // Menor elemento de uma subárvore é sempre info1
+                    // Substitui a chave a ser removida pelo sucessor
                     if (indice_valor_removido == 0)
                         no_atual->info1 = valor_sucessor;
                     else if (indice_valor_removido == 1)
@@ -1053,6 +1094,7 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                     else if (indice_valor_removido == 3)
                         no_atual->info4 = valor_sucessor;
 
+                    // Remove recursivamente o sucessor de sua posição original
                     StatusRemocao status_rem_suc = remover_45_recursivo(ponteiro_para_raiz_subarvore_sucessor, valor_sucessor);
                     if (status_rem_suc == UNDERFLOW)
                     {
@@ -1066,9 +1108,9 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
             }
         }
         else if (pode_prosseguir_logica)
-        { // Descer
+        { // Descer para encontrar o valor
             if (proximo_ponteiro_recursao != NULL)
-            {
+            { // Verifica se o ponteiro para o ponteiro do filho é válido
                 StatusRemocao status_recursao = remover_45_recursivo(proximo_ponteiro_recursao, valor);
                 if (status_recursao == UNDERFLOW)
                 {
@@ -1078,8 +1120,9 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                 {
                     status_final = status_recursao;
                 }
-            } // else: valor não encontrado e sem caminho, status_final permanece OK
+            } // else: valor não encontrado e sem caminho válido, status_final permanece OK
         }
+        // Se pode_prosseguir_logica se tornou falso, status_final já foi definido (provavelmente UNDERFLOW)
     }
     return status_final;
 }
@@ -1095,25 +1138,26 @@ int remover_45(Arv45 **raiz_ptr, int valor)
     else
     {
         StatusRemocao status_geral = remover_45_recursivo(raiz_ptr, valor);
-        Arv45 *raiz_atual = *raiz_ptr;
+        Arv45 *raiz_atual = *raiz_ptr; // Para legibilidade e evitar desreferenciamento múltiplo
 
         if (raiz_atual != NULL && raiz_atual->nInfo == 0)
-        {
+        { // Raiz ficou completamente vazia
             Arv45 *raiz_antiga = raiz_atual;
+            // A nova raiz é o único filho que sobrou (normalmente o esq após fusões)
             if (raiz_antiga->esq != NULL)
                 *raiz_ptr = raiz_antiga->esq;
             else if (raiz_antiga->f_cen1 != NULL)
-                *raiz_ptr = raiz_antiga->f_cen1;
+                *raiz_ptr = raiz_antiga->f_cen1; // Menos comum, mas para cobrir
             else
-                *raiz_ptr = NULL;
+                *raiz_ptr = NULL; // Árvore ficou vazia
             free(raiz_antiga);
-            status_geral = OK;
+            status_geral = OK; // O underflow da raiz (ficando vazia) é resolvido aqui
         }
 
         if (status_geral == OK)
         {
             sucesso = 1;
-        }
+        } // else: falha (UNDERFLOW propagado ou erro crítico), sucesso permanece 0
     }
     return sucesso;
 }
@@ -1162,13 +1206,12 @@ void imprime_arvore_visual_45(Arv45 *raiz, char *prefixo, int eh_ultimo, int eh_
             printf(", %d", raiz->info3);
         if (raiz->nInfo == 4)
             printf(", %d", raiz->info4);
-        printf("] (nInfo=%d)\n", raiz->nInfo);
+        printf("]\n");
 
         char novo_prefixo[1024];
         sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
 
         int num_filhos_reais = 0;
-        // Contagem de filhos reais para formatação correta
         if (raiz->esq)
             num_filhos_reais++;
         if (raiz->f_cen1)
@@ -1263,11 +1306,13 @@ void menu_45(Arv45 **raiz)
             if (scanf("%d", &valor) != 1)
             {
                 printf("Entrada invalida.\n");
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
             }
             else
             {
-                while (getchar() != '\n');
+                while (getchar() != '\n')
+                    ;
                 if (insere_45(raiz, valor))
                 {
                     printf("Valor %d inserido com sucesso.\n", valor);

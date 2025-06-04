@@ -1187,7 +1187,7 @@ void imprime_arvore_visual_45(Arv45 *raiz, char *prefixo, int eh_ultimo, int eh_
             printf(", %d", raiz->info3);
         if (raiz->nInfo == 4)
             printf(", %d", raiz->info4);
-        printf("] (nInfo=%d)\n", raiz->nInfo);
+        printf("]\n");
 
         char novo_prefixo[1024];
         sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
