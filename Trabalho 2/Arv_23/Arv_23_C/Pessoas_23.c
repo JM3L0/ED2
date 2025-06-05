@@ -793,7 +793,7 @@ int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, Arv
 
     while (atual != NULL)
     {
-        resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(atual->arv_cidades, raiz_pessoa);
+        resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(atual->arv_cidades, raiz_pessoa);
         atual = atual->prox;
     }
 
