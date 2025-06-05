@@ -478,13 +478,30 @@ void menu_geral()
         }
         case 13:
         {
-            printf("=== Imprimir quantas pessoas nao moram em suas cidades nateis ===\n");
-            retorno = quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(cabeca_estados, raiz_pessoas);
+            ESTADOS *estado;
+            char nome_estado[100];
+            char nome_cidade[100];
+            printf("Digite o nome do estado: ");
 
-            if (retorno > 0)
-                printf("Total de pessoas que nao moram em suas cidades natais: %d\n", retorno);
+            ler_string_simples(nome_estado, sizeof(nome_estado));
+            estado = existe_estado(cabeca_estados, nome_estado);
+
+            if (estado)
+            {
+                printf("Digite o nome da cidade: ");
+                ler_string_simples(nome_cidade, sizeof(nome_cidade));
+                CIDADES *cidade;
+                cidade = buscar_info_cidade(estado->arv_cidades, nome_cidade);
+                if (cidade)
+                {
+                    retorno = quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(cidade, raiz_pessoas);
+                    printf("Total de pessoas que moram na cidade %s e nao nasceram nela: %d\n", cidade->nome_cidade, retorno);
+                }
+                else
+                    printf("Cidade %s nao encontrada no estado %s!\n", nome_cidade, nome_estado);
+            }
             else
-                printf("Nenhuma pessoa cadastrada ou todas moram na cidade natal!\n");
+                printf("Estado %s nao encontrado!\n", nome_estado);
             break;
         }
         case 14:
