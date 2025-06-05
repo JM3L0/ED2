@@ -793,10 +793,7 @@ int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, Arv
 
     while (atual != NULL)
     {
-        resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(atual->arv_cidades, raiz_pessoa);
-        // if(resultado){
-        //     soma += resultado;
-        // }
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal(atual->arv_cidades, raiz_pessoa);
         atual = atual->prox;
     }
 
@@ -908,6 +905,31 @@ int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, Arv23_PES
         resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->cen);
         if (raiz_pessoa->nInfo == 2)
             resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->dir);
+    }
+
+    return resultado;
+}
+
+int quantas_pessoas_nao_moram_na_cidade_natal( Arv23_CIDADES *raiz_cidade, Arv23_PESSOAS *raiz_pessoa)
+{
+    int resultado = 0;
+
+    if (raiz_pessoa != NULL)
+    {
+        CIDADES *cidade_natal;
+        cidade_natal = cidade_dado_cep(raiz_cidade, raiz_pessoa->info1.cep_city_natal);
+
+        if (cidade_natal)
+        {
+            resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade_natal, raiz_pessoa);
+            if (raiz_pessoa->nInfo == 2)
+                resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade_natal, raiz_pessoa);
+        }
+
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_pessoa->esq, raiz_cidade);
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_pessoa->cen, raiz_cidade);
+        if (raiz_pessoa->nInfo == 2)
+            resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_pessoa->dir, raiz_cidade);
     }
 
     return resultado;
