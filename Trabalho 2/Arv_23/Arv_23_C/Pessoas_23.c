@@ -926,10 +926,10 @@ int quantas_pessoas_nao_moram_na_cidade_natal( Arv23_CIDADES *raiz_cidade, Arv23
                 resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade_natal, raiz_pessoa);
         }
 
-        resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_pessoa->esq, raiz_cidade);
-        resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_pessoa->cen, raiz_cidade);
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_cidade, raiz_pessoa->esq);
+        resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_cidade, raiz_pessoa->cen);
         if (raiz_pessoa->nInfo == 2)
-            resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_pessoa->dir, raiz_cidade);
+            resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_cidade, raiz_pessoa->dir);
     }
 
     return resultado;
