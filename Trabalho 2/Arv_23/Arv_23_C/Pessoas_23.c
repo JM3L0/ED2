@@ -874,7 +874,7 @@ int quantas_pessoas_nascidas_na_cidade_nao_moram_nela(CIDADES *cidade, Arv23_PES
     return resultado;
 }
 
-int quantas_pessoas_moram_na_cidade_não_nasceram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa)
+int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa)
 {
     int resultado = 0;
 

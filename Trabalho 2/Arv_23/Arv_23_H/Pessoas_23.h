@@ -58,4 +58,4 @@ int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, c
 int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, Arv23_PESSOAS *raiz_pessoa);
 // int quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(Arv23_PESSOAS *raiz_pessoa, Arv23_CIDADES *raiz_cidade);
 int quantas_pessoas_nascidas_na_cidade_nao_moram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa);
-int quantas_pessoas_moram_na_cidade_não_nasceram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa);
+int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa);
