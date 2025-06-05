@@ -914,16 +914,19 @@ int quantas_pessoas_nao_moram_na_cidade_natal( Arv23_CIDADES *raiz_cidade, Arv23
 {
     int resultado = 0;
 
-    if (raiz_pessoa != NULL)
+    if (raiz_pessoa != NULL && raiz_cidade != NULL)
     {
         CIDADES *cidade_natal;
         cidade_natal = cidade_dado_cep(raiz_cidade, raiz_pessoa->info1.cep_city_natal);
 
         if (cidade_natal)
         {
-            resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade_natal, raiz_pessoa);
-            if (raiz_pessoa->nInfo == 2)
-                resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade_natal, raiz_pessoa);
+            if (!cep_pertence_a_cidade(cidade_natal->arv_cep, raiz_pessoa->info1.cep_city_atual))
+            {
+                // A pessoa não mora na cidade natal
+                imprimir_dados_PESSOAS(&raiz_pessoa->info1);
+                resultado += 1;
+            }
         }
 
         resultado += quantas_pessoas_nao_moram_na_cidade_natal(raiz_cidade, raiz_pessoa->esq);
