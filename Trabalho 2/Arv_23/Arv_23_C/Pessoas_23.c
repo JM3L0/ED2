@@ -902,9 +902,9 @@ int quantas_pessoas_moram_na_cidade_nao_nasceram_nela(CIDADES *cidade, Arv23_PES
 
         // Percorre a árvore recursivamente
         resultado += quantas_pessoas_moram_na_cidade_não_nasceram_nela(cidade, raiz_pessoa->esq);
-        resultado += quantas_pessoas_moram_na_cidade_não_nasceram_nela(cidade, raiz_pessoa->cen);
+        resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->cen);
         if (raiz_pessoa->nInfo == 2)
-            resultado += quantas_pessoas_moram_na_cidade_não_nasceram_nela(cidade, raiz_pessoa->dir);
+            resultado += quantas_pessoas_moram_na_cidade_nao_nasceram_nela(cidade, raiz_pessoa->dir);
     }
 
     return resultado;
