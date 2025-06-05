@@ -147,7 +147,8 @@ void balancear_RB_CEP(CEP **raiz)
 // Função para buscar uma cep na árvore pelo nome
 CEP *existe_CEP(CEP *raiz, char *str_cep)
 {
-    CEP *resultado = NULL;
+    CEP *resultado;
+    resultado = NULL;
 
     if (raiz != NULL)
     {
@@ -267,10 +268,8 @@ CEP *encontrar_menor_CEP(CEP *raiz)
 void trocar_informacoes_CEP(CEP *cep1, CEP *cep2)
 {
     if (cep1 != NULL && cep2 != NULL)
-    {
         // Troca os valores de CEP
         strcpy(cep1->cep, cep2->cep);
-    }
 }
 
 // Função para mover um nó vermelho para a esquerda durante a remoção

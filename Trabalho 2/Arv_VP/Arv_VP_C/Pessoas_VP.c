@@ -445,10 +445,8 @@ int verifica_pessoa_nascida_ou_que_mora_na_cidade(PESSOAS *raiz_pessoa, char *ce
         if (strcasecmp(raiz_pessoa->cep_city_natal, cep) == 0 || strcasecmp(raiz_pessoa->cep_city_atual, cep) == 0)
             resultado = 1;
         else
-        {
             // Verifica recursivamente nas subárvores
-            resultado = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->esq, cep) || verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->dir, cep);
-        }
+            resultado = verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->esq, cep) || verifica_pessoa_nascida_ou_que_mora_na_cidade(raiz_pessoa->dir, cep);        
     }
     
     return resultado;

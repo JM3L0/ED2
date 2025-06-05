@@ -77,7 +77,6 @@ int capturar_data(DATA *data)
                     sucesso = 1;
                 else
                 {
-
                     limpar_buffer();
                     printf("Erro: data invalida!\n");
                 }
