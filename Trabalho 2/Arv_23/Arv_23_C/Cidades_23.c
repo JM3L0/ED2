@@ -63,7 +63,8 @@ int eh_folha_cidade(Arv23_CIDADES *no)
 
 CIDADES *buscar_info_cidade(Arv23_CIDADES *raiz, char *info)
 {
-    CIDADES *retorno = NULL;
+    CIDADES *retorno;
+    retorno = NULL;
 
     if (raiz != NULL)
     {
@@ -91,7 +92,8 @@ CIDADES *buscar_info_cidade(Arv23_CIDADES *raiz, char *info)
 //==============================================================================
 void adiciona_infos_cidade(Arv23_CIDADES **no, CIDADES info, Arv23_CIDADES *Sub_Arv_Info)
 {
-    Arv23_CIDADES *no_atual = *no;
+    Arv23_CIDADES *no_atual;
+    no_atual = *no;
     if (strcmp(info.nome_cidade, no_atual->info1.nome_cidade) > 0)
     {
         no_atual->info2 = info;
@@ -110,8 +112,10 @@ void adiciona_infos_cidade(Arv23_CIDADES **no, CIDADES info, Arv23_CIDADES *Sub_
 // Ajustado para CIDADES
 Arv23_CIDADES *quebra_no_cidade(Arv23_CIDADES **no, CIDADES info, CIDADES *sobe, Arv23_CIDADES *F_dir)
 {
-    Arv23_CIDADES *no_atual = *no;
-    Arv23_CIDADES *maior = NULL;
+    Arv23_CIDADES *no_atual;
+    no_atual = *no;
+    Arv23_CIDADES *maior;
+    maior = NULL;
     if (strcmp(info.nome_cidade, no_atual->info2.nome_cidade) > 0)
     {
         *sobe = no_atual->info2;
@@ -141,7 +145,8 @@ Arv23_CIDADES *quebra_no_cidade(Arv23_CIDADES **no, CIDADES info, CIDADES *sobe,
 int insere_23_cidade(Arv23_CIDADES **raiz, CIDADES valor)
 {
     CIDADES sobe;
-    Arv23_CIDADES *maiorNo = NULL;
+    Arv23_CIDADES *maiorNo;
+    maiorNo = NULL;
     int sucesso = 0;
 
     if (raiz != NULL)
@@ -150,11 +155,11 @@ int insere_23_cidade(Arv23_CIDADES **raiz, CIDADES valor)
 
         if (maiorNo != NULL)
         {
-            Arv23_CIDADES *nova_raiz = cria_no_cidade(sobe, *raiz, maiorNo);
+            Arv23_CIDADES *nova_raiz;
+            nova_raiz = cria_no_cidade(sobe, *raiz, maiorNo);
+
             if (nova_raiz != NULL)
-            {
                 *raiz = nova_raiz;
-            }
             else
             {
                 sucesso = 0;
@@ -169,7 +174,8 @@ int insere_23_cidade(Arv23_CIDADES **raiz, CIDADES valor)
 int insere_23_recursivo_cidade(Arv23_CIDADES **raiz, CIDADES valor, CIDADES *sobe, Arv23_CIDADES **maiorNo)
 {
     int sucesso = 0;
-    Arv23_CIDADES *no_atual = *raiz;
+    Arv23_CIDADES *no_atual;
+    no_atual = *raiz;
 
     if (no_atual == NULL)
     {
@@ -217,8 +223,10 @@ int insere_23_recursivo_cidade(Arv23_CIDADES **raiz, CIDADES valor, CIDADES *sob
 
             if (*maiorNo != NULL)
             {
-                CIDADES chave_que_subiu = *sobe;
-                Arv23_CIDADES *novo_filho_dir = *maiorNo;
+                CIDADES chave_que_subiu;
+                chave_que_subiu = *sobe;
+                Arv23_CIDADES *novo_filho_dir;
+                novo_filho_dir = *maiorNo;
                 *maiorNo = NULL;
                 memset(sobe, 0, sizeof(CIDADES));
 
@@ -297,23 +305,15 @@ void imprime_arvore_visual_cidade(Arv23_CIDADES *raiz, char *prefixo, int eh_ult
     if (raiz != NULL)
     {
         printf("%s", prefixo);
-        if (!eh_raiz)
-        {
-            printf("%s", eh_ultimo ? "`------ " : "+------ ");
-        }
-        else
-        {
-            printf(" \nRaiz--> ");
-        }
+        if (!eh_raiz)        
+            printf("%s", eh_ultimo ? "`------ " : "+------ ");        
+        else        
+            printf(" \nRaiz--> ");        
 
-        if (raiz->nInfo == 1)
-        {
-            printf("[%s]\n", raiz->info1.nome_cidade);
-        }
-        else if (raiz->nInfo == 2)
-        {
-            printf("[%s, %s]\n", raiz->info1.nome_cidade, raiz->info2.nome_cidade);
-        }
+        if (raiz->nInfo == 1)        
+            printf("[%s]\n", raiz->info1.nome_cidade);        
+        else if (raiz->nInfo == 2)        
+            printf("[%s, %s]\n", raiz->info1.nome_cidade, raiz->info2.nome_cidade);        
 
         char novo_prefixo[1024];
         sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));

@@ -34,7 +34,9 @@ int eh_folha_CEP(Arv23_CEP *no)
 // Busca o menor elemento
 Arv23_CEP *buscar_menor_elemento_CEP(Arv23_CEP *no)
 {
-    Arv23_CEP *atual = no;
+    Arv23_CEP *atual;
+    atual = no;
+
     while (atual != NULL && atual->esq != NULL)
         atual = atual->esq;
     return atual;
@@ -45,7 +47,8 @@ Arv23_CEP *buscar_menor_elemento_CEP(Arv23_CEP *no)
 //==============================================================================
 void adiciona_infos_CEP(Arv23_CEP **no, CEP info, Arv23_CEP *Sub_Arv_Info)
 {
-    Arv23_CEP *no_atual = *no;
+    Arv23_CEP *no_atual;
+    no_atual = *no;
     if (strcmp(info.cep, no_atual->info1.cep) > 0)
     {
         strcpy(no_atual->info2.cep, info.cep);
@@ -64,8 +67,11 @@ void adiciona_infos_CEP(Arv23_CEP **no, CEP info, Arv23_CEP *Sub_Arv_Info)
 // Quebra um nó cheio
 Arv23_CEP *quebra_no_CEP(Arv23_CEP **no, CEP info, CEP *sobe, Arv23_CEP *F_dir)
 {
-    Arv23_CEP *no_atual = *no;
-    Arv23_CEP *maior = NULL;
+    Arv23_CEP *maior;
+    Arv23_CEP *no_atual;
+    no_atual = *no;
+    maior = NULL;
+
     if (strcmp(info.cep, no_atual->info2.cep) > 0)
     {
         strcpy(sobe->cep, no_atual->info2.cep);
@@ -96,9 +102,10 @@ Arv23_CEP *quebra_no_CEP(Arv23_CEP **no, CEP info, CEP *sobe, Arv23_CEP *F_dir)
 // Inserção principal
 int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
 {
-    CEP sobe = {{0}};
-    Arv23_CEP *maiorNo = NULL;
     int sucesso = 0;
+    CEP sobe = {{0}};
+    Arv23_CEP *maiorNo;
+    maiorNo = NULL;
 
     if (raiz != NULL)
     {
@@ -106,7 +113,9 @@ int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
 
         if (maiorNo != NULL)
         {
-            Arv23_CEP *nova_raiz = cria_no_CEP(sobe, *raiz, maiorNo);
+            Arv23_CEP *nova_raiz;
+            nova_raiz = cria_no_CEP(sobe, *raiz, maiorNo);
+
             if (nova_raiz != NULL)
                 *raiz = nova_raiz;
             else
@@ -124,7 +133,8 @@ int insere_23_CEP(Arv23_CEP **raiz, CEP valor)
 int insere_23_recursivo_CEP(Arv23_CEP **raiz, CEP valor, CEP *sobe, Arv23_CEP **maiorNo)
 {
     int sucesso = 0;
-    Arv23_CEP *no_atual = *raiz;
+    Arv23_CEP *no_atual;
+    no_atual = *raiz;
 
     if (no_atual == NULL)
     {
@@ -170,8 +180,10 @@ int insere_23_recursivo_CEP(Arv23_CEP **raiz, CEP valor, CEP *sobe, Arv23_CEP **
 
             if (*maiorNo != NULL)
             {
-                CEP chave_que_subiu = *sobe;
-                Arv23_CEP *novo_filho_dir = *maiorNo;
+                Arv23_CEP *novo_filho_dir;
+                CEP chave_que_subiu;
+                chave_que_subiu = *sobe;
+                novo_filho_dir = *maiorNo;
                 *maiorNo = NULL;
                 sobe->cep[0] = '\0';
 
@@ -198,8 +210,10 @@ int insere_23_recursivo_CEP(Arv23_CEP **raiz, CEP valor, CEP *sobe, Arv23_CEP **
 //==============================================================================
 StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP valor)
 {
-    StatusRemocao status_final = OK;
-    Arv23_CEP *no_atual = *ponteiro_no_atual;
+    Arv23_CEP *no_atual;
+    StatusRemocao status_final;
+    status_final = OK;
+    no_atual = *ponteiro_no_atual;
 
     if (no_atual == NULL)
         status_final = INFO_NAO_ENCONTRADA;
@@ -250,9 +264,10 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
             }
             else
             {
-                Arv23_CEP *sucessor_node = NULL;
                 CEP valor_sucessor;
                 Arv23_CEP **ponteiro_subarvore_sucessor;
+                Arv23_CEP *sucessor_node;
+                sucessor_node = NULL;
 
                 if (indice_valor_removido == 0)
                 {
@@ -303,6 +318,7 @@ StatusRemocao remover_23_CEP_recursivo_CEP(Arv23_CEP **ponteiro_no_atual, CEP va
 StatusRemocao remover_23_CEP(Arv23_CEP **raiz, CEP valor)
 {
     int OPERACAO = 0;
+    
     if (raiz == NULL || *raiz == NULL)
     {
         // printf("Arvore vazia. Nao e possivel remover %s.\n", valor.cep);
@@ -314,8 +330,10 @@ StatusRemocao remover_23_CEP(Arv23_CEP **raiz, CEP valor)
 
         if (*raiz != NULL && (*raiz)->nInfo == 0)
         {
-            Arv23_CEP *raiz_antiga = *raiz;
-            Arv23_CEP *nova_raiz = raiz_antiga->esq ? raiz_antiga->esq : raiz_antiga->cen;
+            Arv23_CEP *raiz_antiga;
+            raiz_antiga = *raiz;
+            Arv23_CEP *nova_raiz;
+            nova_raiz = raiz_antiga->esq ? raiz_antiga->esq : raiz_antiga->cen;
             *raiz = nova_raiz;
             free(raiz_antiga);
             status_geral = OK;
@@ -333,10 +351,13 @@ StatusRemocao remover_23_CEP(Arv23_CEP **raiz, CEP valor)
 // Redistribuição com irmão esquerdo
 StatusRemocao redistribuir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_esq, int pos_filho)
 {
-    Arv23_CEP *filho = *ponteiro_filho_no_pai;
+    Arv23_CEP *filho;
+    filho = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
-    Arv23_CEP *filho_transferido = irmao_esq->dir;
-    Arv23_CEP *filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
+    Arv23_CEP *filho_transferido;
+    filho_transferido = irmao_esq->dir;
+    Arv23_CEP *filho_original_unico;
+    filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
 
     if (pos_filho == 1)
     {
@@ -364,10 +385,13 @@ StatusRemocao redistribuir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_
 // Redistribuição com irmão direito
 StatusRemocao redistribuir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_dir, int pos_filho)
 {
-    Arv23_CEP *filho = *ponteiro_filho_no_pai;
+    Arv23_CEP *filho;
+    filho = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
-    Arv23_CEP *filho_transferido = irmao_dir->esq;
-    Arv23_CEP *filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
+    Arv23_CEP *filho_transferido;
+    filho_transferido = irmao_dir->esq;
+    Arv23_CEP *filho_original_unico;
+    filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
 
     if (pos_filho == 0)
     {
@@ -398,13 +422,17 @@ StatusRemocao redistribuir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_p
 // Fusão com irmão esquerdo
 StatusRemocao fundir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_esq, int pos_filho)
 {
-    Arv23_CEP *filho_underflow = *ponteiro_filho_no_pai;
+    Arv23_CEP *filho_underflow;
+    filho_underflow = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
     StatusRemocao status_pai = OK;
 
-    Arv23_CEP *filho_u_remanescente = (filho_underflow->esq != NULL) ? filho_underflow->esq : filho_underflow->cen;
-    Arv23_CEP *irmao_e_esq = irmao_esq->esq;
-    Arv23_CEP *irmao_e_cen = irmao_esq->cen;
+    Arv23_CEP *filho_u_remanescente;
+    filho_u_remanescente = (filho_underflow->esq != NULL) ? filho_underflow->esq : filho_underflow->cen;
+    Arv23_CEP *irmao_e_esq;
+    irmao_e_esq = irmao_esq->esq;
+    Arv23_CEP *irmao_e_cen;
+    irmao_e_cen = irmao_esq->cen;
 
     if (pai->nInfo == 1)
     {
@@ -454,13 +482,17 @@ StatusRemocao fundir_com_irmao_esquerdo_CEP(Arv23_CEP **ponteiro_filho_no_pai, A
 // Fusão com irmão direito
 StatusRemocao fundir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai, Arv23_CEP *irmao_dir, int pos_filho)
 {
-    Arv23_CEP *filho_underflow = *ponteiro_filho_no_pai;
+    Arv23_CEP *filho_underflow;
+    filho_underflow = *ponteiro_filho_no_pai;
     CEP chave_pai_desce;
     StatusRemocao status_pai = OK;
 
-    Arv23_CEP *filho_u_remanescente = (filho_underflow->esq != NULL) ? filho_underflow->esq : filho_underflow->cen;
-    Arv23_CEP *irmao_d_esq = irmao_dir->esq;
-    Arv23_CEP *irmao_d_cen = irmao_dir->cen;
+    Arv23_CEP *filho_u_remanescente;
+    filho_u_remanescente = (filho_underflow->esq != NULL) ? filho_underflow->esq : filho_underflow->cen;
+    Arv23_CEP *irmao_d_esq;
+    irmao_d_esq = irmao_dir->esq;
+    Arv23_CEP *irmao_d_cen;
+    irmao_d_cen = irmao_dir->cen;
 
     if (pai->nInfo == 1)
     {
@@ -515,7 +547,8 @@ StatusRemocao fundir_com_irmao_direito_CEP(Arv23_CEP **ponteiro_filho_no_pai, Ar
 StatusRemocao tratar_underflow_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP *pai)
 {
     StatusRemocao status_final = OK;
-    Arv23_CEP *filho_com_underflow = *ponteiro_filho_no_pai;
+    Arv23_CEP *filho_com_underflow;
+    filho_com_underflow = *ponteiro_filho_no_pai;
 
     if (filho_com_underflow == NULL || filho_com_underflow->nInfo > 0)
         status_final = OK;
@@ -523,8 +556,10 @@ StatusRemocao tratar_underflow_CEP(Arv23_CEP **ponteiro_filho_no_pai, Arv23_CEP 
         status_final = UNDERFLOW;
     else
     {
-        Arv23_CEP *irmao_esq = NULL;
-        Arv23_CEP *irmao_dir = NULL;
+        Arv23_CEP *irmao_esq;
+        irmao_esq = NULL;
+        Arv23_CEP *irmao_dir;
+        irmao_dir = NULL;
         int pos_filho = -1;
 
         if (pai->esq == filho_com_underflow)

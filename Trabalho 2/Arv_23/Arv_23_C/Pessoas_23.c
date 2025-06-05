@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "../Arv_23_H/STRUCTS_23.h"
-#include "../Arv_23_H/PESSOAS_23.h"
+#include "../Arv_23_H/Pessoas_23.h"
 #include "../Arv_23_H/Cidades_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
@@ -60,7 +60,8 @@ PESSOAS cadastra_pessoa(char *cep_natal, char *cep_atual, int *sucesso)
 
 Arv23_PESSOAS *cria_no_PESSOAS(PESSOAS info, Arv23_PESSOAS *F_esq, Arv23_PESSOAS *F_cen)
 {
-    Arv23_PESSOAS *no = (Arv23_PESSOAS *)malloc(sizeof(Arv23_PESSOAS));
+    Arv23_PESSOAS *no;
+    no = (Arv23_PESSOAS *)malloc(sizeof(Arv23_PESSOAS));
     if (no != NULL)
     {
         no->info1 = info; // Copia todos os campos
@@ -81,7 +82,8 @@ int eh_folha_PESSOAS(Arv23_PESSOAS *no)
 // Busca o menor elemento
 Arv23_PESSOAS *buscar_menor_elemento_PESSOAS(Arv23_PESSOAS *no)
 {
-    Arv23_PESSOAS *atual = no;
+    Arv23_PESSOAS *atual;
+    atual = no;
     while (atual != NULL && atual->esq != NULL)
     atual = atual->esq;
     return atual;
@@ -89,7 +91,8 @@ Arv23_PESSOAS *buscar_menor_elemento_PESSOAS(Arv23_PESSOAS *no)
 
 PESSOAS *buscar_info_pessoa(Arv23_PESSOAS *raiz, char *info)
 {
-    PESSOAS *retorno = NULL;
+    PESSOAS *retorno;
+    retorno = NULL;
 
     if (raiz != NULL)
     {
@@ -119,7 +122,8 @@ PESSOAS *buscar_info_pessoa(Arv23_PESSOAS *raiz, char *info)
 // Adiciona uma nova informação ao nó
 void adiciona_infos_PESSOAS(Arv23_PESSOAS **no, PESSOAS info, Arv23_PESSOAS *Sub_Arv_Dir)
 {
-    Arv23_PESSOAS *no_atual = *no;
+    Arv23_PESSOAS *no_atual;
+    no_atual = *no;
     if (no_atual != NULL) { // Adiciona verificação de nulidade
         if (strcmp(info.CPF, no_atual->info1.CPF) > 0)
         {
@@ -141,8 +145,10 @@ void adiciona_infos_PESSOAS(Arv23_PESSOAS **no, PESSOAS info, Arv23_PESSOAS *Sub
 // Quebra um nó cheio
 Arv23_PESSOAS *quebra_no_PESSOAS(Arv23_PESSOAS **no, PESSOAS info, PESSOAS *sobe, Arv23_PESSOAS *F_dir)
 {
-    Arv23_PESSOAS *no_atual = *no;
-    Arv23_PESSOAS *maior = NULL;
+    Arv23_PESSOAS *no_atual;
+    no_atual = *no;
+    Arv23_PESSOAS *maior;
+    maior = NULL;
     if (strcmp(info.CPF, no_atual->info2.CPF) > 0)
     {
         *sobe = no_atual->info2;
@@ -173,7 +179,8 @@ Arv23_PESSOAS *quebra_no_PESSOAS(Arv23_PESSOAS **no, PESSOAS info, PESSOAS *sobe
 int insere_23_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor)
 {
     PESSOAS sobe = {0};
-    Arv23_PESSOAS *maiorNo = NULL;
+    Arv23_PESSOAS *maiorNo;
+    maiorNo = NULL;
     int sucesso = 0;
 
     if (raiz != NULL)
@@ -182,11 +189,10 @@ int insere_23_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor)
 
         if (maiorNo != NULL)
         {
-            Arv23_PESSOAS *nova_raiz = cria_no_PESSOAS(sobe, *raiz, maiorNo);
-            if (nova_raiz != NULL)
-            {
-                *raiz = nova_raiz;
-            }
+            Arv23_PESSOAS *nova_raiz;
+            nova_raiz = cria_no_PESSOAS(sobe, *raiz, maiorNo);
+            if (nova_raiz != NULL)            
+                *raiz = nova_raiz;            
             else
             {
                 sucesso = 0;
@@ -202,7 +208,8 @@ int insere_23_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor)
 int insere_23_recursivo_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor, PESSOAS *sobe, Arv23_PESSOAS **maiorNo)
 {
     int sucesso = 0;
-    Arv23_PESSOAS *no_atual = *raiz;
+    Arv23_PESSOAS *no_atual;
+    no_atual = *raiz;
     
     if (no_atual == NULL)
     {
@@ -266,10 +273,8 @@ int insere_23_recursivo_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor, PESSOAS *so
                     sucesso = (*maiorNo != NULL);
                 }
             }
-            else
-            {
+            else            
                 sucesso = sucesso_rec;
-            }
         }
     }
     return sucesso;
@@ -283,12 +288,11 @@ int insere_23_recursivo_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor, PESSOAS *so
 StatusRemocao remover_23_PESSOAS_recursivo(Arv23_PESSOAS **ponteiro_no_atual, PESSOAS valor)
 {
     StatusRemocao status_final = OK;
-    Arv23_PESSOAS *no_atual = *ponteiro_no_atual;
+    Arv23_PESSOAS *no_atual;
+    no_atual = *ponteiro_no_atual;
 
     if (no_atual == NULL)
-    {
         status_final = INFO_NAO_ENCONTRADA;
-    }
     else
     {
         Arv23_PESSOAS **proximo_ponteiro_recursao = NULL;
@@ -332,7 +336,8 @@ StatusRemocao remover_23_PESSOAS_recursivo(Arv23_PESSOAS **ponteiro_no_atual, PE
             }
             else
             {
-                Arv23_PESSOAS *sucessor_node = NULL;
+                Arv23_PESSOAS *sucessor_node;
+                sucessor_node = NULL;
                 PESSOAS valor_sucessor;
                 Arv23_PESSOAS **ponteiro_subarvore_sucessor;
 
@@ -395,8 +400,10 @@ StatusRemocao remover_23_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor)
 
         if (*raiz != NULL && (*raiz)->nInfo == 0)
         {
-            Arv23_PESSOAS *raiz_antiga = *raiz;
-            Arv23_PESSOAS *nova_raiz = raiz_antiga->esq ? raiz_antiga->esq : raiz_antiga->cen;
+            Arv23_PESSOAS *raiz_antiga;
+            raiz_antiga = *raiz;
+            Arv23_PESSOAS *nova_raiz;
+            nova_raiz = raiz_antiga->esq ? raiz_antiga->esq : raiz_antiga->cen;
             *raiz = nova_raiz;
             free(raiz_antiga);
             status_geral = OK;
@@ -413,10 +420,13 @@ StatusRemocao remover_23_PESSOAS(Arv23_PESSOAS **raiz, PESSOAS valor)
 // Redistribuição com irmão esquerdo
 StatusRemocao redistribuir_com_irmao_esquerdo_PESSOAS(Arv23_PESSOAS **ponteiro_filho_no_pai, Arv23_PESSOAS *pai, Arv23_PESSOAS *irmao_esq, int pos_filho)
 {
-    Arv23_PESSOAS *filho = *ponteiro_filho_no_pai;
+    Arv23_PESSOAS *filho;
+    filho = *ponteiro_filho_no_pai;
     PESSOAS chave_pai_desce;
-    Arv23_PESSOAS *filho_transferido = irmao_esq->dir;
-    Arv23_PESSOAS *filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
+    Arv23_PESSOAS *filho_transferido;
+    filho_transferido = irmao_esq->dir;
+    Arv23_PESSOAS *filho_original_unico;
+    filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
 
     if (pos_filho == 1)
     {
@@ -444,10 +454,13 @@ StatusRemocao redistribuir_com_irmao_esquerdo_PESSOAS(Arv23_PESSOAS **ponteiro_f
 // Redistribuição com irmão direito
 StatusRemocao redistribuir_com_irmao_direito_PESSOAS(Arv23_PESSOAS **ponteiro_filho_no_pai, Arv23_PESSOAS *pai, Arv23_PESSOAS *irmao_dir, int pos_filho)
 {
-    Arv23_PESSOAS *filho = *ponteiro_filho_no_pai;
+    Arv23_PESSOAS *filho;
+    filho = *ponteiro_filho_no_pai;
     PESSOAS chave_pai_desce;
-    Arv23_PESSOAS *filho_transferido = irmao_dir->esq;
-    Arv23_PESSOAS *filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
+    Arv23_PESSOAS *filho_transferido;
+    filho_transferido = irmao_dir->esq;
+    Arv23_PESSOAS *filho_original_unico;
+    filho_original_unico = (filho->esq != NULL) ? filho->esq : filho->cen;
 
     if (pos_filho == 0)
     {
@@ -478,7 +491,8 @@ StatusRemocao redistribuir_com_irmao_direito_PESSOAS(Arv23_PESSOAS **ponteiro_fi
 // Fusão com irmão esquerdo
 StatusRemocao fundir_com_irmao_esquerdo_PESSOAS(Arv23_PESSOAS **ponteiro_filho_no_pai, Arv23_PESSOAS *pai, Arv23_PESSOAS *irmao_esq, int pos_filho)
 {
-    Arv23_PESSOAS *filho_underflow = *ponteiro_filho_no_pai;
+    Arv23_PESSOAS *filho_underflow;
+    filho_underflow = *ponteiro_filho_no_pai;
     PESSOAS chave_pai_desce;
     StatusRemocao status_pai = OK;
 
@@ -532,13 +546,17 @@ StatusRemocao fundir_com_irmao_esquerdo_PESSOAS(Arv23_PESSOAS **ponteiro_filho_n
 // Fusão com irmão direito
 StatusRemocao fundir_com_irmao_direito_PESSOAS(Arv23_PESSOAS **ponteiro_filho_no_pai, Arv23_PESSOAS *pai, Arv23_PESSOAS *irmao_dir, int pos_filho)
 {
-    Arv23_PESSOAS *filho_underflow = *ponteiro_filho_no_pai;
+    Arv23_PESSOAS *filho_underflow;
+    filho_underflow = *ponteiro_filho_no_pai;
     PESSOAS chave_pai_desce;
     StatusRemocao status_pai = OK;
 
-    Arv23_PESSOAS *filho_u_remanescente = (filho_underflow->esq != NULL) ? filho_underflow->esq : filho_underflow->cen;
-    Arv23_PESSOAS *irmao_d_esq = irmao_dir->esq;
-    Arv23_PESSOAS *irmao_d_cen = irmao_dir->cen;
+    Arv23_PESSOAS *filho_u_remanescente;
+    filho_u_remanescente = (filho_underflow->esq != NULL) ? filho_underflow->esq : filho_underflow->cen;
+    Arv23_PESSOAS *irmao_d_esq;
+    irmao_d_esq = irmao_dir->esq;
+    Arv23_PESSOAS *irmao_d_cen;
+    irmao_d_cen = irmao_dir->cen;
 
     if (pai->nInfo == 1)
     {
@@ -592,20 +610,19 @@ StatusRemocao fundir_com_irmao_direito_PESSOAS(Arv23_PESSOAS **ponteiro_filho_no
 StatusRemocao tratar_underflow_PESSOAS(Arv23_PESSOAS **ponteiro_filho_no_pai, Arv23_PESSOAS *pai)
 {
     StatusRemocao status_final = OK;
-    Arv23_PESSOAS *filho_com_underflow = *ponteiro_filho_no_pai;
+    Arv23_PESSOAS *filho_com_underflow;
+    filho_com_underflow = *ponteiro_filho_no_pai;
 
     if (filho_com_underflow == NULL || filho_com_underflow->nInfo > 0)
-    {
         status_final = OK;
-    }
     else if (pai == NULL)
-    {
         status_final = UNDERFLOW;
-    }
     else
     {
-        Arv23_PESSOAS *irmao_esq = NULL;
-        Arv23_PESSOAS *irmao_dir = NULL;
+        Arv23_PESSOAS *irmao_esq;
+        irmao_esq = NULL;
+        Arv23_PESSOAS *irmao_dir;
+        irmao_dir = NULL;
         int pos_filho = -1;
 
         if (pai->esq == filho_com_underflow)
