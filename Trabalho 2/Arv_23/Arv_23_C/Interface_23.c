@@ -494,7 +494,7 @@ void menu_geral()
                 cidade = buscar_info_cidade(estado->arv_cidades, nome_cidade);
                 if (cidade)
                 {
-                    retorno = quantas_pessoas_nao_moram_na_cidade_natal_PESSOAS(cidade, raiz_pessoas);
+                    retorno = quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoas);
                     printf("Total de pessoas que moram na cidade %s e nao nasceram nela: %d\n", cidade->nome_cidade, retorno);
                 }
                 else
