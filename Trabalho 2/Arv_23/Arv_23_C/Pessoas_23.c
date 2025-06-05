@@ -787,7 +787,7 @@ int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, c
 /////////////
 int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, Arv23_PESSOAS *raiz_pessoa)
 {
-    int resultado, soma = 0;
+    int resultado = 0, soma = 0;
     ESTADOS *atual;
     atual = cabeca_estado;
 
