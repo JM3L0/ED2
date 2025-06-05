@@ -927,15 +927,15 @@ int quantas_pessoas_nao_moram_na_cidade_natal( Arv23_CIDADES *raiz_cidade, Arv23
                 imprimir_dados_PESSOAS(&raiz_pessoa->info1);
                 resultado += 1;
             }
-
-            if (raiz_pessoa->nInfo == 2)
+        }
+        if (raiz_pessoa->nInfo == 2)
+        {
+            cidade_natal = cidade_dado_cep(raiz_cidade, raiz_pessoa->info2.cep_city_natal);
+            if (!cep_pertence_a_cidade(cidade_natal->arv_cep, raiz_pessoa->info2.cep_city_atual))
             {
-                if (!cep_pertence_a_cidade(cidade_natal->arv_cep, raiz_pessoa->info2.cep_city_atual))
-                {
-                    // A pessoa não mora na cidade natal
-                    imprimir_dados_PESSOAS(&raiz_pessoa->info2);
-                    resultado += 1;
-                }
+                // A pessoa não mora na cidade natal
+                imprimir_dados_PESSOAS(&raiz_pessoa->info2);
+                resultado += 1;
             }
         }
 
