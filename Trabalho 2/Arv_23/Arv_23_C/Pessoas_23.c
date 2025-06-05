@@ -787,7 +787,7 @@ int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, c
 /////////////
 int quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(ESTADOS *cabeca_estado, Arv23_PESSOAS *raiz_pessoa)
 {
-    int resultado = 0, soma = 0;
+    int resultado = 0;;
     ESTADOS *atual;
     atual = cabeca_estado;
 
@@ -926,6 +926,16 @@ int quantas_pessoas_nao_moram_na_cidade_natal( Arv23_CIDADES *raiz_cidade, Arv23
                 // A pessoa não mora na cidade natal
                 imprimir_dados_PESSOAS(&raiz_pessoa->info1);
                 resultado += 1;
+            }
+
+            if (raiz_pessoa->nInfo == 2)
+            {
+                if (!cep_pertence_a_cidade(cidade_natal->arv_cep, raiz_pessoa->info2.cep_city_atual))
+                {
+                    // A pessoa não mora na cidade natal
+                    imprimir_dados_PESSOAS(&raiz_pessoa->info2);
+                    resultado += 1;
+                }
             }
         }
 
