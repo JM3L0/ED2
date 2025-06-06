@@ -878,3 +878,39 @@ int quantas_pessoas_nao_moram_na_cidade_natal( Arv23_CIDADES *raiz_cidade, Arv23
 
     return resultado;
 }
+
+int quantas_pessoas_nascidas_na_cidade_nao_moram_nela(CIDADES *cidade, Arv23_PESSOAS *raiz_pessoa)
+{
+    int resultado = 0;
+
+    if (raiz_pessoa != NULL)
+    {
+        // Verificação do primeiro registro (sempre presente)
+        if (cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info1.cep_city_natal)) {
+            // A pessoa nasceu na cidade
+            if (!cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info1.cep_city_atual)) {
+                // A pessoa não mora mais na cidade natal
+                resultado += 1;
+            }
+        }
+
+        // Verificação do segundo registro (se existir)
+        if (raiz_pessoa->nInfo == 2) {
+            if (cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info2.cep_city_natal)) {
+                // A pessoa nasceu na cidade
+                if (!cep_pertence_a_cidade(cidade->arv_cep, raiz_pessoa->info2.cep_city_atual)) {
+                    // A pessoa não mora mais na cidade natal
+                    resultado += 1;
+                }
+            }
+        }
+
+        // Percorre a árvore recursivamente
+        resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoa->esq);
+        resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoa->cen);
+        if (raiz_pessoa->nInfo == 2)
+            resultado += quantas_pessoas_nascidas_na_cidade_nao_moram_nela(cidade, raiz_pessoa->dir);
+    }
+
+    return resultado;
+}
