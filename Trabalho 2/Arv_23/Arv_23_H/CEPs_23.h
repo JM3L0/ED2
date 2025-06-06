@@ -42,7 +42,6 @@ void libera_arvore_CEP(Arv23_CEP **raiz);
 // FUNÇÕES DE EXIBIÇÃO E PERCURSO DA ÁRVORE 2-3
 //==============================================================================
 void imprime_23_em_ordem_CEP(Arv23_CEP *raiz);
-void imprime_arvore_visual_CEP(Arv23_CEP *raiz, char *prefixo, int eh_ultimo, int eh_raiz);
 
 //==============================================================================
 // ESPECIFICAS DO TRABALHO

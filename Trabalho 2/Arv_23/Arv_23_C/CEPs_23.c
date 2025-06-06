@@ -638,40 +638,6 @@ void imprime_23_em_ordem_CEP(Arv23_CEP *raiz)
     }
 }
 
-// Impressão visual
-void imprime_arvore_visual_CEP(Arv23_CEP *raiz, char *prefixo, int eh_ultimo, int eh_raiz)
-{
-    if (raiz != NULL)
-    {
-        printf("%s", prefixo);
-        printf("%s", eh_raiz ? " \nRaiz--> " : (eh_ultimo ? "`------ " : "+------ "));
-
-        if (raiz->nInfo == 1)
-            printf("[%s]\n", raiz->info1.cep);
-        else if (raiz->nInfo == 2)
-            printf("[%s, %s]\n", raiz->info1.cep, raiz->info2.cep);
-
-        char novo_prefixo[1024];
-        sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
-
-        int num_filhos = 0;
-        if (raiz->esq)
-            num_filhos++;
-        if (raiz->cen)
-            num_filhos++;
-        if (raiz->dir)
-            num_filhos++;
-
-        int filhos_impressos = 0;
-        if (raiz->esq)
-            imprime_arvore_visual_CEP(raiz->esq, novo_prefixo, ++filhos_impressos == num_filhos, 0);
-        if (raiz->cen)
-            imprime_arvore_visual_CEP(raiz->cen, novo_prefixo, ++filhos_impressos == num_filhos, 0);
-        if (raiz->dir)
-            imprime_arvore_visual_CEP(raiz->dir, novo_prefixo, ++filhos_impressos == num_filhos, 0);
-    }
-}
-
 //==============================================================================
 // ESPECIFICAS DO TRABALHO
 //==============================================================================

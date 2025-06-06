@@ -713,39 +713,6 @@ void imprime_23_em_ordem_PESSOAS(Arv23_PESSOAS *raiz)
     }
 }
 
-// Impressão visual
-void imprime_arvore_visual_PESSOAS(Arv23_PESSOAS *raiz, char *prefixo, int eh_ultimo, int eh_raiz)
-{
-    if (raiz != NULL)
-    {
-        printf("%s", prefixo);
-        printf("%s", eh_raiz ? " Raiz--> " : (eh_ultimo ? "`------ " : "+------ "));
-
-        if (raiz->nInfo == 1)
-            printf("[%s]\n", raiz->info1.CPF);
-        else if (raiz->nInfo == 2)
-            printf("[%s, %s]\n", raiz->info1.CPF, raiz->info2.CPF);
-
-        char novo_prefixo[1024];
-        sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
-
-        int num_filhos = 0;
-        if (raiz->esq) num_filhos++;
-        if (raiz->cen) num_filhos++;
-        if (raiz->dir) num_filhos++;
-
-        int filhos_impressos = 0;
-        if (raiz->esq)
-            imprime_arvore_visual_PESSOAS(raiz->esq, novo_prefixo, ++filhos_impressos == num_filhos, 0);
-
-        if (raiz->cen)
-            imprime_arvore_visual_PESSOAS(raiz->cen, novo_prefixo, ++filhos_impressos == num_filhos, 0);
-
-        if (raiz->dir)
-            imprime_arvore_visual_PESSOAS(raiz->dir, novo_prefixo, ++filhos_impressos == num_filhos, 0);
-    }
-}
-
 //==============================================================================
 // FUNÇÕES ESPECIFÍCAS DO TRABALHO
 //==============================================================================

@@ -348,26 +348,19 @@ void menu_geral()
         }
         case 6:
         {
-            imprime_arvore_visual_PESSOAS(raiz_pessoas, "", 1, 1);
             PESSOAS pessoa_remover;
             printf("=== Remover Pessoa (pelo CPF) ===\n");
             sucesso = capturar_cpf(pessoa_remover.CPF);
 
             StatusRemocao status = remover_23_PESSOAS(&raiz_pessoas, pessoa_remover);
             mensagens_do_remover(status);
-
-            imprime_arvore_visual_PESSOAS(raiz_pessoas, "", 1, 1);
-
             break;
         }
         case 7:
         {
             ESTADOS *estado_populoso = verifica_estado_mais_populoso(cabeca_estados);
             if (estado_populoso)
-            {
                 printf("Estado mais populoso: %s com populacao de %d\n", estado_populoso->nome_estado, estado_populoso->populacao_estado);
-                imprime_arvore_visual_cidade(estado_populoso->arv_cidades, "", 1, 1);
-            }
             else
                 printf("Nenhum estado cadastrado!\n");
             break;
@@ -520,10 +513,7 @@ void menu_geral()
             ESTADOS *estado;
             estado = existe_estado(cabeca_estados, nome_estado);
             if (estado)
-            {
                 imprime_23_em_ordem_cidade(estado->arv_cidades);
-                imprime_arvore_visual_cidade(estado->arv_cidades, "", 1, 1);
-            }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
             break;
@@ -543,10 +533,7 @@ void menu_geral()
                 CIDADES *cidade;
                 cidade = buscar_info_cidade(estado->arv_cidades, nome_cidade);
                 if (cidade)
-                {
                     imprime_23_em_ordem_CEP(cidade->arv_cep);
-                    imprime_arvore_visual_CEP(cidade->arv_cep, "", 1, 1);
-                }
                 else
                     printf("Cidade %s nao encontrada no estado %s!\n", nome_cidade, nome_estado);
             }
@@ -557,10 +544,7 @@ void menu_geral()
         case 17:
         {
             if (raiz_pessoas != NULL)
-            {
                 imprime_23_em_ordem_PESSOAS(raiz_pessoas);
-                imprime_arvore_visual_PESSOAS(raiz_pessoas, "", 1, 1);
-            }
             else
                 printf("Nenhuma pessoa cadastrada!\n");
             break;

@@ -48,7 +48,6 @@ void libera_arvore_PESSOAS(Arv23_PESSOAS **raiz);
 //==============================================================================
 void imprimir_dados_PESSOAS(PESSOAS *pessoa);
 void imprime_23_em_ordem_PESSOAS(Arv23_PESSOAS *raiz);
-void imprime_arvore_visual_PESSOAS(Arv23_PESSOAS *raiz, char *prefixo, int eh_ultimo, int eh_raiz);
 int verificar_se_existe_pessoa_associada_a_um_CEP(Arv23_PESSOAS *raiz_pessoas, char *CEP);
 
 //==============================================================================
