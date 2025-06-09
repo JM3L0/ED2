@@ -33,6 +33,8 @@ arv_VP *existe_valor(arv_VP *raiz, int valor);
 void imprimir_no(arv_VP *no);
 void imprimir_em_ordem(arv_VP *raiz);
 void imprimir_todos(arv_VP *raiz);
+void imprimir_arvore_visual(arv_VP *raiz);
+void imprimir_arvore_recursivo(arv_VP *raiz, char *prefixo, int eh_ultimo, int eh_raiz);
 
 // Funções de desalocação
 void libera_no(arv_VP **raiz);
@@ -222,6 +224,53 @@ void imprimir_todos(arv_VP *raiz)
 }
 
 // =================================
+// IMPRESSÃO VISUAL
+// =================================
+
+void imprimir_arvore_visual(arv_VP *raiz)
+{
+    imprimir_arvore_recursivo(raiz, "", 1, 1);
+}
+
+void imprimir_arvore_recursivo(arv_VP *raiz, char *prefixo, int eh_ultimo, int eh_raiz)
+{
+    if (raiz != NULL)
+    {
+        printf("%s", prefixo);
+        if (!eh_raiz)
+        {
+            printf("%s", eh_ultimo ? "`------ " : "+------ ");
+        }
+        else
+        {
+            printf(" Raiz--> ");
+        }
+
+        // Mostra o valor e a cor do nó
+        printf("[%d](%s)\n", raiz->valor, raiz->cor == RED ? "V" : "P");
+
+        char novo_prefixo[1024];
+        sprintf(novo_prefixo, "%s%s", prefixo, eh_raiz ? "         " : (eh_ultimo ? "         " : "|        "));
+
+        int num_filhos = 0;
+        if (raiz->esq) num_filhos++;
+        if (raiz->dir) num_filhos++;
+
+        int filhos_impressos = 0;
+        if (raiz->esq != NULL)
+        {
+            filhos_impressos++;
+            imprimir_arvore_recursivo(raiz->esq, novo_prefixo, filhos_impressos == num_filhos, 0);
+        }
+        if (raiz->dir != NULL)
+        {
+            filhos_impressos++;
+            imprimir_arvore_recursivo(raiz->dir, novo_prefixo, filhos_impressos == num_filhos, 0);
+        }
+    }
+}
+
+// =================================
 // DESALOCAÇÃO
 // =================================
 
@@ -403,6 +452,10 @@ int main()
 {
     arv_VP *raiz = NULL;
     int opcao, valor, resultado;
+
+    for (int i = 0; i < 10; i++) {
+        inserir(&raiz, alocaNo(i + 1)); // Inserindo valores de 1 a 10
+    }
     
     do {
         printf("\n==== MENU ARVORE VERMELHO-PRETA ====\n");
@@ -410,6 +463,7 @@ int main()
         printf("2. Remover valor\n");
         printf("3. Buscar valor\n");
         printf("4. Imprimir arvore\n");
+        printf("5. Imprimir arvore visual\n");
         printf("0. Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -445,6 +499,9 @@ int main()
                 
             case 4:
                 imprimir_todos(raiz);
+                break;
+            case 5:
+                imprimir_arvore_visual(raiz);
                 break;
                 
             case 0:
