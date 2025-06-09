@@ -444,6 +444,69 @@ int remover_arvore(arv_VP **raiz, int valor)
     return removeu;
 }
 
+int altura_da_arvore(arv_VP *raiz){
+
+    int altura = 0;
+
+    if (raiz == NULL){
+        altura = -1;
+    }else{
+        int altura_esq = altura_da_arvore(raiz->esq);
+        int altura_dir = altura_da_arvore(raiz->dir);
+
+        if (altura_esq > altura_dir){
+            altura = altura_esq + 1;
+        }else{
+            altura = altura_dir + 1;
+        }
+    }
+    return altura;
+}
+
+int conta_no_preto(arv_VP *raiz){
+
+    int pretos = 0;
+    if (raiz != NULL){
+        if (raiz->cor == BLACK){
+            pretos++;
+        }
+        pretos += conta_no_preto(raiz->esq);
+        pretos += conta_no_preto(raiz->dir);
+    }
+    return pretos;
+}
+
+int conta_no_vermelho(arv_VP *raiz){
+
+    int vermelhos = 0;
+    if (raiz != NULL){
+        if (raiz->cor == RED){
+            vermelhos++;
+        }
+        vermelhos += conta_no_vermelho(raiz->esq);
+        vermelhos += conta_no_vermelho(raiz->dir);
+    }
+    return vermelhos;
+}
+
+int altura_negra(arv_VP *raiz){
+    int altura = 0;
+
+    if (raiz == NULL){
+        altura = -1; // Considera a altura negra como -1 para o nó nulo
+    }else{
+        int altura_esq = altura_negra(raiz->esq);
+        int altura_dir = altura_negra(raiz->dir);
+
+        if (altura_esq > altura_dir){
+            altura = altura_esq + (raiz->cor == BLACK ? 1 : 0);
+        }else{
+            altura = altura_dir + (raiz->cor == BLACK ? 1 : 0);
+        }
+    }
+    return altura;
+}
+
 // =================================
 // FUNÇÃO PRINCIPAL
 // =================================
@@ -453,7 +516,7 @@ int main()
     arv_VP *raiz = NULL;
     int opcao, valor, resultado;
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 7; i++) {
         inserir(&raiz, alocaNo(i + 1)); // Inserindo valores de 1 a 10
     }
     
@@ -464,6 +527,10 @@ int main()
         printf("3. Buscar valor\n");
         printf("4. Imprimir arvore\n");
         printf("5. Imprimir arvore visual\n");
+        printf("6. Altura da arvore\n");
+        printf("7. Contar nos pretos\n");
+        printf("8. Contar nos vermelhos\n");
+        printf("9. Altura negra da arvore\n");
         printf("0. Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -502,6 +569,17 @@ int main()
                 break;
             case 5:
                 imprimir_arvore_visual(raiz);
+            case 6:
+                printf("Altura da arvore: %d\n", altura_da_arvore(raiz));
+                break;
+            case 7:
+                printf("Numero de nos pretos: %d\n", conta_no_preto(raiz));
+                break;
+            case 8:
+                printf("Numero de nos vermelhos: %d\n", conta_no_vermelho(raiz));
+                break;
+            case 9:
+                printf("Altura negra da arvore: %d\n", altura_negra(raiz));
                 break;
                 
             case 0:
