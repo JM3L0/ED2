@@ -409,9 +409,9 @@ int main()
         printf("1. Inserir valor\n");
         printf("2. Remover valor\n");
         printf("3. Buscar valor\n");
-        printf("4. Imprimir árvore\n");
+        printf("4. Imprimir arvore\n");
         printf("0. Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         
         switch(opcao) {
