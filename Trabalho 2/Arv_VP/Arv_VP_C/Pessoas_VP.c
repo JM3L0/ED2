@@ -194,7 +194,6 @@ void imprimir_pessoa(PESSOAS *pessoa)
         printf("CEP Natal: %s\n", pessoa->cep_city_natal);
         printf("CEP Atual: %s\n", pessoa->cep_city_atual);
         imprimir_data(pessoa->data_nasc);
-        // printf("Cor: %s\n", pessoa->cor == RED ? "Vermelho" : "Preto");
 
         printf("------------------------\n");
     }

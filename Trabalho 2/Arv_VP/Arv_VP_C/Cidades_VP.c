@@ -181,7 +181,6 @@ void imprimir_cidade(CIDADES *cidade)
     {
         printf("Cidade: %s\n", cidade->nome_cidade);
         printf("Populacao: %d\n", cidade->populacao_city);
-        // printf("Cor: %s\n", cidade->cor == RED ? "Vermelho" : "Preto");
         if(cidade->cep != NULL)
             imprimir_todos_CEP(cidade->cep); // imprime a árvore de cep da cidade
         printf("------------------------\n");

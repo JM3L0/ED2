@@ -171,7 +171,6 @@ void imprimir_CEP(CEP *Cep)
     if (Cep != NULL)
     {
         printf("CEP: %s\n", Cep->cep);
-        // printf("Cor: %s\n", Cep->cor == RED ? "Vermelho" : "Preto");
         printf("------------------------\n");
     }
 }
