@@ -10,11 +10,6 @@
 #include "../Arv_23_H/STRUCTS_23.h"
 #include "../Arv_23_H/utilitarios_23.h"
 
-// ================================= somente para povoar o sistema
-#include <time.h>
-void povoar_sistema(ESTADOS **cabeca_estados, Arv23_PESSOAS **raiz_pessoas) ;
-// =================================
-
 void menu_print()
 {
     printf("\n[1] - Cadastrar estado\n");
@@ -45,10 +40,6 @@ void menu_geral()
     Arv23_PESSOAS *raiz_pessoas;
     raiz_pessoas = NULL;
     int opcao1, opcao2, sucesso, cep_usado, retorno;
-
-    printf("Deseja povoar o sistema? [1] - SIM [0] - NAO: ");
-    opcao1 = digitar_int();
-    if (opcao1) povoar_sistema(&cabeca_estados, &raiz_pessoas); // Povoando o sistema com estados e pessoas iniciais
 
     do
     {
@@ -133,6 +124,7 @@ void menu_geral()
                 free(novo_estado);
                 printf("Erro ao cadastrar estado!\n");
             }
+            pausar();
             break;
         }
         case 2:
@@ -209,6 +201,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 3:
@@ -266,6 +259,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 4:
@@ -307,6 +301,7 @@ void menu_geral()
                 printf("Deseja cadastrar outra pessoa? [1] - SIM [0] - NAO: ");
                 opcao2 = digitar_int();
             } while (opcao2 == 1);
+            pausar();
             break;
         }
         case 5:
@@ -344,6 +339,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", estado_nome);
+            pausar();
             break;
         }
         case 6:
@@ -354,6 +350,7 @@ void menu_geral()
 
             StatusRemocao status = remover_23_PESSOAS(&raiz_pessoas, pessoa_remover);
             mensagens_do_remover(status);
+            pausar();
             break;
         }
         case 7:
@@ -363,6 +360,7 @@ void menu_geral()
                 printf("Estado mais populoso: %s com populacao de %d\n", estado_populoso->nome_estado, estado_populoso->populacao_estado);
             else
                 printf("Nenhum estado cadastrado!\n");
+            pausar();
             break;
         }
         case 8:
@@ -382,6 +380,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 9:
@@ -405,6 +404,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 10:
@@ -413,6 +413,7 @@ void menu_geral()
             retorno = quantas_pessoas_nao_moram_na_cidade_natal_ESTADO(cabeca_estados, raiz_pessoas);
             if (retorno > 0)
                 printf("Total de pessoas que nao moram na cidade natal: %d\n", retorno);
+            pausar();
             break;
         }
         case 11:
@@ -441,6 +442,7 @@ void menu_geral()
                 else
                     printf("Cidade natal nao encontrada para o CEP %s!\n", pessoa->cep_city_natal);
             }
+            pausar();
             break;
         }
         case 12:
@@ -467,6 +469,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 13:
@@ -495,6 +498,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 14:
@@ -503,6 +507,7 @@ void menu_geral()
                 printf("Todos os estados foram impressos com sucesso!\n");
             else
                 printf("Nenhum estado cadastrado!\n");
+            pausar();
             break;
         }
         case 15:
@@ -516,6 +521,7 @@ void menu_geral()
                 imprime_23_em_ordem_cidade(estado->arv_cidades);
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 16:
@@ -539,6 +545,7 @@ void menu_geral()
             }
             else
                 printf("Estado %s nao encontrado!\n", nome_estado);
+            pausar();
             break;
         }
         case 17:
@@ -547,6 +554,7 @@ void menu_geral()
                 imprime_23_em_ordem_PESSOAS(raiz_pessoas);
             else
                 printf("Nenhuma pessoa cadastrada!\n");
+            pausar();
             break;
         }
         case 0:{
@@ -569,207 +577,4 @@ int main()
 {
     menu_geral();
     return 0;
-}
-
-void povoar_sistema(ESTADOS **cabeca_estados, Arv23_PESSOAS **raiz_pessoas) {
-
-    int num_estados_a_gerar;
-    int num_cidades_por_estado_a_gerar; // Inclui a capital
-    int num_ceps_por_cidade_a_gerar;
-    int num_pessoas_a_gerar;
-
-    printf("\n--- Configurando Povoamento Automatico do Sistema ---\n");
-    printf("Digite o numero de Estados a gerar (ex: Estado001): ");
-    num_estados_a_gerar = digitar_int();
-
-    printf("Digite o numero de Cidades por Estado (ex: Cidade001, inclui capital): ");
-    num_cidades_por_estado_a_gerar = digitar_int();
-
-    printf("Digite o numero de CEPs por Cidade (ex: 00000-001): ");
-    num_ceps_por_cidade_a_gerar = digitar_int();
-
-    printf("Digite o numero de Pessoas a gerar (ex: Pessoa001): ");
-    num_pessoas_a_gerar = digitar_int();
-    printf("------------------------------------------------------\n");
-
-    if (num_estados_a_gerar <= 0 || num_cidades_por_estado_a_gerar <= 0 || num_ceps_por_cidade_a_gerar <= 0) {
-        printf("AVISO: Numero de estados, cidades por estado e CEPs por cidade devem ser positivos para criar a geografia base.\n");
-        if (num_pessoas_a_gerar > 0) {
-             printf("AVISO: Nenhuma pessoa sera criada pois nao havera CEPs para associar.\n");
-        }
-        return;
-    }
-
-    char **lista_todos_ceps_gerados = NULL;
-    int total_ceps_gerados_globalmente = 0;
-    int capacidade_lista_ceps_global = 0;
-
-    // Contadores estáticos para garantir unicidade dos IDs gerados
-    static int estado_id_gen = 1;
-    static int cidade_id_gen = 1; // Contador global para nomes "CidadeNNN"
-    static int cep_id_gen_global = 1;
-    static int pessoa_id_gen = 1;
-    static unsigned long long cpf_numerico_gen = 10000000000ULL; // Para CPFs numéricos de 11 dígitos
-
-    srand(time(NULL));
-
-    printf("INFO: Iniciando populacao automatica do sistema...\n");
-
-    // ------------------ Loop para Estados ------------------
-    for (int i = 0; i < num_estados_a_gerar; i++) {
-        char nome_estado_buffer[100];
-        sprintf(nome_estado_buffer, "Estado%03d", estado_id_gen++); // Formato EstadoNNN
-        char *nome_estado_alocado = strdup(nome_estado_buffer);
-
-        if (!nome_estado_alocado) {
-            fprintf(stderr, "ERRO_MEMORIA: Falha ao alocar nome para o estado %s.\n", nome_estado_buffer);
-            continue;
-        }
-
-        ESTADOS *novo_estado_ptr;
-        novo_estado_ptr = aloca_estado(nome_estado_alocado);
-        if (!novo_estado_ptr) {
-            fprintf(stderr, "ERRO: Falha ao alocar memoria para o estado %s.\n", nome_estado_buffer);
-            free(nome_estado_alocado);
-            continue;
-        }
-
-        if (!inserir_estado_rec(cabeca_estados, novo_estado_ptr)) {
-            fprintf(stderr, "INFO: Falha ao inserir estado %s (pode ja existir ou erro na insercao).\n", nome_estado_buffer);
-            // inserir_estado_rec deve lidar com a liberação de novo_estado_ptr e nome_estado_alocado
-            continue;
-        }
-        printf("  [Estado Criado] Nome: %s\n", novo_estado_ptr->nome_estado);
-
-        // ----- Criar Cidade Capital para o estado -----
-        // A capital também seguirá o formato CidadeNNN usando o contador global cidade_id_gen
-        if (num_cidades_por_estado_a_gerar > 0) { // Garante que pelo menos a capital seja criada se cidades > 0
-            CIDADES capital_obj;
-            sprintf(capital_obj.nome_cidade, "Cidade%03d", cidade_id_gen++); // Formato CidadeNNN
-            capital_obj.populacao_city = 100000 + rand() % 900000;
-            capital_obj.arv_cep = NULL;
-
-            // Adiciona nome da capital ao estado (o primeiro "CidadeNNN" gerado para este estado)
-            strcpy(novo_estado_ptr->nome_capital, capital_obj.nome_cidade);
-
-
-            for (int k = 0; k < num_ceps_por_cidade_a_gerar; k++) {
-                CEP cep_para_capital_obj;
-                // Formato 00000-001
-                sprintf(cep_para_capital_obj.cep, "%05d-%03d", (cep_id_gen_global / 1000), (cep_id_gen_global % 1000));
-                cep_id_gen_global++;
-
-                if (total_ceps_gerados_globalmente >= capacidade_lista_ceps_global) {
-                    capacidade_lista_ceps_global = (capacidade_lista_ceps_global == 0) ? 100 : capacidade_lista_ceps_global * 2;
-                    lista_todos_ceps_gerados = (char **)realloc(lista_todos_ceps_gerados, capacidade_lista_ceps_global * sizeof(char *));
-                    if (!lista_todos_ceps_gerados) {
-                        fprintf(stderr, "ERRO_FATAL: Falha ao realocar memoria para lista de CEPs (capital).\n");
-                        exit(EXIT_FAILURE);
-                    }
-                }
-                lista_todos_ceps_gerados[total_ceps_gerados_globalmente] = strdup(cep_para_capital_obj.cep);
-                if (!lista_todos_ceps_gerados[total_ceps_gerados_globalmente]) {
-                     fprintf(stderr, "ERRO_FATAL: Falha ao duplicar string do CEP para lista (capital).\n");
-                     exit(EXIT_FAILURE);
-                }
-                total_ceps_gerados_globalmente++;
-
-                if (!insere_23_CEP(&(capital_obj.arv_cep), cep_para_capital_obj)) {
-                    fprintf(stderr, "  ERRO_CEP: Falha ao inserir CEP %s para a capital %s.\n", cep_para_capital_obj.cep, capital_obj.nome_cidade);
-                } else {
-                     printf("    [CEP Adicionado] CEP: %s (Capital: %s)\n", cep_para_capital_obj.cep, capital_obj.nome_cidade);
-                }
-            }
-
-            if (!insere_23_cidade(&(novo_estado_ptr->arv_cidades), capital_obj)) {
-                fprintf(stderr, "  ERRO_CIDADE: Falha ao inserir capital %s no estado %s.\n", capital_obj.nome_cidade, novo_estado_ptr->nome_estado);
-                libera_arvore_CEP(&(capital_obj.arv_cep));
-            } else {
-                novo_estado_ptr->quant_city++;
-                novo_estado_ptr->populacao_estado += capital_obj.populacao_city;
-                printf("    [Capital Adicionada] Nome: %s, Populacao: %d (Estado: %s)\n", capital_obj.nome_cidade, capital_obj.populacao_city, novo_estado_ptr->nome_estado);
-            }
-        }
-
-
-        // ----- Criar outras Cidades para o estado -----
-        // Se num_cidades_por_estado_a_gerar for 1, este loop não executa, apenas a capital é criada.
-        for (int j = 0; j < num_cidades_por_estado_a_gerar - 1; j++) {
-            CIDADES cidade_obj;
-            sprintf(cidade_obj.nome_cidade, "Cidade%03d", cidade_id_gen++); // Formato CidadeNNN
-            cidade_obj.populacao_city = 10000 + rand() % 90000;
-            cidade_obj.arv_cep = NULL;
-
-            for (int k = 0; k < num_ceps_por_cidade_a_gerar; k++) {
-                CEP cep_para_cidade_obj;
-                sprintf(cep_para_cidade_obj.cep, "%05d-%03d", (cep_id_gen_global / 1000), (cep_id_gen_global % 1000));
-                cep_id_gen_global++;
-
-                if (total_ceps_gerados_globalmente >= capacidade_lista_ceps_global) {
-                    capacidade_lista_ceps_global = (capacidade_lista_ceps_global == 0) ? 100 : capacidade_lista_ceps_global * 2;
-                    lista_todos_ceps_gerados = (char **)realloc(lista_todos_ceps_gerados, capacidade_lista_ceps_global * sizeof(char *));
-                    if (!lista_todos_ceps_gerados) {
-                        fprintf(stderr, "ERRO_FATAL: Falha ao realocar memoria para lista de CEPs (cidade).\n");
-                        exit(EXIT_FAILURE);
-                    }
-                }
-                lista_todos_ceps_gerados[total_ceps_gerados_globalmente] = strdup(cep_para_cidade_obj.cep);
-                if (!lista_todos_ceps_gerados[total_ceps_gerados_globalmente]) {
-                     fprintf(stderr, "ERRO_FATAL: Falha ao duplicar string do CEP para lista (cidade).\n");
-                     exit(EXIT_FAILURE);
-                }
-                total_ceps_gerados_globalmente++;
-
-                if (!insere_23_CEP(&(cidade_obj.arv_cep), cep_para_cidade_obj)) {
-                    fprintf(stderr, "    ERRO_CEP: Falha ao inserir CEP %s para a cidade %s.\n", cep_para_cidade_obj.cep, cidade_obj.nome_cidade);
-                } else {
-                     printf("      [CEP Adicionado] CEP: %s (Cidade: %s)\n", cep_para_cidade_obj.cep, cidade_obj.nome_cidade);
-                }
-            }
-
-            if (!insere_23_cidade(&(novo_estado_ptr->arv_cidades), cidade_obj)) {
-                fprintf(stderr, "    ERRO_CIDADE: Falha ao inserir cidade %s no estado %s.\n", cidade_obj.nome_cidade, novo_estado_ptr->nome_estado);
-                libera_arvore_CEP(&(cidade_obj.arv_cep));
-            } else {
-                novo_estado_ptr->quant_city++;
-                novo_estado_ptr->populacao_estado += cidade_obj.populacao_city;
-                printf("      [Cidade Adicionada] Nome: %s, Populacao: %d (Estado: %s)\n", cidade_obj.nome_cidade, cidade_obj.populacao_city, novo_estado_ptr->nome_estado);
-            }
-        }
-    }
-
-    // ------------------ Loop para Pessoas ------------------
-    if (total_ceps_gerados_globalmente == 0 && num_pessoas_a_gerar > 0) {
-        fprintf(stderr, "AVISO: Nenhum CEP foi gerado no sistema. Impossivel cadastrar pessoas.\n");
-    } else if (num_pessoas_a_gerar > 0 && total_ceps_gerados_globalmente > 0) {
-        printf("INFO: Criando %d pessoa(s)...\n", num_pessoas_a_gerar);
-        for (int p = 0; p < num_pessoas_a_gerar; p++) {
-            PESSOAS pessoa_obj;
-
-            sprintf(pessoa_obj.nome_pessoa, "Pessoa%03d", pessoa_id_gen++); // Formato PessoaNNN
-            sprintf(pessoa_obj.CPF, "%011llu", cpf_numerico_gen++); // Mantém CPF numérico
-
-            strcpy(pessoa_obj.cep_city_natal, lista_todos_ceps_gerados[rand() % total_ceps_gerados_globalmente]);
-            strcpy(pessoa_obj.cep_city_atual, lista_todos_ceps_gerados[rand() % total_ceps_gerados_globalmente]);
-
-            pessoa_obj.data_nasc.dia = 1 + rand() % 28;
-            pessoa_obj.data_nasc.mes = 1 + rand() % 12;
-            pessoa_obj.data_nasc.ano = 1950 + rand() % 53; // Nascidos entre 1950 e 2002
-
-            if (!insere_23_PESSOAS(raiz_pessoas, pessoa_obj)) {
-                fprintf(stderr, "  ERRO_PESSOA: Falha ao inserir pessoa %s (CPF: %s). Pode ser CPF duplicado.\n", pessoa_obj.nome_pessoa, pessoa_obj.CPF);
-            } else {
-                 printf("  [Pessoa Criada] Nome: %s, CPF: %s, CEP Natal: %s, CEP Atual: %s\n",
-                        pessoa_obj.nome_pessoa, pessoa_obj.CPF, pessoa_obj.cep_city_natal, pessoa_obj.cep_city_atual);
-            }
-        }
-    }
-
-    // ----- Limpar a lista de strings de CEPs globalmente geradas -----
-    for (int i = 0; i < total_ceps_gerados_globalmente; i++) {
-        free(lista_todos_ceps_gerados[i]);
-    }
-    free(lista_todos_ceps_gerados);
-
-    printf("INFO: Populacao automatica do sistema concluida.\n");
 }
