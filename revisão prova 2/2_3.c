@@ -995,13 +995,103 @@ void menu(Arv23 **raiz)
 int main()
 {
     Arv23 *raiz = NULL;
-    // Chama o menu interativo
-    menu(&raiz);
+    int opcao = 0, valor;
+    char prefixo_inicial[10] = "";
+
+    do {
+        printf("\n=========================\n");
+        printf("      ARVORE 2-3 MENU    \n");
+        printf("=========================\n");
+        
+        if (raiz != NULL) {
+            printf("Arvore 2-3 Atual:\n");
+            imprime_arvore_visual(raiz, prefixo_inicial, 1, 1);
+            printf("\nEm ordem: ");
+            imprime_23_em_ordem(raiz);
+            printf("\n");
+        } else {
+            printf("Arvore vazia\n");
+        }
+        
+        printf("------------------------\n");
+        printf("1. Inserir um valor\n");
+        printf("2. Remover um valor\n");
+        printf("3. Inserir valores de 1 a 30\n");
+        printf("4. Buscar um valor (não implementado)\n");
+        printf("5. Limpar a árvore\n");
+        printf("6. Sair\n");
+        printf("Escolha uma opcao: ");
+
+        if (scanf("%d", &opcao) != 1) {
+            printf("Entrada invalida. Por favor, insira um numero.\n");
+            while (getchar() != '\n');
+            opcao = 0;
+            continue;
+        }
+        while (getchar() != '\n');
+
+        switch (opcao) {
+            case 1:
+                printf("Digite o valor a ser inserido: ");
+                if (scanf("%d", &valor) != 1) {
+                    printf("Entrada invalida.\n");
+                    while (getchar() != '\n');
+                } else {
+                    while (getchar() != '\n');
+                    if (insere_23(&raiz, valor)) {
+                        printf("Valor %d inserido com sucesso.\n", valor);
+                    }
+                }
+                break;
+
+            case 2:
+                printf("Digite o valor a ser removido: ");
+                if (scanf("%d", &valor) != 1) {
+                    printf("Entrada invalida.\n");
+                    while (getchar() != '\n');
+                } else {
+                    while (getchar() != '\n');
+                    if (raiz == NULL) {
+                        printf("Arvore esta vazia, nao e possivel remover.\n");
+                    } else {
+                        remover_23(&raiz, valor);
+                    }
+                }
+                break;
+                
+            case 3:
+                printf("Inserindo valores de 1 a 30...\n");
+                for (int i = 1; i <= 30; i++) {
+                    insere_23(&raiz, i);
+                }
+                printf("Valores 1-30 inseridos com sucesso.\n");
+                break;
+                
+            case 4:
+                printf("Funcionalidade de busca nao implementada.\n");
+                break;
+                
+            case 5:
+                if (raiz != NULL) {
+                    libera_arvore(&raiz);
+                    printf("Arvore esvaziada com sucesso.\n");
+                } else {
+                    printf("Arvore ja esta vazia.\n");
+                }
+                break;
+
+            case 6:
+                printf("Saindo...\n");
+                break;
+
+            default:
+                printf("Opcao invalida. Tente novamente.\n");
+                break;
+        }
+    } while (opcao != 6);
 
     libera_arvore(&raiz); // Libera a memoria da arvore antes de sair
     printf("\nPrograma encerrado. Memoria liberada.\n");
-
-    imprime_23_em_ordem(raiz); // Imprime a arvore em ordem (deve estar vazia)
 
     return 0;
 }

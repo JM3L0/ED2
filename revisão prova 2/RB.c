@@ -507,6 +507,35 @@ int altura_negra(arv_VP *raiz){
     return altura;
 }
 
+int conta_quantas_folhas(arv_VP *riaz){
+    int folhas = 0;
+    if (riaz != NULL){
+        if (riaz->esq == NULL && riaz->dir == NULL){
+            folhas++;
+        }else{
+            folhas += conta_quantas_folhas(riaz->esq);
+            folhas += conta_quantas_folhas(riaz->dir);
+        }
+    }
+    return folhas;
+}
+
+int quantos_vermelho_e_pretos(arv_VP *raiz, int *vermelhos, int *pretos)
+{
+    int quant = 0;
+    if (raiz != NULL)
+    {
+        quant = 1; // Conta o nó atual
+        if (raiz->cor == RED)
+            (*vermelhos)++;
+        else
+            (*pretos)++;
+
+        quant += quantos_vermelho_e_pretos(raiz->esq, vermelhos, pretos);
+        quant += quantos_vermelho_e_pretos(raiz->dir, vermelhos, pretos);
+    }
+    return quant;
+}
 // =================================
 // FUNÇÃO PRINCIPAL
 // =================================
@@ -516,7 +545,7 @@ int main()
     arv_VP *raiz = NULL;
     int opcao, valor, resultado;
 
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 100; i++) {
         inserir(&raiz, alocaNo(i + 1)); // Inserindo valores de 1 a 10
     }
     
@@ -531,6 +560,8 @@ int main()
         printf("7. Contar nos pretos\n");
         printf("8. Contar nos vermelhos\n");
         printf("9. Altura negra da arvore\n");
+        printf("10. Contar folhas\n");
+        printf("11. Quantos nos vermelhos e pretos\n");
         printf("0. Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -581,7 +612,19 @@ int main()
             case 9:
                 printf("Altura negra da arvore: %d\n", altura_negra(raiz));
                 break;
-                
+            case 10:
+                printf("Numero de folhas: %d\n", conta_quantas_folhas(raiz));
+                break;
+            case 11:
+            {
+                int vermelhos = 0, pretos = 0;
+                int total = quantos_vermelho_e_pretos(raiz, &vermelhos, &pretos);
+                printf("Total de nos: %d\n", total);
+                printf("Nos vermelhos: %d\n", vermelhos);
+                printf("Nos pretos: %d\n", pretos);
+
+                break;
+            } 
             case 0:
                 printf("Saindo...\n");
                 break;
