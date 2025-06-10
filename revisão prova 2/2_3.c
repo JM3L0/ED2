@@ -990,6 +990,48 @@ void menu(Arv23 **raiz)
     libera_arvore(raiz); // Funcao nao implementada
 }
 
+int altura_23(Arv23 *raiz){
+    int altura = -1;
+    while (raiz != NULL){
+        altura++;
+        raiz = raiz->esq; // Segue sempre o filho esquerdo
+    }
+    return altura;
+}
+
+int qunatas_folhas(Arv23 *raiz){
+    int folhas = 0;
+    if (raiz != NULL) {
+        if (eh_folha(raiz)) {
+            folhas = 1; // Conta esta folha
+        } else {
+            folhas += qunatas_folhas(raiz->esq);
+            folhas += qunatas_folhas(raiz->cen);
+            if (raiz->nInfo == 2) folhas += qunatas_folhas(raiz->dir);
+        }
+    }
+    return folhas;
+}
+
+int profundidade_e_altura(Arv23 *raiz, int buscado, int *altura){
+    int profundidade = 0;
+    if (raiz != NULL){
+        if (raiz->info1 == buscado || (raiz->nInfo == 2 && raiz->info2 == buscado)){
+            (*altura) = altura_23(raiz);
+        }
+        else if (buscado < raiz->info1){
+            profundidade = profundidade_e_altura(raiz->esq, buscado, altura) + 1;
+        }
+        else if (raiz->nInfo == 1 || buscado < raiz->info2){
+            profundidade = profundidade_e_altura(raiz->cen, buscado, altura) + 1;
+        }
+        else {
+            profundidade = profundidade_e_altura(raiz->dir, buscado, altura) + 1;
+        }
+    }
+    return profundidade;
+}
+
 //================ MAIN   ==================
 
 int main()
@@ -997,6 +1039,7 @@ int main()
     Arv23 *raiz = NULL;
     int opcao = 0, valor;
     char prefixo_inicial[10] = "";
+    int altura = 0;
 
     do {
         printf("\n=========================\n");
@@ -1017,8 +1060,11 @@ int main()
         printf("1. Inserir um valor\n");
         printf("2. Remover um valor\n");
         printf("3. Inserir valores de 1 a 30\n");
-        printf("4. Buscar um valor (não implementado)\n");
-        printf("5. Limpar a árvore\n");
+        printf("4. Buscar um valor (nao implementado)\n");
+        printf("5. Limpar a arvore\n");
+        printf("7. Altura da arvore\n");
+        printf("8. Qunatas folhas\n");
+        printf("9. Profundidade e altura de um valor\n");
         printf("6. Sair\n");
         printf("Escolha uma opcao: ");
 
@@ -1061,7 +1107,7 @@ int main()
                 
             case 3:
                 printf("Inserindo valores de 1 a 30...\n");
-                for (int i = 1; i <= 30; i++) {
+                for (int i = 1; i <= 100; i++) {
                     insere_23(&raiz, i);
                 }
                 printf("Valores 1-30 inseridos com sucesso.\n");
@@ -1083,7 +1129,30 @@ int main()
             case 6:
                 printf("Saindo...\n");
                 break;
-
+            case 7:
+                altura = altura_23(raiz);
+                printf("Altura da arvore: %d\n", altura);
+                break;
+            case 8:{
+                int folhas = qunatas_folhas(raiz);
+                printf("Quantidade de folhas na arvore: %d\n", folhas);
+                break;
+            }
+            case 9:
+                printf("Digite o valor para buscar profundidade e altura: ");
+                if (scanf("%d", &valor) != 1) {
+                    printf("Entrada invalida.\n");
+                    while (getchar() != '\n');
+                } else {
+                    while (getchar() != '\n');
+                    int profundidade = profundidade_e_altura(raiz, valor, &altura);
+                    if (altura >= 0) {
+                        printf("Valor %d encontrado. Profundidade: %d, Altura: %d\n", valor, profundidade, altura);
+                    } else {
+                        printf("Valor %d nao encontrado na arvore.\n", valor);
+                    }
+                }
+                break;
             default:
                 printf("Opcao invalida. Tente novamente.\n");
                 break;
