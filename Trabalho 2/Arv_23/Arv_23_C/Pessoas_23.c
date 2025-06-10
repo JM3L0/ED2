@@ -139,7 +139,6 @@ void adiciona_infos_PESSOAS(Arv23_PESSOAS **no, PESSOAS info, Arv23_PESSOAS *Sub
         }
         no_atual->nInfo = 2;
     }
-    // Funções void não têm return explícito no final normalmente
 }
 
 // Quebra um nó cheio

@@ -78,67 +78,64 @@ void adiciona_chave_em_no_com_espaco_45(Arv45 *no_atual, int info_nova, Arv45 *s
     if (no_atual == NULL || no_atual->nInfo >= 4)
     { // 4 é o MAX_KEYS
         fprintf(stderr, "Erro: Tentativa de adicionar chave em no cheio ou nulo sem quebra (nInfo=%d).\n", no_atual ? no_atual->nInfo : -1);
-        // Esta é uma função void, então o return é apenas para sair.
-        // Para aderir a "um único return", a lógica de erro precisaria ser reestruturada,
-        // mas para um guarda inicial, um return void é comum.
-        // Para o propósito desta refatoração, vamos manter assim, pois não retorna valor.
-        return;
+        // erro de inserção, não há espaço para nova chave
+    }else{
+
+        int j;
+        int pos_insercao_chave = 0;
+    
+        if (no_atual->nInfo >= 1 && info_nova > no_atual->info1)
+            pos_insercao_chave = 1;
+        if (no_atual->nInfo >= 2 && info_nova > no_atual->info2)
+            pos_insercao_chave = 2;
+        if (no_atual->nInfo >= 3 && info_nova > no_atual->info3)
+            pos_insercao_chave = 3;
+    
+        // Desloca chaves existentes para a direita
+        for (j = no_atual->nInfo - 1; j >= pos_insercao_chave; j--)
+        {
+            if (j == 2)
+                no_atual->info4 = no_atual->info3;
+            else if (j == 1)
+                no_atual->info3 = no_atual->info2;
+            else if (j == 0)
+                no_atual->info2 = no_atual->info1;
+        }
+    
+        // Desloca ponteiros de filhos existentes para a direita
+        for (j = no_atual->nInfo; j >= pos_insercao_chave + 1; j--)
+        {
+            if (j == 3)
+                no_atual->dir = no_atual->f_cen3;
+            else if (j == 2)
+                no_atual->f_cen3 = no_atual->f_cen2;
+            else if (j == 1)
+                no_atual->f_cen2 = no_atual->f_cen1;
+        }
+    
+        // Insere a nova chave
+        if (pos_insercao_chave == 0)
+            no_atual->info1 = info_nova;
+        else if (pos_insercao_chave == 1)
+            no_atual->info2 = info_nova;
+        else if (pos_insercao_chave == 2)
+            no_atual->info3 = info_nova;
+        else if (pos_insercao_chave == 3)
+            no_atual->info4 = info_nova;
+    
+        // Insere o novo filho (à DIREITA da info_nova)
+        if (pos_insercao_chave == 0)
+            no_atual->f_cen1 = sub_arv_direita_da_info_nova;
+        else if (pos_insercao_chave == 1)
+            no_atual->f_cen2 = sub_arv_direita_da_info_nova;
+        else if (pos_insercao_chave == 2)
+            no_atual->f_cen3 = sub_arv_direita_da_info_nova;
+        else if (pos_insercao_chave == 3)
+            no_atual->dir = sub_arv_direita_da_info_nova;
+    
+        no_atual->nInfo++;
+        // Single exit point for void function
     }
-
-    int j;
-    int pos_insercao_chave = 0;
-
-    if (no_atual->nInfo >= 1 && info_nova > no_atual->info1)
-        pos_insercao_chave = 1;
-    if (no_atual->nInfo >= 2 && info_nova > no_atual->info2)
-        pos_insercao_chave = 2;
-    if (no_atual->nInfo >= 3 && info_nova > no_atual->info3)
-        pos_insercao_chave = 3;
-
-    // Desloca chaves existentes para a direita
-    for (j = no_atual->nInfo - 1; j >= pos_insercao_chave; j--)
-    {
-        if (j == 2)
-            no_atual->info4 = no_atual->info3;
-        else if (j == 1)
-            no_atual->info3 = no_atual->info2;
-        else if (j == 0)
-            no_atual->info2 = no_atual->info1;
-    }
-
-    // Desloca ponteiros de filhos existentes para a direita
-    for (j = no_atual->nInfo; j >= pos_insercao_chave + 1; j--)
-    {
-        if (j == 3)
-            no_atual->dir = no_atual->f_cen3;
-        else if (j == 2)
-            no_atual->f_cen3 = no_atual->f_cen2;
-        else if (j == 1)
-            no_atual->f_cen2 = no_atual->f_cen1;
-    }
-
-    // Insere a nova chave
-    if (pos_insercao_chave == 0)
-        no_atual->info1 = info_nova;
-    else if (pos_insercao_chave == 1)
-        no_atual->info2 = info_nova;
-    else if (pos_insercao_chave == 2)
-        no_atual->info3 = info_nova;
-    else if (pos_insercao_chave == 3)
-        no_atual->info4 = info_nova;
-
-    // Insere o novo filho (à DIREITA da info_nova)
-    if (pos_insercao_chave == 0)
-        no_atual->f_cen1 = sub_arv_direita_da_info_nova;
-    else if (pos_insercao_chave == 1)
-        no_atual->f_cen2 = sub_arv_direita_da_info_nova;
-    else if (pos_insercao_chave == 2)
-        no_atual->f_cen3 = sub_arv_direita_da_info_nova;
-    else if (pos_insercao_chave == 3)
-        no_atual->dir = sub_arv_direita_da_info_nova;
-
-    no_atual->nInfo++;
-    // Single exit point for void function
 }
 
 //================ QUEBRA NO ==================
@@ -686,6 +683,7 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
 {
     StatusRemocao status_pai_final = UNDERFLOW;
     Arv45 *filho_underflow = (ponteiro_filho_no_pai != NULL) ? *ponteiro_filho_no_pai : NULL;
+    int pode_proceder = 1;
 
     if (pai == NULL || irmao_esq == NULL || filho_underflow == NULL || irmao_esq->nInfo != 1)
     { // 1 é MIN_KEYS_ALLOWED
@@ -736,55 +734,57 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
         }
         else
         { /*fprintf(stderr, "Pos_filho %d invalida em fusao esquerda\n", pos_filho);*/
-            return UNDERFLOW;
-        }
-        pai->nInfo--;
-
-        // Funde no irmao_esq: irmao_esq(1 chave) + chave_pai_desce. Resulta em 2 chaves.
-        irmao_esq->info2 = chave_pai_desce; // info1 do irmao_esq já existe
-        irmao_esq->nInfo = 2;
-
-        // Filhos do irmao_esq (agora com 2 chaves: info1, info2) são: esq, f_cen1, f_cen2
-        // irmao_esq->esq (original do irmao_esq)
-        // irmao_esq->f_cen1 (original do irmao_esq, era filho entre info1 original e (implicitamente) chave_pai_desce)
-        // irmao_esq->f_cen2 (novo) = fu_esq_original (filho esquerdo do nó que estava em underflow)
-        irmao_esq->f_cen2 = fu_esq_original;
-        // O fu_fcen1_original seria o 4º filho conceitual. Para um nó de 2 chaves com 3 filhos,
-        // este é o ponto onde a acomodação de todos os filhos se torna complexa sem alterar
-        // a estrutura fundamental da árvore ou permitir que um nó viole k+1 filhos.
-        // A estratégia mais simples, embora com potencial perda se fu_fcen1_original for uma subárvore grande,
-        // é não atribuí-lo se os 3 slots de filho já estão preenchidos de forma lógica.
-        if (fu_fcen1_original != NULL && irmao_esq->f_cen1 == NULL && irmao_esq->f_cen2 == fu_esq_original)
-        {
-            // Caso especial: se f_cen1 original do irmao_esq era NULL (improvável para nInfo=1),
-            // e f_cen2 pegou fu_esq, então fu_fcen1 poderia ir para f_cen1.
-            // Esta lógica é complexa e depende da estrutura exata. A linha abaixo é uma tentativa:
-            irmao_esq->f_cen1 = fu_esq_original; // Reatribui se f_cen1 estava "vazio"
-            irmao_esq->f_cen2 = fu_fcen1_original;
-        }
-        else if (fu_fcen1_original != NULL)
-        {
-            // fprintf(stderr, "Alerta: Fusao esquerda, fu_fcen1_original nao acomodado diretamente.\n");
-        }
-
-        irmao_esq->f_cen3 = NULL;
-        irmao_esq->dir = NULL; // Limpa para consistência de 2 chaves
-
-        free(filho_underflow);
-        if (ponteiro_filho_no_pai != NULL)
-            *ponteiro_filho_no_pai = NULL; // Marca o ponteiro no pai como nulo
-
-        if (pai->nInfo == 0 && pai != NULL)
-        {
+            pode_proceder = 0;
             status_pai_final = UNDERFLOW;
         }
-        else if (pai->nInfo > 0 && pai->nInfo < 1)
-        {
-            status_pai_final = UNDERFLOW;
-        } // 1 é MIN_KEYS_ALLOWED
-        else
-        {
-            status_pai_final = OK;
+
+        if (pode_proceder){
+
+            pai->nInfo--;
+    
+            // Funde no irmao_esq: irmao_esq(1 chave) + chave_pai_desce. Resulta em 2 chaves.
+            irmao_esq->info2 = chave_pai_desce; // info1 do irmao_esq já existe
+            irmao_esq->nInfo = 2;
+    
+            // Filhos do irmao_esq (agora com 2 chaves: info1, info2) são: esq, f_cen1, f_cen2
+            // irmao_esq->esq (original do irmao_esq)
+            // irmao_esq->f_cen1 (original do irmao_esq, era filho entre info1 original e (implicitamente) chave_pai_desce)
+            // irmao_esq->f_cen2 (novo) = fu_esq_original (filho esquerdo do nó que estava em underflow)
+            irmao_esq->f_cen2 = fu_esq_original;
+            // O fu_fcen1_original seria o 4º filho conceitual. Para um nó de 2 chaves com 3 filhos,
+            // este é o ponto onde a acomodação de todos os filhos se torna complexa sem alterar
+            // a estrutura fundamental da árvore ou permitir que um nó viole k+1 filhos.
+            // A estratégia mais simples, embora com potencial perda se fu_fcen1_original for uma subárvore grande,
+            // é não atribuí-lo se os 3 slots de filho já estão preenchidos de forma lógica.
+            if (fu_fcen1_original != NULL && irmao_esq->f_cen1 == NULL && irmao_esq->f_cen2 == fu_esq_original)
+            {
+                // Caso especial: se f_cen1 original do irmao_esq era NULL (improvável para nInfo=1),
+                // e f_cen2 pegou fu_esq, então fu_fcen1 poderia ir para f_cen1.
+                // Esta lógica é complexa e depende da estrutura exata. A linha abaixo é uma tentativa:
+                irmao_esq->f_cen1 = fu_esq_original; // Reatribui se f_cen1 estava "vazio"
+                irmao_esq->f_cen2 = fu_fcen1_original;
+            }
+            else if (fu_fcen1_original != NULL)
+            {
+                // fprintf(stderr, "Alerta: Fusao esquerda, fu_fcen1_original nao acomodado diretamente.\n");
+            }
+    
+            irmao_esq->f_cen3 = NULL;
+            irmao_esq->dir = NULL; // Limpa para consistência de 2 chaves
+    
+            free(filho_underflow);
+            if (ponteiro_filho_no_pai != NULL)
+                *ponteiro_filho_no_pai = NULL; // Marca o ponteiro no pai como nulo
+    
+            if (pai->nInfo == 0 && pai != NULL)
+                status_pai_final = UNDERFLOW;
+            
+            else if (pai->nInfo > 0 && pai->nInfo < 1)
+                status_pai_final = UNDERFLOW;
+
+            else
+                status_pai_final = OK;
+
         }
     }
     return status_pai_final;
@@ -795,6 +795,7 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
 {
     StatusRemocao status_pai_final = UNDERFLOW;
     Arv45 *filho_underflow = *ponteiro_filho_no_pai; // nInfo == 0
+    int pode_proceder = 1;
 
     if (pai == NULL || irmao_dir == NULL || filho_underflow == NULL || irmao_dir->nInfo != 1)
     { // 1 é MIN_KEYS_ALLOWED
@@ -844,51 +845,51 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
         }
         else
         { /*fprintf(stderr, "Pos_filho %d invalida em fusao direita\n", pos_filho);*/
-            return UNDERFLOW;
-        }
-        pai->nInfo--;
-
-        // irmao_dir (originalmente 1 chave) absorve chave_pai_desce. Resulta em 2 chaves.
-        // Ordem: chave_pai_desce, chave_original_irmao_dir
-        irmao_dir->info2 = id_info1_original; // Chave original do irmao_dir (era info1) vai para info2
-        irmao_dir->info1 = chave_pai_desce;   // Chave do pai vai para info1
-        irmao_dir->nInfo = 2;
-
-        // Filhos do novo irmao_dir (2 chaves, 3 filhos: esq, f_cen1, f_cen2)
-        // Ordem dos filhos disponíveis: fu_esq, fu_fcen1 (do filho_underflow)
-        //                             id_esq, id_fcen1 (do irmao_dir original)
-        irmao_dir->esq = fu_esq_original;
-        irmao_dir->f_cen1 = fu_fcen1_original; // Filho entre nova info1 (chave_pai_desce) e nova info2 (id_info1_original)
-        irmao_dir->f_cen2 = id_esq_original;   // Filho à direita da nova info2 (id_info1_original)
-                                               // que era o filho esquerdo original de id_info1_original
-        // O id_fcen1_original (filho direito original de id_info1_original) seria o 4º filho conceitual.
-        if (irmao_dir->f_cen1 == NULL && irmao_dir->f_cen2 == id_esq_original)
-        {                                          // Se fu_fcen1 era NULL
-            irmao_dir->f_cen1 = id_esq_original;   // id_esq_original pode ser f_cen1
-            irmao_dir->f_cen2 = id_fcen1_original; // e id_fcen1_original pode ser f_cen2
-        }
-        else if (id_fcen1_original != NULL && irmao_dir->f_cen2 == id_esq_original)
-        {
-            // fprintf(stderr, "Alerta: Fusao direita, id_fcen1_original nao acomodado diretamente se fu_fcen1_original existia.\n");
-        }
-
-        irmao_dir->f_cen3 = NULL;
-        irmao_dir->dir = NULL;
-
-        free(filho_underflow);
-        // O ponteiro no pai (e.g., pai->esq) já aponta para irmao_dir.
-
-        if (pai->nInfo == 0 && pai != NULL)
-        {
+            pode_proceder = 0;
             status_pai_final = UNDERFLOW;
         }
-        else if (pai->nInfo > 0 && pai->nInfo < 1)
+        if (pode_proceder)
         {
-            status_pai_final = UNDERFLOW;
-        } // 1 é MIN_KEYS_ALLOWED
-        else
-        {
-            status_pai_final = OK;
+            pai->nInfo--;
+    
+            // irmao_dir (originalmente 1 chave) absorve chave_pai_desce. Resulta em 2 chaves.
+            // Ordem: chave_pai_desce, chave_original_irmao_dir
+            irmao_dir->info2 = id_info1_original; // Chave original do irmao_dir (era info1) vai para info2
+            irmao_dir->info1 = chave_pai_desce;   // Chave do pai vai para info1
+            irmao_dir->nInfo = 2;
+    
+            // Filhos do novo irmao_dir (2 chaves, 3 filhos: esq, f_cen1, f_cen2)
+            // Ordem dos filhos disponíveis: fu_esq, fu_fcen1 (do filho_underflow)
+            //                             id_esq, id_fcen1 (do irmao_dir original)
+            irmao_dir->esq = fu_esq_original;
+            irmao_dir->f_cen1 = fu_fcen1_original; // Filho entre nova info1 (chave_pai_desce) e nova info2 (id_info1_original)
+            irmao_dir->f_cen2 = id_esq_original;   // Filho à direita da nova info2 (id_info1_original)
+                                                   // que era o filho esquerdo original de id_info1_original
+            // O id_fcen1_original (filho direito original de id_info1_original) seria o 4º filho conceitual.
+            if (irmao_dir->f_cen1 == NULL && irmao_dir->f_cen2 == id_esq_original)
+            {                                          // Se fu_fcen1 era NULL
+                irmao_dir->f_cen1 = id_esq_original;   // id_esq_original pode ser f_cen1
+                irmao_dir->f_cen2 = id_fcen1_original; // e id_fcen1_original pode ser f_cen2
+            }
+            else if (id_fcen1_original != NULL && irmao_dir->f_cen2 == id_esq_original)
+            {
+                // fprintf(stderr, "Alerta: Fusao direita, id_fcen1_original nao acomodado diretamente se fu_fcen1_original existia.\n");
+            }
+    
+            irmao_dir->f_cen3 = NULL;
+            irmao_dir->dir = NULL;
+    
+            free(filho_underflow);
+            // O ponteiro no pai (e.g., pai->esq) já aponta para irmao_dir.
+    
+            if (pai->nInfo == 0 && pai != NULL)
+                status_pai_final = UNDERFLOW;
+            
+            else if (pai->nInfo > 0 && pai->nInfo < 1)
+                status_pai_final = UNDERFLOW;
+
+            else
+                status_pai_final = OK;
         }
     }
     return status_pai_final;
