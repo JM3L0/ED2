@@ -20,6 +20,18 @@ typedef enum {
     NAO_FOI_POSSIVEL_T_UNDERFLOW
 } StatusRemocao;
 
+// ===== Lista Duplamente =====
+typedef struct ESTADOS// lista duplamente encadeada
+{
+    char *nome_estado;
+    char nome_capital[100];
+    int quant_city;
+    int populacao_estado;
+    struct Arv23_CIDADES *arv_cidades;
+
+    struct ESTADOS *prox, *ant;
+
+} ESTADOS;
 
 // ===== INFOS =====
 typedef struct DATA// DATA DE NASCIMENTO
@@ -44,17 +56,6 @@ typedef struct CIDADES
 
 } CIDADES;
 
-typedef struct ESTADOS// lista duplamente encadeada
-{
-    char *nome_estado;
-    char nome_capital[100];
-    int quant_city;
-    int populacao_estado;
-    struct Arv23_CIDADES *arv_cidades;
-
-    struct ESTADOS *prox, *ant;
-
-} ESTADOS;
 
 typedef struct PESSOAS
 {
