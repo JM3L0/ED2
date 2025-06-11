@@ -77,7 +77,7 @@ void adiciona_chave_em_no_com_espaco_45(Arv45 *no_atual, int info_nova, Arv45 *s
 {
     if (no_atual == NULL || no_atual->nInfo >= 4)
     { // 4 é o MAX_KEYS
-        fprintf(stderr, "Erro: Tentativa de adicionar chave em no cheio ou nulo sem quebra (nInfo=%d).\n", no_atual ? no_atual->nInfo : -1);
+        printf("Erro: Tentativa de adicionar chave em no cheio ou nulo sem quebra (nInfo=%d).\n", no_atual ? no_atual->nInfo : -1);
         // erro de inserção, não há espaço para nova chave
     }else{
 
@@ -395,7 +395,7 @@ int insere_45(Arv45 **raiz, int valor)
                     }
                     else
                     {
-                        fprintf(stderr, "Erro ao criar nova raiz!\n");
+                        printf("Erro ao criar nova raiz!\n");
                         if (novo_no_irmao_da_raiz)
                             free(novo_no_irmao_da_raiz);
                         // sucesso permanece 0
@@ -510,7 +510,7 @@ StatusRemocao tratar_underflow_45(Arv45 **ponteiro_filho_no_pai, Arv45 *pai)
             }
             else if (filho_com_underflow != pai)
             { // Evita erro se filho é a própria raiz (pai é NULL)
-                fprintf(stderr, "Erro critico: Filho em underflow nao eh filho do pai.\n");
+                printf("Erro critico: Filho em underflow nao eh filho do pai.\n");
                 status_final = UNDERFLOW;
             }
         }
@@ -526,7 +526,7 @@ StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, 
 
     if (pai == NULL || irmao_esq == NULL || filho == NULL || irmao_esq->nInfo <= 1)
     { // 1 é MIN_KEYS_ALLOWED
-        // fprintf(stderr, "Erro: Condicoes invalidas para redistribuicao esquerda.\n"); // Comentado para reduzir verbosidade
+        // printf("Erro: Condicoes invalidas para redistribuicao esquerda.\n"); // Comentado para reduzir verbosidade
         status_retorno = UNDERFLOW;
     }
     else
@@ -544,7 +544,7 @@ StatusRemocao redistribuir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, 
         else if (pos_filho == 4)
             chave_pai_desce = pai->info4;
         else
-        { /*fprintf(stderr, "Posicao %d invalida para redistribuicao esquerda\n", pos_filho);*/
+        { /*printf("Posicao %d invalida para redistribuicao esquerda\n", pos_filho);*/
             status_retorno = UNDERFLOW;
         }
 
@@ -620,7 +620,7 @@ StatusRemocao redistribuir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, A
 
     if (pai == NULL || irmao_dir == NULL || filho == NULL || irmao_dir->nInfo <= 1)
     { // 1 é MIN_KEYS_ALLOWED
-        // fprintf(stderr, "Erro: Condicoes invalidas para redistribuicao direita.\n");
+        // printf("Erro: Condicoes invalidas para redistribuicao direita.\n");
         status_retorno = UNDERFLOW;
     }
     else
@@ -638,7 +638,7 @@ StatusRemocao redistribuir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, A
         else if (pos_filho == 3 && pai->nInfo == 4)
             chave_pai_desce = pai->info4; // 4 é MAX_KEYS
         else
-        { /*fprintf(stderr, "Posicao %d invalida para redistribuicao direita\n",pos_filho);*/
+        { /*printf("Posicao %d invalida para redistribuicao direita\n",pos_filho);*/
             status_retorno = UNDERFLOW;
         }
 
@@ -687,7 +687,7 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
 
     if (pai == NULL || irmao_esq == NULL || filho_underflow == NULL || irmao_esq->nInfo != 1)
     { // 1 é MIN_KEYS_ALLOWED
-        // fprintf(stderr, "Erro: Condicoes invalidas para fusao esquerda (irmao_esq->nInfo=%d).\n", irmao_esq ? irmao_esq->nInfo : -1);
+        // printf("Erro: Condicoes invalidas para fusao esquerda (irmao_esq->nInfo=%d).\n", irmao_esq ? irmao_esq->nInfo : -1);
     }
     else
     {
@@ -733,7 +733,7 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
             pai->dir = NULL;
         }
         else
-        { /*fprintf(stderr, "Pos_filho %d invalida em fusao esquerda\n", pos_filho);*/
+        { /*printf("Pos_filho %d invalida em fusao esquerda\n", pos_filho);*/
             pode_proceder = 0;
             status_pai_final = UNDERFLOW;
         }
@@ -766,7 +766,7 @@ StatusRemocao fundir_com_irmao_esquerdo_45(Arv45 **ponteiro_filho_no_pai, Arv45 
             }
             else if (fu_fcen1_original != NULL)
             {
-                // fprintf(stderr, "Alerta: Fusao esquerda, fu_fcen1_original nao acomodado diretamente.\n");
+                // printf("Alerta: Fusao esquerda, fu_fcen1_original nao acomodado diretamente.\n");
             }
     
             irmao_esq->f_cen3 = NULL;
@@ -799,7 +799,7 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
 
     if (pai == NULL || irmao_dir == NULL || filho_underflow == NULL || irmao_dir->nInfo != 1)
     { // 1 é MIN_KEYS_ALLOWED
-        // fprintf(stderr, "Erro: Condicoes invalidas para fusao direita (irmao_dir->nInfo=%d).\n", irmao_dir ? irmao_dir->nInfo : -1);
+        // printf("Erro: Condicoes invalidas para fusao direita (irmao_dir->nInfo=%d).\n", irmao_dir ? irmao_dir->nInfo : -1);
     }
     else
     {
@@ -844,7 +844,7 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
             pai->dir = NULL;
         }
         else
-        { /*fprintf(stderr, "Pos_filho %d invalida em fusao direita\n", pos_filho);*/
+        { /*printf("Pos_filho %d invalida em fusao direita\n", pos_filho);*/
             pode_proceder = 0;
             status_pai_final = UNDERFLOW;
         }
@@ -873,7 +873,7 @@ StatusRemocao fundir_com_irmao_direito_45(Arv45 **ponteiro_filho_no_pai, Arv45 *
             }
             else if (id_fcen1_original != NULL && irmao_dir->f_cen2 == id_esq_original)
             {
-                // fprintf(stderr, "Alerta: Fusao direita, id_fcen1_original nao acomodado diretamente se fu_fcen1_original existia.\n");
+                // printf("Alerta: Fusao direita, id_fcen1_original nao acomodado diretamente se fu_fcen1_original existia.\n");
             }
     
             irmao_dir->f_cen3 = NULL;
@@ -1029,7 +1029,7 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                 }
                 else if (pode_prosseguir_logica && subarvore_para_sucessor == NULL)
                 {
-                    fprintf(stderr, "Erro critico: Subarvore do sucessor eh NULL ao remover %d de no interno!\n", valor);
+                    printf("Erro critico: Subarvore do sucessor eh NULL ao remover %d de no interno!\n", valor);
                     status_final = UNDERFLOW; // Indica erro
                     pode_prosseguir_logica = 0;
                 }
@@ -1037,7 +1037,7 @@ StatusRemocao remover_45_recursivo(Arv45 **ponteiro_no_atual_ptr, int valor)
                 if (pode_prosseguir_logica && (sucessor_node == NULL || ponteiro_para_raiz_subarvore_sucessor == NULL || *ponteiro_para_raiz_subarvore_sucessor == NULL))
                 {
                     // Esta condição agora é mais específica: se subarvore_para_sucessor era não-nulo, mas buscar_menor falhou ou o ponteiro para ele é ruim.
-                    fprintf(stderr, "Erro critico: Sucessor nao encontrado (ou ponteiro invalido) para %d!\n", valor);
+                    printf("Erro critico: Sucessor nao encontrado (ou ponteiro invalido) para %d!\n", valor);
                     status_final = UNDERFLOW; // Indica erro
                     pode_prosseguir_logica = 0;
                 }
