@@ -4,9 +4,17 @@
 #include <string.h>
 #include <limits.h>
 
+#ifdef _WIN32
+// Windows: usar clock()
+#define USAR_CLOCK
+#else
+// Sistemas POSIX: usar clock_gettime
+#include <time.h>
+#endif
+
 #define NUM_DISCO 4
 #define NUM_PINO 3
-#define NUM_CONFIG (1 << (2 * NUM_DISCO)) // 3^4 = 81
+#define NUM_CONFIG 81 // 3^4 = 81
 #define INFINITO INT_MAX
 
 // Estrutura para representar uma configuracao
@@ -87,12 +95,26 @@ void construir_matriz_adjacencia(int matriz[NUM_CONFIG][NUM_CONFIG]) {
     }
 }
 
-// Imprime a matriz de adjacencia
+// Imprime a matriz de adjacencia completa
 void imprimir_matriz_adjacencia(int matriz[NUM_CONFIG][NUM_CONFIG]) {
-    printf("Matriz de adjacencia:\n");
+    printf("\n=== Matriz de Adjacencia ===\n");
+    // Imprimir cabecalho das colunas
+    printf("   ");
+    for (int j = 0; j < NUM_CONFIG; j++) {
+        printf("%2d ", j);
+    }
+    printf("\n");
+    printf("   ");
+    for (int j = 0; j < NUM_CONFIG; j++) {
+        printf("---");
+    }
+    printf("\n");
+
+    // Imprimir linhas da matriz
     for (int i = 0; i < NUM_CONFIG; i++) {
+        printf("%2d|", i);
         for (int j = 0; j < NUM_CONFIG; j++) {
-            printf("%d ", matriz[i][j]);
+            printf("%2d ", matriz[i][j]);
         }
         printf("\n");
     }
@@ -145,6 +167,17 @@ void imprimir_caminho(int anterior[], int fim, int inicio) {
     printf("Configuracao: (%d, %d, %d, %d)\n", config.disco[0], config.disco[1], config.disco[2], config.disco[3]);
 }
 
+// Funcao para obter o tempo atual em milissegundos
+double obter_tempo_milissegundos() {
+#ifndef USAR_CLOCK
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return (double)(ts.tv_sec * 1000.0 + ts.tv_nsec / 1000000.0);
+#else
+    return (double)(clock() * 1000.0 / CLOCKS_PER_SEC);
+#endif
+}
+
 int main() {
     int matriz[NUM_CONFIG][NUM_CONFIG];
     int distancia[NUM_CONFIG], anterior[NUM_CONFIG];
@@ -155,8 +188,8 @@ int main() {
     int inicio = configuracao_para_indice(config_inicial);
     int fim = configuracao_para_indice(config_final);
 
-    // Medir tempo
-    clock_t inicio_tempo = clock();
+    // Medir tempo inicial
+    double inicio_tempo = obter_tempo_milissegundos();
 
     // Construir matriz de adjacencia
     construir_matriz_adjacencia(matriz);
@@ -165,14 +198,14 @@ int main() {
     dijkstra(matriz, inicio, distancia, anterior);
 
     // Medir tempo final
-    clock_t fim_tempo = clock();
-    double tempo_gasto = (double)(fim_tempo - inicio_tempo) * 1000.0 / CLOCKS_PER_SEC;
+    double fim_tempo = obter_tempo_milissegundos();
+    double tempo_gasto = fim_tempo - inicio_tempo;
 
     // Imprimir resultados
     printf("Menor numero de movimentos: %d\n", distancia[fim]);
     printf("Caminho:\n");
     imprimir_caminho(anterior, fim, inicio);
-    printf("Tempo gasto: %f milissegundos\n", tempo_gasto);
+    printf("Tempo gasto: %.16f milissegundos\n", tempo_gasto);
 
     // Imprimir matriz de adjacencia
     imprimir_matriz_adjacencia(matriz);
