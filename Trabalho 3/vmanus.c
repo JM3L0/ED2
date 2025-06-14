@@ -110,70 +110,11 @@ void gerarEstados(EstadoHanoi *estados, int *numEstados, EstadoHanoi estadoAtual
     }
 }
 
-int main() {
-    EstadoHanoi *estados = (EstadoHanoi *)malloc(sizeof(EstadoHanoi) * 1000); // Alocação inicial
-    int numEstados = 0;
-
-    EstadoHanoi estadoInicial;
-    for (int i = 0; i < NUM_DISCOS; i++) {
-        estadoInicial.pinos[i] = 0; // Todos os discos no pino 0 inicialmente
-    }
-
-    gerarEstados(estados, &numEstados, estadoInicial, 0);
-
-    printf("Número total de estados: %d\n", numEstados);
-
-    // Construir a matriz de adjacência
-    int **matrizAdjacencia = (int **)malloc(sizeof(int *) * numEstados);
-    for (int i = 0; i < numEstados; i++) {
-        matrizAdjacencia[i] = (int *)malloc(sizeof(int) * numEstados);
-        for (int j = 0; j < numEstados; j++) {
-            matrizAdjacencia[i][j] = 0; // Inicializa com 0 (sem conexão)
-        }
-    }
-
-    for (int i = 0; i < numEstados; i++) {
-        for (int origem = 0; origem < NUM_PINOS; origem++) {
-            for (int destino = 0; destino < NUM_PINOS; destino++) {
-                if (origem != destino) {
-                    if (movimentoValido(estados[i], origem, destino)) {
-                        EstadoHanoi proximoEstado = aplicarMovimento(estados[i], origem, destino);
-                        int indiceProximoEstado = encontrarIndiceEstado(estados, numEstados, proximoEstado);
-                        if (indiceProximoEstado != -1) {
-                            matrizAdjacencia[i][indiceProximoEstado] = 1; // Conexão com peso 1
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    printf("Matriz de Adjacência:\n");
-    for (int i = 0; i < numEstados; i++) {
-        for (int j = 0; j < numEstados; j++) {
-            printf("%d ", matrizAdjacencia[i][j]);
-        }
-        printf("\n");
-    }
-
-    // Algoritmo de Dijkstra
+// Função para executar o algoritmo de Dijkstra
+void dijkstra(int numEstados, int **matrizAdjacencia, int inicio, int fim, EstadoHanoi *estados) {
     int *distancia = (int *)malloc(sizeof(int) * numEstados);
     int *visitado = (int *)malloc(sizeof(int) * numEstados);
     int *anterior = (int *)malloc(sizeof(int) * numEstados);
-
-    // Definir estado inicial e final (exemplo: todos os discos no pino 0 para todos no pino 2)
-    EstadoHanoi estadoFinal;
-    for (int i = 0; i < NUM_DISCOS; i++) {
-        estadoFinal.pinos[i] = 2;
-    }
-
-    int inicio = encontrarIndiceEstado(estados, numEstados, estadoInicial);
-    int fim = encontrarIndiceEstado(estados, numEstados, estadoFinal);
-
-    if (inicio == -1 || fim == -1) {
-        printf("Estado inicial ou final não encontrado.\n");
-        return 1;
-    }
 
     for (int i = 0; i < numEstados; i++) {
         distancia[i] = INT_MAX;
@@ -229,16 +170,80 @@ int main() {
     }
 
     // Liberar memória
+    free(distancia);
+    free(visitado);
+    free(anterior);
+}
+
+int main() {
+    EstadoHanoi *estados = (EstadoHanoi *)malloc(sizeof(EstadoHanoi) * 1000); // Alocação inicial
+    int numEstados = 0;
+
+    EstadoHanoi estadoInicial;
+    for (int i = 0; i < NUM_DISCOS; i++) {
+        estadoInicial.pinos[i] = 0; // Todos os discos no pino 0 inicialmente
+    }
+
+    gerarEstados(estados, &numEstados, estadoInicial, 0);
+
+    printf("Número total de estados: %d\n", numEstados);
+
+    // Construir a matriz de adjacência
+    int **matrizAdjacencia = (int **)malloc(sizeof(int *) * numEstados);
+    for (int i = 0; i < numEstados; i++) {
+        matrizAdjacencia[i] = (int *)malloc(sizeof(int) * numEstados);
+        for (int j = 0; j < numEstados; j++) {
+            matrizAdjacencia[i][j] = 0; // Inicializa com 0 (sem conexão)
+        }
+    }
+
+    for (int i = 0; i < numEstados; i++) {
+        for (int origem = 0; origem < NUM_PINOS; origem++) {
+            for (int destino = 0; destino < NUM_PINOS; destino++) {
+                if (origem != destino) {
+                    if (movimentoValido(estados[i], origem, destino)) {
+                        EstadoHanoi proximoEstado = aplicarMovimento(estados[i], origem, destino);
+                        int indiceProximoEstado = encontrarIndiceEstado(estados, numEstados, proximoEstado);
+                        if (indiceProximoEstado != -1) {
+                            matrizAdjacencia[i][indiceProximoEstado] = 1; // Conexão com peso 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    printf("Matriz de Adjacência:\n");
+    for (int i = 0; i < numEstados; i++) {
+        for (int j = 0; j < numEstados; j++) {
+            printf("%d ", matrizAdjacencia[i][j]);
+        }
+        printf("\n");
+    }
+
+    // Definir estado inicial e final (exemplo: todos os discos no pino 0 para todos no pino 2)
+    EstadoHanoi estadoFinal;
+    for (int i = 0; i < NUM_DISCOS; i++) {
+        estadoFinal.pinos[i] = 2;
+    }
+
+    int inicio = encontrarIndiceEstado(estados, numEstados, estadoInicial);
+    int fim = encontrarIndiceEstado(estados, numEstados, estadoFinal);
+
+    if (inicio == -1 || fim == -1) {
+        printf("Estado inicial ou final não encontrado.\n");
+        return 1;
+    }
+
+    // Chamar a função Dijkstra
+    dijkstra(numEstados, matrizAdjacencia, inicio, fim, estados);
+
+    // Liberar memória
     for (int i = 0; i < numEstados; i++) {
         free(matrizAdjacencia[i]);
     }
     free(matrizAdjacencia);
     free(estados);
-    free(distancia);
-    free(visitado);
-    free(anterior);
 
     return 0;
 }
-
-
