@@ -5,10 +5,8 @@
 #include <limits.h>
 
 #ifdef _WIN32
-// Windows: usar clock()
-#define USAR_CLOCK
+#include <windows.h>
 #else
-// Sistemas POSIX: usar clock_gettime
 #include <time.h>
 #endif
 
@@ -16,6 +14,7 @@
 #define NUM_PINO 3
 #define NUM_CONFIG 81 // 3^4 = 81
 #define INFINITO INT_MAX
+#define NUM_ITERACOES 1000 // Reduzido para 1000 iteracoes
 
 // Estrutura para representar uma configuracao
 typedef struct {
@@ -169,12 +168,15 @@ void imprimir_caminho(int anterior[], int fim, int inicio) {
 
 // Funcao para obter o tempo atual em milissegundos
 double obter_tempo_milissegundos() {
-#ifndef USAR_CLOCK
+#ifdef _WIN32
+    LARGE_INTEGER freq, counter;
+    QueryPerformanceFrequency(&freq);
+    QueryPerformanceCounter(&counter);
+    return (double)(counter.QuadPart * 1000.0 / freq.QuadPart);
+#else
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
     return (double)(ts.tv_sec * 1000.0 + ts.tv_nsec / 1000000.0);
-#else
-    return (double)(clock() * 1000.0 / CLOCKS_PER_SEC);
 #endif
 }
 
@@ -188,24 +190,26 @@ int main() {
     int inicio = configuracao_para_indice(config_inicial);
     int fim = configuracao_para_indice(config_final);
 
+    // Construir matriz de adjacencia (uma vez)
+    construir_matriz_adjacencia(matriz);
+
     // Medir tempo inicial
     double inicio_tempo = obter_tempo_milissegundos();
 
-    // Construir matriz de adjacencia
-    construir_matriz_adjacencia(matriz);
-
-    // Executar Dijkstra
-    dijkstra(matriz, inicio, distancia, anterior);
+    // Executar Dijkstra varias vezes para medir tempo
+    for (int iter = 0; iter < NUM_ITERACOES; iter++) {
+        dijkstra(matriz, inicio, distancia, anterior);
+    }
 
     // Medir tempo final
     double fim_tempo = obter_tempo_milissegundos();
-    double tempo_gasto = fim_tempo - inicio_tempo;
+    double tempo_gasto = (fim_tempo - inicio_tempo) / NUM_ITERACOES;
 
     // Imprimir resultados
     printf("Menor numero de movimentos: %d\n", distancia[fim]);
     printf("Caminho:\n");
     imprimir_caminho(anterior, fim, inicio);
-    printf("Tempo gasto: %.16f milissegundos\n", tempo_gasto);
+    printf("Tempo medio por execucao: %.6f milissegundos\n", tempo_gasto);
 
     // Imprimir matriz de adjacencia
     imprimir_matriz_adjacencia(matriz);
