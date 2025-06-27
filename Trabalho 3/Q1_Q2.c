@@ -181,8 +181,8 @@ int main() {
         printf("\n\n==== MENU ====\n");
         printf("1. Imprimir configuracoes do grafo\n");
         printf("2. Imprimir matriz de adjacencia\n");
-        printf("3. Encontrar caminho minimo com Ford-Moore-Bellman\n");
-        printf("4. Encontrar caminho minimo com Dijkstra\n");
+        printf("3. Encontrar caminho minimo com Dijkstra\n");
+        printf("4. Encontrar caminho minimo com Ford-Moore-Bellman\n");
         printf("5. Testes de tempo\n");
         printf("0. Sair\n");
         printf("Escolha uma opcao: ");
