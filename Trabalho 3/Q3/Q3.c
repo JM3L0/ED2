@@ -103,6 +103,26 @@ No *dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vert
     return vetor_nos;
 }
 
+int inicializa_grafo(float matriz[][100]){
+    int n_vertices = 0;
+    
+    printf("Informe o numero de vertices (max 100): ");
+    scanf("%d", &n_vertices);
+    
+    if (n_vertices <= 0 || n_vertices > 100) {
+        printf("Numero de vertices invalido!\n");
+        n_vertices = 0;
+    } else {
+        for (int i = 0; i < n_vertices; i++) {
+            for (int j = 0; j < n_vertices; j++) {
+                matriz[i][j] = 0;
+            }
+        }
+        printf("Grafo criado com %d vertices.\n", n_vertices);
+    }
+    return n_vertices;
+}
+
 int main() {
     int n_vertices = 0;
     float matriz[100][100]; // Fixed maximum size
@@ -121,20 +141,7 @@ int main() {
         
         switch (opcao) {
             case 1: 
-                printf("Informe o numero de vertices (max 100): ");
-                scanf("%d", &n_vertices);
-                
-                if (n_vertices <= 0 || n_vertices > 100) {
-                    printf("Numero de vertices invalido!\n");
-                    n_vertices = 0;
-                } else {
-                    for (int i = 0; i < n_vertices; i++) {
-                        for (int j = 0; j < n_vertices; j++) {
-                            matriz[i][j] = 0;
-                        }
-                    }
-                    printf("Grafo criado com %d vertices.\n", n_vertices);
-                }
+                n_vertices = inicializa_grafo(matriz);
                 break;
             
             case 2: 
