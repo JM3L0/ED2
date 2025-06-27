@@ -87,16 +87,14 @@ void exibir_caminhos(int *vetor, int tam)
 void exibir_matriz(int n_vertices, float matriz[][n_vertices]){
     printf("\nMatriz de adjacencia do grafo:\n");
     printf("   ");
-    for (int i = 0; i < n_vertices; i++) {
+    for (int i = 0; i < n_vertices; i++)
         printf("%4d ", i);
-    }
     printf("\n");
     
     for (int i = 0; i < n_vertices; i++) {
         printf("%2d ", i);
-        for (int j = 0; j < n_vertices; j++) {
+        for (int j = 0; j < n_vertices; j++)
             printf("%.2f ", matriz[i][j]);
-        }
         printf("\n");
     }
 }
@@ -124,15 +122,15 @@ void adicionar_aresta(int n_vertices, float matriz[][n_vertices])
         printf("Informe o vertice de destino (0 a %d): ", n_vertices - 1);
         scanf("%d", &destino);
         
-        if (origem < 0 || origem >= n_vertices || destino < 0 || destino >= n_vertices) {
+        if (origem < 0 || origem >= n_vertices || destino < 0 || destino >= n_vertices)
             printf("Vertices invalidos!\n");
-        } else {
+        else {
             printf("Informe a confiabilidade da aresta (0 a 1): ");
             scanf("%f", &confiabilidade);
             
-            if (confiabilidade <= 0 || confiabilidade > 1) {
+            if (confiabilidade <= 0 || confiabilidade > 1)
                 printf("Confiabilidade deve estar entre 0 e 1!\n");
-            } else {
+            else {
                 matriz[origem][destino] = confiabilidade;
                 matriz[destino][origem] = confiabilidade;
                 printf("Aresta adicionada com sucesso!\n");

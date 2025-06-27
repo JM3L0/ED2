@@ -16,7 +16,6 @@ typedef struct no
 No *alocar_no(int tam)
 {
     No *vetor;
-
     vetor = (No *) malloc(sizeof(No) * tam);
 
     if(!vetor)
@@ -80,19 +79,19 @@ No *dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vert
         vetor_nos[pos_atual].indice = pos_atual;
         vetor_nos[pos_atual].valor = 1;
 
-        for(int it = 0; it < n_vertices && !vetor_nos[pos_final].marcado && pos_atual != INVALIDO; it++)
+        for(int i = 0; i < n_vertices && !vetor_nos[pos_final].marcado && pos_atual != INVALIDO; i++)
         {
             vetor_nos[pos_atual].marcado = 1;
-            for(int i = 0; i < n_vertices; i++)
+            for(int j = 0; j < n_vertices; j++)
             {
-                if(matriz[pos_atual][i])
+                if(matriz[pos_atual][j])
                 {
-                    float valor_aresta = vetor_nos[pos_atual].valor * matriz[pos_atual][i];
+                    float valor_aresta = vetor_nos[pos_atual].valor * matriz[pos_atual][j];
 
-                    if(!vetor_nos[i].marcado && valor_aresta > vetor_nos[i].valor)
+                    if(!vetor_nos[j].marcado && valor_aresta > vetor_nos[j].valor)
                     {
-                        vetor_nos[i].valor = valor_aresta;
-                        vetor_nos[i].indice = pos_atual;
+                        vetor_nos[j].valor = valor_aresta;
+                        vetor_nos[j].indice = pos_atual;
                     }
                 }
             }
@@ -114,9 +113,8 @@ int inicializa_grafo(float matriz[][100]){
         n_vertices = 0;
     } else {
         for (int i = 0; i < n_vertices; i++) {
-            for (int j = 0; j < n_vertices; j++) {
+            for (int j = 0; j < n_vertices; j++)
                 matriz[i][j] = 0;
-            }
         }
         printf("Grafo criado com %d vertices.\n", n_vertices);
     }
@@ -149,9 +147,9 @@ int main() {
                 break;
             
             case 3: 
-                if (n_vertices == 0) {
+                if (n_vertices == 0)
                     printf("Crie um grafo primeiro!\n");
-                } else {
+                else {
                     int origem, destino;
                     
                     printf("Informe o vertice de origem (0 a %d): ", n_vertices - 1);
@@ -164,12 +162,12 @@ int main() {
                     } else {
                         float temp_matriz[n_vertices][n_vertices];
                         for (int i = 0; i < n_vertices; i++) {
-                            for (int j = 0; j < n_vertices; j++) {
-                                temp_matriz[i][j] = matriz[i][j];
-                            }
+                            for (int j = 0; j < n_vertices; j++)
+                                temp_matriz[i][j] = matriz[i][j];                            
                         }
                         
-                        No *vetor_nos = dijkstra(origem, destino, n_vertices, temp_matriz);
+                        No *vetor_nos;
+                        vetor_nos = dijkstra(origem, destino, n_vertices, temp_matriz);
                         
                         if (vetor_nos != NULL) {
                             printf("\nCaminho mais confiavel de [%d] ate [%d]:\n", origem, destino);
@@ -186,11 +184,10 @@ int main() {
                 break;
             
             case 4: 
-                if (n_vertices == 0) {
+                if (n_vertices == 0)
                     printf("Crie um grafo primeiro!\n");
-                } else {
+                else
                     exibir_matriz(n_vertices, matriz);
-                }
                 break;
             
             case 5: 
@@ -202,16 +199,14 @@ int main() {
                                   0.1, 0.3, 0.4, 0.9, 0.2, 0.5};
                 
                 for (int i = 0; i < n_vertices; i++) {
-                    for (int j = 0; j < n_vertices; j++) {
+                    for (int j = 0; j < n_vertices; j++)
                         matriz[i][j] = 0;
-                    }
                 }
                 
                 int n_arestas = sizeof(valores) / sizeof(float);
                 
-                for (int i = 0; i < n_arestas; i++) {
+                for (int i = 0; i < n_arestas; i++)
                     matriz[posicoes[i][0]][posicoes[i][1]] = valores[i];
-                }
                 
                 printf("Grafo exemplo carregado com %d vertices e %d arestas.\n", n_vertices, n_arestas);
                 break;
