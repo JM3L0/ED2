@@ -103,53 +103,121 @@ No *dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vert
     return vetor_nos;
 }
 
-int main()
-{
-    int posicoes[][2] = {{0, 1}, {0, 2}, {1, 3}, {1, 4}, {1, 5},
-                         {2, 3}, {2, 4}, {2, 5}, {3, 6}, {4, 6}, {5, 6}};
-                        
-    float valores[] = {0.3, 0.5, 0.9, 0.4, 0.7,
-                     0.1, 0.3, 0.4, 0.9, 0.2, 0.5};
-
-    int n_vertices = 7;
+int main() {
+    int n_vertices = 0;
+    float matriz[100][100]; // Fixed maximum size
+    int opcao = 0;
     
-    float matriz[n_vertices][n_vertices];
-
-    for(int i = 0; i < n_vertices; i++)
-    {
-        for(int j = 0; j < n_vertices; j++)
-            matriz[i][j] = 0;
-    }
-
-
-    int n_arestas = sizeof(valores) / sizeof(int);
-
-
-    for(int i = 0; i < n_arestas; i++)
-        matriz[posicoes[i][0]][posicoes[i][1]] = valores[i];
-
-    No *vetor_nos;
-    for(int i = 0; i < n_vertices; i++)
-    {
-        for(int j = n_vertices - 1; j < n_vertices; j++)
-        {
-            printf("\n[%d] ate [%d]: ", i, j);
-            vetor_nos = dijkstra(i, j, n_vertices, matriz);
-
-            if(vetor_nos != NULL)
-            {
-                printf("\n");
-                if(!exibir_caminho(j, vetor_nos, i))
-                    printf("Nao ha caminho valido");
-                printf("\n");
-
-                free(vetor_nos);
-                vetor_nos = NULL;
-            }
+    while (1) {
+        printf("\n=== Menu ===\n");
+        printf("1. Criar novo grafo\n");
+        printf("2. Adicionar aresta\n");
+        printf("3. Encontrar caminho mais confiavel\n");
+        printf("4. Exibir matriz de adjacencia\n");
+        printf("5. Carregar grafo exemplo\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+        
+        switch (opcao) {
+            case 1: 
+                printf("Informe o numero de vertices (max 100): ");
+                scanf("%d", &n_vertices);
+                
+                if (n_vertices <= 0 || n_vertices > 100) {
+                    printf("Numero de vertices invalido!\n");
+                    n_vertices = 0;
+                } else {
+                    for (int i = 0; i < n_vertices; i++) {
+                        for (int j = 0; j < n_vertices; j++) {
+                            matriz[i][j] = 0;
+                        }
+                    }
+                    printf("Grafo criado com %d vertices.\n", n_vertices);
+                }
+                break;
+            
+            case 2: 
+                adicionar_aresta(n_vertices, matriz);
+                break;
+            
+            case 3: 
+                if (n_vertices == 0) {
+                    printf("Crie um grafo primeiro!\n");
+                } else {
+                    int origem, destino;
+                    
+                    printf("Informe o vertice de origem (0 a %d): ", n_vertices - 1);
+                    scanf("%d", &origem);
+                    printf("Informe o vertice de destino (0 a %d): ", n_vertices - 1);
+                    scanf("%d", &destino);
+                    
+                    if (origem < 0 || origem >= n_vertices || destino < 0 || destino >= n_vertices) {
+                        printf("Vertices invalidos!\n");
+                    } else {
+                        float temp_matriz[n_vertices][n_vertices];
+                        for (int i = 0; i < n_vertices; i++) {
+                            for (int j = 0; j < n_vertices; j++) {
+                                temp_matriz[i][j] = matriz[i][j];
+                            }
+                        }
+                        
+                        No *vetor_nos = dijkstra(origem, destino, n_vertices, temp_matriz);
+                        
+                        if (vetor_nos != NULL) {
+                            printf("\nCaminho mais confiavel de [%d] ate [%d]:\n", origem, destino);
+                            if (!exibir_caminho(destino, vetor_nos, origem))
+                                printf("Nao ha caminho valido");
+                            else
+                                printf("\nConfiabilidade: %.4f", vetor_nos[destino].valor);
+                            
+                            printf("\n");
+                            free(vetor_nos);
+                        }
+                    }
+                }
+                break;
+            
+            case 4: 
+                if (n_vertices == 0) {
+                    printf("Crie um grafo primeiro!\n");
+                } else {
+                    exibir_matriz(n_vertices, matriz);
+                }
+                break;
+            
+            case 5: 
+                n_vertices = 7;
+                int posicoes[][2] = {{0, 1}, {0, 2}, {1, 3}, {1, 4}, {1, 5},
+                                     {2, 3}, {2, 4}, {2, 5}, {3, 6}, {4, 6}, {5, 6}};
+                            
+                float valores[] = {0.3, 0.5, 0.9, 0.4, 0.7,
+                                  0.1, 0.3, 0.4, 0.9, 0.2, 0.5};
+                
+                for (int i = 0; i < n_vertices; i++) {
+                    for (int j = 0; j < n_vertices; j++) {
+                        matriz[i][j] = 0;
+                    }
+                }
+                
+                int n_arestas = sizeof(valores) / sizeof(float);
+                
+                for (int i = 0; i < n_arestas; i++) {
+                    matriz[posicoes[i][0]][posicoes[i][1]] = valores[i];
+                }
+                
+                printf("Grafo exemplo carregado com %d vertices e %d arestas.\n", n_vertices, n_arestas);
+                break;
+            
+            case 0: 
+                printf("Programa finalizado.\n");
+                return 0;
+            
+            default:
+                printf("Opcao invalida!\n");
+                break;
         }
     }
-
-    printf("\n");
     
     return 0;
 }
