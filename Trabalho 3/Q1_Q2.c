@@ -44,9 +44,8 @@ int ehAresta(NoGrafo config1, NoGrafo config2) {
     if (valida) {
         for (int i = 0; i < NUM_DISCOS; ++i) {
             if (i != disco_alterado && i < disco_alterado) { 
-                if (config1.conf[i] == config1.conf[disco_alterado] || config2.conf[i] == config2.conf[disco_alterado]) {
+                if (config1.conf[i] == config1.conf[disco_alterado] || config2.conf[i] == config2.conf[disco_alterado])
                     valida = 0; 
-                }
             }
         }
     }
@@ -57,67 +56,71 @@ int ehAresta(NoGrafo config1, NoGrafo config2) {
 // Preenche a matriz de adjacência do grafo
 void gerarAdjacencias(NoGrafo *grafo) {
     for (int i = 0; i < MAX; ++i) {
-        for (int j = 0; j < MAX; ++j) {
+        for (int j = 0; j < MAX; ++j)
             adj[i][j] = ehAresta(grafo[i], grafo[j]);
-        }
     }
 }
 //-----------------------------------------------
 
 //Imprime o caminho mínimo encontrado
-void imprimirCaminho(int *p, int s, int f) {
-    printf("\nCaminho minimo entre configuracoes %d e %d:\n", s, f);
+void imprimirCaminho(int *pesos, int origem, int destino) {
+    printf("\nCaminho minimo entre configuracoes %d e %d:\n", origem, destino);
 
-    int caminho[f + 1], temp = p[f], pos = 0;
+    int caminho[destino + 1], temp = pesos[destino], pos = 0;
 
-    while(temp != -1) temp = p[caminho[pos++] = temp];
+    while(temp != -1)
+        temp = pesos[caminho[pos++] = temp];
 
-    for (int i = pos - 1; ~i; i--) printf("%d ", caminho[i]);
+    for (int i = pos - 1; ~i; i--)
+        printf("%d ", caminho[i]);
 
-    printf("%d\n", f);
+    printf("%d\n", destino);
 
     printf("Quantidade de movimentos: %d\n", pos);
 }
 
 //-----------------------------------------------
 // Implementação do algoritmo de Ford-Moore-Bellman
-int* fordMooreBellman(int s) {
-    static int dp[MAX], p[MAX];
+int* fordMooreBellman(int origem) {
+    //dis_p = vetor de distâncias dos vértices
+    //pesos = vetor de predecessores
+    //adj = matriz de adjacência
+    static int dis_p[MAX], pesos[MAX];
 
-    memset(p, -1, sizeof(p));
+    memset(pesos, -1, sizeof(pesos));
 
-    for (int i = 0; i < MAX; i++) dp[i] = INF;
-    dp[s] = 0;
+    for (int i = 0; i < MAX; i++) dis_p[i] = INF;
+    dis_p[origem] = 0;
     for (int i = 0; i < MAX - 1; ++i) {
         for (int j = 0; j < MAX; ++j) {
-            if (dp[j] != INF) {
+            if (dis_p[j] != INF) {
                 for (int k = 0; k < MAX; k++) {
-                    if (adj[j][k] == 1 && dp[j] + adj[j][k] < dp[k]) {
-                        dp[k] = dp[j] + adj[j][k];
-                        p[k] = j;
+                    if (adj[j][k] == 1 && dis_p[j] + adj[j][k] < dis_p[k]) {
+                        dis_p[k] = dis_p[j] + adj[j][k];
+                        pesos[k] = j;
                     }
                 }
             }
         }
     }
-    return p; // Retorna o vetor de predecessores
+    return pesos; // Retorna o vetor de predecessores
 }
 
 //-----------------------------------------------
 // Implementação do algoritmo de Dijkstra
-int* dijkstra(int s) {
-    static int dp[MAX], p[MAX];
+int* dijkstra(int origem) {
+    static int dis_p[MAX], pesos[MAX];
     int visitado[MAX] = {0};
 
-    memset(p, -1, sizeof(p));
-    for (int i = 0; i < MAX; i++) dp[i] = INF;
-    dp[s] = 0;
+    memset(pesos, -1, sizeof(pesos));
+    for (int i = 0; i < MAX; i++) dis_p[i] = INF;
+    dis_p[origem] = 0;
 
     for (int i = 0; i < MAX; ++i) {
         int u = -1, min_dist = INF;
         for (int j = 0; j < MAX; ++j) {
-            if (!visitado[j] && dp[j] < min_dist) {
-                min_dist = dp[j];
+            if (!visitado[j] && dis_p[j] < min_dist) {
+                min_dist = dis_p[j];
                 u = j;
             }
         }
@@ -125,13 +128,13 @@ int* dijkstra(int s) {
         visitado[u] = 1;
 
         for (int v = 0; v < MAX; ++v) {
-            if (adj[u][v] == 1 && dp[u] + adj[u][v] < dp[v]) {
-                dp[v] = dp[u] + adj[u][v];
-                p[v] = u;
+            if (adj[u][v] == 1 && dis_p[u] + adj[u][v] < dis_p[v]) {
+                dis_p[v] = dis_p[u] + adj[u][v];
+                pesos[v] = u;
             }
         }
     }
-    return p; // Retorna o vetor de predecessores
+    return pesos; // Retorna o vetor de predecessores
 }
 
 //-----------------------------------------------
@@ -151,15 +154,14 @@ void imprimirGrafo(NoGrafo *grafo) {
 void imprimirMatrizAdjacencia() {
     printf("\nMatriz de Adjacencia:\n");
     printf("   ");
-    for (int i = 0; i < MAX; i++) {
+    for (int i = 0; i < MAX; i++)
         printf("%2d ", i);
-    }
+
     printf("\n");
     for (int i = 0; i < MAX; i++) {
         printf("%2d ", i);
-        for (int j = 0; j < MAX; j++) {
+        for (int j = 0; j < MAX; j++)
             printf("%2d ", adj[i][j]);
-        }
         printf("\n");
     }
 }
@@ -196,34 +198,36 @@ int main() {
                 imprimirMatrizAdjacencia();
                 break;
             case 3:{
+                int *pesos;
 
                 printf("Encontrando caminho minimo com Dijkstra...\n");
 
                 clock_t inicio = clock();  // Marca o tempo de início
-                int *p = dijkstra(origem);
+                pesos = dijkstra(origem);
+
                 clock_t fim = clock();     // Marca o tempo de fim
 
-                imprimirCaminho(p, origem, destino);
+                imprimirCaminho(pesos, origem, destino);
                 double tempo_execucao = ((double)(fim - inicio)) / CLOCKS_PER_SEC * 1000; // Tempo em milissegundos
                 printf("Tempo de execucao (Dijkstra): %.6f ms\n", tempo_execucao);
                 break;
             }
             case 4:{
+                int *pesos;
                 
                 printf("Encontrando caminho minimo com Ford-Moore-Bellman...\n");
                 
                 clock_t inicio = clock();  // Marca o tempo de início
-                int *p = fordMooreBellman(origem);
+                pesos = fordMooreBellman(origem);
                 clock_t fim = clock();     // Marca o tempo de fim
                 
-                imprimirCaminho(p, origem, destino);
+                imprimirCaminho(pesos, origem, destino);
                 
                 double tempo_execucao = ((double)(fim - inicio)) / CLOCKS_PER_SEC * 1000; // Tempo em milissegundos
                 printf("Tempo de execucao (Ford-Moore-Bellman): %.6f ms\n", tempo_execucao);
                 break;
             }
             case 5:{
-                
                 testes_tempo(origem);
                 break;
             }
@@ -234,7 +238,7 @@ int main() {
                 printf("Opcao invalida!\n");
         }
     } while (opcao != 0);
-    
+
     return 0;
 }
 
