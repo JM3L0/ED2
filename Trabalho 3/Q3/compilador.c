@@ -10,8 +10,8 @@ int main()
         comando = "gcc -o Q3 ../Q3.c ../Util.c";
         executavel = "Q3";
     #else
-        comando = "gcc Q3.c Util.c -o output/Q3";
-        executavel = "./output/Q3";
+        comando = "gcc -o Q3 ../Q3.c ../Util.c";
+        executavel = "./Q3";
     #endif
 
     printf("Compilando o projeto...\n");
