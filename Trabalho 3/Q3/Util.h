@@ -10,5 +10,4 @@ void exibir_vetor(int *vetor, int tam);
 void exibir_matriz(int n_vertices, float matriz[][n_vertices]);
 int vetor_igual(int *vetor1, int *vetor2, int tam);
 void adicionar_aresta(int n_vertices, float matriz[][n_vertices]);
-float pegar_ODC(int *origem, int *destino, int tam_M);
 void limpar_buffer();

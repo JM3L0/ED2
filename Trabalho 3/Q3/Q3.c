@@ -142,23 +142,6 @@ int main() {
                 break;
             
             case 2: {
-                // int origem, destino;
-                // float confiabilidade;
-
-                // confiabilidade = pegar_ODC(&origem, &destino, n_vertices);
-                // limpar_buffer();
-
-                // printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
-                
-                // if (confiabilidade != -1){// add aresta
-                //     printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
-                //     matriz[origem][destino] = confiabilidade;
-                //     printf("%f\n", matriz[origem][destino]);
-                //     printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
-                //     matriz[destino][origem] = confiabilidade; 
-                //     printf("%f\n", matriz[destino][origem]);
-                //     printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
-                // }
 
                 adicionar_aresta(n_vertices, matriz);
                 
