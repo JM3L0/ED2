@@ -30,9 +30,9 @@ void exibir_matriz(int n_vertices, float matriz[][n_vertices]){
 
 void adicionar_aresta(int n_vertices, float matriz[][n_vertices])
 {
-    if (n_vertices == 0) {
+    if (n_vertices == 0)
         printf("Crie um grafo primeiro!\n");
-    } else {
+    else {
         int origem, destino;
         float confiabilidade;
         
@@ -138,12 +138,7 @@ int inicializa_grafo(int n_vertices, float matriz[][MAX_VERTICES]){
         printf("Numero de vertices invalido!\n");
         n_vertices = 0;
     } else {
-        for (int i = 0; i < n_vertices; i++) {
-            for (int j = 0; j < n_vertices; j++)
-                matriz[i][j] = 0.0;
-        }
-
-        // memset(matriz, 0, sizeof(float) * MAX_VERTICES * MAX_VERTICES);
+        memset(matriz, 0, sizeof(float) * MAX_VERTICES * MAX_VERTICES);
         printf("Grafo criado com %d vertices.\n", n_vertices);
     }
     return n_vertices;
@@ -153,8 +148,8 @@ int main() {
     int n_vertices = 0;
     float matriz[MAX_VERTICES][MAX_VERTICES];
     int opcao = 0;
-    
-    while (1) {
+
+    do {
         printf("\n=== Menu ===\n");
         printf("1. Criar novo grafo\n");
         printf("2. Adicionar aresta\n");
@@ -186,9 +181,9 @@ int main() {
                     printf("Informe o vertice de destino (0 a %d): ", n_vertices - 1);
                     scanf("%d", &destino);
                     
-                    if (origem < 0 || origem >= n_vertices || destino < 0 || destino >= n_vertices) {
+                    if (origem < 0 || origem >= n_vertices || destino < 0 || destino >= n_vertices)
                         printf("Vertices invalidos!\n");
-                    } else {
+                    else {
                         No vetor_nos[n_vertices];
                         dijkstra(origem, destino, n_vertices, matriz, vetor_nos);
                         
@@ -212,13 +207,12 @@ int main() {
 
             case 0: 
                 printf("Programa finalizado.\n");
-                return 0;
+                break;
             
             default:
                 printf("Opcao invalida!\n");
                 break;
         }
-    }
-    
+    }while (opcao != 0);
     return 0;
 }
