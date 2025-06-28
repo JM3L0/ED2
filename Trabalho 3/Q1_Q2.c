@@ -6,7 +6,7 @@
 #define NUM_DISCOS 4  // Número de discos
 #define NUM_PINOS 3
 #define MAX 81 // NUM_PINOS ^ NUM_DISCOS
-#define INF 99999999
+#define INF 999999999
 typedef struct {
     int conf[NUM_DISCOS]; // Configuração dos discos nos pinos
 } NoGrafo; 
