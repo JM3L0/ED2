@@ -20,12 +20,12 @@ int main()
 
     if (retorno == 0)
     {
-        printf("Compilação concluida com sucesso!\n");
+        printf("Compilacao concluida com sucesso!\n");
         system(executavel);
     }
     else
     {
-        printf("Erro durante a compilação. Codigo de retorno: %d\n", retorno);
+        printf("Erro durante a compilacao. Codigo de retorno: %d\n", retorno);
     }
 
     return 0;

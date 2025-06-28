@@ -138,3 +138,49 @@ void adicionar_aresta(int n_vertices, float matriz[][n_vertices])
         }
     }
 }
+
+float pegar_ODC(int *origem, int *destino, int tam_M){
+    float confiabilidade = -1;
+    int valido = 0;
+
+    if (tam_M <= 0) {
+        printf("Tamanho invalido para a matriz de adjacencia!\n");
+    }else{
+
+        do{
+            printf("Informe a configuracao de origem (0 a %d): ", tam_M - 1);
+            scanf("%d", origem);
+    
+            if (*origem < 0 || *origem >= tam_M) {
+                printf("Configuracao de origem invalida!\n");
+            }else{
+        
+                printf("Informe a configuracao de destino (0 a %d): ", tam_M - 1);
+                scanf("%d", destino);
+                
+                if (*destino < 0 || *destino >= tam_M) {
+                    printf("Configuracao de destino invalida!\n");
+                }else{
+                    printf("Informe a confiabilidade da aresta (0 a 1): ");
+                    scanf("%f", &confiabilidade);
+                    
+                    if (confiabilidade < 0 || confiabilidade > 1) {
+                        printf("Confiabilidade deve estar entre 0 e 1!\n");
+                    } else {
+                        valido = 1;
+                    }
+                }
+            }
+    
+            if (!valido) 
+                printf("Reiniciando processo\n");
+        }while (!valido);
+    }
+    
+    return confiabilidade;
+}
+
+void limpar_buffer()
+{
+    while (getchar() != '\n');
+}

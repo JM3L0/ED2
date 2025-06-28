@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../Q3/Util.h"
 #include <limits.h>
+#include <time.h>
+#include "../Q3/Util.h"
 
 #define INFINITO -1
 #define INVALIDO -1
@@ -102,11 +103,7 @@ No *dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vert
     return vetor_nos;
 }
 
-int inicializa_grafo(float matriz[][100]){
-    int n_vertices = 0;
-    
-    printf("Informe o numero de vertices (max 100): ");
-    scanf("%d", &n_vertices);
+int inicializa_grafo(int n_vertices, float matriz[][100]){
     
     if (n_vertices <= 0 || n_vertices > 100) {
         printf("Numero de vertices invalido!\n");
@@ -139,13 +136,34 @@ int main() {
         
         switch (opcao) {
             case 1: 
-                n_vertices = inicializa_grafo(matriz);
+                printf("Informe o numero de vertices (max 100): ");
+                scanf("%d", &n_vertices);
+                n_vertices = inicializa_grafo(n_vertices ,matriz);
                 break;
             
-            case 2: 
+            case 2: {
+                // int origem, destino;
+                // float confiabilidade;
+
+                // confiabilidade = pegar_ODC(&origem, &destino, n_vertices);
+                // limpar_buffer();
+
+                // printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
+                
+                // if (confiabilidade != -1){// add aresta
+                //     printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
+                //     matriz[origem][destino] = confiabilidade;
+                //     printf("%f\n", matriz[origem][destino]);
+                //     printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
+                //     matriz[destino][origem] = confiabilidade; 
+                //     printf("%f\n", matriz[destino][origem]);
+                //     printf("Origem: %d, Destino: %d, Confiabilidade: %.2f\n", origem, destino, confiabilidade);
+                // }
+
                 adicionar_aresta(n_vertices, matriz);
+                
                 break;
-            
+            }
             case 3: 
                 if (n_vertices == 0)
                     printf("Crie um grafo primeiro!\n");
@@ -160,14 +178,8 @@ int main() {
                     if (origem < 0 || origem >= n_vertices || destino < 0 || destino >= n_vertices) {
                         printf("Vertices invalidos!\n");
                     } else {
-                        float temp_matriz[n_vertices][n_vertices];
-                        for (int i = 0; i < n_vertices; i++) {
-                            for (int j = 0; j < n_vertices; j++)
-                                temp_matriz[i][j] = matriz[i][j];                            
-                        }
-                        
                         No *vetor_nos;
-                        vetor_nos = dijkstra(origem, destino, n_vertices, temp_matriz);
+                        vetor_nos = dijkstra(origem, destino, n_vertices, matriz);
                         
                         if (vetor_nos != NULL) {
                             printf("\nCaminho mais confiavel de [%d] ate [%d]:\n", origem, destino);
@@ -178,6 +190,7 @@ int main() {
                             
                             printf("\n");
                             free(vetor_nos);
+                            vetor_nos = NULL;
                         }
                     }
                 }
@@ -190,27 +203,29 @@ int main() {
                     exibir_matriz(n_vertices, matriz);
                 break;
             
-            case 5: 
-                n_vertices = 7;
-                int posicoes[][2] = {{0, 1}, {0, 2}, {1, 3}, {1, 4}, {1, 5},
-                                     {2, 3}, {2, 4}, {2, 5}, {3, 6}, {4, 6}, {5, 6}};
-                            
-                float valores[] = {0.3, 0.5, 0.9, 0.4, 0.7,
-                                  0.1, 0.3, 0.4, 0.9, 0.2, 0.5};
-                
-                for (int i = 0; i < n_vertices; i++) {
-                    for (int j = 0; j < n_vertices; j++)
-                        matriz[i][j] = 0;
-                }
-                
-                int n_arestas = sizeof(valores) / sizeof(float);
-                
-                for (int i = 0; i < n_arestas; i++)
-                    matriz[posicoes[i][0]][posicoes[i][1]] = valores[i];
-                
-                printf("Grafo exemplo carregado com %d vertices e %d arestas.\n", n_vertices, n_arestas);
+            case 5:{
+
+                n_vertices = inicializa_grafo(3, matriz);
+
+                // Inicializa o gerador de números aleatórios
+                srand(time(NULL));  // Nota: Adicione #include <time.h> no topo do seu arquivo
+
+                printf("Preenchendo grafo exemplo com arestas aleatórias...\n");
+
+                matriz [0][1] = (float)(rand() % 100 + 1) / 100; // Aresta de 0 a 1
+                matriz [1][0] = (float)(rand() % 100 + 1) / 100; // Aresta de 0 a 2
+                matriz [1][2] = (float)(rand() % 100 + 1) / 100; // Aresta de 1 a 2
+                matriz [2][1] = (float)(rand() % 100 + 1) / 100; // Aresta de 1 a 3
+                matriz [2][3] = (float)(rand() % 100 + 1) / 100; // Aresta de 0 a 3
+                matriz [3][2] = (float)(rand() % 100 + 1) / 100; // Aresta de 2 a 3
+                matriz [0][2] = (float)(rand() % 100 + 1) / 100; // Aresta de 0 a 2
+                matriz [2][0] = (float)(rand() % 100 + 1) / 100; // Aresta de 2 a 0
+             
+
+                printf("Grafo exemplo criado com sucesso!\n");
+
                 break;
-            
+            }
             case 0: 
                 printf("Programa finalizado.\n");
                 return 0;
