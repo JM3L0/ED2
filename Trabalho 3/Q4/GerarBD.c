@@ -68,18 +68,16 @@ void criarBancoDeDados(const char* nomeArquivo) {
         }
         
         // Libera a memória alocada
-        for (int i = 0; i < totalMatriculas; i++) {
+        for (int i = 0; i < totalMatriculas; i++)
             free(matriculasUsadas[i]);
-        }
         
         fclose(arquivo);
         printf("Banco de dados criado com sucesso: %s\n", nomeArquivo);
         sucesso = 1;
     }
     
-    if (sucesso == 0) {
+    if (sucesso == 0)
         printf("Erro ao criar o arquivo de banco de dados.\n");
-    }
 }
 
 int main() {
@@ -90,10 +88,9 @@ int main() {
     if (arquivo != NULL) {
         fclose(arquivo);
         printf("Usando banco de dados existente: %s\n", nomeArquivo);
-    } else {
+    } else
         // Se nao existir, cria o arquivo de banco de dados
         criarBancoDeDados(nomeArquivo);
-    }
     
     return 0;
 }
