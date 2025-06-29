@@ -3,12 +3,10 @@
 #include <string.h>
 #include <time.h>
 
-// Funcao para gerar uma matricula aleatoria
+// Função para gerar uma matrícula aleatória
 void gerarMatricula(char* matricula) {
-    for (int i = 0; i < 6; i++) {
-        matricula[i] = '0' + (rand() % 10);
-    }
-    matricula[6] = '\0';
+    // Gera matrícula aleatória de 6 dígitos
+    sprintf(matricula, "%06d", rand() % 1000000);
 }
 
 // Funcao para gerar uma funcao aleatoria
@@ -31,19 +29,47 @@ void criarBancoDeDados(const char* nomeArquivo) {
     if (arquivo != NULL) {
         srand(time(NULL));
         
+        // Array para controlar matrículas já utilizadas
+        char* matriculasUsadas[10000];
+        int totalMatriculas = 0;
+        
         for (int i = 0; i < 10000; i++) {
             char matricula[7];
             char nome[50];
             char funcao[30];
             float salario;
             
-            gerarMatricula(matricula);
-            // Gera nomes sequenciais: Funcionario0001, Funcionario0002, etc.
+            // Gera matrículas aleatórias sem repetição
+            int matriculaUnica = 0;
+            while (!matriculaUnica) {
+                gerarMatricula(matricula);
+                matriculaUnica = 1;
+                
+                // Verifica se a matrícula já foi usada
+                for (int j = 0; j < totalMatriculas; j++) {
+                    if (strcmp(matriculasUsadas[j], matricula) == 0) {
+                        matriculaUnica = 0;
+                        break;
+                    }
+                }
+                
+                if (matriculaUnica) {
+                    // Salva a matrícula no array de controle
+                    matriculasUsadas[totalMatriculas] = strdup(matricula);
+                    totalMatriculas++;
+                }
+            }
+            
             sprintf(nome, "Funcionario%04d", i+1);
             gerarFuncao(funcao);
             salario = gerarSalario();
             
             fprintf(arquivo, "%s;%s;%s;%.2f\n", matricula, nome, funcao, salario);
+        }
+        
+        // Libera a memória alocada
+        for (int i = 0; i < totalMatriculas; i++) {
+            free(matriculasUsadas[i]);
         }
         
         fclose(arquivo);
