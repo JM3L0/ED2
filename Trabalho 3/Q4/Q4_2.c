@@ -3,9 +3,11 @@
 #include <string.h>
 #include <time.h>
 
-#define MAX_TAMANHO 180
 #define METODO_A 1
 #define METODO_B 2
+
+#define TAM_A 121
+#define TAM_B 180
 
 typedef struct {
     char matricula[7];
@@ -15,7 +17,7 @@ typedef struct {
 } Funcionario;
 
 typedef struct {
-    Funcionario tabela[MAX_TAMANHO];
+    Funcionario tabela[TAM_B];
     int tamanho;
     int colisoes;
 } TabelaHash;
@@ -137,59 +139,6 @@ Funcionario* buscar(TabelaHash* th, char* matricula, int metodo) {
     return resultado;
 }
 
-// int carregarFuncionarios(const char* nomeArquivo, Funcionario* funcionarios, int maxFuncionarios) {
-//     FILE* arquivo = fopen(nomeArquivo, "r");
-//     int contador = 0;
-    
-//     if (arquivo != NULL) {
-//         char linha[100];
-        
-//         while (fgets(linha, sizeof(linha), arquivo) && contador < maxFuncionarios) {
-//             linha[strcspn(linha, "\n")] = 0;
-            
-//             char* token = strtok(linha, ";");
-//             int dadosValidos = 1;
-            
-//             if (token != NULL) {
-//                 strcpy(funcionarios[contador].matricula, token);
-//                 token = strtok(NULL, ";");
-                
-//                 if (token != NULL) {
-//                     strcpy(funcionarios[contador].nome, token);
-//                     token = strtok(NULL, ";");
-                    
-//                     if (token != NULL) {
-//                         strcpy(funcionarios[contador].funcao, token);
-//                         token = strtok(NULL, ";");
-                        
-//                         if (token != NULL) {
-//                             funcionarios[contador].salario = atof(token);
-//                         } else {
-//                             dadosValidos = 0;
-//                         }
-//                     } else {
-//                         dadosValidos = 0;
-//                     }
-//                 } else {
-//                     dadosValidos = 0;
-//                 }
-//             } else {
-//                 dadosValidos = 0;
-//             }
-            
-//             if (dadosValidos == 1) {
-//                 contador++;
-//             }
-//         }
-        
-//         fclose(arquivo);
-//     } else {
-//         printf("Erro ao abrir o arquivo de banco de dados.\n");
-//     }
-    
-//     return contador;
-// }
-
 int carregarFuncionarios(const char* nomeArquivo, Funcionario* funcionarios, int maxFuncionarios) {
     FILE* arquivo = fopen(nomeArquivo, "r");
     int contador = 0;
@@ -235,6 +184,38 @@ float calcularTaxaOcupacao(TabelaHash* th) {
     return (float)posicoes_ocupadas / th->tamanho * 100;
 }
 
+void printarFuncionario(Funcionario* funcionario) {
+    if (funcionario != NULL) {
+        printf("Matricula: %s\n", funcionario->matricula);
+        printf("Nome: %s\n", funcionario->nome);
+        printf("Funcao: %s\n", funcionario->funcao);
+        printf("Salario: %.2f\n", funcionario->salario);
+    } else {
+        printf("Funcionario nao encontrado.\n");
+    }
+}
+
+void imprimirTabela(TabelaHash* th) {
+    printf("\n----- CONTEUDO DA TABELA HASH -----\n");
+    printf("Tamanho: %d | Colisoes: %d\n\n", th->tamanho, th->colisoes);
+    
+    int ocupadas = 0;
+    for (int i = 0; i < th->tamanho; i++) {
+        if (th->tabela[i].matricula[0] != '\0') {
+            printf("[%3d] | Matricula: %-6s | Nome: %-20s | Funcao: %-15s | Salario: %.2f\n",
+                  i, th->tabela[i].matricula, th->tabela[i].nome,
+                  th->tabela[i].funcao, th->tabela[i].salario);
+            ocupadas++;
+        } else {
+            printf("[%3d] | Vazia\n", i);
+        }
+    }
+    
+    printf("\nPosicoes ocupadas: %d/%d (%.2f%%)\n", 
+           ocupadas, th->tamanho, (float)ocupadas/th->tamanho*100);
+    printf("-------------------------------\n");
+}
+
 void testarMetodo(int tamanho, const char* nomeArquivo, int metodo) {
     TabelaHash tabela;
     inicializarTabela(&tabela, tamanho);
@@ -269,6 +250,8 @@ void testarMetodo(int tamanho, const char* nomeArquivo, int metodo) {
         printf("Taxa de ocupacao: %.2f%%\n\n", calcularTaxaOcupacao(&tabela));
         
         sucesso = 1;
+
+        imprimirTabela(&tabela);
     }
     
     if (sucesso == 0) {
@@ -288,12 +271,13 @@ int main() {
     printf("\n=== COMPARACAO DE METODOS DE HASHING ===\n\n");
     
     printf("===== TAMANHO 121 =====\n\n");
-    testarMetodo(121, nomeArquivo, METODO_A);
-    testarMetodo(121, nomeArquivo, METODO_B);
+    testarMetodo(TAM_A, nomeArquivo, METODO_A);
+    testarMetodo(TAM_A, nomeArquivo, METODO_B);
     
     printf("===== TAMANHO 180 =====\n\n");
-    testarMetodo(180, nomeArquivo, METODO_A);
-    testarMetodo(180, nomeArquivo, METODO_B);
+    testarMetodo(TAM_B, nomeArquivo, METODO_A);
+    testarMetodo(TAM_B, nomeArquivo, METODO_B);
+
     
     return 0;
 }

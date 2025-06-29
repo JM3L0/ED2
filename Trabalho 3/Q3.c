@@ -58,11 +58,6 @@ void adicionar_aresta(int n_vertices, float matriz[][n_vertices])
     }
 }
 
-void limpar_buffer()
-{
-    while (getchar() != '\n');
-}
-
 void inicializar_nos(No vetor_nos[], int n_vertices)
 {
     for(int i = 0; i < n_vertices; i++)
