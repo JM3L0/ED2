@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 #define METODO_A 1
 #define METODO_B 2
@@ -68,13 +69,12 @@ int calcularHash(char* matricula, int tamanho, int metodo) {
     return resultado % tamanho;
 }
 
-int resolverColisao(char* matricula, int posicao, int tamanho, int metodo) {
+int resolverColisao(char* matricula, int metodo) {
     int incremento = 0;
     
-    if (metodo == METODO_A)
-        // Método A: soma o primeiro dígito
+    if (metodo == METODO_A) // Método A: soma o primeiro dígito
         incremento = matricula[0] - '0';
-    else {
+     else {
         // Método B: soma o valor do primeiro e sexto dígito
         char digitos[3];
         digitos[0] = matricula[0]; 
@@ -83,7 +83,7 @@ int resolverColisao(char* matricula, int posicao, int tamanho, int metodo) {
         incremento = atoi(digitos);
     }
     
-    return (posicao + incremento) % tamanho;
+    return incremento;
 }
 
 void inserir(TabelaHash* th, Funcionario func, int metodo) {
@@ -91,27 +91,52 @@ void inserir(TabelaHash* th, Funcionario func, int metodo) {
     int posicaoOriginal = posicao;
     int inserido = 0;
     
+    // Tenta inserir na posição calculada pelo hash
     if (th->tabela[posicao].matricula[0] == '\0') {
         th->tabela[posicao] = func;
         inserido = 1;
-
     } else {
-        th->colisoes++;
+        // Houve colisão, tenta resolver
+        int tentativas = 0, rodadas = 0;
+        int incremento = resolverColisao(func.matricula, metodo);
         
-        int tentativas = 0;
-        while (tentativas < th->tamanho && inserido == 0) {
-            posicao = resolverColisao(func.matricula, posicao, th->tamanho, metodo);
+        // Prevenção contra incremento zero
+        if (incremento == 0) {
+            incremento = 1;
+        }
+        
+        // Define número máximo de tentativas
+        if (th->tamanho % incremento == 0) 
+            rodadas = 2;
+        else if ((th->tamanho % 2 == 0 && incremento % 2 == 0) || (th->tamanho % 2 != 0 && incremento % 2 != 0)) 
+            rodadas = 3;
+        
+        
+        // Tenta encontrar uma posição livre
+        while (tentativas < rodadas && inserido == 0) {
+            th->colisoes++;
+            
+            // Calcula nova posição com tratamento de índice circular
+            posicao = (posicao + incremento);
+            
+            if (posicao >= th->tamanho){
+                posicao = posicao % th->tamanho;
+            }
             
             if (th->tabela[posicao].matricula[0] == '\0') {
                 th->tabela[posicao] = func;
                 inserido = 1;
             }
+
             
             tentativas++;
         }
         
-        if (inserido == 0)
+        // Se não conseguiu inserir após tentativas, força a inserção na posição original
+        // (substituindo o valor existente)
+        if (inserido == 0) {
             th->tabela[posicaoOriginal] = func;
+        }
     }
 }
 
@@ -131,7 +156,7 @@ Funcionario* buscar(TabelaHash* th, char* matricula, int metodo) {
         }
 
         if (!encontrado)
-            posicao = resolverColisao(matricula, posicao, th->tamanho, metodo);
+            posicao = resolverColisao(matricula, metodo);
         tentativas++;
     }
     
@@ -164,8 +189,9 @@ int carregarFuncionarios(const char* nomeArquivo, Funcionario* funcionarios, int
         }
         
         fclose(arquivo);
-    } else
+    } else {
         printf("Erro ao abrir o arquivo de banco de dados.\n");
+    }
     
     return contador;
 }
@@ -174,8 +200,9 @@ float calcularTaxaOcupacao(TabelaHash* th) {
     int posicoes_ocupadas = 0;
     
     for (int i = 0; i < th->tamanho; i++) {
-        if (th->tabela[i].matricula[0] != '\0')
+        if (th->tabela[i].matricula[0] != '\0') {
             posicoes_ocupadas++;
+        }
     }
     
     return (float)posicoes_ocupadas / th->tamanho * 100;
@@ -187,8 +214,9 @@ void printarFuncionario(Funcionario* funcionario) {
         printf("Nome: %s\n", funcionario->nome);
         printf("Funcao: %s\n", funcionario->funcao);
         printf("Salario: %.2f\n", funcionario->salario);
-    } else
+    } else {
         printf("Funcionario nao encontrado.\n");
+    }
 }
 
 void imprimirTabela(TabelaHash* th) {
@@ -202,8 +230,9 @@ void imprimirTabela(TabelaHash* th) {
                   i, th->tabela[i].matricula, th->tabela[i].nome,
                   th->tabela[i].funcao, th->tabela[i].salario);
             ocupadas++;
-        } else
+        } else {
             printf("[%3d] | Vazia\n", i);
+        }
     }
     
     printf("\nPosicoes ocupadas: %d/%d (%.2f%%)\n", 
@@ -222,16 +251,18 @@ void testarMetodo(int tamanho, const char* nomeArquivo, int metodo) {
     if (numFuncionarios > 0) {
         clock_t inicio = clock();
         
-        for (int i = 0; i < numFuncionarios; i++)
+        for (int i = 0; i < numFuncionarios; i++) {
             inserir(&tabela, funcionarios[i], metodo);
+        }
         
         clock_t fim = clock();
         double tempo_insercao = (double)(fim - inicio) / CLOCKS_PER_SEC;
         
         inicio = clock();
         
-        for (int i = 0; i < numFuncionarios; i++)
+        for (int i = 0; i < numFuncionarios; i++) {
             buscar(&tabela, funcionarios[i].matricula, metodo);
+        }
         
         fim = clock();
         double tempo_busca = (double)(fim - inicio) / CLOCKS_PER_SEC;
@@ -244,11 +275,12 @@ void testarMetodo(int tamanho, const char* nomeArquivo, int metodo) {
         
         sucesso = 1;
 
-        // imprimirTabela(&tabela);
+        imprimirTabela(&tabela);
     }
     
-    if (sucesso == 0)
+    if (sucesso == 0) {
         printf("Nao foi possivel carregar os funcionarios do arquivo.\n");
+    }
 }
 
 int main() {
