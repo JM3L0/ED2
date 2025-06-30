@@ -6,6 +6,7 @@
 #define INVALIDO -1
 #define MAX_VERTICES 100
 
+//---------- Definições de Estruturas -----------
 typedef struct no
 {
     int indice;
@@ -13,6 +14,8 @@ typedef struct no
     int marcado;
 } No;
 
+// exibe a matriz de adjacência do grafo
+// recebe o número de vértices e a matriz de adjacência
 void exibir_matriz(int n_vertices, float matriz[][n_vertices]){
     printf("\nMatriz de adjacencia do grafo:\n");
     printf("   ");
@@ -28,6 +31,8 @@ void exibir_matriz(int n_vertices, float matriz[][n_vertices]){
     }
 }
 
+// adiciona uma aresta ao grafo
+// verifica se o grafo já foi criado e se os vértices informados são válidos
 void adicionar_aresta(int n_vertices, float matriz[][n_vertices])
 {
     if (n_vertices == 0)
@@ -58,6 +63,8 @@ void adicionar_aresta(int n_vertices, float matriz[][n_vertices])
     }
 }
 
+// inicializa todos os nós do vetor
+// com valores padrão: índice inválido, valor infinito e não marcado
 void inicializar_nos(No vetor_nos[], int n_vertices)
 {
     for(int i = 0; i < n_vertices; i++)
@@ -68,6 +75,8 @@ void inicializar_nos(No vetor_nos[], int n_vertices)
     }
 }
 
+// exibe o caminho encontrado pelo algoritmo de Dijkstra
+// recursivamente, começando do nó atual até o nó inicial
 int exibir_caminho(int pos_atual, No vetor_nos[], int pos_inicial)
 {
     int retorno = 1;
@@ -85,6 +94,8 @@ int exibir_caminho(int pos_atual, No vetor_nos[], int pos_inicial)
     return retorno;
 }
 
+
+// -------------- Implementação do Algoritmo de Dijkstra -----------
 void dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vertices], No vetor_nos[])
 {
     if(pos_atual != INVALIDO)
@@ -127,6 +138,8 @@ void dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_ver
     }
 }
 
+// inicializa o grafo com um número de vértices
+// verifica se o número de vértices é válido e inicializa a matriz de adjac
 int inicializa_grafo(int n_vertices, float matriz[][MAX_VERTICES]){
     
     if (n_vertices <= 0 || n_vertices > MAX_VERTICES) {
