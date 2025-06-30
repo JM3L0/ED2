@@ -110,6 +110,8 @@ void inserir(TabelaHash* th, Funcionario func, int metodo) {
             rodadas = 2;
         else if ((th->tamanho % 2 == 0 && incremento % 2 == 0) || (th->tamanho % 2 != 0 && incremento % 2 != 0)) 
             rodadas = 3;
+        else 
+            rodadas = incremento;
         
         
         // Tenta encontrar uma posição livre
