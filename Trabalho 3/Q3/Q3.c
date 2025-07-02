@@ -84,7 +84,6 @@ int exibir_caminho(int pos_atual, No vetor_nos[], int pos_inicial)
     {
         if(pos_atual != pos_inicial)
             retorno = exibir_caminho(vetor_nos[pos_atual].indice, vetor_nos, pos_inicial);
-
         if(retorno)
             printf("[%d] -> ", pos_atual);
     }
