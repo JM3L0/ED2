@@ -111,45 +111,27 @@ void inserir(TabelaHash *th, Funcionario func, int metodo)
     }
     else
     {
-        // Houve colisão, tenta resolver
-        int tentativas = 0, rodadas = 0;
         int incremento = resolverColisao(func.matricula, metodo);
 
-        // Prevenção contra incremento zero
-        if (incremento == 0)
-        {
-            incremento = 1;
-        }
-
-        // Define número máximo de tentativas
-        if (th->tamanho % incremento == 0)
-            rodadas = 2;
-        else if ((th->tamanho % 2 == 0 && incremento % 2 == 0) || (th->tamanho % 2 != 0 && incremento % 2 != 0))
-            rodadas = 3;
-        else
-            rodadas = incremento;
-
+        if (incremento == 0) incremento = 1;
+        
         // Tenta encontrar uma posição livre
-        while (tentativas < rodadas && inserido == 0)
-        {
+        do{
             th->colisoes++;
-
+            
             // Calcula nova posição com tratamento de índice circular
             posicao = (posicao + incremento);
-
-            if (posicao >= th->tamanho)
-            {
-                posicao = posicao % th->tamanho;
-            }
+            if (posicao >= th->tamanho) posicao = posicao % th->tamanho;
+            
             
             if (th->tabela[posicao].matricula[0] == '\0')
             {
                 th->tabela[posicao] = func;
                 inserido = 1;
             }
-            tentativas++;
-            printf("Tentativa %d\n", tentativas);
-        }
+            
+            // printf("Tentativa %d\n", tentativas);
+        } while (posicao != posicaoOriginal && !inserido);
 
         // Se não conseguiu inserir após tentativas, força a inserção na posição original
         // (substituindo o valor existente)
@@ -159,6 +141,69 @@ void inserir(TabelaHash *th, Funcionario func, int metodo)
         }
     }
 }
+
+// void inserir(TabelaHash *th, Funcionario func, int metodo)
+// {
+//     int posicao = calcularHash(func.matricula, th->tamanho, metodo);
+//     int posicaoOriginal = posicao;
+//     int inserido = 0;
+
+//     // Tenta inserir na posição calculada pelo hash
+//     if (th->tabela[posicao].matricula[0] == '\0')
+//     {
+//         th->tabela[posicao] = func;
+//         inserido = 1;
+//     }
+//     else
+//     {
+//         int tam = th->tamanho;
+//         int p_visto [tam];
+//         memset(p_visto, 0, sizeof(p_visto));
+//         int incremento = resolverColisao(func.matricula, metodo);
+
+//         if (incremento == 0) incremento = 1;
+
+//         // int cont = 0;
+//         p_visto[posicao] = 1;
+//         int loop = 0, posicoesvisitadas = 1;
+        
+//         // Tenta encontrar uma posição livre
+//         while (!loop && !inserido && posicoesvisitadas < tam)
+//         {
+//             th->colisoes++;
+
+//             // Calcula nova posição com tratamento de índice circular
+//             posicao = (posicao + incremento);
+//             if (posicao >= th->tamanho) posicao = posicao % th->tamanho;
+
+//             if (p_visto[posicao] == 1)
+//             {
+//                 loop = 1;
+                
+//             }else{
+                
+//                 p_visto[posicao] = 1;
+//                 posicoesvisitadas++;
+                
+//                 if (th->tabela[posicao].matricula[0] == '\0')
+//                 {
+//                     th->tabela[posicao] = func;
+//                     inserido = 1;
+//                 }
+                
+//             }
+
+//             // printf("Tentativa %d\n", tentativas);
+//         }
+
+//         // Se não conseguiu inserir após tentativas, força a inserção na posição original
+//         // (substituindo o valor existente)
+//         if (inserido == 0)
+//         {
+//             th->tabela[posicaoOriginal] = func;
+//         }
+//     }
+// }
 
 
 Funcionario *buscar(TabelaHash *th, char *matricula, int metodo)
